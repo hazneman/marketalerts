@@ -1,0 +1,44 @@
+{
+ "alerts": [
+  {
+   "category": "price_sma200",
+   "close": 242.27,
+   "date": "2026-07-02",
+   "direction": "bullish",
+   "rule": "PRICE_SMA200_BULL",
+   "ticker": "ADP",
+   "values": {
+    "sma200": 239.78
+   }
+  },
+  {
+   "category": "price_sma200",
+   "close": 79.39,
+   "date": "2026-07-02",
+   "direction": "bullish",
+   "rule": "PRICE_SMA200_BULL",
+   "ticker": "AIG",
+   "values": {
+    "sma200": 77.53
+   }
+  },
+  {
+   "category": "price_sma200",
+   "close": 252.44,
+   "date": "2026-07-02",
+   "direction": "bullish",
+   "rule": "PRICE_SMA200_BULL",
+   "ticker": "AJG",
+   "values": {
+    "sma200": 240.01
+   }
+  }
+ ],
+ "bar_date": "2026-07-02",
+ "failures": [],
+ "generated_at": "2026-07-04T21:19:08Z",
+ "insufficient_history": [],
+ "scanned": 30,
+ "schema_version": 1,
+ "universe_count": 30
+}
