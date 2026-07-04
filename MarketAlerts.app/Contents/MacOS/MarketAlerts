@@ -1,0 +1,10 @@
+#!/bin/bash
+# Launcher for Market Alerts. Opens Terminal with the dev.sh menu.
+PROJECT="/Users/hasannumanoglu/Documents/ClaudeCode/market-alerts"
+
+osascript <<EOF
+tell application "Terminal"
+    activate
+    do script "cd '$PROJECT' && ./dev.sh"
+end tell
+EOF

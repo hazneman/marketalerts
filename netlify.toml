@@ -1,0 +1,11 @@
+[build]
+  base = "frontend"
+  command = "npm run build"
+  publish = "dist"
+
+# Scan JSON must never be cached stale — the dashboard cache-busts too,
+# but this keeps Netlify's CDN honest after each daily deploy.
+[[headers]]
+  for = "/data/*"
+  [headers.values]
+  Cache-Control = "no-cache"
