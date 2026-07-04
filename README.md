@@ -11,14 +11,87 @@ Daily alerts for financial opportunities in US stocks (S&P 500 + Nasdaq 100, ~51
 
 ## How it works
 
-```
-GitHub Action (weekdays 22:30 UTC, after US close)
-  → python scanner/scan.py         fetch 2y daily bars (yfinance) → SMA50/200 → detect crosses
-  → commits frontend/public/data/{latest,history}.json  (only if changed)
-  → push triggers Netlify build    → static React dashboard reads the JSON
-```
-
 No backend, no database. On weekends/holidays the scan produces identical JSON → no commit → no deploy.
+
+```mermaid
+flowchart TD
+    CRON["⏰ Cron schedule<br/>weekdays 22:30 UTC<br/>(always after US close)"]
+    MANUAL["🖱️ Manual trigger<br/>Actions tab → Run workflow"]
+
+    subgraph GHA["GitHub Action · daily-scan (ubuntu, ~1–2 min)"]
+        SETUP["checkout → Python 3.12 + pip cache<br/>pip install yfinance 1.4.1, pandas"]
+        RUN["python scanner/scan.py"]
+        DIFF{"git diff:<br/>did the JSON change?"}
+        COMMIT["commit 'scan: YYYY-MM-DD'<br/>and push to main"]
+        NOOP["🛑 no commit, no deploy<br/>(weekend / holiday:<br/>same bar → identical bytes)"]
+    end
+
+    subgraph SCANNER["Scanner (Python)"]
+        UNI["📋 universe.json<br/>517 tickers<br/>S&amp;P 500 + Nasdaq 100"]
+        FETCH["fetcher.iter_us_chunks<br/>yfinance · batches of 80 · 2y daily bars<br/>auto_adjust=False (matches TradingView)<br/>retries + 1s throttle"]
+        ABORT{"&gt;50% of universe<br/>failed?"}
+        DEAD["🛑 abort, keep old data<br/>(Yahoo outage guard)"]
+        GUARD{"per-ticker guards"}
+        SKIPPED["metadata only:<br/>failures[] · empty data<br/>insufficient_history[] · &lt;201 bars<br/>stale · bar older than global bar_date"]
+        RULES["🔌 RULES registry (pluggable)"]
+        R1["PriceSma200Rule<br/>close crosses SMA 200<br/>→ PRICE_SMA200_BULL / _BEAR"]
+        R2["GoldenCrossRule<br/>SMA 50 crosses SMA 200<br/>→ GOLDEN_CROSS / DEATH_CROSS"]
+        OUT["output.py · deterministic JSON<br/>(sorted keys, timestamp preserved<br/>when content unchanged)"]
+        LATEST["latest.json<br/>current bar's alerts + scan metadata"]
+        HIST["history.json<br/>rolling 30 trading days"]
+    end
+
+    subgraph NETLIFY["Netlify"]
+        HOOK["webhook fires on push to main"]
+        BUILD["npm run build (tsc + vite)<br/>base=frontend · publish=dist"]
+        CDN["🌐 market-alerts.netlify.app<br/>/data/* → Cache-Control: no-cache"]
+    end
+
+    subgraph DASH["Dashboard (React + TypeScript + Tailwind)"]
+        HOOKS["useAlerts()<br/>fetch /data/latest.json + history.json<br/>(cache-busted)"]
+        STATUS["ScanStatus<br/>last scan · bar date · 517/517<br/>amber warning on failures/stale bar"]
+        FILTER["FilterBar<br/>ticker search · bull/bear toggle<br/>history day picker"]
+        CATS["CategorySection ×2<br/>Price × SMA 200 · Golden/Death"]
+        TABLE["AlertTable<br/>▲/▼ badge · close · SMA values<br/>· % vs SMA 200"]
+        TV["↗ TradingView chart link<br/>per ticker"]
+    end
+
+    subgraph LOCAL["Local dev (Mac)"]
+        APP["🖥️ MarketAlerts.app<br/>(double-click, in /Applications)"]
+        DEVSH["dev.sh menu<br/>1) quick scan (10) + dashboard<br/>2) full scan (517) + dashboard<br/>3) dashboard only · vite :3100<br/>4) pytest · 17 tests"]
+    end
+
+    USER(("👤 Hasan"))
+
+    CRON --> SETUP
+    MANUAL --> SETUP
+    SETUP --> RUN
+    RUN --> UNI --> FETCH --> ABORT
+    ABORT -- yes --> DEAD
+    ABORT -- no --> GUARD
+    GUARD -- "bad ticker" --> SKIPPED
+    GUARD -- "ok: ≥201 bars, fresh bar" --> RULES
+    RULES --> R1
+    RULES --> R2
+    R1 --> OUT
+    R2 --> OUT
+    SKIPPED --> OUT
+    OUT --> LATEST
+    OUT --> HIST
+    LATEST --> DIFF
+    HIST --> DIFF
+    DIFF -- changed --> COMMIT
+    DIFF -- identical --> NOOP
+    COMMIT --> HOOK --> BUILD --> CDN
+    CDN --> HOOKS
+    HOOKS --> STATUS
+    HOOKS --> FILTER
+    FILTER --> CATS --> TABLE --> TV
+    USER -- "double-click" --> APP --> DEVSH
+    DEVSH -- "scans write into<br/>frontend/public/data/" --> LATEST
+    USER -- "views daily" --> CDN
+    TV -- "validate SMA values<br/>on TradingView" --> USER
+```
 
 ## Run locally
 
