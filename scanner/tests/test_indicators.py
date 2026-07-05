@@ -1,7 +1,7 @@
 import numpy as np
 import pandas as pd
 
-from indicators import sma
+from indicators import rsi, sma
 
 
 def test_sma_equals_hand_computed_mean():
@@ -21,3 +21,25 @@ def test_sma_is_nan_before_window_fills():
 def test_sma200_first_valid_value():
     close = pd.Series(np.ones(250))
     assert sma(close, 200).iloc[199] == 1.0
+
+
+def test_rsi_bounds_and_warmup():
+    close = pd.Series(100 + np.sin(np.arange(60)) * 5)
+    result = rsi(close)
+    assert result.iloc[:14].isna().all()
+    valid = result.iloc[14:].astype(float)
+    assert ((valid >= 0) & (valid <= 100)).all()
+
+
+def test_rsi_extremes():
+    rising = pd.Series(np.arange(1.0, 61.0))     # only gains -> 100
+    falling = pd.Series(np.arange(60.0, 0.0, -1))  # only losses -> ~0
+    assert float(rsi(rising).iloc[-1]) == 100.0
+    assert float(rsi(falling).iloc[-1]) < 1.0
+
+
+def test_rsi_uptrend_is_high_downtrend_is_low():
+    up = pd.Series(np.cumsum(np.tile([2.0, -0.5], 30)) + 100)
+    down = pd.Series(100 - np.cumsum(np.tile([2.0, -0.5], 30)))
+    assert float(rsi(up).iloc[-1]) > 65
+    assert float(rsi(down).iloc[-1]) < 35

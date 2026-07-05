@@ -6,6 +6,11 @@ Rules (Hasan's SMA200 trend filter):
   (N = --confirm, default 2). Orders execute at the NEXT day's open — you
   can't trade a close you haven't seen yet. Cash earns nothing while out.
 
+Optional entry filter: --rsi-max X blocks BUYs while RSI(14) > X on the
+confirmation day (entry is delayed, not cancelled — it happens on the first
+later day when the trend condition still holds and RSI has cooled off).
+Exits are never blocked.
+
 Compared against buy-and-hold of the same ticker over the same window.
 Dividends are ignored on both sides (raw Close); since buy-and-hold is always
 invested, this understates buy-and-hold slightly more than the strategy.
@@ -31,7 +36,7 @@ import pandas as pd
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 from fetcher import iter_us_chunks
-from indicators import sma
+from indicators import rsi, sma
 from scan import load_universe
 
 
@@ -40,7 +45,8 @@ def max_drawdown(equity: np.ndarray) -> float:
     return float(np.min(equity / peak - 1.0))
 
 
-def simulate(df: pd.DataFrame, years: int, sma_n: int, confirm: int) -> dict | None:
+def simulate(df: pd.DataFrame, years: int, sma_n: int, confirm: int,
+             rsi_max: float | None = None) -> dict | None:
     """Run the strategy on one ticker. Returns stats or None if not enough data."""
     cutoff = pd.Timestamp(dt.date.today() - dt.timedelta(days=365 * years))
     df = df.copy()
@@ -49,6 +55,11 @@ def simulate(df: pd.DataFrame, years: int, sma_n: int, confirm: int) -> dict | N
     above = (df["close"] > s).to_numpy()
     below = (df["close"] < s).to_numpy()
     valid = ~np.isnan(s.to_numpy())
+    if rsi_max is not None:
+        r = rsi(df["close"]).to_numpy(dtype=float)
+        rsi_ok = ~np.isnan(r) & (r <= rsi_max)
+    else:
+        rsi_ok = np.ones(len(df), dtype=bool)
 
     idx = df.index
     window = np.where((idx >= cutoff) & valid)[0]
@@ -72,7 +83,7 @@ def simulate(df: pd.DataFrame, years: int, sma_n: int, confirm: int) -> dict | N
     for t in range(start, end + 1):
         # execute yesterday's confirmed signal at today's open
         if t > start:
-            if not in_pos and confirmed(above, t - 1):
+            if not in_pos and confirmed(above, t - 1) and rsi_ok[t - 1]:
                 in_pos, entry_px = True, opens[t]
             elif in_pos and confirmed(below, t - 1):
                 cash *= opens[t] / entry_px
@@ -99,7 +110,8 @@ def simulate(df: pd.DataFrame, years: int, sma_n: int, confirm: int) -> dict | N
     }
 
 
-def run(symbols: list[str], years: int, sma_n: int, confirm: int):
+def run(symbols: list[str], years: int, sma_n: int, confirm: int,
+        rsi_max: float | None = None):
     results: dict[str, dict] = {}
     fetched = 0
     for chunk in iter_us_chunks(symbols, period="10y"):
@@ -107,7 +119,7 @@ def run(symbols: list[str], years: int, sma_n: int, confirm: int):
             fetched += 1
             if df.empty:
                 continue
-            r = simulate(df, years, sma_n, confirm)
+            r = simulate(df, years, sma_n, confirm, rsi_max)
             if r is not None:
                 results[sym] = r
         print(f"  simulated {fetched}/{len(symbols)}", file=sys.stderr)
@@ -155,12 +167,16 @@ def fmt(x: float) -> str:
     return f"{x * 100:+.1f}%"
 
 
-def print_report(s: dict, years: int, sma_n: int, confirm: int) -> str:
+def print_report(s: dict, years: int, sma_n: int, confirm: int,
+                 rsi_max: float | None = None) -> str:
+    rsi_note = f", RSI≤{rsi_max:g} entry filter" if rsi_max is not None else ""
+    rsi_rule = (f"Entries are skipped while RSI(14) > {rsi_max:g}. "
+                if rsi_max is not None else "")
     lines = [
-        f"# Strategy backtest — SMA{sma_n} trend filter, {confirm}-day confirmation, last {years} years",
+        f"# Strategy backtest — SMA{sma_n} trend filter, {confirm}-day confirmation{rsi_note}, last {years} years",
         "",
         f"Buy after {confirm} consecutive closes above the SMA{sma_n}, sell after "
-        f"{confirm} consecutive closes below; execution at next day's open. "
+        f"{confirm} consecutive closes below; execution at next day's open. {rsi_rule}"
         f"Per-ticker, all-in/all-out, vs buy-and-hold of the same ticker. "
         f"{s['tickers']} tickers (today's index members — survivorship bias applies to both sides).",
         "",
@@ -188,6 +204,8 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--years", type=int, default=5)
     parser.add_argument("--sma", type=int, default=200)
     parser.add_argument("--confirm", type=int, default=2)
+    parser.add_argument("--rsi-max", type=float, default=None,
+                        help="skip entries while RSI(14) is above this value")
     parser.add_argument("--limit", type=int)
     parser.add_argument("--report", type=Path)
     parser.add_argument("--curves", type=Path, help="write weekly portfolio curves JSON")
@@ -197,9 +215,9 @@ def main(argv: list[str] | None = None) -> int:
     if args.limit:
         symbols = symbols[: args.limit]
 
-    results = run(symbols, args.years, args.sma, args.confirm)
+    results = run(symbols, args.years, args.sma, args.confirm, args.rsi_max)
     summary = summarize(results)
-    report = print_report(summary, args.years, args.sma, args.confirm)
+    report = print_report(summary, args.years, args.sma, args.confirm, args.rsi_max)
     if args.report:
         args.report.parent.mkdir(parents=True, exist_ok=True)
         args.report.write_text(report)
