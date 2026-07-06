@@ -61,6 +61,8 @@ def simulate(df: pd.DataFrame, years: int, sma_n: int, confirm: int,
     mode="pullback": regime + trigger — buy when close is above SMA(sma_n)
     AND crosses above SMA(fast_n); sell when close crosses below SMA(fast_n)
     or falls below SMA(sma_n). (`confirm`/`band` are unused here.)
+    mode="hybrid": same entry as pullback, but sell ONLY on regime break
+    (close below SMA(sma_n)) — enter on dips, let winners run.
     `until` caps the window end (for out-of-sample validation on old data).
     """
     cutoff = pd.Timestamp(dt.date.today() - dt.timedelta(days=365 * years))
@@ -77,7 +79,7 @@ def simulate(df: pd.DataFrame, years: int, sma_n: int, confirm: int,
     else:
         rsi_ok = np.ones(len(df), dtype=bool)
 
-    if mode == "pullback":
+    if mode in ("pullback", "hybrid"):
         f = sma(closes_s, fast_n).to_numpy()
         c = closes_s.to_numpy()
         above_fast = ~np.isnan(f) & (c > f)
@@ -86,7 +88,8 @@ def simulate(df: pd.DataFrame, years: int, sma_n: int, confirm: int,
         cross_dn = np.zeros(len(df), dtype=bool)
         cross_dn[1:] = ~above_fast[1:] & above_fast[:-1] & ~np.isnan(f[1:])
         entry_sig = cross_up & (c > s.to_numpy()) & rsi_ok
-        exit_sig = cross_dn | (c < s.to_numpy())
+        exit_sig = (c < s.to_numpy()) if mode == "hybrid" \
+            else cross_dn | (c < s.to_numpy())
     else:
         entry_sig = _streak(above, confirm) & rsi_ok
         exit_sig = _streak(below, confirm)
@@ -177,8 +180,11 @@ def validate(symbols: list[str], args) -> int:
     def fmt(x: float) -> str:
         return f"{x * 100:+.1f}%"
 
-    model_name = (f"pullback (>{'SMA%d' % args.sma} + SMA{args.fast} cross)"
-                  if args.model == "pullback" else f"trend SMA{args.sma}/{args.confirm}d")
+    model_name = {
+        "pullback": f"pullback (>SMA{args.sma} + SMA{args.fast} cross)",
+        "hybrid": f"hybrid (SMA{args.fast}-cross entry, SMA{args.sma}-break exit)",
+        "trend": f"trend SMA{args.sma}/{args.confirm}d",
+    }[args.model]
     lines = [f"# Model validation — {model_name} vs trend baseline, two windows", ""]
     for title, years, cap in [(f"Last {args.years} years", args.years, None),
                               (f"{2 * args.years}→{args.years} years ago", 2 * args.years, until)]:
@@ -292,8 +298,9 @@ def main(argv: list[str] | None = None) -> int:
                         help="skip entries while RSI(14) is above this value")
     parser.add_argument("--band", type=float, default=0.0,
                         help="hysteresis buffer, e.g. 0.02 = trade only 2%% beyond the SMA")
-    parser.add_argument("--model", choices=["trend", "pullback"], default="trend",
-                        help="trend = SMA cross hold; pullback = above SMA200 + SMA30 cross entry")
+    parser.add_argument("--model", choices=["trend", "pullback", "hybrid"], default="trend",
+                        help="trend = SMA cross hold; pullback = SMA30-cross entry+exit in "
+                             "SMA200 regime; hybrid = pullback entry, regime-break exit only")
     parser.add_argument("--fast", type=int, default=30,
                         help="fast SMA length for pullback mode")
     parser.add_argument("--validate", action="store_true",
