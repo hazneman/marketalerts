@@ -46,14 +46,20 @@ def max_drawdown(equity: np.ndarray) -> float:
 
 
 def simulate(df: pd.DataFrame, years: int, sma_n: int, confirm: int,
-             rsi_max: float | None = None) -> dict | None:
-    """Run the strategy on one ticker. Returns stats or None if not enough data."""
+             rsi_max: float | None = None, band: float = 0.0,
+             until: pd.Timestamp | None = None) -> dict | None:
+    """Run the strategy on one ticker. Returns stats or None if not enough data.
+
+    band is a hysteresis buffer: entry requires close > SMA*(1+band), exit
+    requires close < SMA*(1-band); closes inside the band break both streaks.
+    `until` caps the window end (for out-of-sample validation on old data).
+    """
     cutoff = pd.Timestamp(dt.date.today() - dt.timedelta(days=365 * years))
     df = df.copy()
     df.index = pd.DatetimeIndex(df.index).tz_localize(None)
     s = sma(df["close"], sma_n)
-    above = (df["close"] > s).to_numpy()
-    below = (df["close"] < s).to_numpy()
+    above = (df["close"] > s * (1.0 + band)).to_numpy()
+    below = (df["close"] < s * (1.0 - band)).to_numpy()
     valid = ~np.isnan(s.to_numpy())
     if rsi_max is not None:
         r = rsi(df["close"]).to_numpy(dtype=float)
@@ -62,9 +68,10 @@ def simulate(df: pd.DataFrame, years: int, sma_n: int, confirm: int,
         rsi_ok = np.ones(len(df), dtype=bool)
 
     idx = df.index
-    window = np.where((idx >= cutoff) & valid)[0]
+    in_range = (idx >= cutoff) if until is None else ((idx >= cutoff) & (idx <= until))
+    window = np.where(in_range & valid)[0]
     if len(window) < 250 or idx[window[0]] > cutoff + pd.Timedelta(days=90):
-        return None  # joined too late for a fair 5y comparison
+        return None  # joined too late for a fair comparison
 
     start, end = window[0], window[-1]
     opens = df["open"].to_numpy()
@@ -111,7 +118,7 @@ def simulate(df: pd.DataFrame, years: int, sma_n: int, confirm: int,
 
 
 def run(symbols: list[str], years: int, sma_n: int, confirm: int,
-        rsi_max: float | None = None):
+        rsi_max: float | None = None, band: float = 0.0):
     results: dict[str, dict] = {}
     fetched = 0
     for chunk in iter_us_chunks(symbols, period="10y"):
@@ -119,7 +126,7 @@ def run(symbols: list[str], years: int, sma_n: int, confirm: int,
             fetched += 1
             if df.empty:
                 continue
-            r = simulate(df, years, sma_n, confirm, rsi_max)
+            r = simulate(df, years, sma_n, confirm, rsi_max, band)
             if r is not None:
                 results[sym] = r
         print(f"  simulated {fetched}/{len(symbols)}", file=sys.stderr)
@@ -206,6 +213,8 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--confirm", type=int, default=2)
     parser.add_argument("--rsi-max", type=float, default=None,
                         help="skip entries while RSI(14) is above this value")
+    parser.add_argument("--band", type=float, default=0.0,
+                        help="hysteresis buffer, e.g. 0.02 = trade only 2%% beyond the SMA")
     parser.add_argument("--limit", type=int)
     parser.add_argument("--report", type=Path)
     parser.add_argument("--curves", type=Path, help="write weekly portfolio curves JSON")
@@ -215,7 +224,7 @@ def main(argv: list[str] | None = None) -> int:
     if args.limit:
         symbols = symbols[: args.limit]
 
-    results = run(symbols, args.years, args.sma, args.confirm, args.rsi_max)
+    results = run(symbols, args.years, args.sma, args.confirm, args.rsi_max, args.band)
     summary = summarize(results)
     report = print_report(summary, args.years, args.sma, args.confirm, args.rsi_max)
     if args.report:
