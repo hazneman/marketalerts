@@ -5,6 +5,10 @@ function tradingViewUrl(ticker: string): string {
   return `https://www.tradingview.com/chart/?symbol=${encodeURIComponent(ticker)}`
 }
 
+function fmtPx(v: number): string {
+  return Math.abs(v) >= 10 ? v.toFixed(2) : v.toFixed(4)
+}
+
 function pctFromSma200(a: AlertItem): string | null {
   const sma200 = a.values.sma200
   if (!sma200) return null
@@ -49,7 +53,7 @@ export default function AlertTable({ alerts }: { alerts: AlertItem[] }) {
               </td>
               <td className="px-4 py-2.5 text-slate-400">{a.date}</td>
               <td className="px-4 py-2.5 text-right font-medium text-slate-100">
-                {a.close.toFixed(2)}
+                {fmtPx(a.close)}
               </td>
               {hasRsi && (
                 <td className="px-4 py-2.5 text-right text-amber-400">
@@ -58,11 +62,11 @@ export default function AlertTable({ alerts }: { alerts: AlertItem[] }) {
               )}
               {hasSma50 && (
                 <td className="px-4 py-2.5 text-right text-slate-300">
-                  {a.values.sma50?.toFixed(2) ?? '—'}
+                  {a.values.sma50 !== undefined ? fmtPx(a.values.sma50) : '—'}
                 </td>
               )}
               <td className="px-4 py-2.5 text-right text-slate-300">
-                {a.values.sma200?.toFixed(2) ?? '—'}
+                {a.values.sma200 !== undefined ? fmtPx(a.values.sma200) : '—'}
               </td>
               <td
                 className={`px-4 py-2.5 text-right ${

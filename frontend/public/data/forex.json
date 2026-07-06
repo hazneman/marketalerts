@@ -23,8 +23,8 @@
    "suggestion": "Low yield and weakening \u2014 funding currency",
    "vs_usd": {
     "above_sma200": false,
-    "chg_1m_pct": -1.63,
-    "price": 1.14233,
+    "chg_1m_pct": -1.65,
+    "price": 1.14207,
     "sma200": 1.16532
    }
   },
@@ -39,8 +39,8 @@
    "suggestion": "Neutral carry, negative trend",
    "vs_usd": {
     "above_sma200": false,
-    "chg_1m_pct": -0.63,
-    "price": 1.33428,
+    "chg_1m_pct": -0.64,
+    "price": 1.33404,
     "sma200": 1.33974
    }
   },
@@ -55,7 +55,7 @@
    "suggestion": "Low yield and weakening \u2014 funding currency",
    "vs_usd": {
     "above_sma200": false,
-    "chg_1m_pct": -1.37,
+    "chg_1m_pct": -1.39,
     "price": 0.00616,
     "sma200": 0.00638
    }
@@ -71,8 +71,8 @@
    "suggestion": "Low yield and weakening \u2014 funding currency",
    "vs_usd": {
     "above_sma200": false,
-    "chg_1m_pct": -2.01,
-    "price": 1.24211,
+    "chg_1m_pct": -2.04,
+    "price": 1.24173,
     "sma200": 1.2638
    }
   },
@@ -87,8 +87,8 @@
    "suggestion": "Low yield and weakening \u2014 funding currency",
    "vs_usd": {
     "above_sma200": false,
-    "chg_1m_pct": -2.22,
-    "price": 0.70318,
+    "chg_1m_pct": -2.23,
+    "price": 0.70305,
     "sma200": 0.72246
    }
   },
@@ -104,7 +104,7 @@
    "vs_usd": {
     "above_sma200": true,
     "chg_1m_pct": -2.77,
-    "price": 0.69348,
+    "price": 0.69343,
     "sma200": 0.68663
    }
   },
@@ -141,7 +141,110 @@
    }
   }
  ],
- "generated_at": "2026-07-06T08:17:41Z",
+ "generated_at": "2026-07-06T08:25:00Z",
+ "pair_alerts": [
+  {
+   "category": "price_sma200_weekly",
+   "close": 0.8561,
+   "date": "2026-07-03",
+   "direction": "bearish",
+   "rule": "PRICE_SMA200W_BEAR",
+   "ticker": "EURGBP",
+   "values": {
+    "sma200": 0.8602
+   }
+  }
+ ],
+ "pairs": [
+  {
+   "above_sma200": false,
+   "chg_1m_pct": -1.65,
+   "price": 1.14207,
+   "sma200": 1.16532,
+   "symbol": "EURUSD",
+   "vs_sma200_pct": -1.99
+  },
+  {
+   "above_sma200": false,
+   "chg_1m_pct": -0.64,
+   "price": 1.33404,
+   "sma200": 1.33974,
+   "symbol": "GBPUSD",
+   "vs_sma200_pct": -0.42
+  },
+  {
+   "above_sma200": true,
+   "chg_1m_pct": 1.41,
+   "price": 162.24699,
+   "sma200": 156.74629,
+   "symbol": "USDJPY",
+   "vs_sma200_pct": 3.51
+  },
+  {
+   "above_sma200": true,
+   "chg_1m_pct": 2.08,
+   "price": 0.80533,
+   "sma200": 0.79143,
+   "symbol": "USDCHF",
+   "vs_sma200_pct": 1.76
+  },
+  {
+   "above_sma200": true,
+   "chg_1m_pct": 2.29,
+   "price": 1.42242,
+   "sma200": 1.38438,
+   "symbol": "USDCAD",
+   "vs_sma200_pct": 2.75
+  },
+  {
+   "above_sma200": true,
+   "chg_1m_pct": -2.77,
+   "price": 0.69343,
+   "sma200": 0.68663,
+   "symbol": "AUDUSD",
+   "vs_sma200_pct": 0.99
+  },
+  {
+   "above_sma200": false,
+   "chg_1m_pct": -3.11,
+   "price": 0.56873,
+   "sma200": 0.58212,
+   "symbol": "NZDUSD",
+   "vs_sma200_pct": -2.3
+  },
+  {
+   "above_sma200": false,
+   "chg_1m_pct": -1.04,
+   "price": 0.8559,
+   "sma200": 0.86977,
+   "symbol": "EURGBP",
+   "vs_sma200_pct": -1.6
+  },
+  {
+   "above_sma200": true,
+   "chg_1m_pct": -0.28,
+   "price": 185.248,
+   "sma200": 182.63189,
+   "symbol": "EURJPY",
+   "vs_sma200_pct": 1.43
+  },
+  {
+   "above_sma200": true,
+   "chg_1m_pct": 0.79,
+   "price": 216.423,
+   "sma200": 209.97671,
+   "symbol": "GBPJPY",
+   "vs_sma200_pct": 3.07
+  },
+  {
+   "above_sma200": true,
+   "chg_1m_pct": 1.64,
+   "price": 46.8184,
+   "sma200": 43.85233,
+   "symbol": "USDTRY",
+   "vs_sma200_pct": 6.76
+  }
+ ],
  "rates_as_of": "2026-01-28",
  "schema_version": 1,
  "usd_rate": 4.0

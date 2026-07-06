@@ -15,7 +15,7 @@ from __future__ import annotations
 import pandas as pd
 
 from indicators import sma
-from .base import Alert, AlertRule, crossed_down, crossed_up
+from .base import Alert, AlertRule, crossed_down, crossed_up, px_round
 
 WEEKS = 200
 
@@ -35,7 +35,7 @@ class Sma200WeeklyRule(AlertRule):
 
         common = dict(ticker=ticker, category=self.category,
                       date=weekly.index[-1].date().isoformat(),
-                      close=round(c, 2), values={"sma200": round(sm, 2)})
+                      close=px_round(c), values={"sma200": px_round(sm)})
         if crossed_up(prev_c, c, prev_s, sm):
             return [Alert(rule="PRICE_SMA200W_BULL", direction="bullish", **common)]
         if crossed_down(prev_c, c, prev_s, sm):

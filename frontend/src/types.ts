@@ -48,6 +48,15 @@ export interface ForexCurrency {
   suggestion: string
 }
 
+export interface ForexPair {
+  symbol: string
+  price: number
+  sma200: number
+  above_sma200: boolean
+  vs_sma200_pct: number
+  chg_1m_pct: number
+}
+
 export interface ForexData {
   schema_version: number
   generated_at: string
@@ -55,6 +64,8 @@ export interface ForexData {
   rates_as_of: string
   usd_rate: number
   currencies: ForexCurrency[]
+  pairs?: ForexPair[]
+  pair_alerts?: AlertItem[]
 }
 
 export const CATEGORY_LABELS: Record<string, string> = {

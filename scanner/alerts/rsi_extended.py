@@ -12,7 +12,7 @@ from __future__ import annotations
 import pandas as pd
 
 from indicators import rsi, sma
-from .base import Alert, AlertRule
+from .base import Alert, AlertRule, px_round
 
 THRESHOLD = 75.0
 
@@ -35,7 +35,7 @@ class RsiOverboughtRule(AlertRule):
             return [Alert(
                 ticker=ticker, rule="RSI_OVERBOUGHT", category=self.category,
                 direction="bearish", date=df.index[-1].date().isoformat(),
-                close=round(c, 2),
-                values={"rsi": round(cur_r, 1), "sma200": round(s200, 2)},
+                close=px_round(c),
+                values={"rsi": round(cur_r, 1), "sma200": px_round(s200)},
             )]
         return []

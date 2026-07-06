@@ -44,6 +44,11 @@ class AlertRule(ABC):
         ...
 
 
+def px_round(v: float) -> float:
+    """Price rounding: 2dp for stock-scale prices, 4dp for FX-scale (<10)."""
+    return round(v, 2 if abs(v) >= 10 else 4)
+
+
 def crossed_up(prev_a: float, a: float, prev_b: float, b: float) -> bool:
     """a crossed above b between the previous and current bar.
 

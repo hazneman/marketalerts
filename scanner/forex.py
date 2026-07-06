@@ -21,12 +21,20 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
+from alerts import RULES
 from fetcher import fetch_us
 from indicators import sma
 
 SCANNER_DIR = Path(__file__).resolve().parent
 DEFAULT_OUTPUT_DIR = SCANNER_DIR.parent / "frontend" / "public" / "data"
 SCHEMA_VERSION = 1
+
+# Major pairs scanned with the SAME alert rules as stocks (price x SMA200,
+# golden/death cross, 200-week SMA, RSI>75). Yahoo symbol = pair + "=X".
+PAIRS = [
+    "EURUSD", "GBPUSD", "USDJPY", "USDCHF", "USDCAD", "AUDUSD", "NZDUSD",
+    "EURGBP", "EURJPY", "GBPJPY", "USDTRY",
+]
 
 
 def suggestion(carry: float, above: bool | None) -> str:
@@ -76,6 +84,28 @@ def build(output_dir: Path = DEFAULT_OUTPUT_DIR) -> dict:
                 entry["suggestion"] = suggestion(entry["carry_vs_usd"], above)
         currencies.append(entry)
 
+    pairs = []
+    pair_alerts = []
+    for symbol in PAIRS:
+        df = fetch_us(f"{symbol}=X", period="6y")  # 6y: enough for the 200-week rule
+        if df.empty or len(df) < 210:
+            continue
+        close = df["close"]
+        s200 = float(sma(close, 200).iloc[-1])
+        px = float(close.iloc[-1])
+        bar_dates.append(df.index[-1].date().isoformat())
+        pairs.append({
+            "symbol": symbol,
+            "price": round(px, 5),
+            "sma200": round(s200, 5),
+            "above_sma200": px > s200,
+            "vs_sma200_pct": round((px / s200 - 1.0) * 100, 2),
+            "chg_1m_pct": round((px / float(close.iloc[-22]) - 1.0) * 100, 2),
+        })
+        for rule in RULES:
+            pair_alerts.extend(a.to_dict() for a in rule.evaluate(symbol, df))
+    pair_alerts.sort(key=lambda a: (a["category"], a["ticker"]))
+
     data = {
         "schema_version": SCHEMA_VERSION,
         "generated_at": dt.datetime.now(dt.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
@@ -83,6 +113,8 @@ def build(output_dir: Path = DEFAULT_OUTPUT_DIR) -> dict:
         "rates_as_of": cfg["as_of"],
         "usd_rate": usd_rate,
         "currencies": currencies,
+        "pairs": pairs,
+        "pair_alerts": pair_alerts,
     }
 
     output_dir.mkdir(parents=True, exist_ok=True)

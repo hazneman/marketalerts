@@ -5,7 +5,7 @@ from __future__ import annotations
 import pandas as pd
 
 from indicators import sma
-from .base import Alert, AlertRule, crossed_down, crossed_up
+from .base import Alert, AlertRule, crossed_down, crossed_up, px_round
 
 
 def _bar_date(df: pd.DataFrame) -> str:
@@ -25,7 +25,7 @@ class PriceSma200Rule(AlertRule):
         prev_s, s = float(sma200.iloc[-2]), float(sma200.iloc[-1])
 
         common = dict(ticker=ticker, category=self.category, date=_bar_date(df),
-                      close=round(c, 2), values={"sma200": round(s, 2)})
+                      close=px_round(c), values={"sma200": px_round(s)})
         if crossed_up(prev_c, c, prev_s, s):
             return [Alert(rule="PRICE_SMA200_BULL", direction="bullish", **common)]
         if crossed_down(prev_c, c, prev_s, s):
@@ -46,8 +46,8 @@ class GoldenCrossRule(AlertRule):
         prev_s, s = float(sma200.iloc[-2]), float(sma200.iloc[-1])
 
         common = dict(ticker=ticker, category=self.category, date=_bar_date(df),
-                      close=round(float(close.iloc[-1]), 2),
-                      values={"sma50": round(f, 2), "sma200": round(s, 2)})
+                      close=px_round(float(close.iloc[-1])),
+                      values={"sma50": px_round(f), "sma200": px_round(s)})
         if crossed_up(prev_f, f, prev_s, s):
             return [Alert(rule="GOLDEN_CROSS", direction="bullish", **common)]
         if crossed_down(prev_f, f, prev_s, s):

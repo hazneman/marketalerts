@@ -1,5 +1,6 @@
 import { useForex } from '../hooks/useAlerts'
-import type { ForexCurrency } from '../types'
+import { CATEGORY_LABELS, type ForexCurrency, type ForexPair } from '../types'
+import CategorySection from './CategorySection'
 
 function suggestionColor(s: string): string {
   if (s.includes('attractive')) return 'bg-emerald-500/15 text-emerald-400'
@@ -7,6 +8,66 @@ function suggestionColor(s: string): string {
   if (s.includes('strengthening')) return 'bg-sky-500/15 text-sky-300'
   if (s.includes('Benchmark')) return 'bg-slate-500/15 text-slate-300'
   return 'bg-slate-500/15 text-slate-400'
+}
+
+function PairsTable({ pairs }: { pairs: ForexPair[] }) {
+  return (
+    <div className="overflow-x-auto rounded-lg border border-slate-800">
+      <table className="w-full text-left text-sm">
+        <thead className="bg-slate-900 text-xs uppercase tracking-wide text-slate-400">
+          <tr>
+            <th className="px-4 py-2.5">Pair</th>
+            <th className="px-4 py-2.5 text-right">Price</th>
+            <th className="px-4 py-2.5 text-right">SMA 200</th>
+            <th className="px-4 py-2.5 text-right">vs SMA 200</th>
+            <th className="px-4 py-2.5">Trend</th>
+            <th className="px-4 py-2.5 text-right">1m</th>
+          </tr>
+        </thead>
+        <tbody className="divide-y divide-slate-800">
+          {pairs.map((p) => (
+            <tr key={p.symbol} className="bg-slate-950 hover:bg-slate-900/60">
+              <td className="px-4 py-2.5">
+                <a
+                  href={`https://www.tradingview.com/chart/?symbol=${p.symbol}`}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="font-semibold text-sky-400 hover:text-sky-300 hover:underline"
+                >
+                  {p.symbol.slice(0, 3)}/{p.symbol.slice(3)} ↗
+                </a>
+              </td>
+              <td className="px-4 py-2.5 text-right font-medium text-slate-100">
+                {p.price.toFixed(4)}
+              </td>
+              <td className="px-4 py-2.5 text-right text-slate-300">{p.sma200.toFixed(4)}</td>
+              <td
+                className={`px-4 py-2.5 text-right ${
+                  p.vs_sma200_pct >= 0 ? 'text-emerald-400' : 'text-rose-400'
+                }`}
+              >
+                {p.vs_sma200_pct >= 0 ? '+' : ''}
+                {p.vs_sma200_pct.toFixed(2)}%
+              </td>
+              <td className="px-4 py-2.5">
+                <span className={p.above_sma200 ? 'text-emerald-400' : 'text-rose-400'}>
+                  {p.above_sma200 ? '▲ above' : '▼ below'} SMA200
+                </span>
+              </td>
+              <td
+                className={`px-4 py-2.5 text-right ${
+                  p.chg_1m_pct >= 0 ? 'text-emerald-400' : 'text-rose-400'
+                }`}
+              >
+                {p.chg_1m_pct >= 0 ? '+' : ''}
+                {p.chg_1m_pct.toFixed(2)}%
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  )
 }
 
 function TrendCell({ c }: { c: ForexCurrency }) {
@@ -119,6 +180,29 @@ export default function ForexPage() {
         the {'{'}CODE{'}'}USD pair, so &quot;above SMA200&quot; always means the currency is
         strengthening against the dollar.
       </p>
+
+      {forex.pairs && forex.pairs.length > 0 && (
+        <>
+          <h2 className="pt-4 text-lg font-semibold text-slate-100">Major pairs</h2>
+          <PairsTable pairs={forex.pairs} />
+
+          <h2 className="pt-4 text-lg font-semibold text-slate-100">Pair signals</h2>
+          {(forex.pair_alerts?.length ?? 0) > 0 ? (
+            [...new Set(forex.pair_alerts!.map((a) => a.category))].map((cat) => (
+              <CategorySection
+                key={cat}
+                title={CATEGORY_LABELS[cat] ?? cat}
+                alerts={forex.pair_alerts!.filter((a) => a.category === cat)}
+                barDate={forex.bar_date ?? ''}
+              />
+            ))
+          ) : (
+            <p className="rounded-lg border border-dashed border-slate-800 px-4 py-6 text-center text-sm text-slate-500">
+              No pair signals on {forex.bar_date}
+            </p>
+          )}
+        </>
+      )}
     </section>
   )
 }
