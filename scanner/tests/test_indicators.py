@@ -1,7 +1,7 @@
 import numpy as np
 import pandas as pd
 
-from indicators import rsi, sma
+from indicators import macd, rsi, sma
 
 
 def test_sma_equals_hand_computed_mean():
@@ -43,3 +43,25 @@ def test_rsi_uptrend_is_high_downtrend_is_low():
     down = pd.Series(100 - np.cumsum(np.tile([2.0, -0.5], 30)))
     assert float(rsi(up).iloc[-1]) > 65
     assert float(rsi(down).iloc[-1]) < 35
+
+
+def test_macd_flat_series_is_zero():
+    line, sig = macd(pd.Series(np.full(100, 50.0)))
+    assert abs(float(line.iloc[-1])) < 1e-9
+    assert abs(float(sig.iloc[-1])) < 1e-9
+
+
+def test_macd_sign_follows_trend():
+    up = pd.Series(np.linspace(100, 200, 100))
+    down = pd.Series(np.linspace(200, 100, 100))
+    assert float(macd(up)[0].iloc[-1]) > 0
+    assert float(macd(down)[0].iloc[-1]) < 0
+
+
+def test_macd_line_crosses_signal_on_turn():
+    # rise then fall: MACD line must drop below its (lagging) signal line
+    closes = pd.Series(np.concatenate([np.linspace(100, 150, 60),
+                                       np.linspace(150, 120, 20)]))
+    line, sig = macd(closes)
+    assert float(line.iloc[-1]) < float(sig.iloc[-1])
+    assert float(line.iloc[59]) > float(sig.iloc[59])

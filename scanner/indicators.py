@@ -1,4 +1,4 @@
-"""Technical indicators: SMA and RSI."""
+"""Technical indicators: SMA, RSI, MACD."""
 
 from __future__ import annotations
 
@@ -34,3 +34,16 @@ def rsi(close: pd.Series, period: int = RSI_PERIOD) -> pd.Series:
     # Mask the warm-up window so we never emit a value before `period` bars.
     out[avg_gain.isna()] = pd.NA
     return out
+
+
+def macd(close: pd.Series, fast: int = 12, slow: int = 26,
+         signal: int = 9) -> tuple[pd.Series, pd.Series]:
+    """MACD line (EMA12 − EMA26) and its signal line (EMA9 of the MACD line).
+
+    Standard parameters, adjust=False EMAs — matches TradingView's MACD.
+    Returns (macd_line, signal_line).
+    """
+    ema_fast = close.ewm(span=fast, adjust=False).mean()
+    ema_slow = close.ewm(span=slow, adjust=False).mean()
+    line = ema_fast - ema_slow
+    return line, line.ewm(span=signal, adjust=False).mean()
