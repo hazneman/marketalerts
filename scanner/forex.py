@@ -37,6 +37,24 @@ PAIRS = [
 ]
 
 
+def pair_read(carry: float, above: bool) -> tuple[str, str]:
+    """Combined reading of a pair's rate balance and 200-day trend.
+
+    carry = base-currency rate minus quote-currency rate. Alignment of the two
+    forces is the signal; conflict between them is the warning.
+    """
+    if carry >= 0.5 and above:
+        return "aligned_bull", "Carry and trend agree — cleanest bullish setup"
+    if carry <= -0.5 and not above:
+        return "aligned_bear", "Negative carry and downtrend agree — cleanest bearish setup"
+    if carry >= 0.5 and not above:
+        return "conflict", "Positive carry but below SMA200 — carry is fighting the trend"
+    if carry <= -0.5 and above:
+        return "conflict", "Uptrend despite negative carry — momentum outrunning rates"
+    trend = "up" if above else "down"
+    return "trend_only", f"Flat rate balance — trend is the whole story ({trend})"
+
+
 def suggestion(carry: float, above: bool | None) -> str:
     if above is None:
         return "No trend data"
@@ -85,6 +103,7 @@ def build(output_dir: Path = DEFAULT_OUTPUT_DIR) -> dict:
                 entry["suggestion"] = suggestion(entry["carry_vs_usd"], above)
         currencies.append(entry)
 
+    rate_of = {c["code"]: c["rate"] for c in cfg["currencies"]}
     pairs = []
     pair_alerts = []
     for symbol in PAIRS:
@@ -94,14 +113,21 @@ def build(output_dir: Path = DEFAULT_OUTPUT_DIR) -> dict:
         close = df["close"]
         s200 = float(sma(close, 200).iloc[-1])
         px = float(close.iloc[-1])
+        above = px > s200
+        base, quote = symbol[:3], symbol[3:]
+        carry = round(rate_of[base] - rate_of[quote], 2)
+        alignment, comment = pair_read(carry, above)
         bar_dates.append(df.index[-1].date().isoformat())
         pairs.append({
             "symbol": symbol,
             "price": round(px, 5),
             "sma200": round(s200, 5),
-            "above_sma200": px > s200,
+            "above_sma200": above,
             "vs_sma200_pct": round((px / s200 - 1.0) * 100, 2),
             "chg_1m_pct": round((px / float(close.iloc[-22]) - 1.0) * 100, 2),
+            "carry_pct": carry,
+            "alignment": alignment,
+            "comment": comment,
         })
         for rule in RULES:
             pair_alerts.extend(a.to_dict() for a in rule.evaluate(symbol, df))

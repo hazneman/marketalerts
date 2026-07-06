@@ -33,8 +33,8 @@
    "suggestion": "Low yield and weakening \u2014 funding currency",
    "vs_usd": {
     "above_sma200": false,
-    "chg_1m_pct": -1.62,
-    "price": 1.14247,
+    "chg_1m_pct": -1.64,
+    "price": 1.1422,
     "sma200": 1.16532
    }
   },
@@ -54,9 +54,9 @@
    "suggestion": "Neutral carry, negative trend",
    "vs_usd": {
     "above_sma200": false,
-    "chg_1m_pct": -0.66,
-    "price": 1.33385,
-    "sma200": 1.33974
+    "chg_1m_pct": -0.67,
+    "price": 1.33365,
+    "sma200": 1.33973
    }
   },
   {
@@ -75,7 +75,7 @@
    "suggestion": "Low yield and weakening \u2014 funding currency",
    "vs_usd": {
     "above_sma200": false,
-    "chg_1m_pct": -1.38,
+    "chg_1m_pct": -1.39,
     "price": 0.00616,
     "sma200": 0.00638
    }
@@ -96,8 +96,8 @@
    "suggestion": "Low yield and weakening \u2014 funding currency",
    "vs_usd": {
     "above_sma200": false,
-    "chg_1m_pct": -2.02,
-    "price": 1.24193,
+    "chg_1m_pct": -2.06,
+    "price": 1.24143,
     "sma200": 1.2638
    }
   },
@@ -117,8 +117,8 @@
    "suggestion": "Low yield and weakening \u2014 funding currency",
    "vs_usd": {
     "above_sma200": false,
-    "chg_1m_pct": -2.24,
-    "price": 0.70298,
+    "chg_1m_pct": -2.26,
+    "price": 0.70285,
     "sma200": 0.72246
    }
   },
@@ -138,8 +138,8 @@
    "suggestion": "Neutral carry, positive trend",
    "vs_usd": {
     "above_sma200": true,
-    "chg_1m_pct": -2.77,
-    "price": 0.69343,
+    "chg_1m_pct": -2.78,
+    "price": 0.69339,
     "sma200": 0.68663
    }
   },
@@ -159,9 +159,9 @@
    "suggestion": "Low yield and weakening \u2014 funding currency",
    "vs_usd": {
     "above_sma200": false,
-    "chg_1m_pct": -3.12,
-    "price": 0.56867,
-    "sma200": 0.58212
+    "chg_1m_pct": -3.17,
+    "price": 0.56838,
+    "sma200": 0.58211
    }
   },
   {
@@ -186,7 +186,7 @@
    }
   }
  ],
- "generated_at": "2026-07-06T08:32:24Z",
+ "generated_at": "2026-07-06T08:57:22Z",
  "outlook_as_of": "2026-07-06",
  "pair_alerts": [
   {
@@ -204,91 +204,124 @@
  "pairs": [
   {
    "above_sma200": false,
-   "chg_1m_pct": -1.62,
-   "price": 1.14247,
+   "alignment": "aligned_bear",
+   "carry_pct": -2.0,
+   "chg_1m_pct": -1.64,
+   "comment": "Negative carry and downtrend agree \u2014 cleanest bearish setup",
+   "price": 1.1422,
    "sma200": 1.16532,
    "symbol": "EURUSD",
-   "vs_sma200_pct": -1.96
+   "vs_sma200_pct": -1.98
   },
   {
    "above_sma200": false,
-   "chg_1m_pct": -0.66,
-   "price": 1.33385,
-   "sma200": 1.33974,
+   "alignment": "trend_only",
+   "carry_pct": -0.25,
+   "chg_1m_pct": -0.67,
+   "comment": "Flat rate balance \u2014 trend is the whole story (down)",
+   "price": 1.33365,
+   "sma200": 1.33973,
    "symbol": "GBPUSD",
-   "vs_sma200_pct": -0.44
+   "vs_sma200_pct": -0.45
   },
   {
    "above_sma200": true,
-   "chg_1m_pct": 1.4,
-   "price": 162.233,
-   "sma200": 156.74622,
+   "alignment": "aligned_bull",
+   "carry_pct": 3.25,
+   "chg_1m_pct": 1.41,
+   "comment": "Carry and trend agree \u2014 cleanest bullish setup",
+   "price": 162.248,
+   "sma200": 156.7463,
    "symbol": "USDJPY",
-   "vs_sma200_pct": 3.5
+   "vs_sma200_pct": 3.51
   },
   {
    "above_sma200": true,
-   "chg_1m_pct": 2.06,
-   "price": 0.80519,
+   "alignment": "aligned_bull",
+   "carry_pct": 4.0,
+   "chg_1m_pct": 2.11,
+   "comment": "Carry and trend agree \u2014 cleanest bullish setup",
+   "price": 0.80552,
    "sma200": 0.79143,
    "symbol": "USDCHF",
-   "vs_sma200_pct": 1.74
+   "vs_sma200_pct": 1.78
   },
   {
    "above_sma200": true,
-   "chg_1m_pct": 2.29,
-   "price": 1.42248,
+   "alignment": "aligned_bull",
+   "carry_pct": 1.75,
+   "chg_1m_pct": 2.31,
+   "comment": "Carry and trend agree \u2014 cleanest bullish setup",
+   "price": 1.42276,
    "sma200": 1.38438,
    "symbol": "USDCAD",
-   "vs_sma200_pct": 2.75
+   "vs_sma200_pct": 2.77
   },
   {
    "above_sma200": true,
-   "chg_1m_pct": -2.77,
-   "price": 0.69343,
+   "alignment": "trend_only",
+   "carry_pct": -0.4,
+   "chg_1m_pct": -2.78,
+   "comment": "Flat rate balance \u2014 trend is the whole story (up)",
+   "price": 0.69339,
    "sma200": 0.68663,
    "symbol": "AUDUSD",
-   "vs_sma200_pct": 0.99
+   "vs_sma200_pct": 0.98
   },
   {
    "above_sma200": false,
-   "chg_1m_pct": -3.12,
-   "price": 0.56867,
-   "sma200": 0.58212,
+   "alignment": "aligned_bear",
+   "carry_pct": -1.75,
+   "chg_1m_pct": -3.17,
+   "comment": "Negative carry and downtrend agree \u2014 cleanest bearish setup",
+   "price": 0.56838,
+   "sma200": 0.58211,
    "symbol": "NZDUSD",
-   "vs_sma200_pct": -2.31
+   "vs_sma200_pct": -2.36
   },
   {
    "above_sma200": false,
+   "alignment": "aligned_bear",
+   "carry_pct": -1.75,
    "chg_1m_pct": -1.01,
-   "price": 0.85613,
+   "comment": "Negative carry and downtrend agree \u2014 cleanest bearish setup",
+   "price": 0.8562,
    "sma200": 0.86978,
    "symbol": "EURGBP",
-   "vs_sma200_pct": -1.57
+   "vs_sma200_pct": -1.56
   },
   {
    "above_sma200": true,
-   "chg_1m_pct": -0.28,
-   "price": 185.254,
-   "sma200": 182.63192,
+   "alignment": "aligned_bull",
+   "carry_pct": 1.25,
+   "chg_1m_pct": -0.27,
+   "comment": "Carry and trend agree \u2014 cleanest bullish setup",
+   "price": 185.27,
+   "sma200": 182.632,
    "symbol": "EURJPY",
    "vs_sma200_pct": 1.44
   },
   {
    "above_sma200": true,
-   "chg_1m_pct": 0.76,
-   "price": 216.366,
-   "sma200": 209.97643,
+   "alignment": "aligned_bull",
+   "carry_pct": 3.0,
+   "chg_1m_pct": 0.77,
+   "comment": "Carry and trend agree \u2014 cleanest bullish setup",
+   "price": 216.375,
+   "sma200": 209.97647,
    "symbol": "GBPJPY",
-   "vs_sma200_pct": 3.04
+   "vs_sma200_pct": 3.05
   },
   {
    "above_sma200": true,
-   "chg_1m_pct": 1.61,
-   "price": 46.8064,
-   "sma200": 43.85227,
+   "alignment": "conflict",
+   "carry_pct": -34.0,
+   "chg_1m_pct": 1.63,
+   "comment": "Uptrend despite negative carry \u2014 momentum outrunning rates",
+   "price": 46.8173,
+   "sma200": 43.85233,
    "symbol": "USDTRY",
-   "vs_sma200_pct": 6.74
+   "vs_sma200_pct": 6.76
   }
  ],
  "rates_as_of": "2026-01-28",

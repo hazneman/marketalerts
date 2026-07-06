@@ -62,6 +62,9 @@ export interface ForexPair {
   above_sma200: boolean
   vs_sma200_pct: number
   chg_1m_pct: number
+  carry_pct?: number
+  alignment?: 'aligned_bull' | 'aligned_bear' | 'conflict' | 'trend_only'
+  comment?: string
 }
 
 export interface ForexData {

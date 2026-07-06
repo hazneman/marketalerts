@@ -28,6 +28,13 @@ function suggestionColor(s: string): string {
   return 'bg-slate-500/15 text-slate-400'
 }
 
+const ALIGNMENT_STYLES: Record<string, string> = {
+  aligned_bull: 'bg-emerald-500/15 text-emerald-400',
+  aligned_bear: 'bg-rose-500/15 text-rose-400',
+  conflict: 'bg-amber-500/15 text-amber-400',
+  trend_only: 'bg-slate-500/15 text-slate-400',
+}
+
 function PairsTable({ pairs }: { pairs: ForexPair[] }) {
   return (
     <div className="overflow-x-auto rounded-lg border border-slate-800">
@@ -36,10 +43,11 @@ function PairsTable({ pairs }: { pairs: ForexPair[] }) {
           <tr>
             <th className="px-4 py-2.5">Pair</th>
             <th className="px-4 py-2.5 text-right">Price</th>
-            <th className="px-4 py-2.5 text-right">SMA 200</th>
             <th className="px-4 py-2.5 text-right">vs SMA 200</th>
             <th className="px-4 py-2.5">Trend</th>
             <th className="px-4 py-2.5 text-right">1m</th>
+            <th className="px-4 py-2.5 text-right">Rate balance</th>
+            <th className="px-4 py-2.5">Combined read</th>
           </tr>
         </thead>
         <tbody className="divide-y divide-slate-800">
@@ -58,7 +66,6 @@ function PairsTable({ pairs }: { pairs: ForexPair[] }) {
               <td className="px-4 py-2.5 text-right font-medium text-slate-100">
                 {p.price.toFixed(4)}
               </td>
-              <td className="px-4 py-2.5 text-right text-slate-300">{p.sma200.toFixed(4)}</td>
               <td
                 className={`px-4 py-2.5 text-right ${
                   p.vs_sma200_pct >= 0 ? 'text-emerald-400' : 'text-rose-400'
@@ -79,6 +86,32 @@ function PairsTable({ pairs }: { pairs: ForexPair[] }) {
               >
                 {p.chg_1m_pct >= 0 ? '+' : ''}
                 {p.chg_1m_pct.toFixed(2)}%
+              </td>
+              <td
+                className={`px-4 py-2.5 text-right ${
+                  (p.carry_pct ?? 0) > 0
+                    ? 'text-emerald-400'
+                    : (p.carry_pct ?? 0) < 0
+                      ? 'text-rose-400'
+                      : 'text-slate-400'
+                }`}
+              >
+                {p.carry_pct !== undefined
+                  ? `${p.carry_pct > 0 ? '+' : ''}${p.carry_pct.toFixed(2)}%`
+                  : '—'}
+              </td>
+              <td className="px-4 py-2.5">
+                {p.comment ? (
+                  <span
+                    className={`inline-block rounded-full px-2.5 py-0.5 text-xs font-medium ${
+                      ALIGNMENT_STYLES[p.alignment ?? 'trend_only']
+                    }`}
+                  >
+                    {p.comment}
+                  </span>
+                ) : (
+                  '—'
+                )}
               </td>
             </tr>
           ))}
