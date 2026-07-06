@@ -34,4 +34,5 @@ export interface AlertHistory {
 export const CATEGORY_LABELS: Record<string, string> = {
   price_sma200: 'Price × SMA 200 crosses',
   sma50_sma200: 'Golden / Death crosses (SMA 50 × SMA 200)',
+  price_sma200_weekly: '200-week SMA crosses (secular trend)',
 }

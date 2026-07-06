@@ -56,7 +56,8 @@ def main(argv: list[str] | None = None) -> int:
 
     frames: dict[str, "pd.DataFrame"] = {}
     done = 0
-    for chunk in iter_us_chunks(symbols):
+    # 6y (not 2y): the 200-week SMA rule needs ~201 weekly bars plus buffer
+    for chunk in iter_us_chunks(symbols, period="6y"):
         frames.update(chunk)
         done += len(chunk)
         logger.info("fetched %d/%d", done, len(symbols))
