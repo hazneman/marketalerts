@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import type { AlertHistory, ScanResult } from '../types'
+import type { AlertHistory, ForexData, ScanResult } from '../types'
 
 async function fetchJson<T>(path: string): Promise<T> {
   const res = await fetch(`${path}?t=${Date.now()}`)
@@ -19,4 +19,15 @@ export function useAlerts() {
   }, [])
 
   return { latest, history, error }
+}
+
+export function useForex() {
+  const [forex, setForex] = useState<ForexData | null>(null)
+  const [error, setError] = useState<string | null>(null)
+
+  useEffect(() => {
+    fetchJson<ForexData>('/data/forex.json').then(setForex).catch((e) => setError(String(e)))
+  }, [])
+
+  return { forex, error }
 }

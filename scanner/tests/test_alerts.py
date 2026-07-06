@@ -82,9 +82,10 @@ class TestGoldenCross:
 
 def test_registry_has_rules():
     assert [type(r).__name__ for r in RULES] == [
-        "PriceSma200Rule", "GoldenCrossRule", "Sma200WeeklyRule"]
+        "PriceSma200Rule", "GoldenCrossRule", "Sma200WeeklyRule",
+        "RsiOverboughtRule"]
     assert {r.category for r in RULES} == {
-        "price_sma200", "sma50_sma200", "price_sma200_weekly"}
+        "price_sma200", "sma50_sma200", "price_sma200_weekly", "rsi_extended"}
 
 
 class TestSma200Weekly:
@@ -129,3 +130,59 @@ class TestSma200Weekly:
     def test_insufficient_weeks_is_silent(self):
         assert self.rule.evaluate("TEST", self.weekly(prev=99.0, last=105.0,
                                                       n_weeks=150)) == []
+
+
+class TestRsiOverbought:
+    from alerts.rsi_extended import RsiOverboughtRule
+    rule = RsiOverboughtRule()
+
+    @staticmethod
+    def rally_df():
+        # mild alternation (RSI ~ 50), then a strong rally that pushes RSI
+        # through 75 somewhere near the end
+        base = 100 + np.cumsum(np.tile([0.3, -0.3], 120))
+        rally = base[-1] + np.cumsum(np.full(20, 1.5))
+        return make_df(np.concatenate([base, rally]))
+
+    def crossing_index(self, df):
+        from indicators import rsi
+        r = rsi(df["close"]).astype(float)
+        hits = np.where((r.shift(1) <= 75) & (r > 75))[0]
+        assert len(hits) > 0
+        return hits[-1]
+
+    def test_fires_exactly_on_crossing_day(self):
+        df = self.rally_df()
+        t = self.crossing_index(df)
+        alerts = self.rule.evaluate("TEST", df.iloc[: t + 1])
+        assert [a.rule for a in alerts] == ["RSI_OVERBOUGHT"]
+        a = alerts[0]
+        assert a.category == "rsi_extended"
+        assert a.direction == "bearish"
+        assert a.values["rsi"] > 75
+        # the day BEFORE the crossing: silent
+        assert self.rule.evaluate("TEST", df.iloc[:t]) == []
+
+    def test_silent_when_already_overbought(self):
+        df = self.rally_df()
+        t = self.crossing_index(df)
+        if t + 2 <= len(df):  # a day later RSI is still >75 -> no re-fire
+            assert self.rule.evaluate("TEST", df.iloc[: t + 2]) == []
+
+    def test_needs_uptrend_context(self):
+        # same RSI cross engineered below the SMA200: long decline, then a
+        # sharp bounce that lifts RSI above 75 while price is far below SMA200
+        closes = np.concatenate([np.linspace(200, 80, 230),
+                                 80 + np.cumsum(np.full(15, 1.2))])
+        df = make_df(closes)
+        from indicators import rsi, sma
+        r = rsi(df["close"]).astype(float)
+        hits = np.where((r.shift(1) <= 75) & (r > 75))[0]
+        for t in hits:
+            sub = df.iloc[: t + 1]
+            if len(sub) >= 201 and float(sub["close"].iloc[-1]) < float(
+                    sma(sub["close"], 200).iloc[-1]):
+                assert self.rule.evaluate("TEST", sub) == []
+                return
+        # if no below-SMA crossing existed the guard wasn't exercised
+        raise AssertionError("test setup produced no below-SMA200 RSI crossing")

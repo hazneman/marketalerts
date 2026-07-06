@@ -1,0 +1,15 @@
+{
+  "_note": "Central-bank policy rates are maintained MANUALLY (no reliable free API). Update after CB meetings and bump as_of. The dashboard displays as_of so staleness is visible.",
+  "as_of": "2026-01-28",
+  "currencies": [
+    {"code": "USD", "country": "United States", "bank": "Federal Reserve", "rate": 4.00, "prev_rate": 4.25, "changed_on": "2025-12-10"},
+    {"code": "EUR", "country": "Euro area", "bank": "European Central Bank", "rate": 2.00, "prev_rate": 2.25, "changed_on": "2025-06-05"},
+    {"code": "GBP", "country": "United Kingdom", "bank": "Bank of England", "rate": 3.75, "prev_rate": 4.00, "changed_on": "2025-12-18"},
+    {"code": "JPY", "country": "Japan", "bank": "Bank of Japan", "rate": 0.75, "prev_rate": 0.50, "changed_on": "2026-01-23"},
+    {"code": "CHF", "country": "Switzerland", "bank": "Swiss National Bank", "rate": 0.00, "prev_rate": 0.25, "changed_on": "2025-06-19"},
+    {"code": "CAD", "country": "Canada", "bank": "Bank of Canada", "rate": 2.25, "prev_rate": 2.50, "changed_on": "2025-10-29"},
+    {"code": "AUD", "country": "Australia", "bank": "Reserve Bank of Australia", "rate": 3.60, "prev_rate": 3.85, "changed_on": "2025-08-12"},
+    {"code": "NZD", "country": "New Zealand", "bank": "Reserve Bank of New Zealand", "rate": 2.25, "prev_rate": 2.75, "changed_on": "2025-11-26"},
+    {"code": "TRY", "country": "Türkiye", "bank": "TCMB", "rate": 38.00, "prev_rate": 39.50, "changed_on": "2025-12-11"}
+  ]
+}

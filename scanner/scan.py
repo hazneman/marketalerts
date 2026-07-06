@@ -110,6 +110,15 @@ def main(argv: list[str] | None = None) -> int:
     write_results(alerts, meta, args.output_dir)
     logger.info("bar_date=%s alerts=%d failures=%d insufficient=%d",
                 bar_date, len(alerts), len(meta["failures"]), len(insufficient))
+
+    # Forex snapshot rides along; its failure must never sink the stock scan.
+    try:
+        from forex import build as build_forex
+        fx = build_forex(args.output_dir)
+        logger.info("forex: %d currencies, bar_date=%s",
+                    len(fx["currencies"]), fx["bar_date"])
+    except Exception as exc:
+        logger.warning("forex build failed (%s) — keeping previous forex.json", exc)
     return 0
 
 

@@ -14,6 +14,7 @@ function pctFromSma200(a: AlertItem): string | null {
 
 export default function AlertTable({ alerts }: { alerts: AlertItem[] }) {
   const hasSma50 = alerts.some((a) => a.values.sma50 !== undefined)
+  const hasRsi = alerts.some((a) => a.values.rsi !== undefined)
   return (
     <div className="overflow-x-auto rounded-lg border border-slate-800">
       <table className="w-full text-left text-sm">
@@ -23,6 +24,7 @@ export default function AlertTable({ alerts }: { alerts: AlertItem[] }) {
             <th className="px-4 py-2.5">Ticker</th>
             <th className="px-4 py-2.5">Date</th>
             <th className="px-4 py-2.5 text-right">Close</th>
+            {hasRsi && <th className="px-4 py-2.5 text-right">RSI</th>}
             {hasSma50 && <th className="px-4 py-2.5 text-right">SMA 50</th>}
             <th className="px-4 py-2.5 text-right">SMA 200</th>
             <th className="px-4 py-2.5 text-right">vs SMA 200</th>
@@ -49,6 +51,11 @@ export default function AlertTable({ alerts }: { alerts: AlertItem[] }) {
               <td className="px-4 py-2.5 text-right font-medium text-slate-100">
                 {a.close.toFixed(2)}
               </td>
+              {hasRsi && (
+                <td className="px-4 py-2.5 text-right text-amber-400">
+                  {a.values.rsi?.toFixed(1) ?? '—'}
+                </td>
+              )}
               {hasSma50 && (
                 <td className="px-4 py-2.5 text-right text-slate-300">
                   {a.values.sma50?.toFixed(2) ?? '—'}

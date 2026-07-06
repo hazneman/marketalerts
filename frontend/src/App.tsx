@@ -1,12 +1,16 @@
 import { useMemo, useState } from 'react'
 import CategorySection from './components/CategorySection'
 import FilterBar, { type DirectionFilter } from './components/FilterBar'
+import ForexPage from './components/ForexPage'
 import ScanStatus from './components/ScanStatus'
 import { useAlerts } from './hooks/useAlerts'
 import { CATEGORY_LABELS, type AlertItem } from './types'
 
+type Page = 'stocks' | 'forex'
+
 export default function App() {
   const { latest, history, error } = useAlerts()
+  const [page, setPage] = useState<Page>('stocks')
   const [search, setSearch] = useState('')
   const [direction, setDirection] = useState<DirectionFilter>('all')
   const [selectedDay, setSelectedDay] = useState('')
@@ -52,33 +56,56 @@ export default function App() {
 
   return (
     <main className="mx-auto max-w-5xl space-y-6 px-4 py-8">
-      <header className="flex flex-wrap items-baseline justify-between gap-2">
-        <h1 className="text-2xl font-bold text-slate-100">Market Alerts</h1>
+      <header className="flex flex-wrap items-center justify-between gap-3">
+        <div className="flex items-center gap-4">
+          <h1 className="text-2xl font-bold text-slate-100">Market Alerts</h1>
+          <nav className="flex overflow-hidden rounded-md border border-slate-700 text-sm">
+            {(['stocks', 'forex'] as const).map((p) => (
+              <button
+                key={p}
+                onClick={() => setPage(p)}
+                className={`px-3 py-1.5 capitalize ${
+                  page === p
+                    ? 'bg-sky-500/20 text-sky-300'
+                    : 'bg-slate-900 text-slate-400 hover:text-slate-200'
+                }`}
+              >
+                {p}
+              </button>
+            ))}
+          </nav>
+        </div>
         <span className="text-sm text-slate-500">
-          US stocks · S&amp;P 500 + Nasdaq 100
+          {page === 'stocks' ? 'US stocks · S&P 500 + Nasdaq 100' : 'Major currencies vs USD'}
         </span>
       </header>
 
-      <ScanStatus latest={latest} />
+      {page === 'forex' ? (
+        <ForexPage />
+      ) : (
+        <>
+          <ScanStatus latest={latest} />
 
-      <FilterBar
-        search={search}
-        onSearch={setSearch}
-        direction={direction}
-        onDirection={setDirection}
-        days={days}
-        selectedDay={activeDay}
-        onDay={setSelectedDay}
-      />
+          <FilterBar
+            search={search}
+            onSearch={setSearch}
+            direction={direction}
+            onDirection={setDirection}
+            days={days}
+            selectedDay={activeDay}
+            onDay={setSelectedDay}
+          />
 
-      {categories.map((cat) => (
-        <CategorySection
-          key={cat}
-          title={CATEGORY_LABELS[cat] ?? cat}
-          alerts={alerts.filter((a) => a.category === cat)}
-          barDate={activeDay}
-        />
-      ))}
+          {categories.map((cat) => (
+            <CategorySection
+              key={cat}
+              title={CATEGORY_LABELS[cat] ?? cat}
+              alerts={alerts.filter((a) => a.category === cat)}
+              barDate={activeDay}
+            />
+          ))}
+        </>
+      )}
     </main>
   )
 }

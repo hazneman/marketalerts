@@ -112,6 +112,18 @@ Every alert ticker in the dashboard links to its TradingView chart. To validate:
 
 SMAs are computed on Yahoo's **raw Close** (`auto_adjust=False`): split-adjusted but *not* dividend-adjusted — the same data TradingView uses on daily charts, so values match. Tradeoff: high-dividend names can show an occasional spurious cross around ex-dividend dates; we accept this to stay TradingView-comparable.
 
+## Forex page
+
+The **Forex** tab shows major currencies (EUR, GBP, JPY, CHF, CAD, AUD, NZD, TRY)
+with: central-bank policy rate, last change, carry vs USD, the currency's trend
+against the dollar (XXXUSD pair vs its 200-day SMA, refreshed by the daily scan),
+and a transparent rule-based suggestion (carry × trend). Informational only.
+
+**Maintaining rates:** policy rates have no reliable free API, so they live in
+[`scanner/rates.json`](scanner/rates.json) and are updated **manually** after
+central-bank meetings (bump `as_of` too — it is displayed on the page so
+staleness is always visible). FX prices update automatically.
+
 ## Known behaviors
 
 - **GOOG/GOOGL** (and other dual-class shares) are both in the universe and will fire near-duplicate alerts on the same day. Expected.

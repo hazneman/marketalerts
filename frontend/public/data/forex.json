@@ -1,0 +1,148 @@
+{
+ "bar_date": "2026-07-06",
+ "currencies": [
+  {
+   "bank": "Federal Reserve",
+   "carry_vs_usd": 0.0,
+   "change_bps": -25,
+   "changed_on": "2025-12-10",
+   "code": "USD",
+   "country": "United States",
+   "rate": 4.0,
+   "suggestion": "Benchmark currency",
+   "vs_usd": null
+  },
+  {
+   "bank": "European Central Bank",
+   "carry_vs_usd": -2.0,
+   "change_bps": -25,
+   "changed_on": "2025-06-05",
+   "code": "EUR",
+   "country": "Euro area",
+   "rate": 2.0,
+   "suggestion": "Low yield and weakening \u2014 funding currency",
+   "vs_usd": {
+    "above_sma200": false,
+    "chg_1m_pct": -1.63,
+    "price": 1.14233,
+    "sma200": 1.16532
+   }
+  },
+  {
+   "bank": "Bank of England",
+   "carry_vs_usd": -0.25,
+   "change_bps": -25,
+   "changed_on": "2025-12-18",
+   "code": "GBP",
+   "country": "United Kingdom",
+   "rate": 3.75,
+   "suggestion": "Neutral carry, negative trend",
+   "vs_usd": {
+    "above_sma200": false,
+    "chg_1m_pct": -0.63,
+    "price": 1.33428,
+    "sma200": 1.33974
+   }
+  },
+  {
+   "bank": "Bank of Japan",
+   "carry_vs_usd": -3.25,
+   "change_bps": 25,
+   "changed_on": "2026-01-23",
+   "code": "JPY",
+   "country": "Japan",
+   "rate": 0.75,
+   "suggestion": "Low yield and weakening \u2014 funding currency",
+   "vs_usd": {
+    "above_sma200": false,
+    "chg_1m_pct": -1.37,
+    "price": 0.00616,
+    "sma200": 0.00638
+   }
+  },
+  {
+   "bank": "Swiss National Bank",
+   "carry_vs_usd": -4.0,
+   "change_bps": -25,
+   "changed_on": "2025-06-19",
+   "code": "CHF",
+   "country": "Switzerland",
+   "rate": 0.0,
+   "suggestion": "Low yield and weakening \u2014 funding currency",
+   "vs_usd": {
+    "above_sma200": false,
+    "chg_1m_pct": -2.01,
+    "price": 1.24211,
+    "sma200": 1.2638
+   }
+  },
+  {
+   "bank": "Bank of Canada",
+   "carry_vs_usd": -1.75,
+   "change_bps": -25,
+   "changed_on": "2025-10-29",
+   "code": "CAD",
+   "country": "Canada",
+   "rate": 2.25,
+   "suggestion": "Low yield and weakening \u2014 funding currency",
+   "vs_usd": {
+    "above_sma200": false,
+    "chg_1m_pct": -2.22,
+    "price": 0.70318,
+    "sma200": 0.72246
+   }
+  },
+  {
+   "bank": "Reserve Bank of Australia",
+   "carry_vs_usd": -0.4,
+   "change_bps": -25,
+   "changed_on": "2025-08-12",
+   "code": "AUD",
+   "country": "Australia",
+   "rate": 3.6,
+   "suggestion": "Neutral carry, positive trend",
+   "vs_usd": {
+    "above_sma200": true,
+    "chg_1m_pct": -2.77,
+    "price": 0.69348,
+    "sma200": 0.68663
+   }
+  },
+  {
+   "bank": "Reserve Bank of New Zealand",
+   "carry_vs_usd": -1.75,
+   "change_bps": -50,
+   "changed_on": "2025-11-26",
+   "code": "NZD",
+   "country": "New Zealand",
+   "rate": 2.25,
+   "suggestion": "Low yield and weakening \u2014 funding currency",
+   "vs_usd": {
+    "above_sma200": false,
+    "chg_1m_pct": -3.11,
+    "price": 0.56873,
+    "sma200": 0.58212
+   }
+  },
+  {
+   "bank": "TCMB",
+   "carry_vs_usd": 34.0,
+   "change_bps": -150,
+   "changed_on": "2025-12-11",
+   "code": "TRY",
+   "country": "T\u00fcrkiye",
+   "rate": 38.0,
+   "suggestion": "Positive carry but weakening \u2014 carry at risk",
+   "vs_usd": {
+    "above_sma200": false,
+    "chg_1m_pct": -1.61,
+    "price": 0.02136,
+    "sma200": 0.02283
+   }
+  }
+ ],
+ "generated_at": "2026-07-06T08:17:41Z",
+ "rates_as_of": "2026-01-28",
+ "schema_version": 1,
+ "usd_rate": 4.0
+}

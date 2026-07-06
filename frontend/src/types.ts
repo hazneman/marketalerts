@@ -31,8 +31,35 @@ export interface AlertHistory {
   days: HistoryDay[]
 }
 
+export interface ForexCurrency {
+  code: string
+  country: string
+  bank: string
+  rate: number
+  change_bps: number
+  changed_on: string
+  carry_vs_usd: number
+  vs_usd: {
+    price: number
+    sma200: number
+    above_sma200: boolean
+    chg_1m_pct: number
+  } | null
+  suggestion: string
+}
+
+export interface ForexData {
+  schema_version: number
+  generated_at: string
+  bar_date: string | null
+  rates_as_of: string
+  usd_rate: number
+  currencies: ForexCurrency[]
+}
+
 export const CATEGORY_LABELS: Record<string, string> = {
   price_sma200: 'Price × SMA 200 crosses',
   sma50_sma200: 'Golden / Death crosses (SMA 50 × SMA 200)',
   price_sma200_weekly: '200-week SMA crosses (secular trend)',
+  rsi_extended: 'RSI > 75 — extended, consider trimming',
 }
