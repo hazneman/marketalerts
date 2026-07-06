@@ -45,27 +45,51 @@ def max_drawdown(equity: np.ndarray) -> float:
     return float(np.min(equity / peak - 1.0))
 
 
+def _streak(mask: np.ndarray, n: int) -> np.ndarray:
+    """True at t when mask has been True for the n days ending at t."""
+    return pd.Series(mask).rolling(n).sum().eq(n).to_numpy()
+
+
 def simulate(df: pd.DataFrame, years: int, sma_n: int, confirm: int,
              rsi_max: float | None = None, band: float = 0.0,
-             until: pd.Timestamp | None = None) -> dict | None:
-    """Run the strategy on one ticker. Returns stats or None if not enough data.
+             until: pd.Timestamp | None = None,
+             mode: str = "trend", fast_n: int = 30) -> dict | None:
+    """Run one strategy on one ticker. Returns stats or None if not enough data.
 
-    band is a hysteresis buffer: entry requires close > SMA*(1+band), exit
-    requires close < SMA*(1-band); closes inside the band break both streaks.
+    mode="trend": buy/sell after `confirm` consecutive closes beyond the
+    SMA(sma_n) with optional hysteresis `band`.
+    mode="pullback": regime + trigger — buy when close is above SMA(sma_n)
+    AND crosses above SMA(fast_n); sell when close crosses below SMA(fast_n)
+    or falls below SMA(sma_n). (`confirm`/`band` are unused here.)
     `until` caps the window end (for out-of-sample validation on old data).
     """
     cutoff = pd.Timestamp(dt.date.today() - dt.timedelta(days=365 * years))
     df = df.copy()
     df.index = pd.DatetimeIndex(df.index).tz_localize(None)
     s = sma(df["close"], sma_n)
-    above = (df["close"] > s * (1.0 + band)).to_numpy()
-    below = (df["close"] < s * (1.0 - band)).to_numpy()
+    closes_s = df["close"]
+    above = (closes_s > s * (1.0 + band)).to_numpy()
+    below = (closes_s < s * (1.0 - band)).to_numpy()
     valid = ~np.isnan(s.to_numpy())
     if rsi_max is not None:
-        r = rsi(df["close"]).to_numpy(dtype=float)
+        r = rsi(closes_s).to_numpy(dtype=float)
         rsi_ok = ~np.isnan(r) & (r <= rsi_max)
     else:
         rsi_ok = np.ones(len(df), dtype=bool)
+
+    if mode == "pullback":
+        f = sma(closes_s, fast_n).to_numpy()
+        c = closes_s.to_numpy()
+        above_fast = ~np.isnan(f) & (c > f)
+        cross_up = np.zeros(len(df), dtype=bool)
+        cross_up[1:] = above_fast[1:] & ~above_fast[:-1] & ~np.isnan(f[:-1])
+        cross_dn = np.zeros(len(df), dtype=bool)
+        cross_dn[1:] = ~above_fast[1:] & above_fast[:-1] & ~np.isnan(f[1:])
+        entry_sig = cross_up & (c > s.to_numpy()) & rsi_ok
+        exit_sig = cross_dn | (c < s.to_numpy())
+    else:
+        entry_sig = _streak(above, confirm) & rsi_ok
+        exit_sig = _streak(below, confirm)
 
     idx = df.index
     in_range = (idx >= cutoff) if until is None else ((idx >= cutoff) & (idx <= until))
@@ -77,9 +101,6 @@ def simulate(df: pd.DataFrame, years: int, sma_n: int, confirm: int,
     opens = df["open"].to_numpy()
     closes = df["close"].to_numpy()
 
-    def confirmed(mask: np.ndarray, t: int) -> bool:
-        return t - confirm + 1 >= 0 and mask[t - confirm + 1: t + 1].all()
-
     equity = np.empty(end - start + 1)
     in_pos = False
     entry_px = 0.0
@@ -88,11 +109,11 @@ def simulate(df: pd.DataFrame, years: int, sma_n: int, confirm: int,
     pos_days = 0
 
     for t in range(start, end + 1):
-        # execute yesterday's confirmed signal at today's open
+        # execute yesterday's signal at today's open
         if t > start:
-            if not in_pos and confirmed(above, t - 1) and rsi_ok[t - 1]:
+            if not in_pos and entry_sig[t - 1]:
                 in_pos, entry_px = True, opens[t]
-            elif in_pos and confirmed(below, t - 1):
+            elif in_pos and exit_sig[t - 1]:
                 cash *= opens[t] / entry_px
                 trades.append(opens[t] / entry_px - 1.0)
                 in_pos = False
@@ -118,7 +139,8 @@ def simulate(df: pd.DataFrame, years: int, sma_n: int, confirm: int,
 
 
 def run(symbols: list[str], years: int, sma_n: int, confirm: int,
-        rsi_max: float | None = None, band: float = 0.0):
+        rsi_max: float | None = None, band: float = 0.0,
+        mode: str = "trend", fast_n: int = 30):
     results: dict[str, dict] = {}
     fetched = 0
     for chunk in iter_us_chunks(symbols, period="10y"):
@@ -126,11 +148,66 @@ def run(symbols: list[str], years: int, sma_n: int, confirm: int,
             fetched += 1
             if df.empty:
                 continue
-            r = simulate(df, years, sma_n, confirm, rsi_max, band)
+            r = simulate(df, years, sma_n, confirm, rsi_max, band, None, mode, fast_n)
             if r is not None:
                 results[sym] = r
         print(f"  simulated {fetched}/{len(symbols)}", file=sys.stderr)
     return results
+
+
+def validate(symbols: list[str], args) -> int:
+    """One fetch, four evaluations: {model, trend baseline} x {recent, earlier}."""
+    frames: dict[str, pd.DataFrame] = {}
+    fetched = 0
+    for chunk in iter_us_chunks(symbols, period="max"):
+        frames.update({s: d for s, d in chunk.items() if not d.empty})
+        fetched += len(chunk)
+        print(f"  fetched {fetched}/{len(symbols)}", file=sys.stderr)
+    until = pd.Timestamp(dt.date.today() - dt.timedelta(days=365 * args.years))
+
+    def ev(mode: str, years: int, cap: pd.Timestamp | None) -> dict:
+        results = {}
+        for sym, df in frames.items():
+            r = simulate(df, years, args.sma, args.confirm, args.rsi_max,
+                         args.band, cap, mode, args.fast)
+            if r is not None:
+                results[sym] = r
+        return summarize(results)
+
+    def fmt(x: float) -> str:
+        return f"{x * 100:+.1f}%"
+
+    model_name = (f"pullback (>{'SMA%d' % args.sma} + SMA{args.fast} cross)"
+                  if args.model == "pullback" else f"trend SMA{args.sma}/{args.confirm}d")
+    lines = [f"# Model validation — {model_name} vs trend baseline, two windows", ""]
+    for title, years, cap in [(f"Last {args.years} years", args.years, None),
+                              (f"{2 * args.years}→{args.years} years ago", 2 * args.years, until)]:
+        m = ev(args.model, years, cap)
+        b = ev("trend", years, cap)
+        print(f"  window '{title}' done", file=sys.stderr)
+        lines += [
+            f"## {title}  ({m['tickers']} tickers)", "",
+            "| Model | Median | Mean | Beat B&H | Avg max DD | Trades/ticker | Exposure |",
+            "|---|---|---|---|---|---|---|",
+            f"| {model_name} | {fmt(m['strategy_median'])} | {fmt(m['strategy_mean'])} "
+            f"| {m['beat_bh_pct'] * 100:.0f}% | {fmt(m['avg_max_dd'])} "
+            f"| {m['trades_per_ticker']:.1f} | {m['avg_exposure'] * 100:.0f}% |",
+            f"| trend SMA{args.sma}/{args.confirm}d (baseline) | {fmt(b['strategy_median'])} "
+            f"| {fmt(b['strategy_mean'])} | {b['beat_bh_pct'] * 100:.0f}% | {fmt(b['avg_max_dd'])} "
+            f"| {b['trades_per_ticker']:.1f} | {b['avg_exposure'] * 100:.0f}% |",
+            f"| buy & hold | {fmt(m['bh_median'])} | {fmt(m['bh_mean'])} | — "
+            f"| {fmt(m['avg_bh_max_dd'])} | — | 100% |",
+            "",
+            f"Model trades: win rate {m['trade_win_rate'] * 100:.0f}%, "
+            f"avg {fmt(m['avg_trade'])}, median {fmt(m['median_trade'])}.",
+            "",
+        ]
+    report = "\n".join(lines)
+    print(report)
+    if args.report:
+        args.report.parent.mkdir(parents=True, exist_ok=True)
+        args.report.write_text(report)
+    return 0
 
 
 def summarize(results: dict[str, dict]) -> dict:
@@ -215,6 +292,12 @@ def main(argv: list[str] | None = None) -> int:
                         help="skip entries while RSI(14) is above this value")
     parser.add_argument("--band", type=float, default=0.0,
                         help="hysteresis buffer, e.g. 0.02 = trade only 2%% beyond the SMA")
+    parser.add_argument("--model", choices=["trend", "pullback"], default="trend",
+                        help="trend = SMA cross hold; pullback = above SMA200 + SMA30 cross entry")
+    parser.add_argument("--fast", type=int, default=30,
+                        help="fast SMA length for pullback mode")
+    parser.add_argument("--validate", action="store_true",
+                        help="compare model vs trend baseline on recent AND earlier window")
     parser.add_argument("--limit", type=int)
     parser.add_argument("--report", type=Path)
     parser.add_argument("--curves", type=Path, help="write weekly portfolio curves JSON")
@@ -224,7 +307,11 @@ def main(argv: list[str] | None = None) -> int:
     if args.limit:
         symbols = symbols[: args.limit]
 
-    results = run(symbols, args.years, args.sma, args.confirm, args.rsi_max, args.band)
+    if args.validate:
+        return validate(symbols, args)
+
+    results = run(symbols, args.years, args.sma, args.confirm, args.rsi_max, args.band,
+                  args.model, args.fast)
     summary = summarize(results)
     report = print_report(summary, args.years, args.sma, args.confirm, args.rsi_max)
     if args.report:
