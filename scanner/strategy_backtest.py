@@ -53,7 +53,8 @@ def _streak(mask: np.ndarray, n: int) -> np.ndarray:
 def simulate(df: pd.DataFrame, years: int, sma_n: int, confirm: int,
              rsi_max: float | None = None, band: float = 0.0,
              until: pd.Timestamp | None = None,
-             mode: str = "trend", fast_n: int = 30) -> dict | None:
+             mode: str = "trend", fast_n: int = 30,
+             min_window: int = 250) -> dict | None:
     """Run one strategy on one ticker. Returns stats or None if not enough data.
 
     mode="trend": buy/sell after `confirm` consecutive closes beyond the
@@ -97,7 +98,7 @@ def simulate(df: pd.DataFrame, years: int, sma_n: int, confirm: int,
     idx = df.index
     in_range = (idx >= cutoff) if until is None else ((idx >= cutoff) & (idx <= until))
     window = np.where(in_range & valid)[0]
-    if len(window) < 250 or idx[window[0]] > cutoff + pd.Timedelta(days=90):
+    if len(window) < min_window or idx[window[0]] > cutoff + pd.Timedelta(days=90):
         return None  # joined too late for a fair comparison
 
     start, end = window[0], window[-1]
@@ -143,15 +144,18 @@ def simulate(df: pd.DataFrame, years: int, sma_n: int, confirm: int,
 
 def run(symbols: list[str], years: int, sma_n: int, confirm: int,
         rsi_max: float | None = None, band: float = 0.0,
-        mode: str = "trend", fast_n: int = 30):
+        mode: str = "trend", fast_n: int = 30, interval: str = "1d"):
+    weekly = interval == "1wk"
     results: dict[str, dict] = {}
     fetched = 0
-    for chunk in iter_us_chunks(symbols, period="10y"):
+    for chunk in iter_us_chunks(symbols, period="max" if weekly else "10y",
+                                interval=interval):
         for sym, df in chunk.items():
             fetched += 1
             if df.empty:
                 continue
-            r = simulate(df, years, sma_n, confirm, rsi_max, band, None, mode, fast_n)
+            r = simulate(df, years, sma_n, confirm, rsi_max, band, None, mode,
+                         fast_n, 200 if weekly else 250)
             if r is not None:
                 results[sym] = r
         print(f"  simulated {fetched}/{len(symbols)}", file=sys.stderr)
@@ -160,19 +164,22 @@ def run(symbols: list[str], years: int, sma_n: int, confirm: int,
 
 def validate(symbols: list[str], args) -> int:
     """One fetch, four evaluations: {model, trend baseline} x {recent, earlier}."""
+    weekly = args.interval == "1wk"
+    min_window = 200 if weekly else 250
     frames: dict[str, pd.DataFrame] = {}
     fetched = 0
-    for chunk in iter_us_chunks(symbols, period="max"):
+    for chunk in iter_us_chunks(symbols, period="max", interval=args.interval):
         frames.update({s: d for s, d in chunk.items() if not d.empty})
         fetched += len(chunk)
         print(f"  fetched {fetched}/{len(symbols)}", file=sys.stderr)
     until = pd.Timestamp(dt.date.today() - dt.timedelta(days=365 * args.years))
 
-    def ev(mode: str, years: int, cap: pd.Timestamp | None) -> dict:
+    def ev(mode: str, years: int, cap: pd.Timestamp | None,
+           sma_n: int | None = None, confirm: int | None = None) -> dict:
         results = {}
         for sym, df in frames.items():
-            r = simulate(df, years, args.sma, args.confirm, args.rsi_max,
-                         args.band, cap, mode, args.fast)
+            r = simulate(df, years, sma_n or args.sma, confirm or args.confirm,
+                         args.rsi_max, args.band, cap, mode, args.fast, min_window)
             if r is not None:
                 results[sym] = r
         return summarize(results)
@@ -180,16 +187,19 @@ def validate(symbols: list[str], args) -> int:
     def fmt(x: float) -> str:
         return f"{x * 100:+.1f}%"
 
+    unit = "w" if weekly else "d"
+    bars = "weekly" if weekly else "daily"
     model_name = {
-        "pullback": f"pullback (>SMA{args.sma} + SMA{args.fast} cross)",
-        "hybrid": f"hybrid (SMA{args.fast}-cross entry, SMA{args.sma}-break exit)",
-        "trend": f"trend SMA{args.sma}/{args.confirm}d",
+        "pullback": f"pullback (>SMA{args.sma} + SMA{args.fast} cross, {bars})",
+        "hybrid": f"hybrid (SMA{args.fast}-cross entry, SMA{args.sma}-break exit, {bars})",
+        "trend": f"trend SMA{args.sma}/{args.confirm}{unit} ({bars})",
     }[args.model]
-    lines = [f"# Model validation — {model_name} vs trend baseline, two windows", ""]
+    base_name = f"trend SMA200/2{unit} ({bars} baseline)"
+    lines = [f"# Model validation — {model_name} vs {base_name}, two windows", ""]
     for title, years, cap in [(f"Last {args.years} years", args.years, None),
                               (f"{2 * args.years}→{args.years} years ago", 2 * args.years, until)]:
         m = ev(args.model, years, cap)
-        b = ev("trend", years, cap)
+        b = ev("trend", years, cap, sma_n=200, confirm=2)
         print(f"  window '{title}' done", file=sys.stderr)
         lines += [
             f"## {title}  ({m['tickers']} tickers)", "",
@@ -198,7 +208,7 @@ def validate(symbols: list[str], args) -> int:
             f"| {model_name} | {fmt(m['strategy_median'])} | {fmt(m['strategy_mean'])} "
             f"| {m['beat_bh_pct'] * 100:.0f}% | {fmt(m['avg_max_dd'])} "
             f"| {m['trades_per_ticker']:.1f} | {m['avg_exposure'] * 100:.0f}% |",
-            f"| trend SMA{args.sma}/{args.confirm}d (baseline) | {fmt(b['strategy_median'])} "
+            f"| {base_name} | {fmt(b['strategy_median'])} "
             f"| {fmt(b['strategy_mean'])} | {b['beat_bh_pct'] * 100:.0f}% | {fmt(b['avg_max_dd'])} "
             f"| {b['trades_per_ticker']:.1f} | {b['avg_exposure'] * 100:.0f}% |",
             f"| buy & hold | {fmt(m['bh_median'])} | {fmt(m['bh_mean'])} | — "
@@ -303,6 +313,8 @@ def main(argv: list[str] | None = None) -> int:
                              "SMA200 regime; hybrid = pullback entry, regime-break exit only")
     parser.add_argument("--fast", type=int, default=30,
                         help="fast SMA length for pullback mode")
+    parser.add_argument("--interval", choices=["1d", "1wk"], default="1d",
+                        help="bar size; 1wk makes confirm/SMA lengths weekly")
     parser.add_argument("--validate", action="store_true",
                         help="compare model vs trend baseline on recent AND earlier window")
     parser.add_argument("--limit", type=int)
@@ -318,7 +330,7 @@ def main(argv: list[str] | None = None) -> int:
         return validate(symbols, args)
 
     results = run(symbols, args.years, args.sma, args.confirm, args.rsi_max, args.band,
-                  args.model, args.fast)
+                  args.model, args.fast, args.interval)
     summary = summarize(results)
     report = print_report(summary, args.years, args.sma, args.confirm, args.rsi_max)
     if args.report:
