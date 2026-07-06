@@ -62,6 +62,7 @@ def build(output_dir: Path = DEFAULT_OUTPUT_DIR) -> dict:
             "change_bps": round((c["rate"] - c["prev_rate"]) * 100),
             "changed_on": c["changed_on"],
             "carry_vs_usd": round(c["rate"] - usd_rate, 2),
+            "outlook": c.get("outlook"),
         }
         if c["code"] == "USD":
             entry.update({"vs_usd": None, "suggestion": "Benchmark currency"})
@@ -111,6 +112,7 @@ def build(output_dir: Path = DEFAULT_OUTPUT_DIR) -> dict:
         "generated_at": dt.datetime.now(dt.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
         "bar_date": max(bar_dates) if bar_dates else None,
         "rates_as_of": cfg["as_of"],
+        "outlook_as_of": cfg.get("outlook_as_of"),
         "usd_rate": usd_rate,
         "currencies": currencies,
         "pairs": pairs,

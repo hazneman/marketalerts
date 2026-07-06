@@ -31,6 +31,12 @@ export interface AlertHistory {
   days: HistoryDay[]
 }
 
+export interface ForexOutlook {
+  rate_6m: string
+  call: 'long' | 'short' | 'neutral' | 'benchmark'
+  rationale: string
+}
+
 export interface ForexCurrency {
   code: string
   country: string
@@ -39,6 +45,7 @@ export interface ForexCurrency {
   change_bps: number
   changed_on: string
   carry_vs_usd: number
+  outlook: ForexOutlook | null
   vs_usd: {
     price: number
     sma200: number
@@ -62,6 +69,7 @@ export interface ForexData {
   generated_at: string
   bar_date: string | null
   rates_as_of: string
+  outlook_as_of?: string
   usd_rate: number
   currencies: ForexCurrency[]
   pairs?: ForexPair[]

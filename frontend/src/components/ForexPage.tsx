@@ -1,6 +1,24 @@
 import { useForex } from '../hooks/useAlerts'
-import { CATEGORY_LABELS, type ForexCurrency, type ForexPair } from '../types'
+import { CATEGORY_LABELS, type ForexCurrency, type ForexOutlook, type ForexPair } from '../types'
 import CategorySection from './CategorySection'
+
+function CallBadge({ outlook }: { outlook: ForexOutlook | null }) {
+  if (!outlook) return <span className="text-slate-500">—</span>
+  const styles: Record<string, string> = {
+    long: 'bg-emerald-500/15 text-emerald-400',
+    short: 'bg-rose-500/15 text-rose-400',
+    neutral: 'bg-slate-500/15 text-slate-300',
+    benchmark: 'bg-slate-500/15 text-slate-500',
+  }
+  return (
+    <span
+      title={outlook.rationale}
+      className={`inline-block cursor-help rounded-full px-2.5 py-0.5 text-xs font-semibold uppercase ${styles[outlook.call]}`}
+    >
+      {outlook.call === 'benchmark' ? 'bench' : outlook.call}
+    </span>
+  )
+}
 
 function suggestionColor(s: string): string {
   if (s.includes('attractive')) return 'bg-emerald-500/15 text-emerald-400'
@@ -115,6 +133,8 @@ export default function ForexPage() {
               <th className="px-4 py-2.5">Trend</th>
               <th className="px-4 py-2.5 text-right">1m</th>
               <th className="px-4 py-2.5">Suggestion</th>
+              <th className="px-4 py-2.5 text-right">6m rate (fcst)</th>
+              <th className="px-4 py-2.5">6m call</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-slate-800">
@@ -169,6 +189,12 @@ export default function ForexPage() {
                     {c.suggestion}
                   </span>
                 </td>
+                <td className="px-4 py-2.5 text-right text-slate-300">
+                  {c.outlook?.rate_6m ?? '—'}
+                </td>
+                <td className="px-4 py-2.5">
+                  <CallBadge outlook={c.outlook} />
+                </td>
               </tr>
             ))}
           </tbody>
@@ -176,9 +202,11 @@ export default function ForexPage() {
       </div>
       <p className="text-xs text-slate-500">
         Suggestion = transparent rule on carry (policy rate − USD rate) and trend
-        (pair vs its 200-day SMA). Informational, not investment advice. Trend uses
-        the {'{'}CODE{'}'}USD pair, so &quot;above SMA200&quot; always means the currency is
-        strengthening against the dollar.
+        (pair vs its 200-day SMA). Trend uses the {'{'}CODE{'}'}USD pair, so
+        &quot;above SMA200&quot; always means the currency is strengthening against the
+        dollar. <span className="text-slate-400">6m rate / 6m call = Claude&apos;s
+        discretionary view{forex.outlook_as_of ? ` written ${forex.outlook_as_of}` : ''} —
+        hover a call for the reasoning. Opinion, not investment advice.</span>
       </p>
 
       {forex.pairs && forex.pairs.length > 0 && (
