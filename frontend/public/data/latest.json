@@ -2,211 +2,101 @@
  "alerts": [
   {
    "category": "price_sma200",
-   "close": 129.07,
-   "date": "2026-07-08",
-   "direction": "bearish",
-   "rule": "PRICE_SMA200_BEAR",
+   "close": 133.59,
+   "date": "2026-07-09",
+   "direction": "bullish",
+   "rule": "PRICE_SMA200_BULL",
    "ticker": "A",
    "values": {
-    "sma200": 130.73
+    "sma200": 130.77
    }
   },
   {
    "category": "price_sma200",
-   "close": 336.39,
-   "date": "2026-07-08",
+   "close": 174.72,
+   "date": "2026-07-09",
    "direction": "bearish",
    "rule": "PRICE_SMA200_BEAR",
+   "ticker": "ATO",
+   "values": {
+    "sma200": 175.86
+   }
+  },
+  {
+   "category": "price_sma200",
+   "close": 130.55,
+   "date": "2026-07-09",
+   "direction": "bearish",
+   "rule": "PRICE_SMA200_BEAR",
+   "ticker": "AWK",
+   "values": {
+    "sma200": 131.68
+   }
+  },
+  {
+   "category": "price_sma200",
+   "close": 346.72,
+   "date": "2026-07-09",
+   "direction": "bullish",
+   "rule": "PRICE_SMA200_BULL",
    "ticker": "AXP",
    "values": {
-    "sma200": 338.34
+    "sma200": 338.37
    }
   },
   {
    "category": "price_sma200",
-   "close": 150.56,
-   "date": "2026-07-08",
-   "direction": "bearish",
-   "rule": "PRICE_SMA200_BEAR",
-   "ticker": "BDX",
-   "values": {
-    "sma200": 154.25
-   }
-  },
-  {
-   "category": "price_sma200",
-   "close": 57.58,
-   "date": "2026-07-08",
+   "close": 104.26,
+   "date": "2026-07-09",
    "direction": "bullish",
    "rule": "PRICE_SMA200_BULL",
-   "ticker": "BKR",
-   "values": {
-    "sma200": 55.73
-   }
-  },
-  {
-   "category": "price_sma200",
-   "close": 102.22,
-   "date": "2026-07-08",
-   "direction": "bearish",
-   "rule": "PRICE_SMA200_BEAR",
    "ticker": "DECK",
    "values": {
-    "sma200": 102.27
+    "sma200": 102.22
    }
   },
   {
    "category": "price_sma200",
-   "close": 148.51,
-   "date": "2026-07-08",
+   "close": 58.3,
+   "date": "2026-07-09",
    "direction": "bearish",
    "rule": "PRICE_SMA200_BEAR",
-   "ticker": "DHI",
+   "ticker": "MDLZ",
    "values": {
-    "sma200": 151.63
+    "sma200": 58.77
    }
   },
   {
    "category": "price_sma200",
-   "close": 176.3,
-   "date": "2026-07-08",
+   "close": 417.21,
+   "date": "2026-07-09",
+   "direction": "bearish",
+   "rule": "PRICE_SMA200_BEAR",
+   "ticker": "MSI",
+   "values": {
+    "sma200": 419.14
+   }
+  },
+  {
+   "category": "price_sma200",
+   "close": 80.17,
+   "date": "2026-07-09",
+   "direction": "bearish",
+   "rule": "PRICE_SMA200_BEAR",
+   "ticker": "PEG",
+   "values": {
+    "sma200": 81.18
+   }
+  },
+  {
+   "category": "price_sma200",
+   "close": 288.08,
+   "date": "2026-07-09",
    "direction": "bullish",
    "rule": "PRICE_SMA200_BULL",
-   "ticker": "DLR",
+   "ticker": "RCL",
    "values": {
-    "sma200": 175.31
-   }
-  },
-  {
-   "category": "price_sma200",
-   "close": 247.82,
-   "date": "2026-07-08",
-   "direction": "bearish",
-   "rule": "PRICE_SMA200_BEAR",
-   "ticker": "FDS",
-   "values": {
-    "sma200": 250.03
-   }
-  },
-  {
-   "category": "price_sma200",
-   "close": 73.01,
-   "date": "2026-07-08",
-   "direction": "bearish",
-   "rule": "PRICE_SMA200_BEAR",
-   "ticker": "GPN",
-   "values": {
-    "sma200": 74.93
-   }
-  },
-  {
-   "category": "price_sma200",
-   "close": 220.36,
-   "date": "2026-07-08",
-   "direction": "bearish",
-   "rule": "PRICE_SMA200_BEAR",
-   "ticker": "HON",
-   "values": {
-    "sma200": 225.07
-   }
-  },
-  {
-   "category": "price_sma200",
-   "close": 519.86,
-   "date": "2026-07-08",
-   "direction": "bearish",
-   "rule": "PRICE_SMA200_BEAR",
-   "ticker": "MA",
-   "values": {
-    "sma200": 530.21
-   }
-  },
-  {
-   "category": "price_sma200",
-   "close": 179.05,
-   "date": "2026-07-08",
-   "direction": "bullish",
-   "rule": "PRICE_SMA200_BULL",
-   "ticker": "MRSH",
-   "values": {
-    "sma200": 178.83
-   }
-  },
-  {
-   "category": "price_sma200",
-   "close": 148.4,
-   "date": "2026-07-08",
-   "direction": "bearish",
-   "rule": "PRICE_SMA200_BEAR",
-   "ticker": "PG",
-   "values": {
-    "sma200": 148.42
-   }
-  },
-  {
-   "category": "price_sma200",
-   "close": 122.94,
-   "date": "2026-07-08",
-   "direction": "bearish",
-   "rule": "PRICE_SMA200_BEAR",
-   "ticker": "PHM",
-   "values": {
-    "sma200": 124.45
-   }
-  },
-  {
-   "category": "price_sma200",
-   "close": 330.57,
-   "date": "2026-07-08",
-   "direction": "bearish",
-   "rule": "PRICE_SMA200_BEAR",
-   "ticker": "SHW",
-   "values": {
-    "sma200": 333.43
-   }
-  },
-  {
-   "category": "price_sma200",
-   "close": 430.79,
-   "date": "2026-07-08",
-   "direction": "bearish",
-   "rule": "PRICE_SMA200_BEAR",
-   "ticker": "SPGI",
-   "values": {
-    "sma200": 437.18
-   }
-  },
-  {
-   "category": "price_sma200",
-   "close": 68.26,
-   "date": "2026-07-08",
-   "direction": "bearish",
-   "rule": "PRICE_SMA200_BEAR",
-   "ticker": "SYF",
-   "values": {
-    "sma200": 74.25
-   }
-  },
-  {
-   "category": "price_sma200",
-   "close": 152.79,
-   "date": "2026-07-08",
-   "direction": "bearish",
-   "rule": "PRICE_SMA200_BEAR",
-   "ticker": "TJX",
-   "values": {
-    "sma200": 153.32
-   }
-  },
-  {
-   "category": "price_sma200",
-   "close": 286.59,
-   "date": "2026-07-08",
-   "direction": "bearish",
-   "rule": "PRICE_SMA200_BEAR",
-   "ticker": "VMC",
-   "values": {
-    "sma200": 291.88
+    "sma200": 288.04
    }
   },
   {
@@ -450,11 +340,59 @@
    "values": {
     "sma200": 97.12
    }
+  },
+  {
+   "category": "sma50_sma200",
+   "close": 249.91,
+   "date": "2026-07-09",
+   "direction": "bullish",
+   "rule": "GOLDEN_CROSS",
+   "ticker": "ABBV",
+   "values": {
+    "sma200": 222.66,
+    "sma50": 222.91
+   }
+  },
+  {
+   "category": "sma50_sma200",
+   "close": 174.72,
+   "date": "2026-07-09",
+   "direction": "bearish",
+   "rule": "DEATH_CROSS",
+   "ticker": "ATO",
+   "values": {
+    "sma200": 175.86,
+    "sma50": 175.71
+   }
+  },
+  {
+   "category": "sma50_sma200",
+   "close": 115.0,
+   "date": "2026-07-09",
+   "direction": "bullish",
+   "rule": "GOLDEN_CROSS",
+   "ticker": "PRU",
+   "values": {
+    "sma200": 104.45,
+    "sma50": 104.57
+   }
+  },
+  {
+   "category": "sma50_sma200",
+   "close": 348.2,
+   "date": "2026-07-09",
+   "direction": "bullish",
+   "rule": "GOLDEN_CROSS",
+   "ticker": "V",
+   "values": {
+    "sma200": 329.09,
+    "sma50": 329.29
+   }
   }
  ],
- "bar_date": "2026-07-08",
+ "bar_date": "2026-07-09",
  "failures": [],
- "generated_at": "2026-07-08T23:35:56Z",
+ "generated_at": "2026-07-09T23:45:58Z",
  "insufficient_history": [
   "FDXF",
   "Q"
