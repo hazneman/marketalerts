@@ -9,6 +9,28 @@ function fmtPx(v: number): string {
   return Math.abs(v) >= 10 ? v.toFixed(2) : v.toFixed(4)
 }
 
+const VERDICT_STYLES: Record<string, string> = {
+  buy: 'bg-emerald-500/15 text-emerald-400',
+  hold: 'bg-amber-500/15 text-amber-400',
+  sell: 'bg-rose-500/15 text-rose-400',
+}
+
+function VerdictBadge({ a }: { a: AlertItem }) {
+  if (!a.verdict) return <span className="text-slate-500">—</span>
+  const fund = a.fundamentals
+    ? `Fundamentals ${a.fundamentals.rating} (${a.fundamentals.score >= 0 ? '+' : ''}${a.fundamentals.score})`
+    : 'Fundamentals unavailable'
+  const macd = a.macd_confirms ? 'MACD confirms' : 'MACD against'
+  return (
+    <span
+      title={`${a.verdict_reason ?? ''} · ${macd} · ${fund}`}
+      className={`inline-block cursor-help rounded-full px-2.5 py-0.5 text-xs font-semibold uppercase ${VERDICT_STYLES[a.verdict]}`}
+    >
+      {a.verdict}
+    </span>
+  )
+}
+
 function pctFromSma200(a: AlertItem): string | null {
   const sma200 = a.values.sma200
   if (!sma200) return null
@@ -19,6 +41,7 @@ function pctFromSma200(a: AlertItem): string | null {
 export default function AlertTable({ alerts }: { alerts: AlertItem[] }) {
   const hasSma50 = alerts.some((a) => a.values.sma50 !== undefined)
   const hasRsi = alerts.some((a) => a.values.rsi !== undefined)
+  const hasVerdict = alerts.some((a) => a.verdict !== undefined)
   return (
     <div className="overflow-x-auto rounded-lg border border-slate-800">
       <table className="w-full text-left text-sm">
@@ -32,6 +55,7 @@ export default function AlertTable({ alerts }: { alerts: AlertItem[] }) {
             {hasSma50 && <th className="px-4 py-2.5 text-right">SMA 50</th>}
             <th className="px-4 py-2.5 text-right">SMA 200</th>
             <th className="px-4 py-2.5 text-right">vs SMA 200</th>
+            {hasVerdict && <th className="px-4 py-2.5">Verdict</th>}
           </tr>
         </thead>
         <tbody className="divide-y divide-slate-800">
@@ -75,6 +99,11 @@ export default function AlertTable({ alerts }: { alerts: AlertItem[] }) {
               >
                 {pctFromSma200(a) ?? '—'}
               </td>
+              {hasVerdict && (
+                <td className="px-4 py-2.5">
+                  <VerdictBadge a={a} />
+                </td>
+              )}
             </tr>
           ))}
         </tbody>

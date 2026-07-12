@@ -30,11 +30,11 @@ def _load(path: Path) -> dict | None:
         return None
 
 
-def write_results(alerts: list[Alert], meta: dict, output_dir: Path,
+def write_results(alerts: list[Alert] | list[dict], meta: dict, output_dir: Path,
                   now: dt.datetime | None = None) -> None:
     output_dir.mkdir(parents=True, exist_ok=True)
     generated_at = (now or dt.datetime.now(dt.timezone.utc)).strftime("%Y-%m-%dT%H:%M:%SZ")
-    alert_dicts = [a.to_dict() for a in alerts]
+    alert_dicts = [a.to_dict() if hasattr(a, "to_dict") else a for a in alerts]
 
     latest = {
         "schema_version": SCHEMA_VERSION,

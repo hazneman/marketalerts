@@ -6,6 +6,10 @@ export interface AlertItem {
   date: string
   close: number
   values: Record<string, number>
+  verdict?: 'buy' | 'hold' | 'sell'
+  verdict_reason?: string
+  macd_confirms?: boolean
+  fundamentals?: { score: number; rating: 'strong' | 'neutral' | 'weak' } | null
 }
 
 export interface ScanResult {

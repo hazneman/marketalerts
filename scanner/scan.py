@@ -100,6 +100,32 @@ def main(argv: list[str] | None = None) -> int:
             alerts.extend(rule.evaluate(sym, df))
     alerts.sort(key=lambda a: (a.category, a.ticker))
 
+    # Enrich each alert with a buy/hold/sell verdict: MACD confirmation from
+    # the bars already in memory + fundamentals fetched only for alerted names.
+    from indicators import macd
+    from recommend import fetch_fundamentals, verdict as combine_verdict
+
+    fundamentals_cache: dict[str, dict | None] = {}
+    alert_dicts = []
+    for a in alerts:
+        d = a.to_dict()
+        line, sig = macd(ok[a.ticker]["close"])
+        macd_ok = bool(line.iloc[-1] > sig.iloc[-1]) if a.direction == "bullish" \
+            else bool(line.iloc[-1] < sig.iloc[-1])
+        if a.ticker not in fundamentals_cache:
+            fundamentals_cache[a.ticker] = fetch_fundamentals(a.ticker)
+        fund = fundamentals_cache[a.ticker]
+        v, reason = combine_verdict(a.direction, macd_ok,
+                                    fund["score"] if fund else None)
+        d.update({
+            "macd_confirms": macd_ok,
+            "fundamentals": ({"score": fund["score"], "rating": fund["rating"]}
+                             if fund else None),
+            "verdict": v,
+            "verdict_reason": reason,
+        })
+        alert_dicts.append(d)
+
     meta = {
         "bar_date": bar_date,
         "universe_count": len(symbols),
@@ -107,7 +133,7 @@ def main(argv: list[str] | None = None) -> int:
         "failures": failures + stale,
         "insufficient_history": insufficient,
     }
-    write_results(alerts, meta, args.output_dir)
+    write_results(alert_dicts, meta, args.output_dir)
     logger.info("bar_date=%s alerts=%d failures=%d insufficient=%d",
                 bar_date, len(alerts), len(meta["failures"]), len(insufficient))
 
