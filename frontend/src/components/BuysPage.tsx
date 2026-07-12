@@ -20,7 +20,7 @@ function AnalystSection({ f }: { f: Fundamentals }) {
   const consensus = a.consensus ? CONSENSUS_LABELS[a.consensus] : null
   const upside = mid && price ? (mid / price - 1) * 100 : null
   return (
-    <div className="mt-3 rounded-md border border-slate-800/70 bg-slate-900/50 p-3">
+    <div className="mt-3 rounded-xl bg-white/[0.03] p-3.5 ring-1 ring-white/5">
       <div className="mb-2 flex flex-wrap items-center gap-2 text-sm">
         <span className="font-medium text-slate-200">Analyst view</span>
         {consensus && (
@@ -139,7 +139,7 @@ function BuyCard({ a }: { a: AlertItem }) {
   const f = a.fundamentals
   const pct = a.values.sma200 ? ((a.close - a.values.sma200) / a.values.sma200) * 100 : null
   return (
-    <div className="rounded-lg border border-slate-800 bg-slate-950 p-4">
+    <div className="rounded-2xl bg-gradient-to-b from-slate-900/60 to-slate-900/20 p-5 ring-1 ring-white/5 transition hover:ring-sky-400/20">
       <div className="flex flex-wrap items-baseline justify-between gap-2">
         <div className="flex items-baseline gap-3">
           <a
@@ -169,7 +169,7 @@ function BuyCard({ a }: { a: AlertItem }) {
       </p>
 
       {f ? (
-        <div className="mt-3 rounded-md border border-slate-800/70 bg-slate-900/50 p-3">
+        <div className="mt-3 rounded-xl bg-white/[0.03] p-3.5 ring-1 ring-white/5">
           <div className="mb-2 flex items-center gap-2 text-sm">
             <span className="font-medium text-slate-200">Fundamentals</span>
             <span
@@ -214,7 +214,7 @@ export default function BuysPage() {
 
   if (error) {
     return (
-      <p className="rounded-lg border border-dashed border-slate-800 px-4 py-6 text-center text-sm text-slate-500">
+      <p className="rounded-xl border border-dashed border-white/10 bg-white/[0.01] px-4 py-8 text-center text-sm text-slate-500">
         No scan data yet.
       </p>
     )
@@ -226,7 +226,7 @@ export default function BuysPage() {
   return (
     <section className="space-y-4">
       <div className="flex flex-wrap items-baseline justify-between gap-2">
-        <h2 className="text-lg font-semibold text-slate-100">
+        <h2 className="flex items-center gap-2 text-base font-semibold tracking-tight text-slate-100"><span className="h-4 w-1 rounded-full bg-sky-400/70" />
           BUY verdicts — {latest.bar_date}
         </h2>
         <span className="text-sm text-slate-500">
@@ -241,7 +241,7 @@ export default function BuysPage() {
           ))}
         </div>
       ) : (
-        <p className="rounded-lg border border-dashed border-slate-800 px-4 py-6 text-center text-sm text-slate-500">
+        <p className="rounded-xl border border-dashed border-white/10 bg-white/[0.01] px-4 py-8 text-center text-sm text-slate-500">
           No BUY verdicts on {latest.bar_date} — signal, MACD, and fundamentals did not align on any name.
         </p>
       )}

@@ -63,34 +63,53 @@ export default function App() {
   }
 
   return (
-    <main className="mx-auto max-w-5xl space-y-6 px-4 py-8">
-      <header className="flex flex-wrap items-center justify-between gap-3">
-        <div className="flex items-center gap-4">
-          <h1 className="text-2xl font-bold text-slate-100">Market Alerts</h1>
-          <nav className="flex overflow-hidden rounded-md border border-slate-700 text-sm">
-            {(['stocks', 'buys', 'forex'] as const).map((p) => (
-              <button
-                key={p}
-                onClick={() => setPage(p)}
-                className={`px-3 py-1.5 capitalize ${
-                  page === p
-                    ? 'bg-sky-500/20 text-sky-300'
-                    : 'bg-slate-900 text-slate-400 hover:text-slate-200'
-                }`}
-              >
-                {p}
-              </button>
-            ))}
-          </nav>
+    <div className="min-h-screen">
+      <header className="sticky top-0 z-20 border-b border-white/5 bg-slate-950/70 backdrop-blur-xl">
+        <div className="mx-auto flex max-w-5xl flex-wrap items-center justify-between gap-3 px-4 py-3">
+          <div className="flex items-center gap-4">
+            <div className="flex items-center gap-2.5">
+              <svg viewBox="0 0 32 32" className="h-7 w-7" aria-hidden="true">
+                <rect width="32" height="32" rx="8" className="fill-sky-500/15" />
+                <path
+                  d="M5 20l6-7 5 4 5-9 6 8"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  className="text-sky-400"
+                />
+              </svg>
+              <h1 className="text-lg font-semibold tracking-tight text-white">
+                Market Alerts
+              </h1>
+            </div>
+            <nav className="flex rounded-full bg-white/5 p-1 text-sm ring-1 ring-white/10">
+              {(['stocks', 'buys', 'forex'] as const).map((p) => (
+                <button
+                  key={p}
+                  onClick={() => setPage(p)}
+                  className={`rounded-full px-3.5 py-1 capitalize transition-colors ${
+                    page === p
+                      ? 'bg-sky-500/20 font-medium text-sky-300 ring-1 ring-sky-400/30'
+                      : 'text-slate-400 hover:text-slate-200'
+                  }`}
+                >
+                  {p}
+                </button>
+              ))}
+            </nav>
+          </div>
+          <span className="hidden text-sm text-slate-500 sm:block">
+            {page === 'stocks'
+              ? 'US stocks · S&P 500 + Nasdaq 100 · BIST'
+              : page === 'buys'
+                ? 'Signals where all three layers agree'
+                : 'Major currencies vs USD'}
+          </span>
         </div>
-        <span className="text-sm text-slate-500">
-          {page === 'stocks'
-            ? 'US stocks · S&P 500 + Nasdaq 100'
-            : page === 'buys'
-              ? 'Signals where all three layers agree'
-              : 'Major currencies vs USD'}
-        </span>
       </header>
+      <main className="mx-auto max-w-5xl space-y-6 px-4 py-8">
 
       {page === 'forex' ? (
         <ForexPage />
@@ -123,6 +142,7 @@ export default function App() {
           ))}
         </>
       )}
-    </main>
+      </main>
+    </div>
   )
 }

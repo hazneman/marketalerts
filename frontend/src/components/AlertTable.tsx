@@ -40,9 +40,9 @@ export default function AlertTable({ alerts }: { alerts: AlertItem[] }) {
   const hasRsi = alerts.some((a) => a.values.rsi !== undefined)
   const hasVerdict = alerts.some((a) => a.verdict !== undefined)
   return (
-    <div className="overflow-x-auto rounded-lg border border-slate-800">
+    <div className="overflow-x-auto rounded-xl bg-slate-900/30 ring-1 ring-white/5">
       <table className="w-full text-left text-sm">
-        <thead className="bg-slate-900 text-xs uppercase tracking-wide text-slate-400">
+        <thead className="bg-white/[0.03] text-[11px] font-medium uppercase tracking-wider text-slate-500">
           <tr>
             <th className="px-4 py-2.5">Signal</th>
             <th className="px-4 py-2.5">Ticker</th>
@@ -55,9 +55,9 @@ export default function AlertTable({ alerts }: { alerts: AlertItem[] }) {
             {hasVerdict && <th className="px-4 py-2.5">Verdict</th>}
           </tr>
         </thead>
-        <tbody className="divide-y divide-slate-800">
+        <tbody className="tnum divide-y divide-white/5">
           {alerts.map((a) => (
-            <tr key={`${a.rule}-${a.ticker}`} className="bg-slate-950 hover:bg-slate-900/60">
+            <tr key={`${a.rule}-${a.ticker}`} className="transition-colors hover:bg-white/[0.03]">
               <td className="px-4 py-2.5">
                 <DirectionBadge direction={a.direction} />
               </td>

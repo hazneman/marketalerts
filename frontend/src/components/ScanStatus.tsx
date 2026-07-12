@@ -6,52 +6,69 @@ function staleBarWarning(barDate: string): boolean {
   return ageDays > 4
 }
 
+function Chip({ label, value, tone = 'default', title }: {
+  label: string
+  value: string
+  tone?: 'default' | 'warn'
+  title?: string
+}) {
+  return (
+    <div
+      title={title}
+      className={`flex min-w-[7rem] flex-col gap-0.5 rounded-xl px-3.5 py-2.5 ring-1 ${
+        tone === 'warn'
+          ? 'bg-amber-500/10 ring-amber-400/30'
+          : 'bg-white/[0.03] ring-white/5'
+      }`}
+    >
+      <span className="text-[11px] font-medium uppercase tracking-wider text-slate-500">
+        {label}
+      </span>
+      <span
+        className={`tnum text-sm font-semibold ${
+          tone === 'warn' ? 'text-amber-300' : 'text-slate-100'
+        }`}
+      >
+        {value}
+      </span>
+    </div>
+  )
+}
+
 export default function ScanStatus({ latest }: { latest: ScanResult }) {
   const failed = latest.failures.length
-  const warn = failed > 0 || staleBarWarning(latest.bar_date)
+  const stale = staleBarWarning(latest.bar_date)
   const scanTime = new Date(latest.generated_at).toLocaleString(undefined, {
     dateStyle: 'medium',
     timeStyle: 'short',
   })
+  const barDates =
+    latest.bar_dates && Object.keys(latest.bar_dates).length > 1
+      ? Object.entries(latest.bar_dates)
+      : [['bar', latest.bar_date] as [string, string]]
+
   return (
-    <div
-      className={`flex flex-wrap items-center gap-x-4 gap-y-1 rounded-lg border px-4 py-2.5 text-sm ${
-        warn
-          ? 'border-amber-500/40 bg-amber-500/10 text-amber-300'
-          : 'border-slate-700 bg-slate-900 text-slate-300'
-      }`}
-    >
-      <span>
-        Last scan: <span className="font-medium text-slate-100">{scanTime}</span>
-      </span>
-      {latest.bar_dates && Object.keys(latest.bar_dates).length > 1 ? (
-        <span>
-          {Object.entries(latest.bar_dates).map(([m, d], i) => (
-            <span key={m}>
-              {i > 0 && ' · '}
-              {m.toUpperCase()} bar:{' '}
-              <span className="font-medium text-slate-100">{d}</span>
-            </span>
-          ))}
-        </span>
-      ) : (
-        <span>
-          Bar date: <span className="font-medium text-slate-100">{latest.bar_date}</span>
-        </span>
-      )}
-      <span>
-        {latest.scanned}/{latest.universe_count} scanned
-      </span>
+    <div className="flex flex-wrap gap-2.5">
+      <Chip label="Last scan" value={scanTime} />
+      {barDates.map(([m, d]) => (
+        <Chip
+          key={m}
+          label={m === 'bar' ? 'Bar date' : `${m.toUpperCase()} bar`}
+          value={d}
+          tone={stale ? 'warn' : 'default'}
+        />
+      ))}
+      <Chip label="Scanned" value={`${latest.scanned}/${latest.universe_count}`} />
       {failed > 0 && (
-        <span title={latest.failures.join(', ')}>⚠ {failed} failed</span>
+        <Chip label="Failed" value={String(failed)} tone="warn"
+              title={latest.failures.join(', ')} />
       )}
       {latest.insufficient_history.length > 0 && (
-        <span
-          className="text-slate-400"
+        <Chip
+          label="Short history"
+          value={String(latest.insufficient_history.length)}
           title={latest.insufficient_history.join(', ')}
-        >
-          {latest.insufficient_history.length} skipped (short history)
-        </span>
+        />
       )}
     </div>
   )

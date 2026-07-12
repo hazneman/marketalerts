@@ -1,3 +1,39 @@
+@import '@fontsource-variable/inter';
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+  html {
+    @apply antialiased;
+  }
+  body {
+    @apply bg-slate-950 text-slate-300;
+    background-image:
+      radial-gradient(1100px 550px at 75% -10%, rgba(56, 130, 246, 0.10), transparent 60%),
+      radial-gradient(800px 450px at -5% 0%, rgba(16, 185, 129, 0.05), transparent 55%);
+    background-attachment: fixed;
+  }
+  ::selection {
+    @apply bg-sky-500/30 text-white;
+  }
+}
+
+@layer utilities {
+  .tnum {
+    font-variant-numeric: tabular-nums;
+  }
+}
+
+::-webkit-scrollbar {
+  height: 8px;
+  width: 10px;
+}
+::-webkit-scrollbar-thumb {
+  background: rgb(51 65 85 / 0.6);
+  border-radius: 8px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
