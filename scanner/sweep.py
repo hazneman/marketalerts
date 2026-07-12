@@ -85,7 +85,7 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--report", type=Path)
     args = parser.parse_args(argv)
 
-    symbols = load_universe()
+    symbols = load_universe()["us"]  # research tools stay US-only
     if args.limit:
         symbols = symbols[: args.limit]
 

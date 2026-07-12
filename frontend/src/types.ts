@@ -6,10 +6,16 @@ export interface AlertItem {
   date: string
   close: number
   values: Record<string, number>
+  market?: 'us' | 'bist'
   verdict?: 'buy' | 'hold' | 'sell'
   verdict_reason?: string
   macd_confirms?: boolean
   fundamentals?: Fundamentals | null
+}
+
+export const MARKET_LABELS: Record<string, string> = {
+  us: 'US',
+  bist: 'BIST',
 }
 
 export interface Fundamentals {
@@ -38,6 +44,7 @@ export interface ScanResult {
   schema_version: number
   generated_at: string
   bar_date: string
+  bar_dates?: Record<string, string>
   universe_count: number
   scanned: number
   failures: string[]

@@ -1,6 +1,6 @@
 # Market Alerts Dashboard
 
-Daily alerts for financial opportunities in US stocks (S&P 500 + Nasdaq 100, ~517 tickers) plus a forex overview, on a static dashboard. **$0/month**: GitHub stores the code and the scan results; Netlify hosts the dashboard.
+Daily alerts for financial opportunities in US stocks (S&P 500 + Nasdaq 100) and BIST Istanbul (~584 tickers total) plus a forex overview, on a static dashboard. **$0/month**: GitHub stores the code and the scan results; Netlify hosts the dashboard.
 
 **Live:** https://market-alerts.netlify.app
 
@@ -65,7 +65,7 @@ flowchart TD
     end
 
     subgraph SCANNER["Scanner (Python)"]
-        UNI["📋 universe.json · 517 tickers<br/>S&amp;P 500 + Nasdaq 100"]
+        UNI["📋 universe.json · 584 tickers<br/>S&amp;P 500 + Nasdaq 100 + BIST"]
         FETCH["fetcher.iter_us_chunks<br/>yfinance · batches of 80 · 6y daily bars<br/>auto_adjust=False (matches TradingView)"]
         ABORT{"&gt;50% of universe<br/>failed?"}
         DEAD["🛑 abort, keep old data<br/>(Yahoo outage guard)"]
@@ -160,6 +160,7 @@ SMAs are computed on Yahoo's **raw Close** (`auto_adjust=False`): split-adjusted
 
 ## Known behaviors
 
+- **BIST tickers** carry Yahoo's `.IS` suffix; bar dates are tracked per market (different holidays), and TradingView links map to `BIST:SYMBOL`. Fundamentals coverage on Yahoo is good for BIST large caps, thinner for small caps — verdicts degrade to technicals-only where data is missing.
 - **GOOG/GOOGL** (and other dual-class shares) are both in the universe and will fire near-duplicate alerts on the same day. Expected.
 - Tickers with **< 201 daily bars** (recent IPOs) are skipped and listed under `insufficient_history` in the scan status.
 - **Persistent failures** usually mean a delisted/renamed ticker — prune `scanner/universe.json` quarterly.

@@ -24,9 +24,21 @@ export default function ScanStatus({ latest }: { latest: ScanResult }) {
       <span>
         Last scan: <span className="font-medium text-slate-100">{scanTime}</span>
       </span>
-      <span>
-        Bar date: <span className="font-medium text-slate-100">{latest.bar_date}</span>
-      </span>
+      {latest.bar_dates && Object.keys(latest.bar_dates).length > 1 ? (
+        <span>
+          {Object.entries(latest.bar_dates).map(([m, d], i) => (
+            <span key={m}>
+              {i > 0 && ' · '}
+              {m.toUpperCase()} bar:{' '}
+              <span className="font-medium text-slate-100">{d}</span>
+            </span>
+          ))}
+        </span>
+      ) : (
+        <span>
+          Bar date: <span className="font-medium text-slate-100">{latest.bar_date}</span>
+        </span>
+      )}
       <span>
         {latest.scanned}/{latest.universe_count} scanned
       </span>

@@ -31,9 +31,14 @@ logging.basicConfig(level=logging.INFO, format="%(levelname)s %(message)s")
 logger = logging.getLogger("scan")
 
 
-def load_universe() -> list[str]:
+def load_universe() -> dict[str, list[str]]:
+    """Return {market: [symbols]} — e.g. {"us": [...], "bist": [...]}."""
     with open(SCANNER_DIR / "universe.json") as fh:
-        return json.load(fh)["tickers"]
+        return json.load(fh)["markets"]
+
+
+def market_of(symbol: str) -> str:
+    return "bist" if symbol.endswith(".IS") else "us"
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -48,7 +53,8 @@ def main(argv: list[str] | None = None) -> int:
     if args.tickers:
         symbols = [t.strip().upper() for t in args.tickers.split(",") if t.strip()]
     else:
-        symbols = load_universe()
+        markets = load_universe()
+        symbols = [s for market_syms in markets.values() for s in market_syms]
         if args.limit:
             symbols = symbols[: args.limit]
 
@@ -84,13 +90,19 @@ def main(argv: list[str] | None = None) -> int:
                      "writing output", len(failures), len(symbols))
         return 1
 
-    # Global latest bar date; tickers lagging behind it are stale (Yahoo hiccup)
-    # and evaluating them would produce off-by-one crosses.
-    bar_date = max(df.index[-1].date() for df in ok.values()).isoformat()
+    # Latest bar date PER MARKET: BIST and US have different holidays, so a
+    # US-only trading day must not mark every BIST ticker stale (and vice
+    # versa). Within its own market, a ticker lagging the market's latest bar
+    # is stale (Yahoo hiccup) — evaluating it would produce off-by-one crosses.
+    bar_dates = {
+        m: max(df.index[-1].date() for s, df in ok.items() if market_of(s) == m).isoformat()
+        for m in {market_of(s) for s in ok}
+    }
+    bar_date = max(bar_dates.values())
 
     insufficient = sorted(sym for sym, df in ok.items() if len(df) < MIN_BARS)
     stale = sorted(sym for sym, df in ok.items()
-                   if df.index[-1].date().isoformat() != bar_date)
+                   if df.index[-1].date().isoformat() != bar_dates[market_of(sym)])
 
     alerts = []
     for sym, df in ok.items():
@@ -118,6 +130,7 @@ def main(argv: list[str] | None = None) -> int:
         v, reason = combine_verdict(a.direction, macd_ok,
                                     fund["score"] if fund else None)
         d.update({
+            "market": market_of(a.ticker),
             "macd_confirms": macd_ok,
             "fundamentals": fund,  # full detail: score, rating, factors, metrics
             "verdict": v,
@@ -127,6 +140,7 @@ def main(argv: list[str] | None = None) -> int:
 
     meta = {
         "bar_date": bar_date,
+        "bar_dates": bar_dates,
         "universe_count": len(symbols),
         "scanned": len(ok) - len(stale),
         "failures": failures + stale,

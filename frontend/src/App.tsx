@@ -14,6 +14,7 @@ export default function App() {
   const [page, setPage] = useState<Page>('stocks')
   const [search, setSearch] = useState('')
   const [direction, setDirection] = useState<DirectionFilter>('all')
+  const [market, setMarket] = useState('all')
   const [selectedDay, setSelectedDay] = useState('')
 
   const days = history?.days ?? []
@@ -28,9 +29,15 @@ export default function App() {
     return source.filter(
       (a) =>
         (direction === 'all' || a.direction === direction) &&
+        (market === 'all' || (a.market ?? 'us') === market) &&
         (q === '' || a.ticker.includes(q)),
     )
-  }, [latest, days, activeDay, search, direction])
+  }, [latest, days, activeDay, search, direction, market])
+
+  const marketsPresent = useMemo(
+    () => [...new Set((latest?.alerts ?? []).map((a) => a.market ?? 'us'))].sort(),
+    [latest],
+  )
 
   // Known categories first (stable order), unknown ones appended (future rules)
   const categories = useMemo(() => {
@@ -101,6 +108,9 @@ export default function App() {
             days={days}
             selectedDay={activeDay}
             onDay={setSelectedDay}
+            markets={marketsPresent}
+            market={market}
+            onMarket={setMarket}
           />
 
           {categories.map((cat) => (

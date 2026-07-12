@@ -322,7 +322,7 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--curves", type=Path, help="write weekly portfolio curves JSON")
     args = parser.parse_args(argv)
 
-    symbols = load_universe()
+    symbols = load_universe()["us"]  # research tools stay US-only
     if args.limit:
         symbols = symbols[: args.limit]
 

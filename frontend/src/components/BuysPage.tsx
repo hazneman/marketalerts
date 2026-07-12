@@ -1,4 +1,5 @@
 import { useAlerts } from '../hooks/useAlerts'
+import { tradingViewUrl } from '../lib/tradingview'
 import type { AlertItem, Fundamentals } from '../types'
 import { CATEGORY_LABELS } from '../types'
 
@@ -142,7 +143,7 @@ function BuyCard({ a }: { a: AlertItem }) {
       <div className="flex flex-wrap items-baseline justify-between gap-2">
         <div className="flex items-baseline gap-3">
           <a
-            href={`https://www.tradingview.com/chart/?symbol=${encodeURIComponent(a.ticker)}`}
+            href={tradingViewUrl(a.ticker)}
             target="_blank"
             rel="noreferrer"
             className="text-lg font-bold text-sky-400 hover:text-sky-300 hover:underline"

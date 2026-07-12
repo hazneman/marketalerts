@@ -1,4 +1,4 @@
-import type { HistoryDay } from '../types'
+import { MARKET_LABELS, type HistoryDay } from '../types'
 
 export type DirectionFilter = 'all' | 'bullish' | 'bearish'
 
@@ -10,10 +10,14 @@ interface Props {
   days: HistoryDay[]
   selectedDay: string
   onDay: (v: string) => void
+  markets: string[]
+  market: string
+  onMarket: (v: string) => void
 }
 
 export default function FilterBar({
   search, onSearch, direction, onDirection, days, selectedDay, onDay,
+  markets, market, onMarket,
 }: Props) {
   return (
     <div className="flex flex-wrap items-center gap-3">
@@ -23,6 +27,23 @@ export default function FilterBar({
         placeholder="Search ticker…"
         className="w-44 rounded-md border border-slate-700 bg-slate-900 px-3 py-1.5 text-sm text-slate-100 placeholder-slate-500 focus:border-sky-500 focus:outline-none"
       />
+      {markets.length > 1 && (
+        <div className="flex overflow-hidden rounded-md border border-slate-700 text-sm">
+          {['all', ...markets].map((m) => (
+            <button
+              key={m}
+              onClick={() => onMarket(m)}
+              className={`px-3 py-1.5 ${
+                market === m
+                  ? 'bg-sky-500/20 text-sky-300'
+                  : 'bg-slate-900 text-slate-400 hover:text-slate-200'
+              }`}
+            >
+              {m === 'all' ? 'All markets' : MARKET_LABELS[m] ?? m.toUpperCase()}
+            </button>
+          ))}
+        </div>
+      )}
       <div className="flex overflow-hidden rounded-md border border-slate-700 text-sm">
         {(['all', 'bullish', 'bearish'] as const).map((d) => (
           <button

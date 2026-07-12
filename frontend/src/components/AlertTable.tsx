@@ -1,9 +1,6 @@
+import { tradingViewUrl } from '../lib/tradingview'
 import type { AlertItem } from '../types'
 import DirectionBadge from './DirectionBadge'
-
-function tradingViewUrl(ticker: string): string {
-  return `https://www.tradingview.com/chart/?symbol=${encodeURIComponent(ticker)}`
-}
 
 function fmtPx(v: number): string {
   return Math.abs(v) >= 10 ? v.toFixed(2) : v.toFixed(4)
