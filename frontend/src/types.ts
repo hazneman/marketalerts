@@ -17,6 +17,21 @@ export interface Fundamentals {
   rating: 'strong' | 'neutral' | 'weak'
   factors?: Record<string, number>
   metrics?: Record<string, number>
+  analyst?: {
+    n_analysts?: number
+    consensus?: string
+    target_low?: number
+    target_mean?: number
+    target_high?: number
+    price?: number
+  } | null
+  rating_changes?: {
+    date: string
+    firm: string
+    action: string
+    from_grade: string | null
+    to_grade: string
+  }[]
 }
 
 export interface ScanResult {

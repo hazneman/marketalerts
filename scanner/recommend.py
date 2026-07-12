@@ -67,18 +67,62 @@ def score_info(info: dict) -> dict:
     return {"score": score, "rating": rating, "factors": factors, "metrics": metrics}
 
 
+def analyst_block(info: dict) -> dict | None:
+    """Fresh analyst view from .info: consensus, coverage, target range."""
+    out: dict = {}
+    if info.get("numberOfAnalystOpinions"):
+        out["n_analysts"] = int(info["numberOfAnalystOpinions"])
+    key = info.get("recommendationKey")
+    if key and key != "none":
+        out["consensus"] = key  # strong_buy | buy | hold | underperform | sell
+    for src, dst in [("targetLowPrice", "target_low"), ("targetMeanPrice", "target_mean"),
+                     ("targetHighPrice", "target_high"), ("currentPrice", "price")]:
+        v = info.get(src)
+        if v:
+            out[dst] = round(float(v), 2)
+    return out or None
+
+
+def recent_rating_changes(tkr, days: int = 90, limit: int = 5) -> list[dict]:
+    """Recent analyst upgrades/downgrades. NOTE: Yahoo's feed has been stale
+    since late 2024 — with the recency cutoff this usually returns [] and the
+    dashboard hides the section; it lights up again if Yahoo resumes the feed."""
+    import pandas as pd
+
+    try:
+        df = tkr.upgrades_downgrades
+        if df is None or df.empty:
+            return []
+        cutoff = pd.Timestamp.now() - pd.Timedelta(days=days)
+        df = df[df.index >= cutoff].sort_index(ascending=False).head(limit)
+        return [{
+            "date": ts.date().isoformat(),
+            "firm": str(row["Firm"]),
+            "action": str(row["Action"]),          # up | down | init | main | reit
+            "from_grade": str(row["FromGrade"]) or None,
+            "to_grade": str(row["ToGrade"]),
+        } for ts, row in df.iterrows()]
+    except Exception as exc:
+        logger.warning("rating changes fetch failed (%s)", exc)
+        return []
+
+
 def fetch_fundamentals(ticker: str) -> dict | None:
     """Fetch + score fundamentals; None when Yahoo has nothing usable."""
     import yfinance as yf
 
     try:
-        info = yf.Ticker(ticker).info or {}
+        tkr = yf.Ticker(ticker)
+        info = tkr.info or {}
     except Exception as exc:
         logger.warning("fundamentals fetch failed for %s (%s)", ticker, exc)
         return None
     if not info.get("marketCap") and not info.get("recommendationMean"):
         return None  # index/unknown symbol — nothing to score
-    return score_info(info)
+    result = score_info(info)
+    result["analyst"] = analyst_block(info)
+    result["rating_changes"] = recent_rating_changes(tkr)
+    return result
 
 
 def verdict(direction: str, macd_confirms: bool, score: int | None) -> tuple[str, str]:

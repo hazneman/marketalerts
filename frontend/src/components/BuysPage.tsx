@@ -1,6 +1,93 @@
 import { useAlerts } from '../hooks/useAlerts'
-import type { AlertItem } from '../types'
+import type { AlertItem, Fundamentals } from '../types'
 import { CATEGORY_LABELS } from '../types'
+
+const CONSENSUS_LABELS: Record<string, { label: string; style: string }> = {
+  strong_buy: { label: 'Strong buy', style: 'bg-emerald-500/20 text-emerald-300' },
+  buy: { label: 'Buy', style: 'bg-emerald-500/15 text-emerald-400' },
+  hold: { label: 'Hold', style: 'bg-amber-500/15 text-amber-400' },
+  underperform: { label: 'Underperform', style: 'bg-rose-500/15 text-rose-400' },
+  sell: { label: 'Sell', style: 'bg-rose-500/20 text-rose-300' },
+}
+
+function AnalystSection({ f }: { f: Fundamentals }) {
+  const a = f.analyst
+  if (!a) return null
+  const { target_low: lo, target_mean: mid, target_high: hi, price } = a
+  const hasRange = lo !== undefined && hi !== undefined && hi > lo
+  const pos = (v: number) => Math.min(100, Math.max(0, ((v - lo!) / (hi! - lo!)) * 100))
+  const consensus = a.consensus ? CONSENSUS_LABELS[a.consensus] : null
+  const upside = mid && price ? (mid / price - 1) * 100 : null
+  return (
+    <div className="mt-3 rounded-md border border-slate-800/70 bg-slate-900/50 p-3">
+      <div className="mb-2 flex flex-wrap items-center gap-2 text-sm">
+        <span className="font-medium text-slate-200">Analyst view</span>
+        {consensus && (
+          <span className={`rounded-full px-2.5 py-0.5 text-xs font-semibold ${consensus.style}`}>
+            {consensus.label}
+          </span>
+        )}
+        {a.n_analysts !== undefined && (
+          <span className="text-xs text-slate-500">{a.n_analysts} analysts</span>
+        )}
+        {upside !== null && (
+          <span className={`text-xs ${upside >= 0 ? 'text-emerald-400' : 'text-rose-400'}`}>
+            mean target {upside >= 0 ? '+' : ''}
+            {upside.toFixed(1)}% from here
+          </span>
+        )}
+      </div>
+      {hasRange && (
+        <div className="px-1 pb-1 pt-3">
+          <div className="relative h-1.5 rounded-full bg-slate-700/60">
+            {mid !== undefined && (
+              <div
+                title={`Mean target ${mid.toFixed(2)}`}
+                className="absolute top-1/2 h-3.5 w-0.5 -translate-y-1/2 bg-sky-400"
+                style={{ left: `${pos(mid)}%` }}
+              />
+            )}
+            {price !== undefined && (
+              <div
+                title={`Current price ${price.toFixed(2)}`}
+                className="absolute top-1/2 h-3 w-3 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-slate-950 bg-slate-100"
+                style={{ left: `${pos(price)}%` }}
+              />
+            )}
+          </div>
+          <div className="mt-1.5 flex justify-between text-xs text-slate-500">
+            <span>low {lo!.toFixed(0)}</span>
+            <span className="text-sky-400">mean {mid !== undefined ? mid.toFixed(0) : '—'}</span>
+            <span>high {hi!.toFixed(0)}</span>
+          </div>
+        </div>
+      )}
+      {(f.rating_changes?.length ?? 0) > 0 && (
+        <ul className="mt-2 space-y-1 border-t border-slate-800/70 pt-2 text-xs">
+          {f.rating_changes!.map((c, i) => (
+            <li key={i} className="flex flex-wrap gap-x-2 text-slate-400">
+              <span className="text-slate-500">{c.date}</span>
+              <span className="text-slate-300">{c.firm}</span>
+              <span
+                className={
+                  c.action === 'up'
+                    ? 'text-emerald-400'
+                    : c.action === 'down'
+                      ? 'text-rose-400'
+                      : 'text-slate-400'
+                }
+              >
+                {c.from_grade && c.from_grade !== c.to_grade
+                  ? `${c.from_grade} → ${c.to_grade}`
+                  : c.to_grade}
+              </span>
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
+  )
+}
 
 const FACTOR_LABELS: Record<string, { label: string; fmt: (m: Record<string, number>) => string }> = {
   analyst: {
@@ -110,6 +197,7 @@ function BuyCard({ a }: { a: AlertItem }) {
               ))}
             </tbody>
           </table>
+          <AnalystSection f={f} />
         </div>
       ) : (
         <p className="mt-3 text-sm text-slate-500">

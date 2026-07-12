@@ -1,4 +1,20 @@
-from recommend import score_info, verdict
+from recommend import analyst_block, score_info, verdict
+
+
+class TestAnalystBlock:
+    def test_full_info(self):
+        a = analyst_block({
+            "numberOfAnalystOpinions": 58, "recommendationKey": "strong_buy",
+            "targetLowPrice": 664.46, "targetMeanPrice": 828.341,
+            "targetHighPrice": 1015.0, "currentPrice": 669.21,
+        })
+        assert a == {"n_analysts": 58, "consensus": "strong_buy",
+                     "target_low": 664.46, "target_mean": 828.34,
+                     "target_high": 1015.0, "price": 669.21}
+
+    def test_empty_info_is_none(self):
+        assert analyst_block({}) is None
+        assert analyst_block({"recommendationKey": "none"}) is None
 
 
 class TestScoreInfo:
