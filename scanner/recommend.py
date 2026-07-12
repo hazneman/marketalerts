@@ -27,36 +27,44 @@ def score_info(info: dict) -> dict:
     """5-factor fundamental score from a yfinance .info dict. Pure/testable.
 
     Each factor contributes +1 / 0 / -1; missing data contributes 0.
+    `metrics` carries the raw values behind each factor for display.
     """
     factors: dict[str, int] = {}
+    metrics: dict[str, float] = {}
 
     rec = info.get("recommendationMean")
     if rec is not None:
         factors["analyst"] = 1 if rec <= 2.2 else (-1 if rec >= 3.5 else 0)
+        metrics["rec_mean"] = round(rec, 1)
 
     fpe = info.get("forwardPE")
     if fpe is not None and fpe > 0:
         factors["valuation"] = 1 if fpe <= 15 else (-1 if fpe >= 40 else 0)
+        metrics["forward_pe"] = round(fpe, 1)
     elif fpe is not None:  # negative forward P/E = expected losses
         factors["valuation"] = -1
+        metrics["forward_pe"] = round(fpe, 1)
 
     fcf, mcap = info.get("freeCashflow"), info.get("marketCap")
     if fcf is not None and mcap:
         fcf_yield = fcf / mcap
         factors["fcf_yield"] = 1 if fcf_yield >= 0.04 else (-1 if fcf_yield < 0 else 0)
+        metrics["fcf_yield_pct"] = round(fcf_yield * 100, 1)
 
     target, price = info.get("targetMeanPrice"), info.get("currentPrice")
     if target and price:
         upside = target / price - 1
         factors["target_upside"] = 1 if upside >= 0.15 else (-1 if upside <= -0.05 else 0)
+        metrics["target_upside_pct"] = round(upside * 100, 1)
 
     growth = info.get("earningsGrowth")
     if growth is not None:
         factors["earnings_growth"] = 1 if growth >= 0.10 else (-1 if growth < 0 else 0)
+        metrics["earnings_growth_pct"] = round(growth * 100, 1)
 
     score = sum(factors.values())
     rating = "strong" if score >= STRONG else ("weak" if score <= WEAK else "neutral")
-    return {"score": score, "rating": rating, "factors": factors}
+    return {"score": score, "rating": rating, "factors": factors, "metrics": metrics}
 
 
 def fetch_fundamentals(ticker: str) -> dict | None:

@@ -119,8 +119,7 @@ def main(argv: list[str] | None = None) -> int:
                                     fund["score"] if fund else None)
         d.update({
             "macd_confirms": macd_ok,
-            "fundamentals": ({"score": fund["score"], "rating": fund["rating"]}
-                             if fund else None),
+            "fundamentals": fund,  # full detail: score, rating, factors, metrics
             "verdict": v,
             "verdict_reason": reason,
         })

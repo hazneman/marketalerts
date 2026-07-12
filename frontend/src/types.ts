@@ -9,7 +9,14 @@ export interface AlertItem {
   verdict?: 'buy' | 'hold' | 'sell'
   verdict_reason?: string
   macd_confirms?: boolean
-  fundamentals?: { score: number; rating: 'strong' | 'neutral' | 'weak' } | null
+  fundamentals?: Fundamentals | null
+}
+
+export interface Fundamentals {
+  score: number
+  rating: 'strong' | 'neutral' | 'weak'
+  factors?: Record<string, number>
+  metrics?: Record<string, number>
 }
 
 export interface ScanResult {

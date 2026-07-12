@@ -1,4 +1,5 @@
 import { useMemo, useState } from 'react'
+import BuysPage from './components/BuysPage'
 import CategorySection from './components/CategorySection'
 import FilterBar, { type DirectionFilter } from './components/FilterBar'
 import ForexPage from './components/ForexPage'
@@ -6,7 +7,7 @@ import ScanStatus from './components/ScanStatus'
 import { useAlerts } from './hooks/useAlerts'
 import { CATEGORY_LABELS, type AlertItem } from './types'
 
-type Page = 'stocks' | 'forex'
+type Page = 'stocks' | 'buys' | 'forex'
 
 export default function App() {
   const { latest, history, error } = useAlerts()
@@ -60,7 +61,7 @@ export default function App() {
         <div className="flex items-center gap-4">
           <h1 className="text-2xl font-bold text-slate-100">Market Alerts</h1>
           <nav className="flex overflow-hidden rounded-md border border-slate-700 text-sm">
-            {(['stocks', 'forex'] as const).map((p) => (
+            {(['stocks', 'buys', 'forex'] as const).map((p) => (
               <button
                 key={p}
                 onClick={() => setPage(p)}
@@ -76,12 +77,18 @@ export default function App() {
           </nav>
         </div>
         <span className="text-sm text-slate-500">
-          {page === 'stocks' ? 'US stocks · S&P 500 + Nasdaq 100' : 'Major currencies vs USD'}
+          {page === 'stocks'
+            ? 'US stocks · S&P 500 + Nasdaq 100'
+            : page === 'buys'
+              ? 'Signals where all three layers agree'
+              : 'Major currencies vs USD'}
         </span>
       </header>
 
       {page === 'forex' ? (
         <ForexPage />
+      ) : page === 'buys' ? (
+        <BuysPage />
       ) : (
         <>
           <ScanStatus latest={latest} />
