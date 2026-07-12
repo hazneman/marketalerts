@@ -1,13 +1,51 @@
 # Market Alerts Dashboard
 
-Daily alerts for financial opportunities in US stocks (S&P 500 + Nasdaq 100, ~517 tickers), shown on a static dashboard. **$0/month**: GitHub stores the code and the scan results; Netlify hosts the dashboard.
+Daily alerts for financial opportunities in US stocks (S&P 500 + Nasdaq 100, ~517 tickers) plus a forex overview, on a static dashboard. **$0/month**: GitHub stores the code and the scan results; Netlify hosts the dashboard.
 
-## Phase 1 alerts
+**Live:** https://market-alerts.netlify.app
+
+## Stock alerts
 
 | Category | Rules | Meaning |
 |---|---|---|
-| Price × SMA 200 | `PRICE_SMA200_BULL` / `PRICE_SMA200_BEAR` | Daily close crossed above/below its 200-day SMA |
+| Price × SMA 200 | `PRICE_SMA200_BULL` / `_BEAR` | Daily close crossed above/below its 200-day SMA |
 | Golden / Death cross | `GOLDEN_CROSS` / `DEATH_CROSS` | SMA 50 crossed above/below SMA 200 |
+| 200-week SMA (secular) | `PRICE_SMA200W_BULL` / `_BEAR` | Weekly close crossed the 200-**week** SMA — rare (~once per 18 months per stock), evaluated on completed weeks only |
+| RSI extended | `RSI_OVERBOUGHT` | RSI(14) crossed above 75 in an uptrend — trim/take-profit alert (the only exit refinement that survived backtesting, see `docs/EXITS.md`) |
+
+### Buy / Hold / Sell verdict
+
+Every stock alert carries a verdict built from three layers:
+
+1. **Signal direction** — bullish → buy-lean, bearish → sell-lean.
+2. **MACD gate** (false-signal filter): if daily MACD momentum disagrees with the
+   signal, the verdict is capped at **HOLD** ("possible false break").
+3. **Fundamentals veto** — 5-factor score from yfinance (analyst consensus,
+   forward P/E, FCF yield, target upside, earnings growth; −5…+5). Bullish
+   signal + weak fundamentals → HOLD; bearish signal + strong fundamentals →
+   HOLD ("trim rather than exit").
+
+Fundamentals are fetched only for tickers that alerted that day; any fetch
+failure degrades gracefully to a technicals-only verdict. Hover a verdict badge
+for the reasoning. Logic lives in [`scanner/recommend.py`](scanner/recommend.py).
+
+## Forex page
+
+- **Currencies** (EUR, GBP, JPY, CHF, CAD, AUD, NZD, TRY vs USD benchmark):
+  policy rate, last change, carry vs USD, trend of the XXXUSD pair vs its
+  200-day SMA, a rule-based suggestion (carry × trend), and a discretionary
+  **6-month rate forecast + long/short call** (Claude's opinion, dated on the
+  page — hover the call for reasoning).
+- **Major pairs** (11 pairs incl. EURUSD, USDJPY, USDTRY, crosses): price,
+  trend, 1-month change, **rate balance** (base minus quote rate) and a
+  **combined read** — green when carry and trend align bullishly, red when
+  bearishly, amber when they conflict.
+- **Pair signals**: every pair runs through the same alert rules as stocks.
+
+**Maintaining rates:** policy rates have no reliable free API, so they live in
+[`scanner/rates.json`](scanner/rates.json) and are updated **manually** after
+central-bank meetings (bump `as_of`; it is displayed on the page so staleness
+is always visible). FX prices update automatically with the daily scan.
 
 ## How it works
 
@@ -18,7 +56,7 @@ flowchart TD
     CRON["⏰ Cron schedule<br/>weekdays 22:30 UTC<br/>(always after US close)"]
     MANUAL["🖱️ Manual trigger<br/>Actions tab → Run workflow"]
 
-    subgraph GHA["GitHub Action · daily-scan (ubuntu, ~1–2 min)"]
+    subgraph GHA["GitHub Action · daily-scan (ubuntu)"]
         SETUP["checkout → Python 3.12 + pip cache<br/>pip install yfinance 1.4.1, pandas"]
         RUN["python scanner/scan.py"]
         DIFF{"git diff:<br/>did the JSON change?"}
@@ -27,38 +65,33 @@ flowchart TD
     end
 
     subgraph SCANNER["Scanner (Python)"]
-        UNI["📋 universe.json<br/>517 tickers<br/>S&amp;P 500 + Nasdaq 100"]
-        FETCH["fetcher.iter_us_chunks<br/>yfinance · batches of 80 · 2y daily bars<br/>auto_adjust=False (matches TradingView)<br/>retries + 1s throttle"]
+        UNI["📋 universe.json · 517 tickers<br/>S&amp;P 500 + Nasdaq 100"]
+        FETCH["fetcher.iter_us_chunks<br/>yfinance · batches of 80 · 6y daily bars<br/>auto_adjust=False (matches TradingView)"]
         ABORT{"&gt;50% of universe<br/>failed?"}
         DEAD["🛑 abort, keep old data<br/>(Yahoo outage guard)"]
-        GUARD{"per-ticker guards"}
-        SKIPPED["metadata only:<br/>failures[] · empty data<br/>insufficient_history[] · &lt;201 bars<br/>stale · bar older than global bar_date"]
-        RULES["🔌 RULES registry (pluggable)"]
-        R1["PriceSma200Rule<br/>close crosses SMA 200<br/>→ PRICE_SMA200_BULL / _BEAR"]
-        R2["GoldenCrossRule<br/>SMA 50 crosses SMA 200<br/>→ GOLDEN_CROSS / DEATH_CROSS"]
-        OUT["output.py · deterministic JSON<br/>(sorted keys, timestamp preserved<br/>when content unchanged)"]
-        LATEST["latest.json<br/>current bar's alerts + scan metadata"]
-        HIST["history.json<br/>rolling 30 trading days"]
+        GUARD{"per-ticker guards<br/>failures · &lt;201 bars · stale bar"}
+        RULES["🔌 RULES registry (pluggable)<br/>SMA200 cross · golden/death<br/>200-week cross · RSI&gt;75"]
+        VERDICT["verdict per alert<br/>MACD confirmation gate<br/>+ 5-factor fundamentals<br/>(alerted tickers only)"]
+        OUT["output.py · deterministic JSON"]
+        LATEST["latest.json + history.json<br/>(rolling 30 days)"]
+        FOREX["forex.py<br/>rates.json + XXXUSD pairs<br/>carry × trend reads · pair signals"]
+        FXJSON["forex.json"]
     end
 
     subgraph NETLIFY["Netlify"]
         HOOK["webhook fires on push to main"]
-        BUILD["npm run build (tsc + vite)<br/>base=frontend · publish=dist"]
+        BUILD["npm run build (tsc + vite)"]
         CDN["🌐 market-alerts.netlify.app<br/>/data/* → Cache-Control: no-cache"]
     end
 
     subgraph DASH["Dashboard (React + TypeScript + Tailwind)"]
-        HOOKS["useAlerts()<br/>fetch /data/latest.json + history.json<br/>(cache-busted)"]
-        STATUS["ScanStatus<br/>last scan · bar date · 517/517<br/>amber warning on failures/stale bar"]
-        FILTER["FilterBar<br/>ticker search · bull/bear toggle<br/>history day picker"]
-        CATS["CategorySection ×2<br/>Price × SMA 200 · Golden/Death"]
-        TABLE["AlertTable<br/>▲/▼ badge · close · SMA values<br/>· % vs SMA 200"]
-        TV["↗ TradingView chart link<br/>per ticker"]
+        TABS["Stocks tab | Forex tab"]
+        STOCKS["alert categories · filters<br/>verdict badges (buy/hold/sell)<br/>↗ TradingView link per ticker"]
+        FX["rates + 6m outlook table<br/>pairs board + combined reads<br/>pair signals"]
     end
 
     subgraph LOCAL["Local dev (Mac)"]
-        APP["🖥️ MarketAlerts.app<br/>(double-click, in /Applications)"]
-        DEVSH["dev.sh menu<br/>1) quick scan (10) + dashboard<br/>2) full scan (517) + dashboard<br/>3) dashboard only · vite :3100<br/>4) pytest · 17 tests"]
+        APP["🖥️ MarketAlerts.app → dev.sh menu<br/>quick scan · full scan · dashboard · tests"]
     end
 
     USER(("👤 Hasan"))
@@ -69,28 +102,20 @@ flowchart TD
     RUN --> UNI --> FETCH --> ABORT
     ABORT -- yes --> DEAD
     ABORT -- no --> GUARD
-    GUARD -- "bad ticker" --> SKIPPED
-    GUARD -- "ok: ≥201 bars, fresh bar" --> RULES
-    RULES --> R1
-    RULES --> R2
-    R1 --> OUT
-    R2 --> OUT
-    SKIPPED --> OUT
-    OUT --> LATEST
-    OUT --> HIST
+    GUARD --> RULES --> VERDICT --> OUT --> LATEST
+    RUN --> FOREX --> FXJSON
     LATEST --> DIFF
-    HIST --> DIFF
+    FXJSON --> DIFF
     DIFF -- changed --> COMMIT
     DIFF -- identical --> NOOP
     COMMIT --> HOOK --> BUILD --> CDN
-    CDN --> HOOKS
-    HOOKS --> STATUS
-    HOOKS --> FILTER
-    FILTER --> CATS --> TABLE --> TV
-    USER -- "double-click" --> APP --> DEVSH
-    DEVSH -- "scans write into<br/>frontend/public/data/" --> LATEST
+    CDN --> TABS
+    TABS --> STOCKS
+    TABS --> FX
+    USER -- "double-click" --> APP
+    APP -- "scans write into<br/>frontend/public/data/" --> LATEST
     USER -- "views daily" --> CDN
-    TV -- "validate SMA values<br/>on TradingView" --> USER
+    STOCKS -- "validate on TradingView" --> USER
 ```
 
 ## Run locally
@@ -101,41 +126,58 @@ Double-click **MarketAlerts.app**, or:
 ./dev.sh
 ```
 
-Menu: `1)` quick scan (10 tickers) + dashboard · `2)` full scan (~5 min) · `3)` dashboard only · `4)` tests.
+Menu: `1)` quick scan (10 tickers) + dashboard · `2)` full scan (~5 min) · `3)` dashboard only · `4)` tests (41).
+
+## Research library (docs/)
+
+Every strategy question was backtested before shipping; the studies are
+reproducible with one command each (validated on the last 5 years AND
+out-of-sample on 2016–2021 where noted):
+
+| Doc | Question | Headline finding |
+|---|---|---|
+| `BACKTEST.md` | Do the alerts predict returns? (27k signals) | Attention signals, not profit machines — none beat buy-and-hold's baseline |
+| `STRATEGY.md` / `STRATEGY-RSI65.md` | SMA200 in/out trading rule; RSI entry filter | ~Half of buy-and-hold's return for modestly smaller drawdowns; RSI entry filter is a wash |
+| `SWEEP.md` | 36-combo parameter grid + OOS validation | In-sample winners flipped out-of-sample — parameter tuning is regime-fitting |
+| `PULLBACK.md` / `HYBRID.md` | Buy-the-dip entries (SMA30 cross) | Consistent but lowest returns; fast exits cut winners early |
+| `WEEKLY.md` | 40-week & 200-week SMA on weekly bars | Whipsaw halves but returns don't improve; 200-week crosses = rare, high-quality events → became an alert |
+| `EXITS.md` | 6 exit rules incl. MACD, RSI, SMA50/90 | Exits into weakness always lose; **RSI>75 take-profit was the only exit beating baseline in both windows** → became an alert |
+| `PROFILE.md` | Which stocks does the model work on? | Detectable in hindsight (crashed/choppy names), not in advance — no tradeable screen |
+
+Tools: `scanner/backtest.py` (event study), `scanner/strategy_backtest.py`
+(trading simulation; `--model trend|pullback|hybrid`, `--interval 1d|1wk`,
+`--sma/--confirm/--band/--rsi-max`, `--validate` for two-window comparison),
+`scanner/sweep.py` (parameter grid), `scanner/profile.py` (trait analysis).
 
 ## Validating against TradingView
 
-Every alert ticker in the dashboard links to its TradingView chart. To validate:
+Every alert ticker links to its TradingView chart. To validate:
 1. Open the ticker's daily chart, add indicator **SMA 200** (and **SMA 50** for golden/death), source = **close**.
 2. Confirm yesterday's close was on the other side of the SMA and today's close on this side.
 3. The SMA value should match `values.sma200` within a cent or two.
 
 SMAs are computed on Yahoo's **raw Close** (`auto_adjust=False`): split-adjusted but *not* dividend-adjusted — the same data TradingView uses on daily charts, so values match. Tradeoff: high-dividend names can show an occasional spurious cross around ex-dividend dates; we accept this to stay TradingView-comparable.
 
-## Forex page
-
-The **Forex** tab shows major currencies (EUR, GBP, JPY, CHF, CAD, AUD, NZD, TRY)
-with: central-bank policy rate, last change, carry vs USD, the currency's trend
-against the dollar (XXXUSD pair vs its 200-day SMA, refreshed by the daily scan),
-and a transparent rule-based suggestion (carry × trend). Informational only.
-
-**Maintaining rates:** policy rates have no reliable free API, so they live in
-[`scanner/rates.json`](scanner/rates.json) and are updated **manually** after
-central-bank meetings (bump `as_of` too — it is displayed on the page so
-staleness is always visible). FX prices update automatically.
-
 ## Known behaviors
 
 - **GOOG/GOOGL** (and other dual-class shares) are both in the universe and will fire near-duplicate alerts on the same day. Expected.
 - Tickers with **< 201 daily bars** (recent IPOs) are skipped and listed under `insufficient_history` in the scan status.
 - **Persistent failures** usually mean a delisted/renamed ticker — prune `scanner/universe.json` quarterly.
+- **Weekly (200-week) alerts** are dated to the completed week's Friday and stay in `latest.json` until the next week completes — by design, so a secular cross stays visible for a week.
+- Yahoo's fundamentals endpoint (`.info`) is slow/flaky — verdicts fall back to technicals-only when it fails (tooltip says "fundamentals unavailable").
 - GitHub disables scheduled workflows after **60 days of repo inactivity**. Daily data commits keep it alive, but if alerts ever stop, check the repo's **Actions tab** first.
 - The cron is fixed at 22:30 UTC → 5:30 pm ET in summer, 6:30 pm ET in winter. Always after the close.
 
-## Adding a new alert type (Phase 2+)
+## Adding a new alert type
 
 1. Create `scanner/alerts/<your_rule>.py` with a class implementing `AlertRule` (see `alerts/base.py`).
 2. Append an instance to `RULES` in `scanner/alerts/__init__.py`.
 3. Add a golden-case test in `scanner/tests/test_alerts.py`.
 
-`scan.py` and the dashboard pick it up automatically (new categories render as their own section).
+`scan.py`, the verdict layer, the forex pair scan, and the dashboard all pick it
+up automatically (new categories render as their own section).
+
+---
+
+*Nothing here is investment advice. The backtests say it plainly: these are
+attention signals for human review, not autopilot orders.*
