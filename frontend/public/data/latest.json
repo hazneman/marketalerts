@@ -69,6 +69,7 @@
     "score": 0
    },
    "macd_confirms": true,
+   "market": "us",
    "rule": "PRICE_SMA200_BULL",
    "ticker": "ATO",
    "values": {
@@ -146,6 +147,7 @@
     "score": 1
    },
    "macd_confirms": false,
+   "market": "us",
    "rule": "PRICE_SMA200_BULL",
    "ticker": "DHI",
    "values": {
@@ -223,6 +225,7 @@
     "score": 4
    },
    "macd_confirms": false,
+   "market": "us",
    "rule": "PRICE_SMA200_BULL",
    "ticker": "EMR",
    "values": {
@@ -230,6 +233,45 @@
    },
    "verdict": "hold",
    "verdict_reason": "MACD momentum does not confirm \u2014 possible false break"
+  },
+  {
+   "category": "price_sma200",
+   "close": 90.3,
+   "date": "2026-07-10",
+   "direction": "bullish",
+   "fundamentals": {
+    "analyst": {
+     "n_analysts": 7,
+     "price": 90.3,
+     "target_high": 132.52,
+     "target_low": 100.25,
+     "target_mean": 114.51
+    },
+    "factors": {
+     "earnings_growth": 1,
+     "fcf_yield": 0,
+     "target_upside": 1,
+     "valuation": 0
+    },
+    "metrics": {
+     "earnings_growth_pct": 35.1,
+     "fcf_yield_pct": 3.5,
+     "forward_pe": 24.3,
+     "target_upside_pct": 26.8
+    },
+    "rating": "strong",
+    "rating_changes": [],
+    "score": 2
+   },
+   "macd_confirms": true,
+   "market": "bist",
+   "rule": "PRICE_SMA200_BULL",
+   "ticker": "ENKAI.IS",
+   "values": {
+    "sma200": 88.62
+   },
+   "verdict": "buy",
+   "verdict_reason": "Bullish signal, MACD confirms, strong fundamentals"
   },
   {
    "category": "price_sma200",
@@ -300,6 +342,7 @@
     "score": 5
    },
    "macd_confirms": false,
+   "market": "us",
    "rule": "PRICE_SMA200_BEAR",
    "ticker": "GILD",
    "values": {
@@ -375,6 +418,7 @@
     "score": 3
    },
    "macd_confirms": true,
+   "market": "us",
    "rule": "PRICE_SMA200_BULL",
    "ticker": "GPN",
    "values": {
@@ -452,10 +496,48 @@
     "score": 1
    },
    "macd_confirms": false,
+   "market": "us",
    "rule": "PRICE_SMA200_BULL",
    "ticker": "HON",
    "values": {
     "sma200": 225.25
+   },
+   "verdict": "hold",
+   "verdict_reason": "MACD momentum does not confirm \u2014 possible false break"
+  },
+  {
+   "category": "price_sma200",
+   "close": 192.8,
+   "date": "2026-07-10",
+   "direction": "bullish",
+   "fundamentals": {
+    "analyst": {
+     "n_analysts": 10,
+     "price": 192.8,
+     "target_high": 333.0,
+     "target_low": 272.6,
+     "target_mean": 301.85
+    },
+    "factors": {
+     "fcf_yield": 1,
+     "target_upside": 1,
+     "valuation": 1
+    },
+    "metrics": {
+     "fcf_yield_pct": 41.0,
+     "forward_pe": 6.5,
+     "target_upside_pct": 56.6
+    },
+    "rating": "strong",
+    "rating_changes": [],
+    "score": 3
+   },
+   "macd_confirms": false,
+   "market": "bist",
+   "rule": "PRICE_SMA200_BULL",
+   "ticker": "KCHOL.IS",
+   "values": {
+    "sma200": 187.69
    },
    "verdict": "hold",
    "verdict_reason": "MACD momentum does not confirm \u2014 possible false break"
@@ -529,6 +611,7 @@
     "score": 2
    },
    "macd_confirms": false,
+   "market": "us",
    "rule": "PRICE_SMA200_BULL",
    "ticker": "MDLZ",
    "values": {
@@ -570,6 +653,7 @@
     "score": 3
    },
    "macd_confirms": true,
+   "market": "us",
    "rule": "PRICE_SMA200_BULL",
    "ticker": "META",
    "values": {
@@ -647,6 +731,7 @@
     "score": 0
    },
    "macd_confirms": false,
+   "market": "us",
    "rule": "PRICE_SMA200_BEAR",
    "ticker": "MRSH",
    "values": {
@@ -707,10 +792,48 @@
     "score": 0
    },
    "macd_confirms": true,
+   "market": "us",
    "rule": "PRICE_SMA200_BULL",
    "ticker": "MSI",
    "values": {
     "sma200": 418.9
+   },
+   "verdict": "buy",
+   "verdict_reason": "Bullish signal confirmed by MACD"
+  },
+  {
+   "category": "price_sma200",
+   "close": 19.34,
+   "date": "2026-07-10",
+   "direction": "bullish",
+   "fundamentals": {
+    "analyst": {
+     "n_analysts": 8,
+     "price": 19.34,
+     "target_high": 25.0,
+     "target_low": 15.0,
+     "target_mean": 19.35
+    },
+    "factors": {
+     "fcf_yield": -1,
+     "target_upside": 0,
+     "valuation": 1
+    },
+    "metrics": {
+     "fcf_yield_pct": -6.6,
+     "forward_pe": 4.6,
+     "target_upside_pct": 0.1
+    },
+    "rating": "neutral",
+    "rating_changes": [],
+    "score": 0
+   },
+   "macd_confirms": true,
+   "market": "bist",
+   "rule": "PRICE_SMA200_BULL",
+   "ticker": "PETKM.IS",
+   "values": {
+    "sma200": 19.23
    },
    "verdict": "buy",
    "verdict_reason": "Bullish signal confirmed by MACD"
@@ -784,6 +907,7 @@
     "score": 2
    },
    "macd_confirms": false,
+   "market": "us",
    "rule": "PRICE_SMA200_BULL",
    "ticker": "PHM",
    "values": {
@@ -861,6 +985,7 @@
     "score": 3
    },
    "macd_confirms": true,
+   "market": "us",
    "rule": "PRICE_SMA200_BEAR",
    "ticker": "RCL",
    "values": {
@@ -938,10 +1063,50 @@
     "score": 1
    },
    "macd_confirms": false,
+   "market": "us",
    "rule": "PRICE_SMA200_BULL",
    "ticker": "SHW",
    "values": {
     "sma200": 333.29
+   },
+   "verdict": "hold",
+   "verdict_reason": "MACD momentum does not confirm \u2014 possible false break"
+  },
+  {
+   "category": "price_sma200",
+   "close": 107.0,
+   "date": "2026-07-10",
+   "direction": "bullish",
+   "fundamentals": {
+    "analyst": {
+     "n_analysts": 10,
+     "price": 107.0,
+     "target_high": 174.4,
+     "target_low": 130.0,
+     "target_mean": 154.27
+    },
+    "factors": {
+     "earnings_growth": 1,
+     "fcf_yield": 0,
+     "target_upside": 1,
+     "valuation": 1
+    },
+    "metrics": {
+     "earnings_growth_pct": 15.1,
+     "fcf_yield_pct": 1.1,
+     "forward_pe": 8.5,
+     "target_upside_pct": 44.2
+    },
+    "rating": "strong",
+    "rating_changes": [],
+    "score": 3
+   },
+   "macd_confirms": false,
+   "market": "bist",
+   "rule": "PRICE_SMA200_BULL",
+   "ticker": "TCELL.IS",
+   "values": {
+    "sma200": 106.51
    },
    "verdict": "hold",
    "verdict_reason": "MACD momentum does not confirm \u2014 possible false break"
@@ -1015,6 +1180,7 @@
     "score": 2
    },
    "macd_confirms": false,
+   "market": "us",
    "rule": "PRICE_SMA200_BULL",
    "ticker": "VMC",
    "values": {
@@ -1092,6 +1258,7 @@
     "score": 3
    },
    "macd_confirms": false,
+   "market": "us",
    "rule": "PRICE_SMA200W_BULL",
    "ticker": "A",
    "values": {
@@ -1169,6 +1336,7 @@
     "score": -2
    },
    "macd_confirms": false,
+   "market": "us",
    "rule": "PRICE_SMA200W_BEAR",
    "ticker": "AWK",
    "values": {
@@ -1243,6 +1411,7 @@
     "score": 1
    },
    "macd_confirms": false,
+   "market": "us",
    "rule": "PRICE_SMA200W_BEAR",
    "ticker": "AZO",
    "values": {
@@ -1250,6 +1419,37 @@
    },
    "verdict": "hold",
    "verdict_reason": "MACD momentum does not confirm \u2014 possible false breakdown"
+  },
+  {
+   "category": "price_sma200_weekly",
+   "close": 15.0,
+   "date": "2026-07-10",
+   "direction": "bearish",
+   "fundamentals": {
+    "analyst": {
+     "price": 15.0
+    },
+    "factors": {
+     "earnings_growth": -1,
+     "fcf_yield": -1
+    },
+    "metrics": {
+     "earnings_growth_pct": -91.3,
+     "fcf_yield_pct": -8.5
+    },
+    "rating": "weak",
+    "rating_changes": [],
+    "score": -2
+   },
+   "macd_confirms": true,
+   "market": "bist",
+   "rule": "PRICE_SMA200W_BEAR",
+   "ticker": "BERA.IS",
+   "values": {
+    "sma200": 15.34
+   },
+   "verdict": "sell",
+   "verdict_reason": "Bearish signal, MACD confirms, weak fundamentals"
   },
   {
    "category": "price_sma200_weekly",
@@ -1320,6 +1520,7 @@
     "score": 4
    },
    "macd_confirms": true,
+   "market": "us",
    "rule": "PRICE_SMA200W_BEAR",
    "ticker": "BIIB",
    "values": {
@@ -1397,6 +1598,7 @@
     "score": 2
    },
    "macd_confirms": true,
+   "market": "us",
    "rule": "PRICE_SMA200W_BULL",
    "ticker": "COP",
    "values": {
@@ -1474,6 +1676,7 @@
     "score": 0
    },
    "macd_confirms": true,
+   "market": "us",
    "rule": "PRICE_SMA200W_BEAR",
    "ticker": "EXR",
    "values": {
@@ -1551,6 +1754,7 @@
     "score": 0
    },
    "macd_confirms": true,
+   "market": "us",
    "rule": "PRICE_SMA200W_BEAR",
    "ticker": "HD",
    "values": {
@@ -1626,6 +1830,7 @@
     "score": 3
    },
    "macd_confirms": true,
+   "market": "us",
    "rule": "PRICE_SMA200W_BEAR",
    "ticker": "IFF",
    "values": {
@@ -1703,6 +1908,7 @@
     "score": 3
    },
    "macd_confirms": false,
+   "market": "us",
    "rule": "PRICE_SMA200W_BEAR",
    "ticker": "ISRG",
    "values": {
@@ -1780,6 +1986,7 @@
     "score": 0
    },
    "macd_confirms": true,
+   "market": "us",
    "rule": "PRICE_SMA200W_BEAR",
    "ticker": "KDP",
    "values": {
@@ -1857,6 +2064,7 @@
     "score": 3
    },
    "macd_confirms": false,
+   "market": "us",
    "rule": "PRICE_SMA200W_BEAR",
    "ticker": "MSFT",
    "values": {
@@ -1934,6 +2142,7 @@
     "score": 1
    },
    "macd_confirms": true,
+   "market": "us",
    "rule": "PRICE_SMA200W_BEAR",
    "ticker": "PPG",
    "values": {
@@ -2011,6 +2220,7 @@
     "score": 3
    },
    "macd_confirms": true,
+   "market": "us",
    "rule": "PRICE_SMA200W_BULL",
    "ticker": "SLB",
    "values": {
@@ -2085,6 +2295,7 @@
     "score": 0
    },
    "macd_confirms": false,
+   "market": "us",
    "rule": "PRICE_SMA200W_BULL",
    "ticker": "TGT",
    "values": {
@@ -2162,6 +2373,7 @@
     "score": 3
    },
    "macd_confirms": true,
+   "market": "us",
    "rule": "PRICE_SMA200W_BULL",
    "ticker": "TMUS",
    "values": {
@@ -2232,6 +2444,7 @@
     "score": 4
    },
    "macd_confirms": false,
+   "market": "us",
    "rule": "PRICE_SMA200W_BEAR",
    "ticker": "TSN",
    "values": {
@@ -2309,6 +2522,7 @@
     "score": 5
    },
    "macd_confirms": true,
+   "market": "us",
    "rule": "PRICE_SMA200W_BULL",
    "ticker": "ULTA",
    "values": {
@@ -2386,6 +2600,7 @@
     "score": 3
    },
    "macd_confirms": false,
+   "market": "us",
    "rule": "PRICE_SMA200W_BULL",
    "ticker": "WYNN",
    "values": {
@@ -2463,6 +2678,7 @@
     "score": 3
    },
    "macd_confirms": true,
+   "market": "us",
    "rule": "PRICE_SMA200W_BULL",
    "ticker": "XYL",
    "values": {
@@ -2473,13 +2689,17 @@
   }
  ],
  "bar_date": "2026-07-10",
+ "bar_dates": {
+  "bist": "2026-07-10",
+  "us": "2026-07-10"
+ },
  "failures": [],
- "generated_at": "2026-07-12T11:55:06Z",
+ "generated_at": "2026-07-12T12:33:39Z",
  "insufficient_history": [
   "FDXF",
   "Q"
  ],
- "scanned": 517,
+ "scanned": 584,
  "schema_version": 1,
- "universe_count": 517
+ "universe_count": 584
 }
