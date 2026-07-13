@@ -40,4 +40,24 @@ jobs:
           git config user.name "market-alerts-bot"
           git config user.email "actions@github.com"
           git add frontend/public/data
-          git diff --cached --quiet || (git commit -m "scan: $(date -u +%F)" && git push)
+          if git diff --cached --quiet; then
+            echo "No data changes — nothing to commit."
+            exit 0
+          fi
+          git commit -m "scan: $(date -u +%F)"
+          # A manual push (or an overlapping run) may have moved main between
+          # our checkout and now. Each attempt rebases our single data commit
+          # onto the latest origin/main and pushes; -X theirs keeps THIS run's
+          # freshly generated data on any conflict (both sides are the same
+          # trading bar, so either is correct). Retry covers a fresh race.
+          for attempt in 1 2 3 4 5; do
+            git pull --rebase -X theirs origin main
+            if git push; then
+              echo "Pushed on attempt $attempt."
+              exit 0
+            fi
+            echo "Push rejected (attempt $attempt) — re-syncing with origin/main…"
+            sleep $((attempt * 3))
+          done
+          echo "Push failed after retries." >&2
+          exit 1
