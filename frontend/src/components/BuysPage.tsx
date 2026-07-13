@@ -194,44 +194,112 @@ function FactorChip({ value }: { value: number | undefined }) {
   )
 }
 
-function BuyCard({ a }: { a: AlertItem }) {
-  const f = a.fundamentals
-  const pct = a.values.sma200 ? ((a.close - a.values.sma200) / a.values.sma200) * 100 : null
+// ---- Suggestion quality: presentational ranking of BUYs by confluence ----
+// Purely a display score (the verdict itself is unchanged): how many
+// independent lenses agree with this buy, weighted by what backtests showed
+// matters. Formula documented in the page footer.
+export function qualityScore(a: AlertItem): number {
+  let s = 3 // base: passed all three verdict layers (it IS a buy)
+  const rating = a.fundamentals?.rating
+  if (rating === 'strong') s += 2
+  else if (rating === 'neutral') s += 1
+  const sec = a.sector?.state
+  if (sec === 'leading') s += 1.5
+  else if (sec === 'improving') s += 0.5
+  else if (sec === 'lagging') s -= 0.5
+  const vol = a.volume?.ratio
+  if (vol !== undefined) s += vol >= 1.5 ? 1.5 : vol >= 1 ? 1 : 0
+  const consensus = a.fundamentals?.analyst?.consensus
+  if (consensus === 'strong_buy') s += 1
+  else if (consensus === 'buy') s += 0.5
+  const upside = a.fundamentals?.metrics?.target_upside_pct
+  if (upside !== undefined && upside >= 15) s += 0.5
+  if (a.rule === 'PRICE_SMA200W_BULL') s += 1 // secular cross: rarest, highest-quality signal
+  else if (a.rule === 'GOLDEN_CROSS') s += 0.5
+  const fibDist = a.fib?.daily?.nearest.dist_pct
+  if (fibDist !== undefined && fibDist >= 0 && fibDist <= 3) s += 0.5 // sitting on support
+  return Math.max(0, s)
+}
+
+const GRADES: { min: number; label: string; style: string }[] = [
+  { min: 8, label: 'Strong+', style: 'bg-emerald-500/25 text-emerald-200 ring-emerald-400/40' },
+  { min: 6.5, label: 'Strong', style: 'bg-emerald-500/15 text-emerald-300 ring-emerald-400/25' },
+  { min: 5, label: 'Good', style: 'bg-sky-500/15 text-sky-300 ring-sky-400/25' },
+  { min: 0, label: 'Fair', style: 'bg-slate-500/15 text-slate-300 ring-white/10' },
+]
+
+export function gradeOf(score: number) {
+  return GRADES.find((g) => score >= g.min) ?? GRADES[GRADES.length - 1]
+}
+
+function QualityBadge({ score }: { score: number }) {
+  const g = gradeOf(score)
   return (
-    <div className="rounded-2xl bg-gradient-to-b from-slate-900/60 to-slate-900/20 p-5 ring-1 ring-white/5 transition hover:ring-sky-400/20">
-      <div className="flex flex-wrap items-baseline justify-between gap-2">
-        <div className="flex items-baseline gap-3">
+    <span
+      title={`Quality score ${score.toFixed(1)} — confluence across fundamentals, sector, volume, analysts, signal rarity, Fib support`}
+      className={`inline-flex items-center gap-1.5 rounded-full px-2.5 py-0.5 text-xs font-semibold ring-1 ${g.style}`}
+    >
+      {g.label}
+      <span className="tnum font-normal opacity-70">{score.toFixed(1)}</span>
+    </span>
+  )
+}
+
+function BuyCard({ a, rank, defaultOpen }: { a: AlertItem; rank: number; defaultOpen: boolean }) {
+  const f = a.fundamentals
+  const [open, setOpen] = useState(defaultOpen)
+  const pct = a.values.sma200 ? ((a.close - a.values.sma200) / a.values.sma200) * 100 : null
+  const score = qualityScore(a)
+  return (
+    <div className="rounded-2xl bg-gradient-to-b from-slate-900/60 to-slate-900/20 ring-1 ring-white/5 transition hover:ring-sky-400/20">
+      <div
+        role="button"
+        aria-expanded={open}
+        onClick={() => setOpen(!open)}
+        className="flex cursor-pointer flex-wrap items-center justify-between gap-x-3 gap-y-2 px-5 py-3.5 select-none"
+      >
+        <div className="flex flex-wrap items-center gap-2.5">
+          <span className={`text-slate-500 transition-transform ${open ? 'rotate-90' : ''}`}>▸</span>
+          <span className="w-6 text-right text-sm text-slate-600">{rank}</span>
           <a
             href={tradingViewUrl(a.ticker)}
             target="_blank"
             rel="noreferrer"
-            className="text-lg font-bold text-sky-400 hover:text-sky-300 hover:underline"
+            onClick={(e) => e.stopPropagation()}
+            className="text-base font-bold text-sky-400 hover:text-sky-300 hover:underline"
           >
             {a.ticker} ↗
           </a>
           <MarketBadge market={a.market} />
-          <span className="text-sm text-slate-400">{CATEGORY_LABELS[a.category] ?? a.category}</span>
+          <QualityBadge score={score} />
+          <span className="hidden text-xs text-slate-500 sm:inline">
+            {CATEGORY_LABELS[a.category] ?? a.category}
+          </span>
         </div>
-        <div className="text-sm text-slate-300">
-          {a.close >= 10 ? a.close.toFixed(2) : a.close.toFixed(4)}
-          {pct !== null && (
-            <span className={`ml-2 ${pct >= 0 ? 'text-emerald-400' : 'text-rose-400'}`}>
-              {pct >= 0 ? '+' : ''}
-              {pct.toFixed(2)}% vs SMA200
-            </span>
-          )}
-          <span className="ml-2 text-slate-500">{a.date}</span>
+        <div className="flex flex-wrap items-center gap-3">
+          <span className="tnum text-sm text-slate-300">
+            {a.close >= 10 ? a.close.toFixed(2) : a.close.toFixed(4)}
+            {pct !== null && (
+              <span className={`ml-2 ${pct >= 0 ? 'text-emerald-400' : 'text-rose-400'}`}>
+                {pct >= 0 ? '+' : ''}
+                {pct.toFixed(2)}%
+              </span>
+            )}
+          </span>
+          <span onClick={(e) => e.stopPropagation()}>
+            <AddToPortfolio a={a} />
+          </span>
         </div>
       </div>
 
-      <div className="mt-1 flex flex-wrap items-center justify-between gap-2">
-        <p className="text-sm text-slate-400">
-          {a.verdict_reason} · <span className="text-emerald-400">MACD confirms</span>
-        </p>
-        <AddToPortfolio a={a} />
-      </div>
+      {open && (
+        <div className="border-t border-white/5 px-5 pb-5 pt-3">
+          <p className="text-sm text-slate-400">
+            {a.verdict_reason} · <span className="text-emerald-400">MACD confirms</span>
+            <span className="ml-2 text-slate-500">{a.date}</span>
+          </p>
 
-      {f ? (
+          {f ? (
         <div className="mt-3 rounded-xl bg-white/[0.03] p-3.5 ring-1 ring-white/5">
           <div className="mb-2 flex items-center gap-2 text-sm">
             <span className="font-medium text-slate-200">Fundamentals</span>
@@ -291,7 +359,9 @@ function BuyCard({ a }: { a: AlertItem }) {
           Fundamentals unavailable for this ticker — verdict is technicals + MACD only.
         </p>
       )}
-      <PriceStructure a={a} />
+          <PriceStructure a={a} />
+        </div>
+      )}
     </div>
   )
 }
@@ -377,13 +447,16 @@ export default function BuysPage() {
   }
   if (!latest) return <p className="py-8 text-center text-slate-500">Loading…</p>
 
-  const buys = latest.alerts.filter((a) => a.verdict === 'buy')
+  const buys = latest.alerts
+    .filter((a) => a.verdict === 'buy')
+    .map((a) => ({ a, score: qualityScore(a) }))
+    .sort((x, y) => y.score - x.score)
 
   return (
     <section className="space-y-4">
       <div className="flex flex-wrap items-baseline justify-between gap-2">
         <h2 className="flex items-center gap-2 text-base font-semibold tracking-tight text-slate-100"><span className="h-4 w-1 rounded-full bg-sky-400/70" />
-          BUY verdicts — {latest.bar_date}
+          BUY verdicts — {latest.bar_date} · ranked by quality
         </h2>
         <span className="text-sm text-slate-500">
           {buys.length} of {latest.alerts.length} alerts passed all three layers
@@ -391,9 +464,9 @@ export default function BuysPage() {
       </div>
 
       {buys.length > 0 ? (
-        <div className="grid gap-4 md:grid-cols-2">
-          {buys.map((a) => (
-            <BuyCard key={`${a.rule}-${a.ticker}`} a={a} />
+        <div className="space-y-2.5">
+          {buys.map(({ a }, i) => (
+            <BuyCard key={`${a.rule}-${a.ticker}`} a={a} rank={i + 1} defaultOpen={false} />
           ))}
         </div>
       ) : (
@@ -404,8 +477,14 @@ export default function BuysPage() {
 
       <p className="text-xs text-slate-500">
         A BUY requires all three layers to agree: a bullish signal, MACD momentum
-        confirmation, and fundamentals that are not weak. Factor chips: +1 favorable
-        · 0 neutral · −1 unfavorable. Informational, not investment advice.
+        confirmation, and fundamentals that are not weak. Click a row to expand its
+        full detail. <span className="text-slate-400">Quality</span> is a display-only
+        confluence score (it does not change the verdict): base 3 for any BUY, plus
+        fundamentals (strong +2 / neutral +1), sector (leading +1.5 / improving +0.5 /
+        lagging −0.5), volume (≥1.5× avg +1.5 / ≥1× +1), analyst consensus (strong buy
+        +1 / buy +0.5) and ≥15% target upside (+0.5), signal rarity (200-week cross +1 /
+        golden cross +0.5), and price sitting on Fib support (+0.5). Strong+ ≥8 ·
+        Strong ≥6.5 · Good ≥5 · Fair below. Informational, not investment advice.
       </p>
     </section>
   )
