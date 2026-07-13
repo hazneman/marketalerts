@@ -1,270 +1,270 @@
 {
- "bar_date": "2026-07-10",
+ "bar_date": "2026-07-13",
  "benchmark": {
   "chg": {
-   "1m": 2.43,
-   "1w": 1.37,
-   "1y": 20.97,
-   "3m": 11.04,
-   "6m": 9.48
+   "1m": 3.27,
+   "1w": -0.28,
+   "1y": 19.71,
+   "3m": 10.26,
+   "6m": 8.65
   },
   "symbol": "SPY"
  },
- "generated_at": "2026-07-13T10:51:10Z",
+ "generated_at": "2026-07-13T23:26:11Z",
  "schema_version": 1,
  "sectors": [
   {
    "above_sma200": true,
    "chg": {
-    "1m": 2.77,
-    "1w": 2.87,
-    "1y": 44.11,
-    "3m": 30.77,
-    "6m": 26.79
+    "1m": 2.63,
+    "1w": -1.25,
+    "1y": 41.08,
+    "3m": 27.11,
+    "6m": 25.68
    },
-   "comment": "Outperforming the market short and medium term \u2014 money flowing in",
+   "comment": "Was strong, now lagging vs the market \u2014 rotation out",
    "name": "Technology",
-   "price": 185.78,
+   "price": 181.28,
    "rank": 1,
    "rs": {
-    "1m": 0.34,
-    "3m": 19.73,
-    "6m": 17.31
+    "1m": -0.64,
+    "3m": 16.85,
+    "6m": 17.03
    },
-   "rs_score": 9.67,
-   "state": "leading",
+   "rs_score": 8.13,
+   "state": "weakening",
    "symbol": "XLK",
-   "vs_sma200_pct": 21.61
+   "vs_sma200_pct": 18.51
   },
   {
    "above_sma200": true,
    "chg": {
-    "1m": 6.2,
-    "1w": 0.16,
-    "1y": 6.32,
-    "3m": 8.53,
-    "6m": 0.18
+    "1m": 7.35,
+    "1w": -0.12,
+    "1y": 6.37,
+    "3m": 10.44,
+    "6m": 0.3
    },
-   "comment": "Turning up vs the market \u2014 early rotation in",
+   "comment": "Outperforming the market short and medium term \u2014 money flowing in",
    "name": "Financials",
-   "price": 55.71,
+   "price": 56.07,
    "rank": 2,
    "rs": {
-    "1m": 3.77,
-    "3m": -2.51,
-    "6m": -9.3
+    "1m": 4.08,
+    "3m": 0.18,
+    "6m": -8.35
    },
-   "rs_score": -0.39,
-   "state": "improving",
+   "rs_score": 0.85,
+   "state": "leading",
    "symbol": "XLF",
-   "vs_sma200_pct": 5.89
+   "vs_sma200_pct": 6.55
   },
   {
    "above_sma200": true,
    "chg": {
-    "1m": 3.6,
-    "1w": -1.08,
-    "1y": 21.36,
-    "3m": 5.65,
-    "6m": 14.44
+    "1m": 6.31,
+    "1w": -2.8,
+    "1y": 19.66,
+    "3m": 5.16,
+    "6m": 12.61
    },
    "comment": "Turning up vs the market \u2014 early rotation in",
    "name": "Industrials",
-   "price": 181.92,
+   "price": 180.37,
    "rank": 3,
    "rs": {
-    "1m": 1.17,
-    "3m": -5.39,
-    "6m": 4.96
+    "1m": 3.04,
+    "3m": -5.1,
+    "6m": 3.96
    },
-   "rs_score": -0.56,
+   "rs_score": 0.33,
    "state": "improving",
    "symbol": "XLI",
-   "vs_sma200_pct": 10.07
+   "vs_sma200_pct": 9.04
   },
   {
    "above_sma200": true,
    "chg": {
-    "1m": 4.06,
-    "1w": -1.77,
-    "1y": 18.71,
-    "3m": 7.71,
-    "6m": 0.74
+    "1m": 5.6,
+    "1w": -0.34,
+    "1y": 18.41,
+    "3m": 9.57,
+    "6m": 2.08
    },
    "comment": "Turning up vs the market \u2014 early rotation in",
    "name": "Health Care",
-   "price": 160.84,
+   "price": 161.41,
    "rank": 4,
    "rs": {
-    "1m": 1.63,
-    "3m": -3.33,
-    "6m": -8.74
+    "1m": 2.33,
+    "3m": -0.69,
+    "6m": -6.57
    },
-   "rs_score": -1.66,
+   "rs_score": -0.06,
    "state": "improving",
    "symbol": "XLV",
-   "vs_sma200_pct": 6.62
+   "vs_sma200_pct": 6.91
   },
   {
    "above_sma200": true,
    "chg": {
-    "1m": -1.16,
-    "1w": -0.51,
-    "1y": 7.37,
-    "3m": 4.03,
-    "6m": 10.74
+    "1m": -0.64,
+    "1w": 0.93,
+    "1y": 7.43,
+    "3m": 4.39,
+    "6m": 10.53
    },
    "comment": "Underperforming short and medium term \u2014 money flowing out",
    "name": "Real Estate",
-   "price": 44.45,
+   "price": 44.7,
    "rank": 5,
    "rs": {
-    "1m": -3.59,
-    "3m": -7.01,
-    "6m": 1.26
+    "1m": -3.91,
+    "3m": -5.87,
+    "6m": 1.88
    },
-   "rs_score": -4.06,
+   "rs_score": -3.73,
    "state": "lagging",
    "symbol": "XLRE",
-   "vs_sma200_pct": 4.85
+   "vs_sma200_pct": 5.41
   },
   {
    "above_sma200": true,
    "chg": {
-    "1m": 0.02,
-    "1w": -1.02,
-    "1y": 4.08,
-    "3m": 0.8,
-    "6m": 9.79
-   },
-   "comment": "Underperforming short and medium term \u2014 money flowing out",
-   "name": "Consumer Staples",
-   "price": 84.12,
-   "rank": 6,
-   "rs": {
-    "1m": -2.41,
-    "3m": -10.24,
-    "6m": 0.31
-   },
-   "rs_score": -4.74,
-   "state": "lagging",
-   "symbol": "XLP",
-   "vs_sma200_pct": 2.78
-  },
-  {
-   "above_sma200": true,
-   "chg": {
-    "1m": 3.25,
-    "1w": -0.76,
-    "1y": 10.89,
-    "3m": -3.69,
-    "6m": 8.45
+    "1m": 3.91,
+    "1w": 0.93,
+    "1y": 10.74,
+    "3m": -2.64,
+    "6m": 8.88
    },
    "comment": "Turning up vs the market \u2014 early rotation in",
    "name": "Utilities",
-   "price": 45.41,
-   "rank": 7,
+   "price": 45.72,
+   "rank": 6,
    "rs": {
-    "1m": 0.82,
-    "3m": -14.73,
-    "6m": -1.03
+    "1m": 0.64,
+    "3m": -12.9,
+    "6m": 0.23
    },
-   "rs_score": -4.9,
+   "rs_score": -4.16,
    "state": "improving",
    "symbol": "XLU",
-   "vs_sma200_pct": 1.41
-  },
-  {
-   "above_sma200": false,
-   "chg": {
-    "1m": 1.18,
-    "1w": 0.1,
-    "1y": 7.09,
-    "3m": 3.99,
-    "6m": -3.03
-   },
-   "comment": "Underperforming short and medium term \u2014 money flowing out",
-   "name": "Consumer Discretionary",
-   "price": 117.24,
-   "rank": 8,
-   "rs": {
-    "1m": -1.25,
-    "3m": -7.05,
-    "6m": -12.51
-   },
-   "rs_score": -4.97,
-   "state": "lagging",
-   "symbol": "XLY",
-   "vs_sma200_pct": -0.18
+   "vs_sma200_pct": 2.07
   },
   {
    "above_sma200": true,
    "chg": {
-    "1m": 0.24,
-    "1w": -2.15,
-    "1y": 10.9,
-    "3m": -1.51,
-    "6m": 9.02
-   },
-   "comment": "Underperforming short and medium term \u2014 money flowing out",
-   "name": "Materials",
-   "price": 50.89,
-   "rank": 9,
-   "rs": {
-    "1m": -2.19,
-    "3m": -12.55,
-    "6m": -0.46
-   },
-   "rs_score": -5.56,
-   "state": "lagging",
-   "symbol": "XLB",
-   "vs_sma200_pct": 5.0
-  },
-  {
-   "above_sma200": true,
-   "chg": {
-    "1m": -4.03,
-    "1w": 3.49,
-    "1y": 25.1,
-    "3m": -3.92,
-    "6m": 22.05
+    "1m": -2.59,
+    "1w": 6.79,
+    "1y": 27.89,
+    "3m": -0.35,
+    "6m": 21.89
    },
    "comment": "Underperforming short and medium term \u2014 money flowing out",
    "name": "Energy",
-   "price": 55.08,
-   "rank": 10,
+   "price": 56.74,
+   "rank": 7,
    "rs": {
-    "1m": -6.46,
-    "3m": -14.96,
-    "6m": 12.57
+    "1m": -5.86,
+    "3m": -10.61,
+    "6m": 13.24
    },
-   "rs_score": -6.58,
+   "rs_score": -4.66,
    "state": "lagging",
    "symbol": "XLE",
-   "vs_sma200_pct": 6.77
+   "vs_sma200_pct": 9.86
+  },
+  {
+   "above_sma200": true,
+   "chg": {
+    "1m": -1.05,
+    "1w": 0.58,
+    "1y": 4.29,
+    "3m": 2.7,
+    "6m": 7.84
+   },
+   "comment": "Underperforming short and medium term \u2014 money flowing out",
+   "name": "Consumer Staples",
+   "price": 84.59,
+   "rank": 8,
+   "rs": {
+    "1m": -4.32,
+    "3m": -7.56,
+    "6m": -0.81
+   },
+   "rs_score": -4.93,
+   "state": "lagging",
+   "symbol": "XLP",
+   "vs_sma200_pct": 3.32
   },
   {
    "above_sma200": false,
    "chg": {
-    "1m": 0.14,
-    "1w": 1.86,
-    "1y": 4.28,
-    "3m": -2.3,
-    "6m": -4.65
+    "1m": 2.25,
+    "1w": -1.67,
+    "1y": 4.84,
+    "3m": 2.79,
+    "6m": -5.6
+   },
+   "comment": "Underperforming short and medium term \u2014 money flowing out",
+   "name": "Consumer Discretionary",
+   "price": 116.04,
+   "rank": 9,
+   "rs": {
+    "1m": -1.02,
+    "3m": -7.47,
+    "6m": -14.25
+   },
+   "rs_score": -5.26,
+   "state": "lagging",
+   "symbol": "XLY",
+   "vs_sma200_pct": -1.19
+  },
+  {
+   "above_sma200": true,
+   "chg": {
+    "1m": 1.98,
+    "1w": -2.69,
+    "1y": 9.63,
+    "3m": -2.66,
+    "6m": 6.48
+   },
+   "comment": "Underperforming short and medium term \u2014 money flowing out",
+   "name": "Materials",
+   "price": 50.58,
+   "rank": 10,
+   "rs": {
+    "1m": -1.29,
+    "3m": -12.92,
+    "6m": -2.17
+   },
+   "rs_score": -5.49,
+   "state": "lagging",
+   "symbol": "XLB",
+   "vs_sma200_pct": 4.3
+  },
+  {
+   "above_sma200": false,
+   "chg": {
+    "1m": 0.52,
+    "1w": 1.25,
+    "1y": 4.58,
+    "3m": -2.07,
+    "6m": -5.01
    },
    "comment": "Underperforming short and medium term \u2014 money flowing out",
    "name": "Communication Services",
-   "price": 111.64,
+   "price": 111.59,
    "rank": 11,
    "rs": {
-    "1m": -2.29,
-    "3m": -13.34,
-    "6m": -14.13
+    "1m": -2.75,
+    "3m": -12.33,
+    "6m": -13.66
    },
-   "rs_score": -7.93,
+   "rs_score": -7.74,
    "state": "lagging",
    "symbol": "XLC",
-   "vs_sma200_pct": -2.81
+   "vs_sma200_pct": -2.82
   }
  ]
 }
