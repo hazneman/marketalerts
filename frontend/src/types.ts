@@ -17,6 +17,29 @@ export interface AlertItem {
     state: 'leading' | 'improving' | 'weakening' | 'lagging' | null
     factor: number
   } | null
+  fib?: { daily: FibFrame | null; weekly: FibFrame | null } | null
+  volume?: VolumeSignal | null
+}
+
+export interface FibLevel {
+  label: string
+  price: number
+  dist_pct: number
+}
+
+export interface FibFrame {
+  high: number
+  low: number
+  position_pct: number
+  levels: FibLevel[]
+  nearest: FibLevel
+}
+
+export interface VolumeSignal {
+  today: number
+  avg20: number
+  ratio: number
+  above_avg: boolean
 }
 
 export const MARKET_LABELS: Record<string, string> = {

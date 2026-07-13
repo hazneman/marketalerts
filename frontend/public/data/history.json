@@ -7,6 +7,82 @@
      "close": 176.2,
      "date": "2026-07-10",
      "direction": "bullish",
+     "fib": {
+      "daily": {
+       "high": 192.51,
+       "levels": [
+        {
+         "dist_pct": -5.11,
+         "label": "23.6%",
+         "price": 185.6802
+        },
+        {
+         "dist_pct": -2.9,
+         "label": "38.2%",
+         "price": 181.4549
+        },
+        {
+         "dist_pct": -1.03,
+         "label": "50.0%",
+         "price": 178.04
+        },
+        {
+         "dist_pct": 0.9,
+         "label": "61.8%",
+         "price": 174.6251
+        },
+        {
+         "dist_pct": 3.79,
+         "label": "78.6%",
+         "price": 169.7632
+        }
+       ],
+       "low": 163.57,
+       "nearest": {
+        "dist_pct": 0.9,
+        "label": "61.8%",
+        "price": 174.6251
+       },
+       "position_pct": 43.6
+      },
+      "weekly": {
+       "high": 192.51,
+       "levels": [
+        {
+         "dist_pct": -3.79,
+         "label": "23.6%",
+         "price": 183.1384
+        },
+        {
+         "dist_pct": -0.64,
+         "label": "38.2%",
+         "price": 177.3408
+        },
+        {
+         "dist_pct": 2.05,
+         "label": "50.0%",
+         "price": 172.655
+        },
+        {
+         "dist_pct": 4.9,
+         "label": "61.8%",
+         "price": 167.9692
+        },
+        {
+         "dist_pct": 9.24,
+         "label": "78.6%",
+         "price": 161.2979
+        }
+       ],
+       "low": 152.8,
+       "nearest": {
+        "dist_pct": -0.64,
+        "label": "38.2%",
+        "price": 177.3408
+       },
+       "position_pct": 58.9
+      }
+     },
      "fundamentals": {
       "analyst": {
        "consensus": "hold",
@@ -32,6 +108,13 @@
       },
       "rating": "neutral",
       "rating_changes": [
+       {
+        "action": "init",
+        "date": "2026-07-13",
+        "firm": "Wells Fargo",
+        "from_grade": null,
+        "to_grade": "Overweight"
+       },
        {
         "action": "main",
         "date": "2026-07-02",
@@ -59,13 +142,6 @@
         "firm": "TD Cowen",
         "from_grade": "Hold",
         "to_grade": "Hold"
-       },
-       {
-        "action": "main",
-        "date": "2026-05-08",
-        "firm": "Citigroup",
-        "from_grade": "Neutral",
-        "to_grade": "Neutral"
        }
       ],
       "score": 0,
@@ -85,13 +161,95 @@
       "sma200": 175.93
      },
      "verdict": "buy",
-     "verdict_reason": "Bullish signal confirmed by MACD"
+     "verdict_reason": "Bullish signal confirmed by MACD",
+     "volume": {
+      "above_avg": false,
+      "avg20": 1350270,
+      "ratio": 0.39,
+      "today": 527300
+     }
     },
     {
      "category": "price_sma200",
      "close": 151.58,
      "date": "2026-07-10",
      "direction": "bullish",
+     "fib": {
+      "daily": {
+       "high": 170.79,
+       "levels": [
+        {
+         "dist_pct": -6.19,
+         "label": "23.6%",
+         "price": 161.5766
+        },
+        {
+         "dist_pct": -2.76,
+         "label": "38.2%",
+         "price": 155.8767
+        },
+        {
+         "dist_pct": 0.2,
+         "label": "50.0%",
+         "price": 151.27
+        },
+        {
+         "dist_pct": 3.35,
+         "label": "61.8%",
+         "price": 146.6633
+        },
+        {
+         "dist_pct": 8.19,
+         "label": "78.6%",
+         "price": 140.1046
+        }
+       ],
+       "low": 131.75,
+       "nearest": {
+        "dist_pct": 0.2,
+        "label": "50.0%",
+        "price": 151.27
+       },
+       "position_pct": 50.8
+      },
+      "weekly": {
+       "high": 184.55,
+       "levels": [
+        {
+         "dist_pct": -11.6,
+         "label": "23.6%",
+         "price": 171.4662
+        },
+        {
+         "dist_pct": -7.22,
+         "label": "38.2%",
+         "price": 163.3719
+        },
+        {
+         "dist_pct": -3.35,
+         "label": "50.0%",
+         "price": 156.83
+        },
+        {
+         "dist_pct": 0.86,
+         "label": "61.8%",
+         "price": 150.2881
+        },
+        {
+         "dist_pct": 7.52,
+         "label": "78.6%",
+         "price": 140.9742
+        }
+       ],
+       "low": 129.11,
+       "nearest": {
+        "dist_pct": 0.86,
+        "label": "61.8%",
+        "price": 150.2881
+       },
+       "position_pct": 40.5
+      }
+     },
      "fundamentals": {
       "analyst": {
        "consensus": "hold",
@@ -170,13 +328,95 @@
       "sma200": 151.48
      },
      "verdict": "hold",
-     "verdict_reason": "MACD momentum does not confirm \u2014 possible false break"
+     "verdict_reason": "MACD momentum does not confirm \u2014 possible false break",
+     "volume": {
+      "above_avg": false,
+      "avg20": 2333145,
+      "ratio": 0.71,
+      "today": 1666600
+     }
     },
     {
      "category": "price_sma200",
      "close": 138.88,
      "date": "2026-07-10",
      "direction": "bullish",
+     "fib": {
+      "daily": {
+       "high": 165.15,
+       "levels": [
+        {
+         "dist_pct": -10.47,
+         "label": "23.6%",
+         "price": 155.1176
+        },
+        {
+         "dist_pct": -6.74,
+         "label": "38.2%",
+         "price": 148.9112
+        },
+        {
+         "dist_pct": -3.49,
+         "label": "50.0%",
+         "price": 143.895
+        },
+        {
+         "dist_pct": 0.0,
+         "label": "61.8%",
+         "price": 138.8788
+        },
+        {
+         "dist_pct": 5.42,
+         "label": "78.6%",
+         "price": 131.7371
+        }
+       ],
+       "low": 122.64,
+       "nearest": {
+        "dist_pct": 0.0,
+        "label": "61.8%",
+        "price": 138.8788
+       },
+       "position_pct": 38.2
+      },
+      "weekly": {
+       "high": 165.15,
+       "levels": [
+        {
+         "dist_pct": -10.47,
+         "label": "23.6%",
+         "price": 155.1176
+        },
+        {
+         "dist_pct": -6.74,
+         "label": "38.2%",
+         "price": 148.9112
+        },
+        {
+         "dist_pct": -3.49,
+         "label": "50.0%",
+         "price": 143.895
+        },
+        {
+         "dist_pct": 0.0,
+         "label": "61.8%",
+         "price": 138.8788
+        },
+        {
+         "dist_pct": 5.42,
+         "label": "78.6%",
+         "price": 131.7371
+        }
+       ],
+       "low": 122.64,
+       "nearest": {
+        "dist_pct": 0.0,
+        "label": "61.8%",
+        "price": 138.8788
+       },
+       "position_pct": 38.2
+      }
+     },
      "fundamentals": {
       "analyst": {
        "consensus": "buy",
@@ -255,13 +495,95 @@
       "sma200": 138.71
      },
      "verdict": "hold",
-     "verdict_reason": "MACD momentum does not confirm \u2014 possible false break"
+     "verdict_reason": "MACD momentum does not confirm \u2014 possible false break",
+     "volume": {
+      "above_avg": false,
+      "avg20": 2862225,
+      "ratio": 0.55,
+      "today": 1563400
+     }
     },
     {
      "category": "price_sma200",
      "close": 129.83,
      "date": "2026-07-10",
      "direction": "bearish",
+     "fib": {
+      "daily": {
+       "high": 157.29,
+       "levels": [
+        {
+         "dist_pct": -12.76,
+         "label": "23.6%",
+         "price": 148.8176
+        },
+        {
+         "dist_pct": -9.57,
+         "label": "38.2%",
+         "price": 143.5762
+        },
+        {
+         "dist_pct": -6.83,
+         "label": "50.0%",
+         "price": 139.34
+        },
+        {
+         "dist_pct": -3.9,
+         "label": "61.8%",
+         "price": 135.1038
+        },
+        {
+         "dist_pct": 0.59,
+         "label": "78.6%",
+         "price": 129.0726
+        }
+       ],
+       "low": 121.39,
+       "nearest": {
+        "dist_pct": 0.59,
+        "label": "78.6%",
+        "price": 129.0726
+       },
+       "position_pct": 23.5
+      },
+      "weekly": {
+       "high": 157.29,
+       "levels": [
+        {
+         "dist_pct": -10.83,
+         "label": "23.6%",
+         "price": 145.5986
+        },
+        {
+         "dist_pct": -6.17,
+         "label": "38.2%",
+         "price": 138.3657
+        },
+        {
+         "dist_pct": -2.03,
+         "label": "50.0%",
+         "price": 132.52
+        },
+        {
+         "dist_pct": 2.49,
+         "label": "61.8%",
+         "price": 126.6743
+        },
+        {
+         "dist_pct": 9.7,
+         "label": "78.6%",
+         "price": 118.3516
+        }
+       ],
+       "low": 107.75,
+       "nearest": {
+        "dist_pct": -2.03,
+        "label": "50.0%",
+        "price": 132.52
+       },
+       "position_pct": 44.6
+      }
+     },
      "fundamentals": {
       "analyst": {
        "consensus": "buy",
@@ -340,13 +662,95 @@
       "sma200": 130.44
      },
      "verdict": "hold",
-     "verdict_reason": "MACD momentum does not confirm \u2014 possible false breakdown"
+     "verdict_reason": "MACD momentum does not confirm \u2014 possible false breakdown",
+     "volume": {
+      "above_avg": false,
+      "avg20": 8616595,
+      "ratio": 0.69,
+      "today": 5935300
+     }
     },
     {
      "category": "price_sma200",
      "close": 76.04,
      "date": "2026-07-10",
      "direction": "bullish",
+     "fib": {
+      "daily": {
+       "high": 82.7,
+       "levels": [
+        {
+         "dist_pct": -2.03,
+         "label": "23.6%",
+         "price": 77.6166
+        },
+        {
+         "dist_pct": 2.11,
+         "label": "38.2%",
+         "price": 74.4717
+        },
+        {
+         "dist_pct": 5.71,
+         "label": "50.0%",
+         "price": 71.93
+        },
+        {
+         "dist_pct": 9.59,
+         "label": "61.8%",
+         "price": 69.3883
+        },
+        {
+         "dist_pct": 15.62,
+         "label": "78.6%",
+         "price": 65.7696
+        }
+       ],
+       "low": 61.16,
+       "nearest": {
+        "dist_pct": -2.03,
+        "label": "23.6%",
+        "price": 77.6166
+       },
+       "position_pct": 69.1
+      },
+      "weekly": {
+       "high": 90.64,
+       "levels": [
+        {
+         "dist_pct": -9.13,
+         "label": "23.6%",
+         "price": 83.6827
+        },
+        {
+         "dist_pct": -4.21,
+         "label": "38.2%",
+         "price": 79.3786
+        },
+        {
+         "dist_pct": 0.18,
+         "label": "50.0%",
+         "price": 75.9
+        },
+        {
+         "dist_pct": 5.0,
+         "label": "61.8%",
+         "price": 72.4214
+        },
+        {
+         "dist_pct": 12.7,
+         "label": "78.6%",
+         "price": 67.4687
+        }
+       ],
+       "low": 61.16,
+       "nearest": {
+        "dist_pct": 0.18,
+        "label": "50.0%",
+        "price": 75.9
+       },
+       "position_pct": 50.5
+      }
+     },
      "fundamentals": {
       "analyst": {
        "consensus": "buy",
@@ -423,13 +827,95 @@
       "sma200": 74.81
      },
      "verdict": "buy",
-     "verdict_reason": "Bullish signal, MACD confirms, strong fundamentals"
+     "verdict_reason": "Bullish signal, MACD confirms, strong fundamentals",
+     "volume": {
+      "above_avg": false,
+      "avg20": 3863930,
+      "ratio": 0.59,
+      "today": 2285300
+     }
     },
     {
      "category": "price_sma200",
      "close": 226.42,
      "date": "2026-07-10",
      "direction": "bullish",
+     "fib": {
+      "daily": {
+       "high": 260.2832,
+       "levels": [
+        {
+         "dist_pct": -9.33,
+         "label": "23.6%",
+         "price": 249.7244
+        },
+        {
+         "dist_pct": -6.9,
+         "label": "38.2%",
+         "price": 243.1923
+        },
+        {
+         "dist_pct": -4.83,
+         "label": "50.0%",
+         "price": 237.913
+        },
+        {
+         "dist_pct": -2.67,
+         "label": "61.8%",
+         "price": 232.6336
+        },
+        {
+         "dist_pct": 0.58,
+         "label": "78.6%",
+         "price": 225.1172
+        }
+       ],
+       "low": 215.5427,
+       "nearest": {
+        "dist_pct": 0.58,
+        "label": "78.6%",
+        "price": 225.1172
+       },
+       "position_pct": 24.3
+      },
+      "weekly": {
+       "high": 260.2832,
+       "levels": [
+        {
+         "dist_pct": -7.61,
+         "label": "23.6%",
+         "price": 245.0812
+        },
+        {
+         "dist_pct": -3.93,
+         "label": "38.2%",
+         "price": 235.6765
+        },
+        {
+         "dist_pct": -0.73,
+         "label": "50.0%",
+         "price": 228.0755
+        },
+        {
+         "dist_pct": 2.7,
+         "label": "61.8%",
+         "price": 220.4745
+        },
+        {
+         "dist_pct": 8.0,
+         "label": "78.6%",
+         "price": 209.6527
+        }
+       ],
+       "low": 195.8679,
+       "nearest": {
+        "dist_pct": -0.73,
+        "label": "50.0%",
+        "price": 228.0755
+       },
+       "position_pct": 47.4
+      }
+     },
      "fundamentals": {
       "analyst": {
        "consensus": "buy",
@@ -508,13 +994,95 @@
       "sma200": 225.25
      },
      "verdict": "hold",
-     "verdict_reason": "MACD momentum does not confirm \u2014 possible false break"
+     "verdict_reason": "MACD momentum does not confirm \u2014 possible false break",
+     "volume": {
+      "above_avg": false,
+      "avg20": 5942339,
+      "ratio": 0.44,
+      "today": 2601700
+     }
     },
     {
      "category": "price_sma200",
      "close": 58.83,
      "date": "2026-07-10",
      "direction": "bullish",
+     "fib": {
+      "daily": {
+       "high": 64.35,
+       "levels": [
+        {
+         "dist_pct": -5.08,
+         "label": "23.6%",
+         "price": 61.9806
+        },
+        {
+         "dist_pct": -2.78,
+         "label": "38.2%",
+         "price": 60.5147
+        },
+        {
+         "dist_pct": -0.84,
+         "label": "50.0%",
+         "price": 59.33
+        },
+        {
+         "dist_pct": 1.18,
+         "label": "61.8%",
+         "price": 58.1453
+        },
+        {
+         "dist_pct": 4.2,
+         "label": "78.6%",
+         "price": 56.4586
+        }
+       ],
+       "low": 54.31,
+       "nearest": {
+        "dist_pct": -0.84,
+        "label": "50.0%",
+        "price": 59.33
+       },
+       "position_pct": 45.0
+      },
+      "weekly": {
+       "high": 71.15,
+       "levels": [
+        {
+         "dist_pct": -11.46,
+         "label": "23.6%",
+         "price": 66.4418
+        },
+        {
+         "dist_pct": -7.4,
+         "label": "38.2%",
+         "price": 63.5291
+        },
+        {
+         "dist_pct": -3.83,
+         "label": "50.0%",
+         "price": 61.175
+        },
+        {
+         "dist_pct": 0.02,
+         "label": "61.8%",
+         "price": 58.8209
+        },
+        {
+         "dist_pct": 6.06,
+         "label": "78.6%",
+         "price": 55.4693
+        }
+       ],
+       "low": 51.2,
+       "nearest": {
+        "dist_pct": 0.02,
+        "label": "61.8%",
+        "price": 58.8209
+       },
+       "position_pct": 38.2
+      }
+     },
      "fundamentals": {
       "analyst": {
        "consensus": "buy",
@@ -593,13 +1161,95 @@
       "sma200": 58.74
      },
      "verdict": "hold",
-     "verdict_reason": "MACD momentum does not confirm \u2014 possible false break"
+     "verdict_reason": "MACD momentum does not confirm \u2014 possible false break",
+     "volume": {
+      "above_avg": false,
+      "avg20": 10396320,
+      "ratio": 0.62,
+      "today": 6428300
+     }
     },
     {
      "category": "price_sma200",
      "close": 669.21,
      "date": "2026-07-10",
      "direction": "bullish",
+     "fib": {
+      "daily": {
+       "high": 744.0,
+       "levels": [
+        {
+         "dist_pct": -3.18,
+         "label": "23.6%",
+         "price": 691.1974
+        },
+        {
+         "dist_pct": 1.62,
+         "label": "38.2%",
+         "price": 658.5313
+        },
+        {
+         "dist_pct": 5.87,
+         "label": "50.0%",
+         "price": 632.13
+        },
+        {
+         "dist_pct": 10.48,
+         "label": "61.8%",
+         "price": 605.7287
+        },
+        {
+         "dist_pct": 17.79,
+         "label": "78.6%",
+         "price": 568.1404
+        }
+       ],
+       "low": 520.26,
+       "nearest": {
+        "dist_pct": 1.62,
+        "label": "38.2%",
+        "price": 658.5313
+       },
+       "position_pct": 66.6
+      },
+      "weekly": {
+       "high": 796.25,
+       "levels": [
+        {
+         "dist_pct": -8.47,
+         "label": "23.6%",
+         "price": 731.1164
+        },
+        {
+         "dist_pct": -3.13,
+         "label": "38.2%",
+         "price": 690.8218
+        },
+        {
+         "dist_pct": 1.66,
+         "label": "50.0%",
+         "price": 658.255
+        },
+        {
+         "dist_pct": 6.96,
+         "label": "61.8%",
+         "price": 625.6882
+        },
+        {
+         "dist_pct": 15.52,
+         "label": "78.6%",
+         "price": 579.3219
+        }
+       ],
+       "low": 520.26,
+       "nearest": {
+        "dist_pct": 1.66,
+        "label": "50.0%",
+        "price": 658.255
+       },
+       "position_pct": 54.0
+      }
+     },
      "fundamentals": {
       "analyst": {
        "consensus": "strong_buy",
@@ -642,13 +1292,95 @@
       "sma200": 642.72
      },
      "verdict": "buy",
-     "verdict_reason": "Bullish signal, MACD confirms, strong fundamentals, sector lagging"
+     "verdict_reason": "Bullish signal, MACD confirms, strong fundamentals, sector lagging",
+     "volume": {
+      "above_avg": true,
+      "avg20": 20295630,
+      "ratio": 2.0,
+      "today": 40563100
+     }
     },
     {
      "category": "price_sma200",
      "close": 178.31,
      "date": "2026-07-10",
      "direction": "bearish",
+     "fib": {
+      "daily": {
+       "high": 193.32,
+       "levels": [
+        {
+         "dist_pct": -3.44,
+         "label": "23.6%",
+         "price": 184.6541
+        },
+        {
+         "dist_pct": -0.55,
+         "label": "38.2%",
+         "price": 179.293
+        },
+        {
+         "dist_pct": 1.91,
+         "label": "50.0%",
+         "price": 174.96
+        },
+        {
+         "dist_pct": 4.5,
+         "label": "61.8%",
+         "price": 170.627
+        },
+        {
+         "dist_pct": 8.42,
+         "label": "78.6%",
+         "price": 164.4581
+        }
+       ],
+       "low": 156.6,
+       "nearest": {
+        "dist_pct": -0.55,
+        "label": "38.2%",
+        "price": 179.293
+       },
+       "position_pct": 59.1
+      },
+      "weekly": {
+       "high": 216.32,
+       "levels": [
+        {
+         "dist_pct": -11.83,
+         "label": "23.6%",
+         "price": 202.2261
+        },
+        {
+         "dist_pct": -7.85,
+         "label": "38.2%",
+         "price": 193.507
+        },
+        {
+         "dist_pct": -4.37,
+         "label": "50.0%",
+         "price": 186.46
+        },
+        {
+         "dist_pct": -0.61,
+         "label": "61.8%",
+         "price": 179.413
+        },
+        {
+         "dist_pct": 5.27,
+         "label": "78.6%",
+         "price": 169.3801
+        }
+       ],
+       "low": 156.6,
+       "nearest": {
+        "dist_pct": -0.61,
+        "label": "61.8%",
+        "price": 179.413
+       },
+       "position_pct": 36.4
+      }
+     },
      "fundamentals": {
       "analyst": {
        "consensus": "buy",
@@ -727,13 +1459,95 @@
       "sma200": 178.65
      },
      "verdict": "hold",
-     "verdict_reason": "MACD momentum does not confirm \u2014 possible false breakdown"
+     "verdict_reason": "MACD momentum does not confirm \u2014 possible false breakdown",
+     "volume": {
+      "above_avg": false,
+      "avg20": 2618040,
+      "ratio": 0.58,
+      "today": 1526500
+     }
     },
     {
      "category": "price_sma200",
      "close": 422.88,
      "date": "2026-07-10",
      "direction": "bullish",
+     "fib": {
+      "daily": {
+       "high": 490.24,
+       "levels": [
+        {
+         "dist_pct": -8.96,
+         "label": "23.6%",
+         "price": 464.5184
+        },
+        {
+         "dist_pct": -5.73,
+         "label": "38.2%",
+         "price": 448.6058
+        },
+        {
+         "dist_pct": -2.95,
+         "label": "50.0%",
+         "price": 435.745
+        },
+        {
+         "dist_pct": -0.0,
+         "label": "61.8%",
+         "price": 422.8842
+        },
+        {
+         "dist_pct": 4.52,
+         "label": "78.6%",
+         "price": 404.5739
+        }
+       ],
+       "low": 381.25,
+       "nearest": {
+        "dist_pct": -0.0,
+        "label": "61.8%",
+        "price": 422.8842
+       },
+       "position_pct": 38.2
+      },
+      "weekly": {
+       "high": 492.22,
+       "levels": [
+        {
+         "dist_pct": -8.24,
+         "label": "23.6%",
+         "price": 460.865
+        },
+        {
+         "dist_pct": -4.21,
+         "label": "38.2%",
+         "price": 441.4675
+        },
+        {
+         "dist_pct": -0.68,
+         "label": "50.0%",
+         "price": 425.79
+        },
+        {
+         "dist_pct": 3.11,
+         "label": "61.8%",
+         "price": 410.1125
+        },
+        {
+         "dist_pct": 9.05,
+         "label": "78.6%",
+         "price": 387.792
+        }
+       ],
+       "low": 359.36,
+       "nearest": {
+        "dist_pct": -0.68,
+        "label": "50.0%",
+        "price": 425.79
+       },
+       "position_pct": 47.8
+      }
+     },
      "fundamentals": {
       "analyst": {
        "n_analysts": 11,
@@ -795,13 +1609,95 @@
       "sma200": 418.9
      },
      "verdict": "buy",
-     "verdict_reason": "Bullish signal confirmed by MACD, sector leading"
+     "verdict_reason": "Bullish signal confirmed by MACD, sector leading",
+     "volume": {
+      "above_avg": false,
+      "avg20": 1124715,
+      "ratio": 0.56,
+      "today": 631400
+     }
     },
     {
      "category": "price_sma200",
      "close": 124.75,
      "date": "2026-07-10",
      "direction": "bullish",
+     "fib": {
+      "daily": {
+       "high": 144.5,
+       "levels": [
+        {
+         "dist_pct": -8.27,
+         "label": "23.6%",
+         "price": 136.0016
+        },
+        {
+         "dist_pct": -4.58,
+         "label": "38.2%",
+         "price": 130.7442
+        },
+        {
+         "dist_pct": -1.38,
+         "label": "50.0%",
+         "price": 126.495
+        },
+        {
+         "dist_pct": 2.05,
+         "label": "61.8%",
+         "price": 122.2458
+        },
+        {
+         "dist_pct": 7.36,
+         "label": "78.6%",
+         "price": 116.1961
+        }
+       ],
+       "low": 108.49,
+       "nearest": {
+        "dist_pct": -1.38,
+        "label": "50.0%",
+        "price": 126.495
+       },
+       "position_pct": 45.2
+      },
+      "weekly": {
+       "high": 144.5,
+       "levels": [
+        {
+         "dist_pct": -8.06,
+         "label": "23.6%",
+         "price": 135.6878
+        },
+        {
+         "dist_pct": -4.21,
+         "label": "38.2%",
+         "price": 130.2361
+        },
+        {
+         "dist_pct": -0.86,
+         "label": "50.0%",
+         "price": 125.83
+        },
+        {
+         "dist_pct": 2.74,
+         "label": "61.8%",
+         "price": 121.4239
+        },
+        {
+         "dist_pct": 8.34,
+         "label": "78.6%",
+         "price": 115.1508
+        }
+       ],
+       "low": 107.16,
+       "nearest": {
+        "dist_pct": -0.86,
+        "label": "50.0%",
+        "price": 125.83
+       },
+       "position_pct": 47.1
+      }
+     },
      "fundamentals": {
       "analyst": {
        "consensus": "buy",
@@ -880,13 +1776,95 @@
       "sma200": 124.38
      },
      "verdict": "hold",
-     "verdict_reason": "MACD momentum does not confirm \u2014 possible false break"
+     "verdict_reason": "MACD momentum does not confirm \u2014 possible false break",
+     "volume": {
+      "above_avg": false,
+      "avg20": 1899605,
+      "ratio": 0.8,
+      "today": 1516800
+     }
     },
     {
      "category": "price_sma200",
      "close": 285.37,
      "date": "2026-07-10",
      "direction": "bearish",
+     "fib": {
+      "daily": {
+       "high": 356.39,
+       "levels": [
+        {
+         "dist_pct": -12.75,
+         "label": "23.6%",
+         "price": 327.0576
+        },
+        {
+         "dist_pct": -7.62,
+         "label": "38.2%",
+         "price": 308.9112
+        },
+        {
+         "dist_pct": -3.02,
+         "label": "50.0%",
+         "price": 294.245
+        },
+        {
+         "dist_pct": 2.07,
+         "label": "61.8%",
+         "price": 279.5788
+        },
+        {
+         "dist_pct": 10.31,
+         "label": "78.6%",
+         "price": 258.6981
+        }
+       ],
+       "low": 232.1,
+       "nearest": {
+        "dist_pct": 2.07,
+        "label": "61.8%",
+        "price": 279.5788
+       },
+       "position_pct": 42.9
+      },
+      "weekly": {
+       "high": 366.5,
+       "levels": [
+        {
+         "dist_pct": -14.76,
+         "label": "23.6%",
+         "price": 334.7816
+        },
+        {
+         "dist_pct": -9.45,
+         "label": "38.2%",
+         "price": 315.1592
+        },
+        {
+         "dist_pct": -4.65,
+         "label": "50.0%",
+         "price": 299.3
+        },
+        {
+         "dist_pct": 0.68,
+         "label": "61.8%",
+         "price": 283.4408
+        },
+        {
+         "dist_pct": 9.4,
+         "label": "78.6%",
+         "price": 260.8616
+        }
+       ],
+       "low": 232.1,
+       "nearest": {
+        "dist_pct": 0.68,
+        "label": "61.8%",
+        "price": 283.4408
+       },
+       "position_pct": 39.6
+      }
+     },
      "fundamentals": {
       "analyst": {
        "consensus": "buy",
@@ -965,13 +1943,95 @@
       "sma200": 287.82
      },
      "verdict": "hold",
-     "verdict_reason": "Bearish signal but fundamentals/sector strong \u2014 trim rather than exit"
+     "verdict_reason": "Bearish signal but fundamentals/sector strong \u2014 trim rather than exit",
+     "volume": {
+      "above_avg": false,
+      "avg20": 2563885,
+      "ratio": 0.45,
+      "today": 1149900
+     }
     },
     {
      "category": "price_sma200",
      "close": 333.99,
      "date": "2026-07-10",
      "direction": "bullish",
+     "fib": {
+      "daily": {
+       "high": 377.77,
+       "levels": [
+        {
+         "dist_pct": -6.45,
+         "label": "23.6%",
+         "price": 357.0232
+        },
+        {
+         "dist_pct": -2.96,
+         "label": "38.2%",
+         "price": 344.1884
+        },
+        {
+         "dist_pct": 0.05,
+         "label": "50.0%",
+         "price": 333.815
+        },
+        {
+         "dist_pct": 3.26,
+         "label": "61.8%",
+         "price": 323.4416
+        },
+        {
+         "dist_pct": 8.2,
+         "label": "78.6%",
+         "price": 308.6727
+        }
+       ],
+       "low": 289.86,
+       "nearest": {
+        "dist_pct": 0.05,
+        "label": "50.0%",
+        "price": 333.815
+       },
+       "position_pct": 50.2
+      },
+      "weekly": {
+       "high": 379.65,
+       "levels": [
+        {
+         "dist_pct": -6.83,
+         "label": "23.6%",
+         "price": 358.4596
+        },
+        {
+         "dist_pct": -3.29,
+         "label": "38.2%",
+         "price": 345.3502
+        },
+        {
+         "dist_pct": -0.23,
+         "label": "50.0%",
+         "price": 334.755
+        },
+        {
+         "dist_pct": 3.03,
+         "label": "61.8%",
+         "price": 324.1598
+        },
+        {
+         "dist_pct": 8.06,
+         "label": "78.6%",
+         "price": 309.075
+        }
+       ],
+       "low": 289.86,
+       "nearest": {
+        "dist_pct": -0.23,
+        "label": "50.0%",
+        "price": 334.755
+       },
+       "position_pct": 49.1
+      }
+     },
      "fundamentals": {
       "analyst": {
        "consensus": "buy",
@@ -1050,13 +2110,95 @@
       "sma200": 333.29
      },
      "verdict": "hold",
-     "verdict_reason": "MACD momentum does not confirm \u2014 possible false break"
+     "verdict_reason": "MACD momentum does not confirm \u2014 possible false break",
+     "volume": {
+      "above_avg": false,
+      "avg20": 2797660,
+      "ratio": 0.39,
+      "today": 1081500
+     }
     },
     {
      "category": "price_sma200",
      "close": 295.25,
      "date": "2026-07-10",
      "direction": "bullish",
+     "fib": {
+      "daily": {
+       "high": 331.09,
+       "levels": [
+        {
+         "dist_pct": -5.52,
+         "label": "23.6%",
+         "price": 312.5074
+        },
+        {
+         "dist_pct": -1.91,
+         "label": "38.2%",
+         "price": 301.0113
+        },
+        {
+         "dist_pct": 1.21,
+         "label": "50.0%",
+         "price": 291.72
+        },
+        {
+         "dist_pct": 4.54,
+         "label": "61.8%",
+         "price": 282.4287
+        },
+        {
+         "dist_pct": 9.68,
+         "label": "78.6%",
+         "price": 269.2004
+        }
+       ],
+       "low": 252.35,
+       "nearest": {
+        "dist_pct": 1.21,
+        "label": "50.0%",
+        "price": 291.72
+       },
+       "position_pct": 54.5
+      },
+      "weekly": {
+       "high": 331.09,
+       "levels": [
+        {
+         "dist_pct": -5.52,
+         "label": "23.6%",
+         "price": 312.5074
+        },
+        {
+         "dist_pct": -1.91,
+         "label": "38.2%",
+         "price": 301.0113
+        },
+        {
+         "dist_pct": 1.21,
+         "label": "50.0%",
+         "price": 291.72
+        },
+        {
+         "dist_pct": 4.54,
+         "label": "61.8%",
+         "price": 282.4287
+        },
+        {
+         "dist_pct": 9.68,
+         "label": "78.6%",
+         "price": 269.2004
+        }
+       ],
+       "low": 252.35,
+       "nearest": {
+        "dist_pct": 1.21,
+        "label": "50.0%",
+        "price": 291.72
+       },
+       "position_pct": 54.5
+      }
+     },
      "fundamentals": {
       "analyst": {
        "consensus": "buy",
@@ -1135,13 +2277,95 @@
       "sma200": 291.82
      },
      "verdict": "hold",
-     "verdict_reason": "MACD momentum does not confirm \u2014 possible false break"
+     "verdict_reason": "MACD momentum does not confirm \u2014 possible false break",
+     "volume": {
+      "above_avg": true,
+      "avg20": 1280480,
+      "ratio": 1.17,
+      "today": 1493000
+     }
     },
     {
      "category": "price_sma200",
      "close": 59.75,
      "date": "2026-07-13",
      "direction": "bearish",
+     "fib": {
+      "daily": {
+       "high": 66.2,
+       "levels": [
+        {
+         "dist_pct": -5.45,
+         "label": "23.6%",
+         "price": 63.191
+        },
+        {
+         "dist_pct": -2.58,
+         "label": "38.2%",
+         "price": 61.3295
+        },
+        {
+         "dist_pct": -0.13,
+         "label": "50.0%",
+         "price": 59.825
+        },
+        {
+         "dist_pct": 2.45,
+         "label": "61.8%",
+         "price": 58.3205
+        },
+        {
+         "dist_pct": 6.36,
+         "label": "78.6%",
+         "price": 56.1785
+        }
+       ],
+       "low": 53.45,
+       "nearest": {
+        "dist_pct": -0.13,
+        "label": "50.0%",
+        "price": 59.825
+       },
+       "position_pct": 49.4
+      },
+      "weekly": {
+       "high": 66.8,
+       "levels": [
+        {
+         "dist_pct": -6.13,
+         "label": "23.6%",
+         "price": 63.6494
+        },
+        {
+         "dist_pct": -3.16,
+         "label": "38.2%",
+         "price": 61.7003
+        },
+        {
+         "dist_pct": -0.62,
+         "label": "50.0%",
+         "price": 60.125
+        },
+        {
+         "dist_pct": 2.05,
+         "label": "61.8%",
+         "price": 58.5497
+        },
+        {
+         "dist_pct": 6.11,
+         "label": "78.6%",
+         "price": 56.3069
+        }
+       ],
+       "low": 53.45,
+       "nearest": {
+        "dist_pct": -0.62,
+        "label": "50.0%",
+        "price": 60.125
+       },
+       "position_pct": 47.2
+      }
+     },
      "fundamentals": {
       "analyst": {
        "consensus": "buy",
@@ -1179,13 +2403,95 @@
       "sma200": 59.99
      },
      "verdict": "sell",
-     "verdict_reason": "Bearish signal confirmed by MACD"
+     "verdict_reason": "Bearish signal confirmed by MACD",
+     "volume": {
+      "above_avg": false,
+      "avg20": 415518,
+      "ratio": 0.04,
+      "today": 18471
+     }
     },
     {
      "category": "price_sma200",
      "close": 252.0,
      "date": "2026-07-13",
      "direction": "bullish",
+     "fib": {
+      "daily": {
+       "high": 281.2,
+       "levels": [
+        {
+         "dist_pct": -5.82,
+         "label": "23.6%",
+         "price": 267.5592
+        },
+        {
+         "dist_pct": -2.75,
+         "label": "38.2%",
+         "price": 259.1204
+        },
+        {
+         "dist_pct": -0.12,
+         "label": "50.0%",
+         "price": 252.3
+        },
+        {
+         "dist_pct": 2.66,
+         "label": "61.8%",
+         "price": 245.4796
+        },
+        {
+         "dist_pct": 6.88,
+         "label": "78.6%",
+         "price": 235.7692
+        }
+       ],
+       "low": 223.4,
+       "nearest": {
+        "dist_pct": -0.12,
+        "label": "50.0%",
+        "price": 252.3
+       },
+       "position_pct": 49.5
+      },
+      "weekly": {
+       "high": 281.2,
+       "levels": [
+        {
+         "dist_pct": -5.82,
+         "label": "23.6%",
+         "price": 267.5592
+        },
+        {
+         "dist_pct": -2.75,
+         "label": "38.2%",
+         "price": 259.1204
+        },
+        {
+         "dist_pct": -0.12,
+         "label": "50.0%",
+         "price": 252.3
+        },
+        {
+         "dist_pct": 2.66,
+         "label": "61.8%",
+         "price": 245.4796
+        },
+        {
+         "dist_pct": 6.88,
+         "label": "78.6%",
+         "price": 235.7692
+        }
+       ],
+       "low": 223.4,
+       "nearest": {
+        "dist_pct": -0.12,
+        "label": "50.0%",
+        "price": 252.3
+       },
+       "position_pct": 49.5
+      }
+     },
      "fundamentals": {
       "analyst": {
        "consensus": "buy",
@@ -1223,16 +2529,98 @@
       "sma200": 251.57
      },
      "verdict": "buy",
-     "verdict_reason": "Bullish signal, MACD confirms, strong fundamentals"
+     "verdict_reason": "Bullish signal, MACD confirms, strong fundamentals",
+     "volume": {
+      "above_avg": false,
+      "avg20": 146680,
+      "ratio": 0.17,
+      "today": 25646
+     }
     },
     {
      "category": "price_sma200",
-     "close": 416.25,
+     "close": 415.75,
      "date": "2026-07-13",
      "direction": "bearish",
+     "fib": {
+      "daily": {
+       "high": 625.5,
+       "levels": [
+        {
+         "dist_pct": -27.46,
+         "label": "23.6%",
+         "price": 573.167
+        },
+        {
+         "dist_pct": -23.12,
+         "label": "38.2%",
+         "price": 540.7915
+        },
+        {
+         "dist_pct": -19.21,
+         "label": "50.0%",
+         "price": 514.625
+        },
+        {
+         "dist_pct": -14.89,
+         "label": "61.8%",
+         "price": 488.4585
+        },
+        {
+         "dist_pct": -7.86,
+         "label": "78.6%",
+         "price": 451.2045
+        }
+       ],
+       "low": 403.75,
+       "nearest": {
+        "dist_pct": -7.86,
+        "label": "78.6%",
+        "price": 451.2045
+       },
+       "position_pct": 5.4
+      },
+      "weekly": {
+       "high": 625.5,
+       "levels": [
+        {
+         "dist_pct": -22.06,
+         "label": "23.6%",
+         "price": 533.3892
+        },
+        {
+         "dist_pct": -12.73,
+         "label": "38.2%",
+         "price": 476.4054
+        },
+        {
+         "dist_pct": -3.39,
+         "label": "50.0%",
+         "price": 430.35
+        },
+        {
+         "dist_pct": 8.19,
+         "label": "61.8%",
+         "price": 384.2946
+        },
+        {
+         "dist_pct": 30.44,
+         "label": "78.6%",
+         "price": 318.7242
+        }
+       ],
+       "low": 235.2,
+       "nearest": {
+        "dist_pct": -3.39,
+        "label": "50.0%",
+        "price": 430.35
+       },
+       "position_pct": 46.3
+      }
+     },
      "fundamentals": {
       "analyst": {
-       "price": 416.75
+       "price": 415.75
       },
       "factors": {
        "earnings_growth": 1,
@@ -1242,7 +2630,7 @@
       "metrics": {
        "earnings_growth_pct": 278.0,
        "fcf_yield_pct": 0.9,
-       "forward_pe": 1190.7
+       "forward_pe": 1187.9
       },
       "rating": "neutral",
       "rating_changes": [],
@@ -1258,13 +2646,95 @@
       "sma200": 434.14
      },
      "verdict": "sell",
-     "verdict_reason": "Bearish signal confirmed by MACD"
+     "verdict_reason": "Bearish signal confirmed by MACD",
+     "volume": {
+      "above_avg": false,
+      "avg20": 2817288,
+      "ratio": 0.85,
+      "today": 2394312
+     }
     },
     {
      "category": "price_sma200_weekly",
      "close": 134.29,
      "date": "2026-07-10",
      "direction": "bullish",
+     "fib": {
+      "daily": {
+       "high": 144.88,
+       "levels": [
+        {
+         "dist_pct": -1.44,
+         "label": "23.6%",
+         "price": 136.2589
+        },
+        {
+         "dist_pct": 2.57,
+         "label": "38.2%",
+         "price": 130.9255
+        },
+        {
+         "dist_pct": 6.06,
+         "label": "50.0%",
+         "price": 126.615
+        },
+        {
+         "dist_pct": 9.8,
+         "label": "61.8%",
+         "price": 122.3045
+        },
+        {
+         "dist_pct": 15.6,
+         "label": "78.6%",
+         "price": 116.1674
+        }
+       ],
+       "low": 108.35,
+       "nearest": {
+        "dist_pct": -1.44,
+        "label": "23.6%",
+        "price": 136.2589
+       },
+       "position_pct": 71.0
+      },
+      "weekly": {
+       "high": 160.27,
+       "levels": [
+        {
+         "dist_pct": -9.27,
+         "label": "23.6%",
+         "price": 148.0169
+        },
+        {
+         "dist_pct": -4.38,
+         "label": "38.2%",
+         "price": 140.4366
+        },
+        {
+         "dist_pct": -0.01,
+         "label": "50.0%",
+         "price": 134.31
+        },
+        {
+         "dist_pct": 4.76,
+         "label": "61.8%",
+         "price": 128.1834
+        },
+        {
+         "dist_pct": 12.41,
+         "label": "78.6%",
+         "price": 119.4609
+        }
+       ],
+       "low": 108.35,
+       "nearest": {
+        "dist_pct": -0.01,
+        "label": "50.0%",
+        "price": 134.31
+       },
+       "position_pct": 50.0
+      }
+     },
      "fundamentals": {
       "analyst": {
        "consensus": "buy",
@@ -1343,13 +2813,95 @@
       "sma200": 131.0
      },
      "verdict": "hold",
-     "verdict_reason": "MACD momentum does not confirm \u2014 possible false break"
+     "verdict_reason": "MACD momentum does not confirm \u2014 possible false break",
+     "volume": {
+      "above_avg": false,
+      "avg20": 2342890,
+      "ratio": 0.93,
+      "today": 2175300
+     }
     },
     {
      "category": "price_sma200_weekly",
      "close": 130.69,
      "date": "2026-07-10",
      "direction": "bearish",
+     "fib": {
+      "daily": {
+       "high": 141.21,
+       "levels": [
+        {
+         "dist_pct": -4.14,
+         "label": "23.6%",
+         "price": 136.339
+        },
+        {
+         "dist_pct": -1.98,
+         "label": "38.2%",
+         "price": 133.3255
+        },
+        {
+         "dist_pct": -0.15,
+         "label": "50.0%",
+         "price": 130.89
+        },
+        {
+         "dist_pct": 1.74,
+         "label": "61.8%",
+         "price": 128.4545
+        },
+        {
+         "dist_pct": 4.56,
+         "label": "78.6%",
+         "price": 124.987
+        }
+       ],
+       "low": 120.57,
+       "nearest": {
+        "dist_pct": -0.15,
+        "label": "50.0%",
+        "price": 130.89
+       },
+       "position_pct": 49.0
+      },
+      "weekly": {
+       "high": 147.87,
+       "levels": [
+        {
+         "dist_pct": -7.59,
+         "label": "23.6%",
+         "price": 141.4272
+        },
+        {
+         "dist_pct": -4.91,
+         "label": "38.2%",
+         "price": 137.4414
+        },
+        {
+         "dist_pct": -2.63,
+         "label": "50.0%",
+         "price": 134.22
+        },
+        {
+         "dist_pct": -0.24,
+         "label": "61.8%",
+         "price": 130.9986
+        },
+        {
+         "dist_pct": 3.38,
+         "label": "78.6%",
+         "price": 126.4122
+        }
+       ],
+       "low": 120.57,
+       "nearest": {
+        "dist_pct": -0.24,
+        "label": "61.8%",
+        "price": 130.9986
+       },
+       "position_pct": 37.1
+      }
+     },
      "fundamentals": {
       "analyst": {
        "consensus": "hold",
@@ -1428,13 +2980,95 @@
       "sma200": 136.45
      },
      "verdict": "hold",
-     "verdict_reason": "MACD momentum does not confirm \u2014 possible false breakdown"
+     "verdict_reason": "MACD momentum does not confirm \u2014 possible false breakdown",
+     "volume": {
+      "above_avg": false,
+      "avg20": 2517890,
+      "ratio": 0.67,
+      "today": 1679100
+     }
     },
     {
      "category": "price_sma200_weekly",
      "close": 3072.64,
      "date": "2026-07-10",
      "direction": "bearish",
+     "fib": {
+      "daily": {
+       "high": 3887.03,
+       "levels": [
+        {
+         "dist_pct": -16.06,
+         "label": "23.6%",
+         "price": 3660.7249
+        },
+        {
+         "dist_pct": -12.73,
+         "label": "38.2%",
+         "price": 3520.7226
+        },
+        {
+         "dist_pct": -9.83,
+         "label": "50.0%",
+         "price": 3407.5701
+        },
+        {
+         "dist_pct": -6.73,
+         "label": "61.8%",
+         "price": 3294.4175
+        },
+        {
+         "dist_pct": -1.94,
+         "label": "78.6%",
+         "price": 3133.319
+        }
+       ],
+       "low": 2928.1101,
+       "nearest": {
+        "dist_pct": -1.94,
+        "label": "78.6%",
+        "price": 3133.319
+       },
+       "position_pct": 15.1
+      },
+      "weekly": {
+       "high": 4388.1099,
+       "levels": [
+        {
+         "dist_pct": -24.01,
+         "label": "23.6%",
+         "price": 4043.5499
+        },
+        {
+         "dist_pct": -19.78,
+         "label": "38.2%",
+         "price": 3830.39
+        },
+        {
+         "dist_pct": -16.0,
+         "label": "50.0%",
+         "price": 3658.11
+        },
+        {
+         "dist_pct": -11.85,
+         "label": "61.8%",
+         "price": 3485.83
+        },
+        {
+         "dist_pct": -5.18,
+         "label": "78.6%",
+         "price": 3240.5501
+        }
+       ],
+       "low": 2928.1101,
+       "nearest": {
+        "dist_pct": -5.18,
+        "label": "78.6%",
+        "price": 3240.5501
+       },
+       "position_pct": 9.9
+      }
+     },
      "fundamentals": {
       "analyst": {
        "n_analysts": 24,
@@ -1510,13 +3144,95 @@
       "sma200": 3077.32
      },
      "verdict": "hold",
-     "verdict_reason": "MACD momentum does not confirm \u2014 possible false breakdown"
+     "verdict_reason": "MACD momentum does not confirm \u2014 possible false breakdown",
+     "volume": {
+      "above_avg": false,
+      "avg20": 524140,
+      "ratio": 0.39,
+      "today": 204000
+     }
     },
     {
      "category": "price_sma200_weekly",
      "close": 199.15,
      "date": "2026-07-10",
      "direction": "bearish",
+     "fib": {
+      "daily": {
+       "high": 219.72,
+       "levels": [
+        {
+         "dist_pct": -3.19,
+         "label": "23.6%",
+         "price": 205.711
+        },
+        {
+         "dist_pct": 1.07,
+         "label": "38.2%",
+         "price": 197.0445
+        },
+        {
+         "dist_pct": 4.79,
+         "label": "50.0%",
+         "price": 190.04
+        },
+        {
+         "dist_pct": 8.8,
+         "label": "61.8%",
+         "price": 183.0355
+        },
+        {
+         "dist_pct": 15.07,
+         "label": "78.6%",
+         "price": 173.063
+        }
+       ],
+       "low": 160.36,
+       "nearest": {
+        "dist_pct": 1.07,
+        "label": "38.2%",
+        "price": 197.0445
+       },
+       "position_pct": 65.3
+      },
+      "weekly": {
+       "high": 219.72,
+       "levels": [
+        {
+         "dist_pct": 1.38,
+         "label": "23.6%",
+         "price": 196.4339
+        },
+        {
+         "dist_pct": 9.41,
+         "label": "38.2%",
+         "price": 182.0281
+        },
+        {
+         "dist_pct": 16.88,
+         "label": "50.0%",
+         "price": 170.385
+        },
+        {
+         "dist_pct": 25.46,
+         "label": "61.8%",
+         "price": 158.7419
+        },
+        {
+         "dist_pct": 40.08,
+         "label": "78.6%",
+         "price": 142.1654
+        }
+       ],
+       "low": 121.05,
+       "nearest": {
+        "dist_pct": 1.38,
+        "label": "23.6%",
+        "price": 196.4339
+       },
+       "position_pct": 79.2
+      }
+     },
      "fundamentals": {
       "analyst": {
        "consensus": "buy",
@@ -1595,13 +3311,95 @@
       "sma200": 209.47
      },
      "verdict": "hold",
-     "verdict_reason": "Bearish signal but fundamentals/sector strong \u2014 trim rather than exit"
+     "verdict_reason": "Bearish signal but fundamentals/sector strong \u2014 trim rather than exit",
+     "volume": {
+      "above_avg": false,
+      "avg20": 1302210,
+      "ratio": 0.87,
+      "today": 1133100
+     }
     },
     {
      "category": "price_sma200_weekly",
      "close": 109.04,
      "date": "2026-07-10",
      "direction": "bullish",
+     "fib": {
+      "daily": {
+       "high": 135.87,
+       "levels": [
+        {
+         "dist_pct": -13.61,
+         "label": "23.6%",
+         "price": 126.22
+        },
+        {
+         "dist_pct": -9.32,
+         "label": "38.2%",
+         "price": 120.25
+        },
+        {
+         "dist_pct": -5.53,
+         "label": "50.0%",
+         "price": 115.425
+        },
+        {
+         "dist_pct": -1.41,
+         "label": "61.8%",
+         "price": 110.6
+        },
+        {
+         "dist_pct": 5.12,
+         "label": "78.6%",
+         "price": 103.7305
+        }
+       ],
+       "low": 94.98,
+       "nearest": {
+        "dist_pct": -1.41,
+        "label": "61.8%",
+        "price": 110.6
+       },
+       "position_pct": 34.4
+      },
+      "weekly": {
+       "high": 135.87,
+       "levels": [
+        {
+         "dist_pct": -12.06,
+         "label": "23.6%",
+         "price": 123.9992
+        },
+        {
+         "dist_pct": -6.53,
+         "label": "38.2%",
+         "price": 116.6554
+        },
+        {
+         "dist_pct": -1.52,
+         "label": "50.0%",
+         "price": 110.72
+        },
+        {
+         "dist_pct": 4.06,
+         "label": "61.8%",
+         "price": 104.7846
+        },
+        {
+         "dist_pct": 13.19,
+         "label": "78.6%",
+         "price": 96.3342
+        }
+       ],
+       "low": 85.57,
+       "nearest": {
+        "dist_pct": -1.52,
+        "label": "50.0%",
+        "price": 110.72
+       },
+       "position_pct": 46.7
+      }
+     },
      "fundamentals": {
       "analyst": {
        "consensus": "buy",
@@ -1680,13 +3478,95 @@
       "sma200": 108.07
      },
      "verdict": "buy",
-     "verdict_reason": "Bullish signal confirmed by MACD, sector lagging"
+     "verdict_reason": "Bullish signal confirmed by MACD, sector lagging",
+     "volume": {
+      "above_avg": false,
+      "avg20": 8322870,
+      "ratio": 0.84,
+      "today": 6977100
+     }
     },
     {
      "category": "price_sma200_weekly",
      "close": 143.96,
      "date": "2026-07-10",
      "direction": "bearish",
+     "fib": {
+      "daily": {
+       "high": 155.19,
+       "levels": [
+        {
+         "dist_pct": -3.18,
+         "label": "23.6%",
+         "price": 148.6906
+        },
+        {
+         "dist_pct": -0.49,
+         "label": "38.2%",
+         "price": 144.6697
+        },
+        {
+         "dist_pct": 1.8,
+         "label": "50.0%",
+         "price": 141.42
+        },
+        {
+         "dist_pct": 4.19,
+         "label": "61.8%",
+         "price": 138.1703
+        },
+        {
+         "dist_pct": 7.8,
+         "label": "78.6%",
+         "price": 133.5436
+        }
+       ],
+       "low": 127.65,
+       "nearest": {
+        "dist_pct": -0.49,
+        "label": "38.2%",
+        "price": 144.6697
+       },
+       "position_pct": 59.2
+      },
+      "weekly": {
+       "high": 155.19,
+       "levels": [
+        {
+         "dist_pct": -2.88,
+         "label": "23.6%",
+         "price": 148.2327
+        },
+        {
+         "dist_pct": 0.02,
+         "label": "38.2%",
+         "price": 143.9286
+        },
+        {
+         "dist_pct": 2.5,
+         "label": "50.0%",
+         "price": 140.45
+        },
+        {
+         "dist_pct": 5.1,
+         "label": "61.8%",
+         "price": 136.9714
+        },
+        {
+         "dist_pct": 9.05,
+         "label": "78.6%",
+         "price": 132.0187
+        }
+       ],
+       "low": 125.71,
+       "nearest": {
+        "dist_pct": 0.02,
+        "label": "38.2%",
+        "price": 143.9286
+       },
+       "position_pct": 61.9
+      }
+     },
      "fundamentals": {
       "analyst": {
        "consensus": "buy",
@@ -1765,13 +3645,95 @@
       "sma200": 148.08
      },
      "verdict": "sell",
-     "verdict_reason": "Bearish signal confirmed by MACD, sector lagging"
+     "verdict_reason": "Bearish signal confirmed by MACD, sector lagging",
+     "volume": {
+      "above_avg": false,
+      "avg20": 1203960,
+      "ratio": 0.73,
+      "today": 876900
+     }
     },
     {
      "category": "price_sma200_weekly",
      "close": 343.3,
      "date": "2026-07-10",
      "direction": "bearish",
+     "fib": {
+      "daily": {
+       "high": 397.63,
+       "levels": [
+        {
+         "dist_pct": -7.72,
+         "label": "23.6%",
+         "price": 372.0169
+        },
+        {
+         "dist_pct": -3.61,
+         "label": "38.2%",
+         "price": 356.1715
+        },
+        {
+         "dist_pct": -0.02,
+         "label": "50.0%",
+         "price": 343.365
+        },
+        {
+         "dist_pct": 3.85,
+         "label": "61.8%",
+         "price": 330.5585
+        },
+        {
+         "dist_pct": 9.92,
+         "label": "78.6%",
+         "price": 312.3254
+        }
+       ],
+       "low": 289.1,
+       "nearest": {
+        "dist_pct": -0.02,
+        "label": "50.0%",
+        "price": 343.365
+       },
+       "position_pct": 49.9
+      },
+      "weekly": {
+       "high": 426.75,
+       "levels": [
+        {
+         "dist_pct": -12.93,
+         "label": "23.6%",
+         "price": 394.2646
+        },
+        {
+         "dist_pct": -8.25,
+         "label": "38.2%",
+         "price": 374.1677
+        },
+        {
+         "dist_pct": -4.09,
+         "label": "50.0%",
+         "price": 357.925
+        },
+        {
+         "dist_pct": 0.47,
+         "label": "61.8%",
+         "price": 341.6823
+        },
+        {
+         "dist_pct": 7.77,
+         "label": "78.6%",
+         "price": 318.5571
+        }
+       ],
+       "low": 289.1,
+       "nearest": {
+        "dist_pct": 0.47,
+        "label": "61.8%",
+        "price": 341.6823
+       },
+       "position_pct": 39.4
+      }
+     },
      "fundamentals": {
       "analyst": {
        "consensus": "buy",
@@ -1850,13 +3812,95 @@
       "sma200": 347.41
      },
      "verdict": "sell",
-     "verdict_reason": "Bearish signal confirmed by MACD, sector lagging"
+     "verdict_reason": "Bearish signal confirmed by MACD, sector lagging",
+     "volume": {
+      "above_avg": false,
+      "avg20": 5037290,
+      "ratio": 0.55,
+      "today": 2747500
+     }
     },
     {
      "category": "price_sma200_weekly",
      "close": 77.53,
      "date": "2026-07-10",
      "direction": "bearish",
+     "fib": {
+      "daily": {
+       "high": 84.45,
+       "levels": [
+        {
+         "dist_pct": -3.06,
+         "label": "23.6%",
+         "price": 79.9754
+        },
+        {
+         "dist_pct": 0.42,
+         "label": "38.2%",
+         "price": 77.2073
+        },
+        {
+         "dist_pct": 3.41,
+         "label": "50.0%",
+         "price": 74.97
+        },
+        {
+         "dist_pct": 6.6,
+         "label": "61.8%",
+         "price": 72.7327
+        },
+        {
+         "dist_pct": 11.48,
+         "label": "78.6%",
+         "price": 69.5474
+        }
+       ],
+       "low": 65.49,
+       "nearest": {
+        "dist_pct": 0.42,
+        "label": "38.2%",
+        "price": 77.2073
+       },
+       "position_pct": 63.5
+      },
+      "weekly": {
+       "high": 84.45,
+       "levels": [
+        {
+         "dist_pct": -1.21,
+         "label": "23.6%",
+         "price": 78.4768
+        },
+        {
+         "dist_pct": 3.68,
+         "label": "38.2%",
+         "price": 74.7816
+        },
+        {
+         "dist_pct": 7.99,
+         "label": "50.0%",
+         "price": 71.795
+        },
+        {
+         "dist_pct": 12.68,
+         "label": "61.8%",
+         "price": 68.8084
+        },
+        {
+         "dist_pct": 20.1,
+         "label": "78.6%",
+         "price": 64.5563
+        }
+       ],
+       "low": 59.14,
+       "nearest": {
+        "dist_pct": -1.21,
+        "label": "23.6%",
+        "price": 78.4768
+       },
+       "position_pct": 72.7
+      }
+     },
      "fundamentals": {
       "analyst": {
        "consensus": "buy",
@@ -1933,13 +3977,95 @@
       "sma200": 82.55
      },
      "verdict": "hold",
-     "verdict_reason": "Bearish signal but fundamentals/sector strong \u2014 trim rather than exit"
+     "verdict_reason": "Bearish signal but fundamentals/sector strong \u2014 trim rather than exit",
+     "volume": {
+      "above_avg": false,
+      "avg20": 2069680,
+      "ratio": 0.71,
+      "today": 1476100
+     }
     },
     {
      "category": "price_sma200_weekly",
      "close": 406.78,
      "date": "2026-07-10",
      "direction": "bearish",
+     "fib": {
+      "daily": {
+       "high": 543.0,
+       "levels": [
+        {
+         "dist_pct": -20.0,
+         "label": "23.6%",
+         "price": 508.4685
+        },
+        {
+         "dist_pct": -16.49,
+         "label": "38.2%",
+         "price": 487.1058
+        },
+        {
+         "dist_pct": -13.42,
+         "label": "50.0%",
+         "price": 469.84
+        },
+        {
+         "dist_pct": -10.12,
+         "label": "61.8%",
+         "price": 452.5742
+        },
+        {
+         "dist_pct": -4.96,
+         "label": "78.6%",
+         "price": 427.9925
+        }
+       ],
+       "low": 396.68,
+       "nearest": {
+        "dist_pct": -4.96,
+        "label": "78.6%",
+        "price": 427.9925
+       },
+       "position_pct": 6.9
+      },
+      "weekly": {
+       "high": 603.88,
+       "levels": [
+        {
+         "dist_pct": -26.7,
+         "label": "23.6%",
+         "price": 554.9808
+        },
+        {
+         "dist_pct": -22.48,
+         "label": "38.2%",
+         "price": 524.7296
+        },
+        {
+         "dist_pct": -18.69,
+         "label": "50.0%",
+         "price": 500.28
+        },
+        {
+         "dist_pct": -14.51,
+         "label": "61.8%",
+         "price": 475.8304
+        },
+        {
+         "dist_pct": -7.76,
+         "label": "78.6%",
+         "price": 441.0208
+        }
+       ],
+       "low": 396.68,
+       "nearest": {
+        "dist_pct": -7.76,
+        "label": "78.6%",
+        "price": 441.0208
+       },
+       "position_pct": 4.9
+      }
+     },
      "fundamentals": {
       "analyst": {
        "consensus": "buy",
@@ -2018,13 +4144,95 @@
       "sma200": 410.91
      },
      "verdict": "hold",
-     "verdict_reason": "MACD momentum does not confirm \u2014 possible false breakdown"
+     "verdict_reason": "MACD momentum does not confirm \u2014 possible false breakdown",
+     "volume": {
+      "above_avg": false,
+      "avg20": 2512395,
+      "ratio": 0.74,
+      "today": 1859200
+     }
     },
     {
      "category": "price_sma200_weekly",
      "close": 31.67,
      "date": "2026-07-10",
      "direction": "bearish",
+     "fib": {
+      "daily": {
+       "high": 33.82,
+       "levels": [
+        {
+         "dist_pct": -0.13,
+         "label": "23.6%",
+         "price": 31.7102
+        },
+        {
+         "dist_pct": 4.16,
+         "label": "38.2%",
+         "price": 30.4049
+        },
+        {
+         "dist_pct": 7.9,
+         "label": "50.0%",
+         "price": 29.35
+        },
+        {
+         "dist_pct": 11.93,
+         "label": "61.8%",
+         "price": 28.2951
+        },
+        {
+         "dist_pct": 18.2,
+         "label": "78.6%",
+         "price": 26.7932
+        }
+       ],
+       "low": 24.88,
+       "nearest": {
+        "dist_pct": -0.13,
+        "label": "23.6%",
+        "price": 31.7102
+       },
+       "position_pct": 76.0
+      },
+      "weekly": {
+       "high": 35.94,
+       "levels": [
+        {
+         "dist_pct": -4.98,
+         "label": "23.6%",
+         "price": 33.3298
+        },
+        {
+         "dist_pct": -0.14,
+         "label": "38.2%",
+         "price": 31.7151
+        },
+        {
+         "dist_pct": 4.14,
+         "label": "50.0%",
+         "price": 30.41
+        },
+        {
+         "dist_pct": 8.81,
+         "label": "61.8%",
+         "price": 29.1049
+        },
+        {
+         "dist_pct": 16.23,
+         "label": "78.6%",
+         "price": 27.2468
+        }
+       ],
+       "low": 24.88,
+       "nearest": {
+        "dist_pct": -0.14,
+        "label": "38.2%",
+        "price": 31.7151
+       },
+       "position_pct": 61.4
+      }
+     },
      "fundamentals": {
       "analyst": {
        "consensus": "buy",
@@ -2103,13 +4311,95 @@
       "sma200": 32.39
      },
      "verdict": "sell",
-     "verdict_reason": "Bearish signal confirmed by MACD, sector lagging"
+     "verdict_reason": "Bearish signal confirmed by MACD, sector lagging",
+     "volume": {
+      "above_avg": false,
+      "avg20": 18414815,
+      "ratio": 0.43,
+      "today": 7968600
+     }
     },
     {
      "category": "price_sma200_weekly",
      "close": 385.1,
      "date": "2026-07-10",
      "direction": "bearish",
+     "fib": {
+      "daily": {
+       "high": 483.74,
+       "levels": [
+        {
+         "dist_pct": -14.8,
+         "label": "23.6%",
+         "price": 451.9886
+        },
+        {
+         "dist_pct": -10.93,
+         "label": "38.2%",
+         "price": 432.3457
+        },
+        {
+         "dist_pct": -7.53,
+         "label": "50.0%",
+         "price": 416.47
+        },
+        {
+         "dist_pct": -3.87,
+         "label": "61.8%",
+         "price": 400.5943
+        },
+        {
+         "dist_pct": 1.88,
+         "label": "78.6%",
+         "price": 377.9916
+        }
+       ],
+       "low": 349.2,
+       "nearest": {
+        "dist_pct": 1.88,
+        "label": "78.6%",
+        "price": 377.9916
+       },
+       "position_pct": 26.7
+      },
+      "weekly": {
+       "high": 555.45,
+       "levels": [
+        {
+         "dist_pct": -24.01,
+         "label": "23.6%",
+         "price": 506.775
+        },
+        {
+         "dist_pct": -19.21,
+         "label": "38.2%",
+         "price": 476.6625
+        },
+        {
+         "dist_pct": -14.86,
+         "label": "50.0%",
+         "price": 452.325
+        },
+        {
+         "dist_pct": -10.02,
+         "label": "61.8%",
+         "price": 427.9875
+        },
+        {
+         "dist_pct": -2.09,
+         "label": "78.6%",
+         "price": 393.3375
+        }
+       ],
+       "low": 349.2,
+       "nearest": {
+        "dist_pct": -2.09,
+        "label": "78.6%",
+        "price": 393.3375
+       },
+       "position_pct": 17.4
+      }
+     },
      "fundamentals": {
       "analyst": {
        "consensus": "strong_buy",
@@ -2188,13 +4478,95 @@
       "sma200": 388.41
      },
      "verdict": "hold",
-     "verdict_reason": "MACD momentum does not confirm \u2014 possible false breakdown"
+     "verdict_reason": "MACD momentum does not confirm \u2014 possible false breakdown",
+     "volume": {
+      "above_avg": false,
+      "avg20": 48088515,
+      "ratio": 0.51,
+      "today": 24612200
+     }
     },
     {
      "category": "price_sma200_weekly",
      "close": 116.76,
      "date": "2026-07-10",
      "direction": "bearish",
+     "fib": {
+      "daily": {
+       "high": 133.43,
+       "levels": [
+        {
+         "dist_pct": -6.3,
+         "label": "23.6%",
+         "price": 124.6107
+        },
+        {
+         "dist_pct": -2.01,
+         "label": "38.2%",
+         "price": 119.1547
+        },
+        {
+         "dist_pct": 1.76,
+         "label": "50.0%",
+         "price": 114.745
+        },
+        {
+         "dist_pct": 5.82,
+         "label": "61.8%",
+         "price": 110.3353
+        },
+        {
+         "dist_pct": 12.21,
+         "label": "78.6%",
+         "price": 104.0572
+        }
+       ],
+       "low": 96.06,
+       "nearest": {
+        "dist_pct": 1.76,
+        "label": "50.0%",
+        "price": 114.745
+       },
+       "position_pct": 55.4
+      },
+      "weekly": {
+       "high": 133.43,
+       "levels": [
+        {
+         "dist_pct": -5.82,
+         "label": "23.6%",
+         "price": 123.9806
+        },
+        {
+         "dist_pct": -1.16,
+         "label": "38.2%",
+         "price": 118.1347
+        },
+        {
+         "dist_pct": 2.95,
+         "label": "50.0%",
+         "price": 113.41
+        },
+        {
+         "dist_pct": 7.43,
+         "label": "61.8%",
+         "price": 108.6853
+        },
+        {
+         "dist_pct": 14.52,
+         "label": "78.6%",
+         "price": 101.9586
+        }
+       ],
+       "low": 93.39,
+       "nearest": {
+        "dist_pct": -1.16,
+        "label": "38.2%",
+        "price": 118.1347
+       },
+       "position_pct": 58.4
+      }
+     },
      "fundamentals": {
       "analyst": {
        "consensus": "buy",
@@ -2273,13 +4645,95 @@
       "sma200": 123.38
      },
      "verdict": "sell",
-     "verdict_reason": "Bearish signal confirmed by MACD, sector lagging"
+     "verdict_reason": "Bearish signal confirmed by MACD, sector lagging",
+     "volume": {
+      "above_avg": false,
+      "avg20": 2171060,
+      "ratio": 0.84,
+      "today": 1825500
+     }
     },
     {
      "category": "price_sma200_weekly",
      "close": 47.76,
      "date": "2026-07-10",
      "direction": "bullish",
+     "fib": {
+      "daily": {
+       "high": 58.82,
+       "levels": [
+        {
+         "dist_pct": -13.5,
+         "label": "23.6%",
+         "price": 55.2163
+        },
+        {
+         "dist_pct": -9.86,
+         "label": "38.2%",
+         "price": 52.9869
+        },
+        {
+         "dist_pct": -6.69,
+         "label": "50.0%",
+         "price": 51.185
+        },
+        {
+         "dist_pct": -3.29,
+         "label": "61.8%",
+         "price": 49.3831
+        },
+        {
+         "dist_pct": 2.01,
+         "label": "78.6%",
+         "price": 46.8178
+        }
+       ],
+       "low": 43.55,
+       "nearest": {
+        "dist_pct": 2.01,
+        "label": "78.6%",
+        "price": 46.8178
+       },
+       "position_pct": 27.6
+      },
+      "weekly": {
+       "high": 58.82,
+       "levels": [
+        {
+         "dist_pct": -8.86,
+         "label": "23.6%",
+         "price": 52.4055
+        },
+        {
+         "dist_pct": -1.4,
+         "label": "38.2%",
+         "price": 48.4372
+        },
+        {
+         "dist_pct": 5.59,
+         "label": "50.0%",
+         "price": 45.23
+        },
+        {
+         "dist_pct": 13.65,
+         "label": "61.8%",
+         "price": 42.0228
+        },
+        {
+         "dist_pct": 27.51,
+         "label": "78.6%",
+         "price": 37.4565
+        }
+       ],
+       "low": 31.64,
+       "nearest": {
+        "dist_pct": -1.4,
+        "label": "38.2%",
+        "price": 48.4372
+       },
+       "position_pct": 59.3
+      }
+     },
      "fundamentals": {
       "analyst": {
        "consensus": "buy",
@@ -2358,13 +4812,95 @@
       "sma200": 46.26
      },
      "verdict": "buy",
-     "verdict_reason": "Bullish signal, MACD confirms, strong fundamentals, sector lagging"
+     "verdict_reason": "Bullish signal, MACD confirms, strong fundamentals, sector lagging",
+     "volume": {
+      "above_avg": false,
+      "avg20": 17016170,
+      "ratio": 0.45,
+      "today": 7573400
+     }
     },
     {
      "category": "price_sma200_weekly",
      "close": 135.14,
      "date": "2026-07-10",
      "direction": "bullish",
+     "fib": {
+      "daily": {
+       "high": 142.82,
+       "levels": [
+        {
+         "dist_pct": 1.67,
+         "label": "23.6%",
+         "price": 132.9222
+        },
+        {
+         "dist_pct": 6.58,
+         "label": "38.2%",
+         "price": 126.7989
+        },
+        {
+         "dist_pct": 10.91,
+         "label": "50.0%",
+         "price": 121.85
+        },
+        {
+         "dist_pct": 15.6,
+         "label": "61.8%",
+         "price": 116.9011
+        },
+        {
+         "dist_pct": 23.02,
+         "label": "78.6%",
+         "price": 109.8552
+        }
+       ],
+       "low": 100.88,
+       "nearest": {
+        "dist_pct": 1.67,
+        "label": "23.6%",
+        "price": 132.9222
+       },
+       "position_pct": 81.7
+      },
+      "weekly": {
+       "high": 142.82,
+       "levels": [
+        {
+         "dist_pct": 4.92,
+         "label": "23.6%",
+         "price": 128.8063
+        },
+        {
+         "dist_pct": 12.49,
+         "label": "38.2%",
+         "price": 120.1368
+        },
+        {
+         "dist_pct": 19.46,
+         "label": "50.0%",
+         "price": 113.13
+        },
+        {
+         "dist_pct": 27.34,
+         "label": "61.8%",
+         "price": 106.1232
+        },
+        {
+         "dist_pct": 40.56,
+         "label": "78.6%",
+         "price": 96.1473
+        }
+       ],
+       "low": 83.44,
+       "nearest": {
+        "dist_pct": 4.92,
+        "label": "23.6%",
+        "price": 128.8063
+       },
+       "position_pct": 87.1
+      }
+     },
      "fundamentals": {
       "analyst": {
        "n_analysts": 34,
@@ -2440,13 +4976,95 @@
       "sma200": 131.86
      },
      "verdict": "hold",
-     "verdict_reason": "MACD momentum does not confirm \u2014 possible false break"
+     "verdict_reason": "MACD momentum does not confirm \u2014 possible false break",
+     "volume": {
+      "above_avg": false,
+      "avg20": 4953780,
+      "ratio": 0.69,
+      "today": 3403200
+     }
     },
     {
      "category": "price_sma200_weekly",
      "close": 187.61,
      "date": "2026-07-10",
      "direction": "bullish",
+     "fib": {
+      "daily": {
+       "high": 224.75,
+       "levels": [
+        {
+         "dist_pct": -11.0,
+         "label": "23.6%",
+         "price": 210.8048
+        },
+        {
+         "dist_pct": -7.21,
+         "label": "38.2%",
+         "price": 202.1776
+        },
+        {
+         "dist_pct": -3.89,
+         "label": "50.0%",
+         "price": 195.205
+        },
+        {
+         "dist_pct": -0.33,
+         "label": "61.8%",
+         "price": 188.2324
+        },
+        {
+         "dist_pct": 5.22,
+         "label": "78.6%",
+         "price": 178.3053
+        }
+       ],
+       "low": 165.66,
+       "nearest": {
+        "dist_pct": -0.33,
+        "label": "61.8%",
+        "price": 188.2324
+       },
+       "position_pct": 37.1
+      },
+      "weekly": {
+       "high": 261.56,
+       "levels": [
+        {
+         "dist_pct": -21.48,
+         "label": "23.6%",
+         "price": 238.9276
+        },
+        {
+         "dist_pct": -16.59,
+         "label": "38.2%",
+         "price": 224.9262
+        },
+        {
+         "dist_pct": -12.17,
+         "label": "50.0%",
+         "price": 213.61
+        },
+        {
+         "dist_pct": -7.26,
+         "label": "61.8%",
+         "price": 202.2938
+        },
+        {
+         "dist_pct": 0.77,
+         "label": "78.6%",
+         "price": 186.1826
+        }
+       ],
+       "low": 165.66,
+       "nearest": {
+        "dist_pct": 0.77,
+        "label": "78.6%",
+        "price": 186.1826
+       },
+       "position_pct": 22.9
+      }
+     },
      "fundamentals": {
       "analyst": {
        "consensus": "buy",
@@ -2525,13 +5143,95 @@
       "sma200": 186.21
      },
      "verdict": "buy",
-     "verdict_reason": "Bullish signal, MACD confirms, strong fundamentals, sector lagging"
+     "verdict_reason": "Bullish signal, MACD confirms, strong fundamentals, sector lagging",
+     "volume": {
+      "above_avg": false,
+      "avg20": 6375335,
+      "ratio": 0.71,
+      "today": 4552000
+     }
     },
     {
      "category": "price_sma200_weekly",
      "close": 57.83,
      "date": "2026-07-10",
      "direction": "bearish",
+     "fib": {
+      "daily": {
+       "high": 69.48,
+       "levels": [
+        {
+         "dist_pct": -12.35,
+         "label": "23.6%",
+         "price": 65.9754
+        },
+        {
+         "dist_pct": -9.37,
+         "label": "38.2%",
+         "price": 63.8073
+        },
+        {
+         "dist_pct": -6.81,
+         "label": "50.0%",
+         "price": 62.055
+        },
+        {
+         "dist_pct": -4.1,
+         "label": "61.8%",
+         "price": 60.3027
+        },
+        {
+         "dist_pct": 0.04,
+         "label": "78.6%",
+         "price": 57.8079
+        }
+       ],
+       "low": 54.63,
+       "nearest": {
+        "dist_pct": 0.04,
+        "label": "78.6%",
+        "price": 57.8079
+       },
+       "position_pct": 21.5
+      },
+      "weekly": {
+       "high": 69.48,
+       "levels": [
+        {
+         "dist_pct": -11.05,
+         "label": "23.6%",
+         "price": 65.0149
+        },
+        {
+         "dist_pct": -7.1,
+         "label": "38.2%",
+         "price": 62.2526
+        },
+        {
+         "dist_pct": -3.65,
+         "label": "50.0%",
+         "price": 60.02
+        },
+        {
+         "dist_pct": 0.07,
+         "label": "61.8%",
+         "price": 57.7874
+        },
+        {
+         "dist_pct": 5.9,
+         "label": "78.6%",
+         "price": 54.6089
+        }
+       ],
+       "low": 50.56,
+       "nearest": {
+        "dist_pct": 0.07,
+        "label": "61.8%",
+        "price": 57.7874
+       },
+       "position_pct": 38.4
+      }
+     },
      "fundamentals": {
       "analyst": {
        "consensus": "hold",
@@ -2603,13 +5303,95 @@
       "sma200": 58.09
      },
      "verdict": "hold",
-     "verdict_reason": "MACD momentum does not confirm \u2014 possible false breakdown"
+     "verdict_reason": "MACD momentum does not confirm \u2014 possible false breakdown",
+     "volume": {
+      "above_avg": false,
+      "avg20": 3412455,
+      "ratio": 0.86,
+      "today": 2925900
+     }
     },
     {
      "category": "price_sma200_weekly",
      "close": 469.2,
      "date": "2026-07-10",
      "direction": "bullish",
+     "fib": {
+      "daily": {
+       "high": 714.97,
+       "levels": [
+        {
+         "dist_pct": -27.92,
+         "label": "23.6%",
+         "price": 650.9267
+        },
+        {
+         "dist_pct": -23.25,
+         "label": "38.2%",
+         "price": 611.3066
+        },
+        {
+         "dist_pct": -19.0,
+         "label": "50.0%",
+         "price": 579.285
+        },
+        {
+         "dist_pct": -14.26,
+         "label": "61.8%",
+         "price": 547.2633
+        },
+        {
+         "dist_pct": -6.47,
+         "label": "78.6%",
+         "price": 501.6732
+        }
+       ],
+       "low": 443.6,
+       "nearest": {
+        "dist_pct": -6.47,
+        "label": "78.6%",
+        "price": 501.6732
+       },
+       "position_pct": 9.4
+      },
+      "weekly": {
+       "high": 714.97,
+       "levels": [
+        {
+         "dist_pct": -27.92,
+         "label": "23.6%",
+         "price": 650.9267
+        },
+        {
+         "dist_pct": -23.25,
+         "label": "38.2%",
+         "price": 611.3066
+        },
+        {
+         "dist_pct": -19.0,
+         "label": "50.0%",
+         "price": 579.285
+        },
+        {
+         "dist_pct": -14.26,
+         "label": "61.8%",
+         "price": 547.2633
+        },
+        {
+         "dist_pct": -6.47,
+         "label": "78.6%",
+         "price": 501.6732
+        }
+       ],
+       "low": 443.6,
+       "nearest": {
+        "dist_pct": -6.47,
+        "label": "78.6%",
+        "price": 501.6732
+       },
+       "position_pct": 9.4
+      }
+     },
      "fundamentals": {
       "analyst": {
        "consensus": "buy",
@@ -2688,13 +5470,95 @@
       "sma200": 464.25
      },
      "verdict": "buy",
-     "verdict_reason": "Bullish signal, MACD confirms, strong fundamentals, sector lagging"
+     "verdict_reason": "Bullish signal, MACD confirms, strong fundamentals, sector lagging",
+     "volume": {
+      "above_avg": false,
+      "avg20": 757040,
+      "ratio": 0.56,
+      "today": 426000
+     }
     },
     {
      "category": "price_sma200_weekly",
      "close": 99.77,
      "date": "2026-07-10",
      "direction": "bullish",
+     "fib": {
+      "daily": {
+       "high": 119.19,
+       "levels": [
+        {
+         "dist_pct": -11.74,
+         "label": "23.6%",
+         "price": 113.0446
+        },
+        {
+         "dist_pct": -8.67,
+         "label": "38.2%",
+         "price": 109.2427
+        },
+        {
+         "dist_pct": -6.03,
+         "label": "50.0%",
+         "price": 106.17
+        },
+        {
+         "dist_pct": -3.23,
+         "label": "61.8%",
+         "price": 103.0973
+        },
+        {
+         "dist_pct": 1.06,
+         "label": "78.6%",
+         "price": 98.7226
+        }
+       ],
+       "low": 93.15,
+       "nearest": {
+        "dist_pct": 1.06,
+        "label": "78.6%",
+        "price": 98.7226
+       },
+       "position_pct": 25.4
+      },
+      "weekly": {
+       "high": 134.72,
+       "levels": [
+        {
+         "dist_pct": -20.13,
+         "label": "23.6%",
+         "price": 124.9095
+        },
+        {
+         "dist_pct": -16.05,
+         "label": "38.2%",
+         "price": 118.8403
+        },
+        {
+         "dist_pct": -12.43,
+         "label": "50.0%",
+         "price": 113.935
+        },
+        {
+         "dist_pct": -8.49,
+         "label": "61.8%",
+         "price": 109.0297
+        },
+        {
+         "dist_pct": -2.23,
+         "label": "78.6%",
+         "price": 102.046
+        }
+       ],
+       "low": 93.15,
+       "nearest": {
+        "dist_pct": -2.23,
+        "label": "78.6%",
+        "price": 102.046
+       },
+       "position_pct": 15.9
+      }
+     },
      "fundamentals": {
       "analyst": {
        "consensus": "strong_buy",
@@ -2773,13 +5637,95 @@
       "sma200": 97.31
      },
      "verdict": "hold",
-     "verdict_reason": "MACD momentum does not confirm \u2014 possible false break"
+     "verdict_reason": "MACD momentum does not confirm \u2014 possible false break",
+     "volume": {
+      "above_avg": false,
+      "avg20": 1528470,
+      "ratio": 0.87,
+      "today": 1326400
+     }
     },
     {
      "category": "price_sma200_weekly",
      "close": 121.22,
      "date": "2026-07-10",
      "direction": "bullish",
+     "fib": {
+      "daily": {
+       "high": 146.55,
+       "levels": [
+        {
+         "dist_pct": -11.4,
+         "label": "23.6%",
+         "price": 136.8126
+        },
+        {
+         "dist_pct": -7.32,
+         "label": "38.2%",
+         "price": 130.7887
+        },
+        {
+         "dist_pct": -3.73,
+         "label": "50.0%",
+         "price": 125.92
+        },
+        {
+         "dist_pct": 0.14,
+         "label": "61.8%",
+         "price": 121.0513
+        },
+        {
+         "dist_pct": 6.22,
+         "label": "78.6%",
+         "price": 114.1196
+        }
+       ],
+       "low": 105.29,
+       "nearest": {
+        "dist_pct": 0.14,
+        "label": "61.8%",
+        "price": 121.0513
+       },
+       "position_pct": 38.6
+      },
+      "weekly": {
+       "high": 154.27,
+       "levels": [
+        {
+         "dist_pct": -15.06,
+         "label": "23.6%",
+         "price": 142.7107
+        },
+        {
+         "dist_pct": -10.58,
+         "label": "38.2%",
+         "price": 135.5596
+        },
+        {
+         "dist_pct": -6.6,
+         "label": "50.0%",
+         "price": 129.78
+        },
+        {
+         "dist_pct": -2.24,
+         "label": "61.8%",
+         "price": 124.0004
+        },
+        {
+         "dist_pct": 4.71,
+         "label": "78.6%",
+         "price": 115.7717
+        }
+       ],
+       "low": 105.29,
+       "nearest": {
+        "dist_pct": -2.24,
+        "label": "61.8%",
+        "price": 124.0004
+       },
+       "position_pct": 32.5
+      }
+     },
      "fundamentals": {
       "analyst": {
        "consensus": "buy",
@@ -2858,18 +5804,100 @@
       "sma200": 120.3
      },
      "verdict": "buy",
-     "verdict_reason": "Bullish signal, MACD confirms, strong fundamentals"
+     "verdict_reason": "Bullish signal, MACD confirms, strong fundamentals",
+     "volume": {
+      "above_avg": false,
+      "avg20": 1924125,
+      "ratio": 0.73,
+      "today": 1399600
+     }
     },
     {
      "category": "price_sma200_weekly",
      "close": 181.85,
      "date": "2026-07-10",
      "direction": "bearish",
+     "fib": {
+      "daily": {
+       "high": 188.8,
+       "levels": [
+        {
+         "dist_pct": 4.62,
+         "label": "23.6%",
+         "price": 174.9114
+        },
+        {
+         "dist_pct": 10.03,
+         "label": "38.2%",
+         "price": 166.3193
+        },
+        {
+         "dist_pct": 14.82,
+         "label": "50.0%",
+         "price": 159.375
+        },
+        {
+         "dist_pct": 20.05,
+         "label": "61.8%",
+         "price": 152.4307
+        },
+        {
+         "dist_pct": 28.38,
+         "label": "78.6%",
+         "price": 142.5439
+        }
+       ],
+       "low": 129.95,
+       "nearest": {
+        "dist_pct": 4.62,
+        "label": "23.6%",
+        "price": 174.9114
+       },
+       "position_pct": 90.1
+      },
+      "weekly": {
+       "high": 210.2,
+       "levels": [
+        {
+         "dist_pct": -4.32,
+         "label": "23.6%",
+         "price": 191.261
+        },
+        {
+         "dist_pct": 1.92,
+         "label": "38.2%",
+         "price": 179.5445
+        },
+        {
+         "dist_pct": 7.6,
+         "label": "50.0%",
+         "price": 170.075
+        },
+        {
+         "dist_pct": 13.94,
+         "label": "61.8%",
+         "price": 160.6055
+        },
+        {
+         "dist_pct": 24.39,
+         "label": "78.6%",
+         "price": 147.1235
+        }
+       ],
+       "low": 129.95,
+       "nearest": {
+        "dist_pct": 1.92,
+        "label": "38.2%",
+        "price": 179.5445
+       },
+       "position_pct": 66.1
+      }
+     },
      "fundamentals": {
       "analyst": {
        "consensus": "buy",
        "n_analysts": 29,
-       "price": 183.3,
+       "price": 183.0,
        "target_high": 255.0,
        "target_low": 163.0,
        "target_mean": 205.34
@@ -2884,7 +5912,7 @@
        "earnings_growth_pct": 13.3,
        "forward_pe": 15.6,
        "rec_mean": 1.7,
-       "target_upside_pct": 12.0
+       "target_upside_pct": 12.2
       },
       "rating": "strong",
       "rating_changes": [],
@@ -2900,13 +5928,95 @@
       "sma200": 182.4
      },
      "verdict": "hold",
-     "verdict_reason": "Bearish signal but fundamentals/sector strong \u2014 trim rather than exit"
+     "verdict_reason": "Bearish signal but fundamentals/sector strong \u2014 trim rather than exit",
+     "volume": {
+      "above_avg": false,
+      "avg20": 627400,
+      "ratio": 0.31,
+      "today": 191563
+     }
     },
     {
      "category": "price_sma200_weekly",
      "close": 26.12,
      "date": "2026-07-10",
      "direction": "bullish",
+     "fib": {
+      "daily": {
+       "high": 34.36,
+       "levels": [
+        {
+         "dist_pct": -16.02,
+         "label": "23.6%",
+         "price": 31.8041
+        },
+        {
+         "dist_pct": -11.62,
+         "label": "38.2%",
+         "price": 30.2229
+        },
+        {
+         "dist_pct": -7.72,
+         "label": "50.0%",
+         "price": 28.945
+        },
+        {
+         "dist_pct": -3.46,
+         "label": "61.8%",
+         "price": 27.6671
+        },
+        {
+         "dist_pct": 3.34,
+         "label": "78.6%",
+         "price": 25.8476
+        }
+       ],
+       "low": 23.53,
+       "nearest": {
+        "dist_pct": 3.34,
+        "label": "78.6%",
+        "price": 25.8476
+       },
+       "position_pct": 29.4
+      },
+      "weekly": {
+       "high": 34.36,
+       "levels": [
+        {
+         "dist_pct": -16.02,
+         "label": "23.6%",
+         "price": 31.8041
+        },
+        {
+         "dist_pct": -11.62,
+         "label": "38.2%",
+         "price": 30.2229
+        },
+        {
+         "dist_pct": -7.72,
+         "label": "50.0%",
+         "price": 28.945
+        },
+        {
+         "dist_pct": -3.46,
+         "label": "61.8%",
+         "price": 27.6671
+        },
+        {
+         "dist_pct": 3.34,
+         "label": "78.6%",
+         "price": 25.8476
+        }
+       ],
+       "low": 23.53,
+       "nearest": {
+        "dist_pct": 3.34,
+        "label": "78.6%",
+        "price": 25.8476
+       },
+       "position_pct": 29.4
+      }
+     },
      "fundamentals": {
       "analyst": {
        "consensus": "strong_buy",
@@ -2944,13 +6054,95 @@
       "sma200": 25.35
      },
      "verdict": "buy",
-     "verdict_reason": "Bullish signal, MACD confirms, strong fundamentals"
+     "verdict_reason": "Bullish signal, MACD confirms, strong fundamentals",
+     "volume": {
+      "above_avg": false,
+      "avg20": 8080472,
+      "ratio": 0.2,
+      "today": 1654280
+     }
     },
     {
      "category": "price_sma200_weekly",
      "close": 139.7,
      "date": "2026-07-10",
      "direction": "bearish",
+     "fib": {
+      "daily": {
+       "high": 148.65,
+       "levels": [
+        {
+         "dist_pct": 1.29,
+         "label": "23.6%",
+         "price": 137.3338
+        },
+        {
+         "dist_pct": 6.73,
+         "label": "38.2%",
+         "price": 130.3331
+        },
+        {
+         "dist_pct": 11.57,
+         "label": "50.0%",
+         "price": 124.675
+        },
+        {
+         "dist_pct": 16.87,
+         "label": "61.8%",
+         "price": 119.0169
+        },
+        {
+         "dist_pct": 25.36,
+         "label": "78.6%",
+         "price": 110.9613
+        }
+       ],
+       "low": 100.7,
+       "nearest": {
+        "dist_pct": 1.29,
+        "label": "23.6%",
+        "price": 137.3338
+       },
+       "position_pct": 80.1
+      },
+      "weekly": {
+       "high": 148.65,
+       "levels": [
+        {
+         "dist_pct": 1.29,
+         "label": "23.6%",
+         "price": 137.3338
+        },
+        {
+         "dist_pct": 6.73,
+         "label": "38.2%",
+         "price": 130.3331
+        },
+        {
+         "dist_pct": 11.57,
+         "label": "50.0%",
+         "price": 124.675
+        },
+        {
+         "dist_pct": 16.87,
+         "label": "61.8%",
+         "price": 119.0169
+        },
+        {
+         "dist_pct": 25.36,
+         "label": "78.6%",
+         "price": 110.9613
+        }
+       ],
+       "low": 100.7,
+       "nearest": {
+        "dist_pct": 1.29,
+        "label": "23.6%",
+        "price": 137.3338
+       },
+       "position_pct": 80.1
+      }
+     },
      "fundamentals": {
       "analyst": {
        "consensus": "buy",
@@ -2988,18 +6180,100 @@
       "sma200": 145.32
      },
      "verdict": "sell",
-     "verdict_reason": "Bearish signal confirmed by MACD"
+     "verdict_reason": "Bearish signal confirmed by MACD",
+     "volume": {
+      "above_avg": false,
+      "avg20": 349940,
+      "ratio": 0.14,
+      "today": 50079
+     }
     },
     {
      "category": "price_sma200_weekly",
      "close": 26.95,
      "date": "2026-07-10",
      "direction": "bearish",
+     "fib": {
+      "daily": {
+       "high": 27.66,
+       "levels": [
+        {
+         "dist_pct": 6.76,
+         "label": "23.6%",
+         "price": 25.5242
+        },
+        {
+         "dist_pct": 12.59,
+         "label": "38.2%",
+         "price": 24.2029
+        },
+        {
+         "dist_pct": 17.79,
+         "label": "50.0%",
+         "price": 23.135
+        },
+        {
+         "dist_pct": 23.49,
+         "label": "61.8%",
+         "price": 22.0671
+        },
+        {
+         "dist_pct": 32.62,
+         "label": "78.6%",
+         "price": 20.5467
+        }
+       ],
+       "low": 18.61,
+       "nearest": {
+        "dist_pct": 6.76,
+        "label": "23.6%",
+        "price": 25.5242
+       },
+       "position_pct": 95.5
+      },
+      "weekly": {
+       "high": 28.4,
+       "levels": [
+        {
+         "dist_pct": 4.45,
+         "label": "23.6%",
+         "price": 26.0896
+        },
+        {
+         "dist_pct": 10.5,
+         "label": "38.2%",
+         "price": 24.6602
+        },
+        {
+         "dist_pct": 15.93,
+         "label": "50.0%",
+         "price": 23.505
+        },
+        {
+         "dist_pct": 21.93,
+         "label": "61.8%",
+         "price": 22.3498
+        },
+        {
+         "dist_pct": 31.61,
+         "label": "78.6%",
+         "price": 20.7051
+        }
+       ],
+       "low": 18.61,
+       "nearest": {
+        "dist_pct": 4.45,
+        "label": "23.6%",
+        "price": 26.0896
+       },
+       "position_pct": 88.3
+      }
+     },
      "fundamentals": {
       "analyst": {
        "consensus": "buy",
        "n_analysts": 22,
-       "price": 27.31,
+       "price": 27.26,
        "target_high": 53.0,
        "target_low": 20.0,
        "target_mean": 35.36
@@ -3014,7 +6288,7 @@
        "fcf_yield_pct": 16.7,
        "forward_pe": 14.7,
        "rec_mean": 1.6,
-       "target_upside_pct": 29.5
+       "target_upside_pct": 29.7
       },
       "rating": "strong",
       "rating_changes": [],
@@ -3030,16 +6304,98 @@
       "sma200": 26.98
      },
      "verdict": "hold",
-     "verdict_reason": "MACD momentum does not confirm \u2014 possible false breakdown"
+     "verdict_reason": "MACD momentum does not confirm \u2014 possible false breakdown",
+     "volume": {
+      "above_avg": false,
+      "avg20": 1166001,
+      "ratio": 0.19,
+      "today": 216328
+     }
     },
     {
      "category": "price_sma200_weekly",
      "close": 15.0,
      "date": "2026-07-10",
      "direction": "bearish",
+     "fib": {
+      "daily": {
+       "high": 23.1,
+       "levels": [
+        {
+         "dist_pct": -29.91,
+         "label": "23.6%",
+         "price": 21.1152
+        },
+        {
+         "dist_pct": -25.58,
+         "label": "38.2%",
+         "price": 19.8874
+        },
+        {
+         "dist_pct": -21.67,
+         "label": "50.0%",
+         "price": 18.895
+        },
+        {
+         "dist_pct": -17.33,
+         "label": "61.8%",
+         "price": 17.9026
+        },
+        {
+         "dist_pct": -10.25,
+         "label": "78.6%",
+         "price": 16.4897
+        }
+       ],
+       "low": 14.69,
+       "nearest": {
+        "dist_pct": -10.25,
+        "label": "78.6%",
+        "price": 16.4897
+       },
+       "position_pct": 1.3
+      },
+      "weekly": {
+       "high": 23.1,
+       "levels": [
+        {
+         "dist_pct": -29.63,
+         "label": "23.6%",
+         "price": 21.0303
+        },
+        {
+         "dist_pct": -25.06,
+         "label": "38.2%",
+         "price": 19.7499
+        },
+        {
+         "dist_pct": -20.92,
+         "label": "50.0%",
+         "price": 18.715
+        },
+        {
+         "dist_pct": -16.29,
+         "label": "61.8%",
+         "price": 17.6801
+        },
+        {
+         "dist_pct": -8.68,
+         "label": "78.6%",
+         "price": 16.2068
+        }
+       ],
+       "low": 14.33,
+       "nearest": {
+        "dist_pct": -8.68,
+        "label": "78.6%",
+        "price": 16.2068
+       },
+       "position_pct": 5.4
+      }
+     },
      "fundamentals": {
       "analyst": {
-       "price": 14.83
+       "price": 14.8
       },
       "factors": {
        "earnings_growth": -1,
@@ -3063,18 +6419,100 @@
       "sma200": 15.34
      },
      "verdict": "sell",
-     "verdict_reason": "Bearish signal, MACD confirms, weak fundamentals"
+     "verdict_reason": "Bearish signal, MACD confirms, weak fundamentals",
+     "volume": {
+      "above_avg": false,
+      "avg20": 10355209,
+      "ratio": 0.25,
+      "today": 2570468
+     }
     },
     {
      "category": "sma50_sma200",
-     "close": 27.29,
+     "close": 27.25,
      "date": "2026-07-13",
      "direction": "bullish",
+     "fib": {
+      "daily": {
+       "high": 27.66,
+       "levels": [
+        {
+         "dist_pct": 6.76,
+         "label": "23.6%",
+         "price": 25.5242
+        },
+        {
+         "dist_pct": 12.59,
+         "label": "38.2%",
+         "price": 24.2029
+        },
+        {
+         "dist_pct": 17.79,
+         "label": "50.0%",
+         "price": 23.135
+        },
+        {
+         "dist_pct": 23.49,
+         "label": "61.8%",
+         "price": 22.0671
+        },
+        {
+         "dist_pct": 32.62,
+         "label": "78.6%",
+         "price": 20.5467
+        }
+       ],
+       "low": 18.61,
+       "nearest": {
+        "dist_pct": 6.76,
+        "label": "23.6%",
+        "price": 25.5242
+       },
+       "position_pct": 95.5
+      },
+      "weekly": {
+       "high": 28.4,
+       "levels": [
+        {
+         "dist_pct": 4.45,
+         "label": "23.6%",
+         "price": 26.0896
+        },
+        {
+         "dist_pct": 10.5,
+         "label": "38.2%",
+         "price": 24.6602
+        },
+        {
+         "dist_pct": 15.93,
+         "label": "50.0%",
+         "price": 23.505
+        },
+        {
+         "dist_pct": 21.93,
+         "label": "61.8%",
+         "price": 22.3498
+        },
+        {
+         "dist_pct": 31.61,
+         "label": "78.6%",
+         "price": 20.7051
+        }
+       ],
+       "low": 18.61,
+       "nearest": {
+        "dist_pct": 4.45,
+        "label": "23.6%",
+        "price": 26.0896
+       },
+       "position_pct": 88.3
+      }
+     },
      "fundamentals": {
       "analyst": {
        "consensus": "buy",
        "n_analysts": 22,
-       "price": 27.31,
+       "price": 27.26,
        "target_high": 53.0,
        "target_low": 20.0,
        "target_mean": 35.36
@@ -3089,7 +6527,7 @@
        "fcf_yield_pct": 16.7,
        "forward_pe": 14.7,
        "rec_mean": 1.6,
-       "target_upside_pct": 29.5
+       "target_upside_pct": 29.7
       },
       "rating": "strong",
       "rating_changes": [],
@@ -3106,13 +6544,95 @@
       "sma50": 23.51
      },
      "verdict": "buy",
-     "verdict_reason": "Bullish signal, MACD confirms, strong fundamentals"
+     "verdict_reason": "Bullish signal, MACD confirms, strong fundamentals",
+     "volume": {
+      "above_avg": false,
+      "avg20": 1166001,
+      "ratio": 0.19,
+      "today": 216328
+     }
     },
     {
      "category": "sma50_sma200",
-     "close": 67.45,
+     "close": 67.5,
      "date": "2026-07-13",
      "direction": "bearish",
+     "fib": {
+      "daily": {
+       "high": 93.5,
+       "levels": [
+        {
+         "dist_pct": -21.28,
+         "label": "23.6%",
+         "price": 85.7474
+        },
+        {
+         "dist_pct": -16.62,
+         "label": "38.2%",
+         "price": 80.9513
+        },
+        {
+         "dist_pct": -12.42,
+         "label": "50.0%",
+         "price": 77.075
+        },
+        {
+         "dist_pct": -7.79,
+         "label": "61.8%",
+         "price": 73.1987
+        },
+        {
+         "dist_pct": -0.27,
+         "label": "78.6%",
+         "price": 67.6799
+        }
+       ],
+       "low": 60.65,
+       "nearest": {
+        "dist_pct": -0.27,
+        "label": "78.6%",
+        "price": 67.6799
+       },
+       "position_pct": 20.9
+      },
+      "weekly": {
+       "high": 93.5,
+       "levels": [
+        {
+         "dist_pct": -19.6,
+         "label": "23.6%",
+         "price": 83.9538
+        },
+        {
+         "dist_pct": -13.51,
+         "label": "38.2%",
+         "price": 78.0481
+        },
+        {
+         "dist_pct": -7.88,
+         "label": "50.0%",
+         "price": 73.275
+        },
+        {
+         "dist_pct": -1.46,
+         "label": "61.8%",
+         "price": 68.5019
+        },
+        {
+         "dist_pct": 9.39,
+         "label": "78.6%",
+         "price": 61.7063
+        }
+       ],
+       "low": 53.05,
+       "nearest": {
+        "dist_pct": -1.46,
+        "label": "61.8%",
+        "price": 68.5019
+       },
+       "position_pct": 35.7
+      }
+     },
      "fundamentals": {
       "analyst": {
        "price": 67.5
@@ -3140,11 +6660,17 @@
       "sma50": 71.63
      },
      "verdict": "hold",
-     "verdict_reason": "Bearish signal but fundamentals/sector strong \u2014 trim rather than exit"
+     "verdict_reason": "Bearish signal but fundamentals/sector strong \u2014 trim rather than exit",
+     "volume": {
+      "above_avg": false,
+      "avg20": 111201172,
+      "ratio": 0.91,
+      "today": 101258597
+     }
     }
    ],
    "bar_date": "2026-07-13",
-   "generated_at": "2026-07-13T11:41:10Z",
+   "generated_at": "2026-07-13T12:10:27Z",
    "scanned": 624
   },
   {

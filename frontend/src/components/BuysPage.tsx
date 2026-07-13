@@ -1,6 +1,6 @@
 import { useAlerts } from '../hooks/useAlerts'
 import { tradingViewUrl } from '../lib/tradingview'
-import type { AlertItem, Fundamentals } from '../types'
+import type { AlertItem, FibFrame, Fundamentals } from '../types'
 import { CATEGORY_LABELS, SECTOR_STATE } from '../types'
 import { MarketBadge } from './AlertTable'
 
@@ -229,6 +229,76 @@ function BuyCard({ a }: { a: AlertItem }) {
         <p className="mt-3 text-sm text-slate-500">
           Fundamentals unavailable for this ticker — verdict is technicals + MACD only.
         </p>
+      )}
+      <PriceStructure a={a} />
+    </div>
+  )
+}
+
+function FibLadder({ frame, label }: { frame: FibFrame; label: string }) {
+  const { high, low, position_pct, levels, nearest } = frame
+  const clampedPos = Math.max(0, Math.min(100, position_pct))
+  return (
+    <div className="mt-2">
+      <div className="mb-1 flex items-center justify-between text-xs text-slate-400">
+        <span className="font-medium text-slate-300">{label}</span>
+        <span>
+          swing {low.toFixed(2)}–{high.toFixed(2)} · at{' '}
+          <span className="text-slate-200">{position_pct.toFixed(0)}%</span> of range
+        </span>
+      </div>
+      {/* position within the swing range, with the current price marker */}
+      <div className="relative h-1.5 rounded-full bg-slate-700/50">
+        <div
+          className="absolute top-1/2 h-3 w-3 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-slate-950 bg-slate-100"
+          style={{ left: `${clampedPos}%` }}
+          title={`Price at ${position_pct.toFixed(1)}% of the ${low.toFixed(2)}–${high.toFixed(2)} range`}
+        />
+      </div>
+      <div className="mt-2 grid grid-cols-5 gap-1 text-center text-xs">
+        {levels.map((l) => {
+          const isNear = l.label === nearest.label
+          return (
+            <div
+              key={l.label}
+              className={`rounded-md px-1 py-1 ${
+                isNear ? 'bg-sky-500/15 ring-1 ring-sky-400/25' : 'bg-white/[0.02]'
+              }`}
+            >
+              <div className="text-slate-400">{l.label}</div>
+              <div className="text-slate-200">{l.price.toFixed(2)}</div>
+              <div className={l.dist_pct >= 0 ? 'text-emerald-400' : 'text-rose-400'}>
+                {l.dist_pct >= 0 ? '+' : ''}
+                {l.dist_pct.toFixed(1)}%
+              </div>
+            </div>
+          )
+        })}
+      </div>
+    </div>
+  )
+}
+
+function PriceStructure({ a }: { a: AlertItem }) {
+  const daily = a.fib?.daily
+  const weekly = a.fib?.weekly
+  const vol = a.volume
+  if (!daily && !weekly && !vol) return null
+  return (
+    <div className="mt-3 rounded-xl bg-white/[0.03] p-3.5 ring-1 ring-white/5">
+      <div className="mb-1 flex items-center gap-2 text-sm">
+        <span className="font-medium text-slate-200">Price structure</span>
+        <span className="text-xs text-slate-500">Fibonacci retracements · nearest level highlighted</span>
+      </div>
+      {daily && <FibLadder frame={daily} label="Daily (120-day swing)" />}
+      {weekly && <FibLadder frame={weekly} label="Weekly (52-week swing)" />}
+      {vol && (
+        <div className="mt-3 flex items-center justify-between border-t border-white/5 pt-2 text-sm">
+          <span className="text-slate-400">Volume vs 20-day average</span>
+          <span className={vol.above_avg ? 'text-emerald-400' : 'text-slate-300'}>
+            {vol.ratio.toFixed(2)}× {vol.above_avg ? '(above)' : '(below)'}
+          </span>
+        </div>
       )}
     </div>
   )

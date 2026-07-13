@@ -133,7 +133,10 @@ def main(argv: list[str] | None = None) -> int:
 
     # Enrich each alert with a buy/hold/sell verdict: MACD confirmation from
     # the bars already in memory + fundamentals fetched only for alerted names.
-    from indicators import macd
+    # Also attach price-structure context (Fibonacci) and volume confirmation —
+    # display-only for now, computed from the OHLCV already in memory.
+    from indicators import macd, volume_signal
+    from levels import fib_block
     from recommend import (SECTOR_TO_SPDR, fetch_fundamentals, sector_factor,
                            verdict as combine_verdict)
 
@@ -163,6 +166,8 @@ def main(argv: list[str] | None = None) -> int:
             "macd_confirms": macd_ok,
             "fundamentals": fund,  # full detail: score, rating, factors, metrics
             "sector": sector,
+            "fib": fib_block(ok[a.ticker]),        # daily + weekly retracements
+            "volume": volume_signal(ok[a.ticker]["volume"]),
             "verdict": v,
             "verdict_reason": reason,
         })

@@ -49,10 +49,29 @@ function pctFromSma200(a: AlertItem): string | null {
   return `${pct >= 0 ? '+' : ''}${pct.toFixed(2)}%`
 }
 
+// Nearest daily Fibonacci level: "61.8% +1.2%" (near a level = tighter |dist|).
+function NearestFib({ a }: { a: AlertItem }) {
+  const d = a.fib?.daily
+  if (!d) return <span className="text-slate-600">—</span>
+  const { label, dist_pct } = d.nearest
+  const near = Math.abs(dist_pct) <= 1.5 // sitting right on the level
+  return (
+    <span className={near ? 'text-sky-300' : 'text-slate-300'}>
+      {label}{' '}
+      <span className={dist_pct >= 0 ? 'text-emerald-400' : 'text-rose-400'}>
+        {dist_pct >= 0 ? '+' : ''}
+        {dist_pct.toFixed(1)}%
+      </span>
+    </span>
+  )
+}
+
 export default function AlertTable({ alerts }: { alerts: AlertItem[] }) {
   const hasSma50 = alerts.some((a) => a.values.sma50 !== undefined)
   const hasRsi = alerts.some((a) => a.values.rsi !== undefined)
   const hasVerdict = alerts.some((a) => a.verdict !== undefined)
+  const hasFib = alerts.some((a) => a.fib?.daily)
+  const hasVol = alerts.some((a) => a.volume)
   return (
     <div className="overflow-x-auto rounded-xl bg-slate-900/30 ring-1 ring-white/5">
       <table className="w-full text-left text-sm">
@@ -66,6 +85,8 @@ export default function AlertTable({ alerts }: { alerts: AlertItem[] }) {
             {hasSma50 && <th className="px-4 py-2.5 text-right">SMA 50</th>}
             <th className="px-4 py-2.5 text-right">SMA 200</th>
             <th className="px-4 py-2.5 text-right">vs SMA 200</th>
+            {hasFib && <th className="px-4 py-2.5">Fib (D)</th>}
+            {hasVol && <th className="px-4 py-2.5 text-right">Vol</th>}
             {hasVerdict && <th className="px-4 py-2.5">Verdict</th>}
           </tr>
         </thead>
@@ -111,6 +132,20 @@ export default function AlertTable({ alerts }: { alerts: AlertItem[] }) {
               >
                 {pctFromSma200(a) ?? '—'}
               </td>
+              {hasFib && (
+                <td className="px-4 py-2.5">
+                  <NearestFib a={a} />
+                </td>
+              )}
+              {hasVol && (
+                <td
+                  className={`px-4 py-2.5 text-right ${
+                    a.volume ? (a.volume.above_avg ? 'text-emerald-400' : 'text-slate-400') : 'text-slate-600'
+                  }`}
+                >
+                  {a.volume ? `${a.volume.ratio.toFixed(1)}×` : '—'}
+                </td>
+              )}
               {hasVerdict && (
                 <td className="px-4 py-2.5">
                   <VerdictBadge a={a} />

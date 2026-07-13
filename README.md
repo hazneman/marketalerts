@@ -29,6 +29,26 @@ Fundamentals are fetched only for tickers that alerted that day; any fetch
 failure degrades gracefully to a technicals-only verdict. Hover a verdict badge
 for the reasoning. Logic lives in [`scanner/recommend.py`](scanner/recommend.py).
 
+### Price structure (Fibonacci + volume)
+
+Each alert also carries **display-only** context (no verdict effect yet):
+
+- **Fibonacci retracements**, daily and weekly. Deterministic recent-swing
+  anchor: swing high/low = highest high / lowest low over the last **120
+  trading days** (daily) or **52 completed weeks** (weekly). Levels = 23.6 /
+  38.2 / 50 / 61.8 / 78.6% between swing low and high; each carries a signed
+  distance % (+ price above the level → support below; − below → resistance
+  above). Alert rows show the nearest daily level; Buy cards show the full
+  daily + weekly ladders. *Caveat:* unlike an SMA, Fib depends on the swing
+  chosen — the fixed windows make it reproducible but are one specific choice.
+- **Volume vs 20-day average** — `ratio = today / SMA(volume, 20)`; a breakout
+  on above-average volume is more trustworthy than one on thin volume.
+
+Both compute from OHLCV already in memory (all markets), in
+[`scanner/levels.py`](scanner/levels.py) and
+[`scanner/indicators.py`](scanner/indicators.py). Not yet backtested into the
+verdict — that's the next honest step before wiring them in.
+
 ## Sectors page
 
 Sector rotation for US equities via the 11 SPDR Select Sector ETFs, read
