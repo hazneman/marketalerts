@@ -34,8 +34,8 @@ for the reasoning. Logic lives in [`scanner/recommend.py`](scanner/recommend.py)
 Each alert also carries **display-only** context (no verdict effect yet):
 
 - **Fibonacci retracements**, daily and weekly. Deterministic recent-swing
-  anchor: swing high/low = highest high / lowest low over the last **120
-  trading days** (daily) or **52 completed weeks** (weekly). Levels = 23.6 /
+  anchor: swing high/low = highest high / lowest low over the last **252
+  trading days** (~1 year, daily) or **52 completed weeks** (weekly). Levels = 23.6 /
   38.2 / 50 / 61.8 / 78.6% between swing low and high; each carries a signed
   distance % (+ price above the level → support below; − below → resistance
   above). Alert rows show the nearest daily level; Buy cards show the full

@@ -290,7 +290,7 @@ function PriceStructure({ a }: { a: AlertItem }) {
         <span className="font-medium text-slate-200">Price structure</span>
         <span className="text-xs text-slate-500">Fibonacci retracements · nearest level highlighted</span>
       </div>
-      {daily && <FibLadder frame={daily} label="Daily (120-day swing)" />}
+      {daily && <FibLadder frame={daily} label="Daily (1-year swing)" />}
       {weekly && <FibLadder frame={weekly} label="Weekly (52-week swing)" />}
       {vol && (
         <div className="mt-3 flex items-center justify-between border-t border-white/5 pt-2 text-sm">
