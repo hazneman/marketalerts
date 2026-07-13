@@ -121,6 +121,37 @@ export interface ForexData {
   pair_alerts?: AlertItem[]
 }
 
+export interface SectorRow {
+  symbol: string
+  name: string
+  price: number
+  above_sma200: boolean
+  vs_sma200_pct: number
+  chg: Record<string, number | null>
+  rs: Record<string, number>
+  rs_score: number
+  rank: number
+  state: 'leading' | 'improving' | 'weakening' | 'lagging'
+  comment: string
+}
+
+export interface SectorData {
+  schema_version: number
+  generated_at: string
+  bar_date: string
+  benchmark: { symbol: string; chg: Record<string, number | null> }
+  sectors: SectorRow[]
+}
+
+export const SECTOR_HORIZONS = ['1w', '1m', '3m', '6m', '1y'] as const
+
+export const SECTOR_STATE: Record<string, { label: string; style: string }> = {
+  leading: { label: 'Leading', style: 'bg-emerald-500/15 text-emerald-300 ring-emerald-400/25' },
+  improving: { label: 'Improving', style: 'bg-sky-500/15 text-sky-300 ring-sky-400/25' },
+  weakening: { label: 'Weakening', style: 'bg-amber-500/15 text-amber-300 ring-amber-400/25' },
+  lagging: { label: 'Lagging', style: 'bg-rose-500/15 text-rose-300 ring-rose-400/25' },
+}
+
 export const CATEGORY_LABELS: Record<string, string> = {
   price_sma200: 'Price × SMA 200 crosses',
   sma50_sma200: 'Golden / Death crosses (SMA 50 × SMA 200)',

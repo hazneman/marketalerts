@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import type { AlertHistory, ForexData, ScanResult } from '../types'
+import type { AlertHistory, ForexData, ScanResult, SectorData } from '../types'
 
 async function fetchJson<T>(path: string): Promise<T> {
   const res = await fetch(`${path}?t=${Date.now()}`)
@@ -30,4 +30,15 @@ export function useForex() {
   }, [])
 
   return { forex, error }
+}
+
+export function useSectors() {
+  const [sectors, setSectors] = useState<SectorData | null>(null)
+  const [error, setError] = useState<string | null>(null)
+
+  useEffect(() => {
+    fetchJson<SectorData>('/data/sectors.json').then(setSectors).catch((e) => setError(String(e)))
+  }, [])
+
+  return { sectors, error }
 }

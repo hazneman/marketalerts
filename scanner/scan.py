@@ -158,7 +158,8 @@ def main(argv: list[str] | None = None) -> int:
     logger.info("bar_date=%s alerts=%d failures=%d insufficient=%d",
                 bar_date, len(alerts), len(meta["failures"]), len(insufficient))
 
-    # Forex snapshot rides along; its failure must never sink the stock scan.
+    # Forex + sector snapshots ride along; their failure must never sink the
+    # stock scan (each keeps its previous JSON on error).
     try:
         from forex import build as build_forex
         fx = build_forex(args.output_dir)
@@ -166,6 +167,14 @@ def main(argv: list[str] | None = None) -> int:
                     len(fx["currencies"]), fx["bar_date"])
     except Exception as exc:
         logger.warning("forex build failed (%s) — keeping previous forex.json", exc)
+
+    try:
+        from sectors import build as build_sectors
+        sec = build_sectors(args.output_dir)
+        logger.info("sectors: %d ranked, bar_date=%s",
+                    len(sec["sectors"]), sec["bar_date"])
+    except Exception as exc:
+        logger.warning("sectors build failed (%s) — keeping previous sectors.json", exc)
     return 0
 
 

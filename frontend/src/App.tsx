@@ -4,10 +4,11 @@ import CategorySection from './components/CategorySection'
 import FilterBar, { type DirectionFilter } from './components/FilterBar'
 import ForexPage from './components/ForexPage'
 import ScanStatus from './components/ScanStatus'
+import SectorsPage from './components/SectorsPage'
 import { useAlerts } from './hooks/useAlerts'
 import { CATEGORY_LABELS, MARKET_ORDER, type AlertItem } from './types'
 
-type Page = 'stocks' | 'buys' | 'forex'
+type Page = 'stocks' | 'buys' | 'sectors' | 'forex'
 
 export default function App() {
   const { latest, history, error } = useAlerts()
@@ -88,7 +89,7 @@ export default function App() {
               </h1>
             </div>
             <nav className="flex rounded-full bg-white/5 p-1 text-sm ring-1 ring-white/10">
-              {(['stocks', 'buys', 'forex'] as const).map((p) => (
+              {(['stocks', 'buys', 'sectors', 'forex'] as const).map((p) => (
                 <button
                   key={p}
                   onClick={() => setPage(p)}
@@ -108,7 +109,9 @@ export default function App() {
               ? 'S&P 500 + Nasdaq 100 · DAX · BIST'
               : page === 'buys'
                 ? 'Signals where all three layers agree'
-                : 'Major currencies vs USD'}
+                : page === 'sectors'
+                  ? 'US sector rotation vs the market'
+                  : 'Major currencies vs USD'}
           </span>
         </div>
       </header>
@@ -118,6 +121,8 @@ export default function App() {
         <ForexPage />
       ) : page === 'buys' ? (
         <BuysPage />
+      ) : page === 'sectors' ? (
+        <SectorsPage />
       ) : (
         <>
           <ScanStatus latest={latest} />
