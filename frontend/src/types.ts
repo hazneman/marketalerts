@@ -42,6 +42,13 @@ export interface VolumeSignal {
   above_avg: boolean
 }
 
+export interface PricesData {
+  schema_version: number
+  generated_at: string
+  bar_dates: Record<string, string>
+  prices: Record<string, { close: number; chg_1d_pct: number | null }>
+}
+
 export const MARKET_LABELS: Record<string, string> = {
   us: 'US',
   de: 'DE',

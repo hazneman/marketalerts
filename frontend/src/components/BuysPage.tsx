@@ -1,8 +1,66 @@
-import { useAlerts } from '../hooks/useAlerts'
+import { useState } from 'react'
+import { useAlerts, usePortfolio } from '../hooks/useAlerts'
+import { addPosition } from '../lib/portfolio'
 import { tradingViewUrl } from '../lib/tradingview'
 import type { AlertItem, FibFrame, Fundamentals } from '../types'
 import { CATEGORY_LABELS, SECTOR_STATE } from '../types'
 import { MarketBadge } from './AlertTable'
+
+const inputCls =
+  'rounded-lg bg-white/[0.04] px-2 py-1 text-xs text-slate-100 placeholder-slate-500 ring-1 ring-white/10 focus:outline-none focus:ring-sky-400/40'
+
+function AddToPortfolio({ a }: { a: AlertItem }) {
+  const { positions } = usePortfolio()
+  const [open, setOpen] = useState(false)
+  const [shares, setShares] = useState('')
+  const [cost, setCost] = useState(String(a.close))
+  const [date, setDate] = useState(a.date)
+  const held = positions.some((p) => p.ticker === a.ticker)
+
+  if (held && !open) {
+    return (
+      <span className="rounded-full bg-emerald-500/10 px-2.5 py-1 text-xs font-medium text-emerald-300 ring-1 ring-emerald-400/20">
+        ✓ in portfolio
+      </span>
+    )
+  }
+  if (!open) {
+    return (
+      <button
+        onClick={() => setOpen(true)}
+        className="rounded-full bg-sky-500/15 px-2.5 py-1 text-xs font-medium text-sky-300 ring-1 ring-sky-400/25 transition hover:bg-sky-500/25"
+      >
+        + portfolio
+      </button>
+    )
+  }
+  return (
+    <span className="flex flex-wrap items-center gap-1.5">
+      <input className={`${inputCls} w-16`} type="number" min="0" step="any" placeholder="qty"
+             value={shares} onChange={(e) => setShares(e.target.value)} autoFocus />
+      <input className={`${inputCls} w-20`} type="number" min="0" step="any" placeholder="cost"
+             value={cost} onChange={(e) => setCost(e.target.value)} />
+      <input className={`${inputCls} w-32`} type="date" value={date}
+             onChange={(e) => setDate(e.target.value)} />
+      <button
+        disabled={!(Number(shares) > 0 && Number(cost) > 0 && date)}
+        onClick={() => {
+          addPosition({
+            ticker: a.ticker, market: a.market, shares: Number(shares),
+            avg_cost: Number(cost), date, added_from: a.rule,
+          })
+          setOpen(false)
+        }}
+        className="rounded-lg bg-emerald-500/20 px-2.5 py-1 text-xs font-medium text-emerald-300 ring-1 ring-emerald-400/30 disabled:opacity-40"
+      >
+        add
+      </button>
+      <button onClick={() => setOpen(false)} className="text-xs text-slate-500 hover:text-slate-300">
+        ×
+      </button>
+    </span>
+  )
+}
 
 const CONSENSUS_LABELS: Record<string, { label: string; style: string }> = {
   strong_buy: { label: 'Strong buy', style: 'bg-emerald-500/20 text-emerald-300' },
@@ -166,9 +224,12 @@ function BuyCard({ a }: { a: AlertItem }) {
         </div>
       </div>
 
-      <p className="mt-1 text-sm text-slate-400">
-        {a.verdict_reason} · <span className="text-emerald-400">MACD confirms</span>
-      </p>
+      <div className="mt-1 flex flex-wrap items-center justify-between gap-2">
+        <p className="text-sm text-slate-400">
+          {a.verdict_reason} · <span className="text-emerald-400">MACD confirms</span>
+        </p>
+        <AddToPortfolio a={a} />
+      </div>
 
       {f ? (
         <div className="mt-3 rounded-xl bg-white/[0.03] p-3.5 ring-1 ring-white/5">
@@ -291,7 +352,7 @@ function PriceStructure({ a }: { a: AlertItem }) {
         <span className="text-xs text-slate-500">Fibonacci retracements · nearest level highlighted</span>
       </div>
       {daily && <FibLadder frame={daily} label="Daily (1-year swing)" />}
-      {weekly && <FibLadder frame={weekly} label="Weekly (52-week swing)" />}
+      {weekly && <FibLadder frame={weekly} label="Weekly (2-year swing)" />}
       {vol && (
         <div className="mt-3 flex items-center justify-between border-t border-white/5 pt-2 text-sm">
           <span className="text-slate-400">Volume vs 20-day average</span>

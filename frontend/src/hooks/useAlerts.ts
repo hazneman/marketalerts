@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
-import type { AlertHistory, ForexData, ScanResult, SectorData } from '../types'
+import { loadPortfolio, subscribe, type PortfolioStore } from '../lib/portfolio'
+import type { AlertHistory, ForexData, PricesData, ScanResult, SectorData } from '../types'
 
 async function fetchJson<T>(path: string): Promise<T> {
   const res = await fetch(`${path}?t=${Date.now()}`)
@@ -41,4 +42,22 @@ export function useSectors() {
   }, [])
 
   return { sectors, error }
+}
+
+export function usePrices() {
+  const [prices, setPrices] = useState<PricesData | null>(null)
+
+  useEffect(() => {
+    fetchJson<PricesData>('/data/prices.json').then(setPrices).catch(() => setPrices(null))
+  }, [])
+
+  return prices
+}
+
+export function usePortfolio(): PortfolioStore {
+  const [store, setStore] = useState<PortfolioStore>(() => loadPortfolio())
+
+  useEffect(() => subscribe(() => setStore(loadPortfolio())), [])
+
+  return store
 }

@@ -35,7 +35,7 @@ Each alert also carries **display-only** context (no verdict effect yet):
 
 - **Fibonacci retracements**, daily and weekly. Deterministic recent-swing
   anchor: swing high/low = highest high / lowest low over the last **252
-  trading days** (~1 year, daily) or **52 completed weeks** (weekly). Levels = 23.6 /
+  trading days** (~1 year, daily) or **104 completed weeks** (~2 years, weekly). Levels = 23.6 /
   38.2 / 50 / 61.8 / 78.6% between swing low and high; each carries a signed
   distance % (+ price above the level → support below; − below → resistance
   above). Alert rows show the nearest daily level; Buy cards show the full
@@ -48,6 +48,17 @@ Both compute from OHLCV already in memory (all markets), in
 [`scanner/levels.py`](scanner/levels.py) and
 [`scanner/indicators.py`](scanner/indicators.py). Not yet backtested into the
 verdict — that's the next honest step before wiring them in.
+
+## Portfolio page
+
+A personal trade backlog. Add positions from a Buy card ("+ portfolio" with
+shares / avg cost / date, prefilled from the alert) or manually on the
+Portfolio tab. Open positions are valued against `prices.json` (latest close
+for every scanned ticker, written by the daily scan) with unrealized P&L;
+selling a position logs it as a closed trade with realized P&L and holding
+period. **Storage: this browser's localStorage only** — holdings never leave
+your machine; use Export/Import backup to move browsers or protect against
+cleared browser data.
 
 ## Sectors page
 

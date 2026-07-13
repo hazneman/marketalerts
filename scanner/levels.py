@@ -1,8 +1,8 @@
 """Price-structure context per ticker: daily + weekly Fibonacci retracements.
 
 Deterministic recent-swing anchor: the swing high/low is the highest high /
-lowest low over a fixed window (daily = 252 trading days ≈ 1 year, weekly = 52
-completed weeks), so the levels are reproducible — the trade-off for Fibonacci's
+lowest low over a fixed window (daily = 252 trading days ≈ 1 year, weekly = 104
+completed weeks ≈ 2 years), so the levels are reproducible — the trade-off for Fibonacci's
 usual subjectivity is one fixed window choice per timeframe.
 """
 
@@ -13,7 +13,7 @@ import pandas as pd
 from indicators import fib_retracement
 
 DAILY_WINDOW = 252   # ~1 year of trading days
-WEEKLY_WINDOW = 52   # ~1 year of completed weeks
+WEEKLY_WINDOW = 104  # ~2 years of completed weeks
 
 
 def _daily_fib(df: pd.DataFrame) -> dict | None:

@@ -185,6 +185,22 @@ def main(argv: list[str] | None = None) -> int:
     logger.info("bar_date=%s alerts=%d failures=%d insufficient=%d",
                 bar_date, len(alerts), len(meta["failures"]), len(insufficient))
 
+    # prices.json: latest close for every scanned ticker, so the portfolio
+    # page can value any universe holding (not just today's alerted names).
+    from alerts.base import px_round
+    from output import write_prices
+    prices = {}
+    for sym, df in ok.items():
+        c = df["close"]
+        last = float(c.iloc[-1])
+        prices[sym] = {
+            "close": px_round(last),
+            "chg_1d_pct": round((last / float(c.iloc[-2]) - 1.0) * 100, 2)
+            if len(c) > 1 else None,
+        }
+    write_prices(prices, bar_dates, args.output_dir)
+    logger.info("prices.json: %d tickers", len(prices))
+
     # Forex snapshot rides along (sectors already built above for the verdict);
     # its failure must never sink the stock scan — it keeps its previous JSON.
     try:

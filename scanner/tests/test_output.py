@@ -2,7 +2,7 @@ import datetime as dt
 import json
 
 from alerts.base import Alert
-from output import HISTORY_DAYS, write_results
+from output import HISTORY_DAYS, write_prices, write_results
 
 
 def alert(ticker="AAPL", date="2026-07-02"):
@@ -59,3 +59,16 @@ def test_history_newest_first_and_trimmed(tmp_path):
     dates = [d["bar_date"] for d in history["days"]]
     assert dates == sorted(dates, reverse=True)
     assert dates[0] == "2026-02-04"  # newest kept, oldest 5 trimmed
+
+
+def test_write_prices_and_idempotency(tmp_path):
+    prices = {"AAPL": {"close": 210.5, "chg_1d_pct": 1.2},
+              "SAP.DE": {"close": 180.0, "chg_1d_pct": -0.4}}
+    bars = {"us": "2026-07-13", "de": "2026-07-13"}
+    write_prices(prices, bars, tmp_path, now=ts(22))
+    data = json.loads((tmp_path / "prices.json").read_text())
+    assert data["prices"]["AAPL"]["close"] == 210.5
+    assert data["bar_dates"] == bars
+    before = (tmp_path / "prices.json").read_bytes()
+    write_prices(prices, bars, tmp_path, now=ts(23))  # unchanged content
+    assert (tmp_path / "prices.json").read_bytes() == before

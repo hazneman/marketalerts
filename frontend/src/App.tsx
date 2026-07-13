@@ -3,12 +3,13 @@ import BuysPage from './components/BuysPage'
 import CategorySection from './components/CategorySection'
 import FilterBar, { type DirectionFilter } from './components/FilterBar'
 import ForexPage from './components/ForexPage'
+import PortfolioPage from './components/PortfolioPage'
 import ScanStatus from './components/ScanStatus'
 import SectorsPage from './components/SectorsPage'
 import { useAlerts } from './hooks/useAlerts'
 import { CATEGORY_LABELS, MARKET_ORDER, type AlertItem } from './types'
 
-type Page = 'stocks' | 'buys' | 'sectors' | 'forex'
+type Page = 'stocks' | 'buys' | 'sectors' | 'forex' | 'portfolio'
 
 export default function App() {
   const { latest, history, error } = useAlerts()
@@ -89,7 +90,7 @@ export default function App() {
               </h1>
             </div>
             <nav className="flex rounded-full bg-white/5 p-1 text-sm ring-1 ring-white/10">
-              {(['stocks', 'buys', 'sectors', 'forex'] as const).map((p) => (
+              {(['stocks', 'buys', 'sectors', 'forex', 'portfolio'] as const).map((p) => (
                 <button
                   key={p}
                   onClick={() => setPage(p)}
@@ -111,7 +112,9 @@ export default function App() {
                 ? 'Signals where all three layers agree'
                 : page === 'sectors'
                   ? 'US sector rotation vs the market'
-                  : 'Major currencies vs USD'}
+                  : page === 'portfolio'
+                    ? 'Your trades · stored in this browser'
+                    : 'Major currencies vs USD'}
           </span>
         </div>
       </header>
@@ -123,6 +126,8 @@ export default function App() {
         <BuysPage />
       ) : page === 'sectors' ? (
         <SectorsPage />
+      ) : page === 'portfolio' ? (
+        <PortfolioPage />
       ) : (
         <>
           <ScanStatus latest={latest} />

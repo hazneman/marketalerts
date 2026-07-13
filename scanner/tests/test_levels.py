@@ -78,14 +78,14 @@ def _ohlc(closes, highs=None, lows=None, vols=None):
 class TestFibBlock:
     def test_daily_present_weekly_none_on_short_history(self):
         # 255 business days from a Monday = exactly 51 completed weeks: enough
-        # for the daily window (252) but one week short of the 52-week weekly.
+        # for the daily window (252) but far short of the 104-week weekly.
         closes = list(np.linspace(100, 200, 255))
         block = fib_block(_ohlc(closes))
         assert block["daily"] is not None
         assert block["weekly"] is None
 
     def test_both_present_with_two_years(self):
-        n = 520  # ~2 years of daily bars -> >52 completed weeks
+        n = 550  # ~2.2 years of daily bars -> >104 completed weeks
         closes = list(100 + 20 * np.sin(np.linspace(0, 8, n)))
         block = fib_block(_ohlc(closes))
         assert block["daily"] is not None

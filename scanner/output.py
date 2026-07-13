@@ -30,6 +30,28 @@ def _load(path: Path) -> dict | None:
         return None
 
 
+def write_prices(prices: dict, bar_dates: dict, output_dir: Path,
+                 now: dt.datetime | None = None) -> None:
+    """prices.json: latest close (+1d change) for every scanned ticker.
+
+    Lets the portfolio page value ANY universe holding client-side, not just
+    tickers that alerted today. Same generated_at-preserving idempotency as
+    the other outputs.
+    """
+    output_dir.mkdir(parents=True, exist_ok=True)
+    generated_at = (now or dt.datetime.now(dt.timezone.utc)).strftime("%Y-%m-%dT%H:%M:%SZ")
+    data = {
+        "schema_version": SCHEMA_VERSION,
+        "generated_at": generated_at,
+        "bar_dates": bar_dates,
+        "prices": prices,
+    }
+    prev = _load(output_dir / "prices.json")
+    if prev is not None and {**prev, "generated_at": None} == {**data, "generated_at": None}:
+        data["generated_at"] = prev["generated_at"]
+    _dump(data, output_dir / "prices.json")
+
+
 def write_results(alerts: list[Alert] | list[dict], meta: dict, output_dir: Path,
                   now: dt.datetime | None = None) -> None:
     output_dir.mkdir(parents=True, exist_ok=True)
