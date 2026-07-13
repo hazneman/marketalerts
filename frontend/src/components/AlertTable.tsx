@@ -1,6 +1,20 @@
 import { tradingViewUrl } from '../lib/tradingview'
 import type { AlertItem } from '../types'
+import { MARKET_BADGE_STYLES, MARKET_LABELS } from '../types'
 import DirectionBadge from './DirectionBadge'
+
+export function MarketBadge({ market }: { market?: string }) {
+  if (!market) return null
+  return (
+    <span
+      className={`ml-1.5 inline-block rounded px-1 py-px align-middle text-[10px] font-semibold tracking-wide ring-1 ${
+        MARKET_BADGE_STYLES[market] ?? 'bg-slate-500/10 text-slate-400 ring-white/10'
+      }`}
+    >
+      {MARKET_LABELS[market] ?? market.toUpperCase()}
+    </span>
+  )
+}
 
 function fmtPx(v: number): string {
   return Math.abs(v) >= 10 ? v.toFixed(2) : v.toFixed(4)
@@ -71,6 +85,7 @@ export default function AlertTable({ alerts }: { alerts: AlertItem[] }) {
                 >
                   {a.ticker} ↗
                 </a>
+                <MarketBadge market={a.market} />
               </td>
               <td className="px-4 py-2.5 text-slate-400">{a.date}</td>
               <td className="px-4 py-2.5 text-right font-medium text-slate-100">

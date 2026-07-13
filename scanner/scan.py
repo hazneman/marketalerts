@@ -37,8 +37,15 @@ def load_universe() -> dict[str, list[str]]:
         return json.load(fh)["markets"]
 
 
+MARKET_ORDER = {"us": 0, "de": 1, "bist": 2}
+
+
 def market_of(symbol: str) -> str:
-    return "bist" if symbol.endswith(".IS") else "us"
+    if symbol.endswith(".IS"):
+        return "bist"
+    if symbol.endswith(".DE"):
+        return "de"
+    return "us"
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -110,7 +117,8 @@ def main(argv: list[str] | None = None) -> int:
             continue
         for rule in RULES:
             alerts.extend(rule.evaluate(sym, df))
-    alerts.sort(key=lambda a: (a.category, a.ticker))
+    alerts.sort(key=lambda a: (a.category, MARKET_ORDER.get(market_of(a.ticker), 9),
+                               a.ticker))
 
     # Enrich each alert with a buy/hold/sell verdict: MACD confirmation from
     # the bars already in memory + fundamentals fetched only for alerted names.

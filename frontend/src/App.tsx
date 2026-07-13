@@ -5,7 +5,7 @@ import FilterBar, { type DirectionFilter } from './components/FilterBar'
 import ForexPage from './components/ForexPage'
 import ScanStatus from './components/ScanStatus'
 import { useAlerts } from './hooks/useAlerts'
-import { CATEGORY_LABELS, type AlertItem } from './types'
+import { CATEGORY_LABELS, MARKET_ORDER, type AlertItem } from './types'
 
 type Page = 'stocks' | 'buys' | 'forex'
 
@@ -35,7 +35,10 @@ export default function App() {
   }, [latest, days, activeDay, search, direction, market])
 
   const marketsPresent = useMemo(
-    () => [...new Set((latest?.alerts ?? []).map((a) => a.market ?? 'us'))].sort(),
+    () =>
+      [...new Set((latest?.alerts ?? []).map((a) => a.market ?? 'us'))].sort(
+        (a, b) => (MARKET_ORDER[a] ?? 9) - (MARKET_ORDER[b] ?? 9),
+      ),
     [latest],
   )
 
@@ -102,7 +105,7 @@ export default function App() {
           </div>
           <span className="hidden text-sm text-slate-500 sm:block">
             {page === 'stocks'
-              ? 'US stocks · S&P 500 + Nasdaq 100 · BIST'
+              ? 'S&P 500 + Nasdaq 100 · DAX · BIST'
               : page === 'buys'
                 ? 'Signals where all three layers agree'
                 : 'Major currencies vs USD'}

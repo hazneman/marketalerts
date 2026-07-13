@@ -6,7 +6,7 @@ export interface AlertItem {
   date: string
   close: number
   values: Record<string, number>
-  market?: 'us' | 'bist'
+  market?: 'us' | 'de' | 'bist'
   verdict?: 'buy' | 'hold' | 'sell'
   verdict_reason?: string
   macd_confirms?: boolean
@@ -15,7 +15,16 @@ export interface AlertItem {
 
 export const MARKET_LABELS: Record<string, string> = {
   us: 'US',
+  de: 'DE',
   bist: 'BIST',
+}
+
+export const MARKET_ORDER: Record<string, number> = { us: 0, de: 1, bist: 2 }
+
+export const MARKET_BADGE_STYLES: Record<string, string> = {
+  us: 'bg-sky-500/10 text-sky-300 ring-sky-400/20',
+  de: 'bg-violet-500/10 text-violet-300 ring-violet-400/20',
+  bist: 'bg-amber-500/10 text-amber-300 ring-amber-400/20',
 }
 
 export interface Fundamentals {

@@ -2,6 +2,7 @@ import { useAlerts } from '../hooks/useAlerts'
 import { tradingViewUrl } from '../lib/tradingview'
 import type { AlertItem, Fundamentals } from '../types'
 import { CATEGORY_LABELS } from '../types'
+import { MarketBadge } from './AlertTable'
 
 const CONSENSUS_LABELS: Record<string, { label: string; style: string }> = {
   strong_buy: { label: 'Strong buy', style: 'bg-emerald-500/20 text-emerald-300' },
@@ -150,6 +151,7 @@ function BuyCard({ a }: { a: AlertItem }) {
           >
             {a.ticker} ↗
           </a>
+          <MarketBadge market={a.market} />
           <span className="text-sm text-slate-400">{CATEGORY_LABELS[a.category] ?? a.category}</span>
         </div>
         <div className="text-sm text-slate-300">
