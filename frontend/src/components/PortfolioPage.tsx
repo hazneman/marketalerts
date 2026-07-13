@@ -116,13 +116,103 @@ function CloseDialog({ pos, onDone }: { pos: Position; onDone: () => void }) {
   )
 }
 
+function Performance({ closed }: { closed: ClosedTrade[] }) {
+  if (closed.length === 0) return null
+  const trades = [...closed].sort((a, b) => a.sell_date.localeCompare(b.sell_date))
+  const pnls = trades.map((t) => t.shares * (t.sell_price - t.avg_cost))
+  const wins = pnls.filter((v) => v > 0)
+  const losses = pnls.filter((v) => v <= 0)
+  let running = 0
+  const cum = pnls.map((v) => (running += v))
+  const best = trades[pnls.indexOf(Math.max(...pnls))]
+  const worst = trades[pnls.indexOf(Math.min(...pnls))]
+
+  const w = 560
+  const h = 48
+  const min = Math.min(0, ...cum)
+  const max = Math.max(0, ...cum)
+  const span = max - min || 1
+  const x = (i: number) => (cum.length === 1 ? w : (i / (cum.length - 1)) * w)
+  const y = (v: number) => h - ((v - min) / span) * (h - 6) - 3
+  const pts = cum.map((v, i) => `${x(i)},${y(v)}`).join(' ')
+  const final = cum[cum.length - 1]
+
+  return (
+    <div className="space-y-3 rounded-xl bg-white/[0.02] p-3.5 ring-1 ring-white/5">
+      <div className="flex flex-wrap gap-2.5">
+        <Chip label="Trades" value={trades.length} />
+        <Chip label="Win rate" value={`${((wins.length / trades.length) * 100).toFixed(0)}%`}
+              tone={wins.length >= losses.length ? 'up' : 'down'} />
+        <Chip label="Avg win" value={wins.length ? `+${fmt(wins.reduce((a, b) => a + b, 0) / wins.length)}` : '—'} tone="up" />
+        <Chip label="Avg loss" value={losses.length ? fmt(losses.reduce((a, b) => a + b, 0) / losses.length) : '—'}
+              tone={losses.length ? 'down' : undefined} />
+        <Chip label="Best" value={best ? `${best.ticker} ${pnls[trades.indexOf(best)] >= 0 ? '+' : ''}${fmt(pnls[trades.indexOf(best)])}` : '—'} tone="up" />
+        <Chip label="Worst" value={worst ? `${worst.ticker} ${pnls[trades.indexOf(worst)] >= 0 ? '+' : ''}${fmt(pnls[trades.indexOf(worst)])}` : '—'}
+              tone={pnls[trades.indexOf(worst)] < 0 ? 'down' : 'up'} />
+      </div>
+      {cum.length >= 2 && (
+        <div>
+          <div className="mb-1 flex items-center justify-between text-xs text-slate-500">
+            <span>Cumulative realized P&L over time</span>
+            <span className={final >= 0 ? 'text-emerald-400' : 'text-rose-400'}>
+              {final >= 0 ? '+' : ''}
+              {fmt(final)}
+            </span>
+          </div>
+          <svg viewBox={`0 0 ${w} ${h}`} className="h-12 w-full" preserveAspectRatio="none"
+               role="img" aria-label="Cumulative realized profit and loss by trade close date">
+            <line x1="0" x2={w} y1={y(0)} y2={y(0)} stroke="rgba(148,163,184,0.25)" strokeDasharray="4 4" />
+            <polyline points={pts} fill="none"
+                      stroke={final >= 0 ? 'rgb(52 211 153)' : 'rgb(251 113 133)'} strokeWidth="2" />
+          </svg>
+          <div className="flex justify-between text-[10px] text-slate-600">
+            <span>{trades[0].sell_date}</span>
+            <span>{trades[trades.length - 1].sell_date}</span>
+          </div>
+        </div>
+      )}
+    </div>
+  )
+}
+
 export default function PortfolioPage() {
   const { positions, closed } = usePortfolio()
   const prices = usePrices()
   const [closing, setClosing] = useState<string | null>(null)
   const fileRef = useRef<HTMLInputElement>(null)
+  const [live, setLive] = useState<Record<string, number> | null>(null)
+  const [liveAt, setLiveAt] = useState<string | null>(null)
+  const [updating, setUpdating] = useState(false)
+  const [priceNote, setPriceNote] = useState<string | null>(null)
 
-  const priceOf = (t: string) => prices?.prices[t]?.close ?? null
+  const priceOf = (t: string) => live?.[t] ?? prices?.prices[t]?.close ?? null
+
+  async function updatePrices() {
+    const tickers = [...new Set(positions.map((p) => p.ticker))]
+    if (tickers.length === 0) return
+    setUpdating(true)
+    setPriceNote(null)
+    try {
+      const r = await fetch(
+        `/.netlify/functions/quotes?symbols=${encodeURIComponent(tickers.join(','))}`,
+      )
+      if (!r.ok) throw new Error(`HTTP ${r.status}`)
+      const j = await r.json()
+      const map: Record<string, number> = {}
+      for (const [k, v] of Object.entries(j.prices ?? {})) {
+        map[k] = (v as { price: number }).price
+      }
+      if (Object.keys(map).length === 0) throw new Error('no quotes')
+      setLive(map)
+      setLiveAt(new Date().toLocaleTimeString(undefined, { hour: '2-digit', minute: '2-digit' }))
+      const missing = tickers.filter((t) => !(t in map))
+      setPriceNote(missing.length > 0 ? `no live quote for ${missing.join(', ')} — using last scan` : null)
+    } catch {
+      setPriceNote('Live quotes unavailable (they work on the deployed site) — showing last-scan prices.')
+    } finally {
+      setUpdating(false)
+    }
+  }
 
   let totalCost = 0
   let totalValue = 0
@@ -140,16 +230,27 @@ export default function PortfolioPage() {
 
   return (
     <section className="space-y-6">
-      <div className="flex flex-wrap items-baseline justify-between gap-2">
+      <div className="flex flex-wrap items-center justify-between gap-2">
         <h2 className="flex items-center gap-2 text-base font-semibold tracking-tight text-slate-100">
           <span className="h-4 w-1 rounded-full bg-sky-400/70" />
           Portfolio — trade backlog
         </h2>
-        <span className="text-xs text-slate-500">
-          stored in this browser only · prices from last scan
-          {prices ? ` (${Object.values(prices.bar_dates).join(' / ')})` : ''}
+        <span className="flex flex-wrap items-center gap-3">
+          <span className="text-xs text-slate-500">
+            {liveAt
+              ? `live prices · ${liveAt}`
+              : `prices from last scan${prices ? ` (${Object.values(prices.bar_dates).join(' / ')})` : ''}`}
+          </span>
+          <button
+            onClick={updatePrices}
+            disabled={updating || positions.length === 0}
+            className="rounded-lg bg-sky-500/15 px-3 py-1.5 text-xs font-medium text-sky-300 ring-1 ring-sky-400/25 transition hover:bg-sky-500/25 disabled:opacity-40"
+          >
+            {updating ? 'Updating…' : '↻ Update prices'}
+          </button>
         </span>
       </div>
+      {priceNote && <p className="text-xs text-amber-400/90">{priceNote}</p>}
 
       <div className="flex flex-wrap gap-2.5">
         <Chip label="Open positions" value={positions.length} />
@@ -231,8 +332,9 @@ export default function PortfolioPage() {
 
       <h3 className="flex items-center gap-2 pt-2 text-sm font-semibold text-slate-200">
         <span className="h-3.5 w-1 rounded-full bg-slate-500/70" />
-        Closed trades ({closed.length})
+        Closed trades ({closed.length}) — historic P&L
       </h3>
+      <Performance closed={closed} />
       {closed.length > 0 ? (
         <div className="overflow-x-auto rounded-xl bg-slate-900/30 ring-1 ring-white/5">
           <table className="w-full text-left text-sm">

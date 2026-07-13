@@ -3,6 +3,10 @@
   command = "npm run build"
   publish = "dist"
 
+# Live-quote proxy for the Portfolio page (path relative to base)
+[functions]
+  directory = "netlify/functions"
+
 # Scan JSON must never be cached stale — the dashboard cache-busts too,
 # but this keeps Netlify's CDN honest after each daily deploy.
 [[headers]]
