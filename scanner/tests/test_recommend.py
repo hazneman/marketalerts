@@ -104,3 +104,16 @@ class TestSectorFactor:
     def test_leading_sector_defends_strong_name_from_sell(self):
         # bearish on a +1 company name in a leading sector: 1+1=2 >= STRONG -> HOLD
         assert verdict("bearish", True, 1, "leading")[0] == "hold"
+
+
+class TestRsiExtendedCap:
+    def test_never_sell_even_with_macd_and_weak_fundamentals(self):
+        v, reason = verdict("bearish", True, -5, "lagging", "rsi_extended")
+        assert v == "hold"
+        assert "trim" in reason
+
+    def test_capped_regardless_of_macd(self):
+        assert verdict("bearish", False, 0, None, "rsi_extended")[0] == "hold"
+
+    def test_other_categories_unaffected(self):
+        assert verdict("bearish", True, -3, None, "price_sma200")[0] == "sell"

@@ -153,13 +153,20 @@ def fetch_fundamentals(ticker: str) -> dict | None:
 
 
 def verdict(direction: str, macd_confirms: bool, score: int | None,
-            sector_state: str | None = None) -> tuple[str, str]:
+            sector_state: str | None = None,
+            category: str | None = None) -> tuple[str, str]:
     """Combine signal x MACD x (fundamentals + sector) into (verdict, reason)."""
     base = 0 if score is None else score
     eff = base + sector_factor(sector_state)  # combined tailwind/headwind
     fund_note = "" if score is not None else " (fundamentals unavailable)"
     sec_note = (", sector leading" if sector_state == "leading"
                 else ", sector lagging" if sector_state == "lagging" else "")
+
+    # RSI>75 fires on stocks in UPTRENDS as a take-profit alert; backtests
+    # (docs/EXITS.md) showed exiting uptrend strength outright loses — so this
+    # category never escalates to SELL, whatever MACD/fundamentals say.
+    if category == "rsi_extended":
+        return "hold", "Overbought in an uptrend — take-profit/trim signal, not an exit"
 
     if direction == "bullish":
         if not macd_confirms:

@@ -160,7 +160,8 @@ def main(argv: list[str] | None = None) -> int:
                    "factor": sector_factor(state)} if spdr else None)
 
         v, reason = combine_verdict(a.direction, macd_ok,
-                                    fund["score"] if fund else None, state)
+                                    fund["score"] if fund else None, state,
+                                    a.category)
         d.update({
             "market": mkt,
             "macd_confirms": macd_ok,

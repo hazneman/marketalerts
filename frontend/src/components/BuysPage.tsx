@@ -206,14 +206,16 @@ export function qualityScore(a: AlertItem): number {
   const sec = a.sector?.state
   if (sec === 'leading') s += 1.5
   else if (sec === 'improving') s += 0.5
+  else if (sec === 'weakening') s -= 0.25 // rotation out already underway
   else if (sec === 'lagging') s -= 0.5
   const vol = a.volume?.ratio
-  if (vol !== undefined) s += vol >= 1.5 ? 1.5 : vol >= 1 ? 1 : 0
+  // average volume is NOT confirmation — credit starts above it
+  if (vol !== undefined) s += vol >= 2 ? 1.5 : vol >= 1.25 ? 1 : vol >= 1 ? 0.5 : 0
+  // consensus adds only a small kicker: the fundamentals rating above already
+  // contains analyst factors, so full weight here would double-count them
   const consensus = a.fundamentals?.analyst?.consensus
-  if (consensus === 'strong_buy') s += 1
-  else if (consensus === 'buy') s += 0.5
-  const upside = a.fundamentals?.metrics?.target_upside_pct
-  if (upside !== undefined && upside >= 15) s += 0.5
+  if (consensus === 'strong_buy') s += 0.5
+  else if (consensus === 'buy') s += 0.25
   if (a.rule === 'PRICE_SMA200W_BULL') s += 1 // secular cross: rarest, highest-quality signal
   else if (a.rule === 'GOLDEN_CROSS') s += 0.5
   const fibDist = a.fib?.daily?.nearest.dist_pct
@@ -221,9 +223,11 @@ export function qualityScore(a: AlertItem): number {
   return Math.max(0, s)
 }
 
+// thresholds scaled to the achievable max of 10 (non-US names top out at 8.5
+// since sector rotation is US-only — evidence-based, noted in the footer)
 const GRADES: { min: number; label: string; style: string }[] = [
-  { min: 8, label: 'Strong+', style: 'bg-emerald-500/25 text-emerald-200 ring-emerald-400/40' },
-  { min: 6.5, label: 'Strong', style: 'bg-emerald-500/15 text-emerald-300 ring-emerald-400/25' },
+  { min: 7.5, label: 'Strong+', style: 'bg-emerald-500/25 text-emerald-200 ring-emerald-400/40' },
+  { min: 6, label: 'Strong', style: 'bg-emerald-500/15 text-emerald-300 ring-emerald-400/25' },
   { min: 5, label: 'Good', style: 'bg-sky-500/15 text-sky-300 ring-sky-400/25' },
   { min: 0, label: 'Fair', style: 'bg-slate-500/15 text-slate-300 ring-white/10' },
 ]
@@ -481,10 +485,12 @@ export default function BuysPage() {
         full detail. <span className="text-slate-400">Quality</span> is a display-only
         confluence score (it does not change the verdict): base 3 for any BUY, plus
         fundamentals (strong +2 / neutral +1), sector (leading +1.5 / improving +0.5 /
-        lagging −0.5), volume (≥1.5× avg +1.5 / ≥1× +1), analyst consensus (strong buy
-        +1 / buy +0.5) and ≥15% target upside (+0.5), signal rarity (200-week cross +1 /
-        golden cross +0.5), and price sitting on Fib support (+0.5). Strong+ ≥8 ·
-        Strong ≥6.5 · Good ≥5 · Fair below. Informational, not investment advice.
+        weakening −0.25 / lagging −0.5; US-only, so non-US names top out lower),
+        volume (≥2× avg +1.5 / ≥1.25× +1 / ≥1× +0.5), a small analyst kicker
+        (strong buy +0.5 / buy +0.25 — the fundamentals rating already counts analyst
+        factors), signal rarity (200-week cross +1 / golden cross +0.5), and price
+        sitting on Fib support (+0.5). Strong+ ≥7.5 · Strong ≥6 · Good ≥5 · Fair
+        below. Informational, not investment advice.
       </p>
     </section>
   )
