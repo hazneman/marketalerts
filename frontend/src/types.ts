@@ -11,6 +11,12 @@ export interface AlertItem {
   verdict_reason?: string
   macd_confirms?: boolean
   fundamentals?: Fundamentals | null
+  sector?: {
+    name: string
+    symbol: string
+    state: 'leading' | 'improving' | 'weakening' | 'lagging' | null
+    factor: number
+  } | null
 }
 
 export const MARKET_LABELS: Record<string, string> = {

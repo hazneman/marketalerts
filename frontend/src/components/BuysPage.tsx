@@ -1,7 +1,7 @@
 import { useAlerts } from '../hooks/useAlerts'
 import { tradingViewUrl } from '../lib/tradingview'
 import type { AlertItem, Fundamentals } from '../types'
-import { CATEGORY_LABELS } from '../types'
+import { CATEGORY_LABELS, SECTOR_STATE } from '../types'
 import { MarketBadge } from './AlertTable'
 
 const CONSENSUS_LABELS: Record<string, { label: string; style: string }> = {
@@ -200,6 +200,29 @@ function BuyCard({ a }: { a: AlertItem }) {
               ))}
             </tbody>
           </table>
+          {a.sector && (
+            <div className="mt-2 flex items-center justify-between border-t border-white/5 pt-2 text-sm">
+              <span className="text-slate-400">
+                Sector — <span className="text-slate-300">{a.sector.name}</span>
+              </span>
+              <span className="flex items-center gap-2">
+                {a.sector.state ? (
+                  <span
+                    className={`rounded-full px-2 py-0.5 text-xs font-semibold ring-1 ${
+                      SECTOR_STATE[a.sector.state].style
+                    }`}
+                  >
+                    {SECTOR_STATE[a.sector.state].label}
+                  </span>
+                ) : (
+                  <span className="text-xs text-slate-500">no data</span>
+                )}
+                <span className="w-12 text-right">
+                  <FactorChip value={a.sector.factor} />
+                </span>
+              </span>
+            </div>
+          )}
           <AnalystSection f={f} />
         </div>
       ) : (

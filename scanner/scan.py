@@ -120,27 +120,49 @@ def main(argv: list[str] | None = None) -> int:
     alerts.sort(key=lambda a: (a.category, MARKET_ORDER.get(market_of(a.ticker), 9),
                                a.ticker))
 
+    # Sector rotation first, so verdicts can factor in whether a US stock's
+    # sector is leading or lagging the market. Failure -> empty map -> no effect.
+    sector_states: dict[str, str] = {}
+    try:
+        from sectors import build as build_sectors
+        sec = build_sectors(args.output_dir)
+        sector_states = {r["symbol"]: r["state"] for r in sec["sectors"]}
+        logger.info("sectors: %d ranked, bar_date=%s", len(sec["sectors"]), sec["bar_date"])
+    except Exception as exc:
+        logger.warning("sectors build failed (%s) — keeping previous sectors.json", exc)
+
     # Enrich each alert with a buy/hold/sell verdict: MACD confirmation from
     # the bars already in memory + fundamentals fetched only for alerted names.
     from indicators import macd
-    from recommend import fetch_fundamentals, verdict as combine_verdict
+    from recommend import (SECTOR_TO_SPDR, fetch_fundamentals, sector_factor,
+                           verdict as combine_verdict)
 
     fundamentals_cache: dict[str, dict | None] = {}
     alert_dicts = []
     for a in alerts:
         d = a.to_dict()
+        mkt = market_of(a.ticker)
         line, sig = macd(ok[a.ticker]["close"])
         macd_ok = bool(line.iloc[-1] > sig.iloc[-1]) if a.direction == "bullish" \
             else bool(line.iloc[-1] < sig.iloc[-1])
         if a.ticker not in fundamentals_cache:
             fundamentals_cache[a.ticker] = fetch_fundamentals(a.ticker)
         fund = fundamentals_cache[a.ticker]
+
+        # Sector rotation applies to US stocks only (SPDR ETFs are US-market).
+        sector_name = fund.get("sector") if fund else None
+        spdr = SECTOR_TO_SPDR.get(sector_name) if (sector_name and mkt == "us") else None
+        state = sector_states.get(spdr) if spdr else None
+        sector = ({"name": sector_name, "symbol": spdr, "state": state,
+                   "factor": sector_factor(state)} if spdr else None)
+
         v, reason = combine_verdict(a.direction, macd_ok,
-                                    fund["score"] if fund else None)
+                                    fund["score"] if fund else None, state)
         d.update({
-            "market": market_of(a.ticker),
+            "market": mkt,
             "macd_confirms": macd_ok,
             "fundamentals": fund,  # full detail: score, rating, factors, metrics
+            "sector": sector,
             "verdict": v,
             "verdict_reason": reason,
         })
@@ -158,8 +180,8 @@ def main(argv: list[str] | None = None) -> int:
     logger.info("bar_date=%s alerts=%d failures=%d insufficient=%d",
                 bar_date, len(alerts), len(meta["failures"]), len(insufficient))
 
-    # Forex + sector snapshots ride along; their failure must never sink the
-    # stock scan (each keeps its previous JSON on error).
+    # Forex snapshot rides along (sectors already built above for the verdict);
+    # its failure must never sink the stock scan — it keeps its previous JSON.
     try:
         from forex import build as build_forex
         fx = build_forex(args.output_dir)
@@ -167,14 +189,6 @@ def main(argv: list[str] | None = None) -> int:
                     len(fx["currencies"]), fx["bar_date"])
     except Exception as exc:
         logger.warning("forex build failed (%s) — keeping previous forex.json", exc)
-
-    try:
-        from sectors import build as build_sectors
-        sec = build_sectors(args.output_dir)
-        logger.info("sectors: %d ranked, bar_date=%s",
-                    len(sec["sectors"]), sec["bar_date"])
-    except Exception as exc:
-        logger.warning("sectors build failed (%s) — keeping previous sectors.json", exc)
     return 0
 
 

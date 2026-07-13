@@ -4,9 +4,12 @@ Layers (in order of authority):
   1. The alert's direction is the base case (bullish -> buy-lean, bearish -> sell-lean).
   2. MACD gate: if daily MACD momentum disagrees with the signal direction the
      verdict is capped at HOLD — this is the false-signal filter.
-  3. Fundamentals overlay: a 5-factor score (adapted from the ichimoku-screener
-     fundamentals module) can veto — bullish signal on fundamentally weak names
-     and bearish signals on fundamentally strong names both cap at HOLD.
+  3. Fundamentals + sector overlay: a 5-factor company score (adapted from the
+     ichimoku-screener fundamentals module) PLUS a sector-rotation factor
+     (US only — is the stock's sector leading or lagging the market, from
+     sectors.py). Their sum can veto: a bullish signal into weak fundamentals /
+     a sinking sector, or a bearish signal on a strong name in a leading
+     sector, both cap at HOLD.
 
 Fundamentals are fetched ONLY for tickers that alerted today (yfinance .info
 is slow/flaky per ticker), and every failure degrades gracefully to a
@@ -19,8 +22,31 @@ import logging
 
 logger = logging.getLogger(__name__)
 
-STRONG = 2    # score >= STRONG  -> fundamentally strong
-WEAK = -2     # score <= WEAK    -> fundamentally weak
+STRONG = 2    # combined score >= STRONG  -> strong tailwind
+WEAK = -2     # combined score <= WEAK    -> weak / headwind
+
+# yfinance .info["sector"] (GICS name) -> SPDR sector ETF used by sectors.py
+SECTOR_TO_SPDR = {
+    "Technology": "XLK",
+    "Communication Services": "XLC",
+    "Consumer Cyclical": "XLY",
+    "Consumer Defensive": "XLP",
+    "Energy": "XLE",
+    "Financial Services": "XLF",
+    "Healthcare": "XLV",
+    "Industrials": "XLI",
+    "Basic Materials": "XLB",
+    "Real Estate": "XLRE",
+    "Utilities": "XLU",
+}
+
+# rotation state -> ±1 factor (conservative: reward clear leaders, penalize
+# clear laggards, stay neutral through the transition quadrants)
+SECTOR_FACTOR = {"leading": 1, "improving": 0, "weakening": 0, "lagging": -1}
+
+
+def sector_factor(state: str | None) -> int:
+    return SECTOR_FACTOR.get(state or "", 0)
 
 
 def score_info(info: dict) -> dict:
@@ -122,27 +148,32 @@ def fetch_fundamentals(ticker: str) -> dict | None:
     result = score_info(info)
     result["analyst"] = analyst_block(info)
     result["rating_changes"] = recent_rating_changes(tkr)
+    result["sector"] = info.get("sector")  # raw GICS name; mapped in scan.py
     return result
 
 
-def verdict(direction: str, macd_confirms: bool, score: int | None) -> tuple[str, str]:
-    """Combine the three layers into (verdict, reason)."""
-    s = 0 if score is None else score
+def verdict(direction: str, macd_confirms: bool, score: int | None,
+            sector_state: str | None = None) -> tuple[str, str]:
+    """Combine signal x MACD x (fundamentals + sector) into (verdict, reason)."""
+    base = 0 if score is None else score
+    eff = base + sector_factor(sector_state)  # combined tailwind/headwind
     fund_note = "" if score is not None else " (fundamentals unavailable)"
+    sec_note = (", sector leading" if sector_state == "leading"
+                else ", sector lagging" if sector_state == "lagging" else "")
 
     if direction == "bullish":
         if not macd_confirms:
             return "hold", "MACD momentum does not confirm — possible false break"
-        if s <= WEAK:
-            return "hold", "Bullish signal confirmed, but fundamentals are weak"
-        if s >= STRONG:
-            return "buy", "Bullish signal, MACD confirms, strong fundamentals" + fund_note
-        return "buy", "Bullish signal confirmed by MACD" + fund_note
+        if eff <= WEAK:
+            return "hold", "Bullish signal confirmed, but fundamentals/sector are weak" + fund_note
+        if eff >= STRONG:
+            return "buy", "Bullish signal, MACD confirms, strong fundamentals" + sec_note + fund_note
+        return "buy", "Bullish signal confirmed by MACD" + sec_note + fund_note
 
     if not macd_confirms:
         return "hold", "MACD momentum does not confirm — possible false breakdown"
-    if s >= STRONG:
-        return "hold", "Bearish signal on a fundamentally strong name — trim rather than exit"
-    if s <= WEAK:
-        return "sell", "Bearish signal, MACD confirms, weak fundamentals" + fund_note
-    return "sell", "Bearish signal confirmed by MACD" + fund_note
+    if eff >= STRONG:
+        return "hold", "Bearish signal but fundamentals/sector strong — trim rather than exit" + fund_note
+    if eff <= WEAK:
+        return "sell", "Bearish signal, MACD confirms, weak fundamentals" + sec_note + fund_note
+    return "sell", "Bearish signal confirmed by MACD" + sec_note + fund_note

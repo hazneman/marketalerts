@@ -1,4 +1,4 @@
-from recommend import analyst_block, score_info, verdict
+from recommend import analyst_block, score_info, sector_factor, verdict
 
 
 class TestAnalystBlock:
@@ -80,3 +80,27 @@ class TestVerdict:
     def test_no_fundamentals_falls_back_to_technicals(self):
         assert verdict("bullish", True, None)[0] == "buy"
         assert verdict("bearish", True, None)[0] == "sell"
+
+
+class TestSectorFactor:
+    def test_mapping(self):
+        assert sector_factor("leading") == 1
+        assert sector_factor("lagging") == -1
+        assert sector_factor("improving") == 0
+        assert sector_factor("weakening") == 0
+        assert sector_factor(None) == 0
+
+    def test_lagging_sector_tips_borderline_bull_to_hold(self):
+        # neutral company fundamentals (0) that would be BUY on its own...
+        assert verdict("bullish", True, 0)[0] == "buy"
+        # ...but a -1 sector plus a -1 company factor sums to WEAK -> HOLD
+        assert verdict("bullish", True, -1, "lagging")[0] == "hold"
+
+    def test_leading_sector_mentioned_in_reason(self):
+        v, reason = verdict("bullish", True, 3, "leading")
+        assert v == "buy"
+        assert "sector leading" in reason
+
+    def test_leading_sector_defends_strong_name_from_sell(self):
+        # bearish on a +1 company name in a leading sector: 1+1=2 >= STRONG -> HOLD
+        assert verdict("bearish", True, 1, "leading")[0] == "hold"
