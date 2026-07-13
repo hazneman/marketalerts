@@ -29,6 +29,17 @@ Fundamentals are fetched only for tickers that alerted that day; any fetch
 failure degrades gracefully to a technicals-only verdict. Hover a verdict badge
 for the reasoning. Logic lives in [`scanner/recommend.py`](scanner/recommend.py).
 
+## Sectors page
+
+Sector rotation for US equities via the 11 SPDR Select Sector ETFs, read
+against SPY. The signal is **relative strength** (sector return − SPY return):
+money rotates toward sectors beating the market. Each sector shows multi-horizon
+returns (1w–1y, colored heatmap), RS at 1m/3m, trend regime (vs 200-day SMA),
+and an RRG-style **state** — leading / improving / weakening / lagging — from the
+sign of short vs medium RS. Ranked leaders→laggards by a recency-weighted RS
+blend (50% 1m · 35% 3m · 15% 6m). Data: [`scanner/sectors.py`](scanner/sectors.py),
+rides the daily scan like forex.
+
 ## Forex page
 
 - **Currencies** (EUR, GBP, JPY, CHF, CAD, AUD, NZD, TRY vs USD benchmark):
