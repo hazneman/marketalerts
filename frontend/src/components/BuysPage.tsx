@@ -3,7 +3,7 @@ import { useAlerts, usePortfolio } from '../hooks/useAlerts'
 import { addPosition } from '../lib/portfolio'
 import { tradingViewUrl } from '../lib/tradingview'
 import type { AlertItem, FibFrame, Fundamentals } from '../types'
-import { CATEGORY_LABELS, SECTOR_STATE } from '../types'
+import { CATEGORY_LABELS, CONSENSUS_LABELS, SECTOR_STATE } from '../types'
 import { MarketBadge } from './AlertTable'
 
 const inputCls =
@@ -60,14 +60,6 @@ function AddToPortfolio({ a }: { a: AlertItem }) {
       </button>
     </span>
   )
-}
-
-const CONSENSUS_LABELS: Record<string, { label: string; style: string }> = {
-  strong_buy: { label: 'Strong buy', style: 'bg-emerald-500/20 text-emerald-300' },
-  buy: { label: 'Buy', style: 'bg-emerald-500/15 text-emerald-400' },
-  hold: { label: 'Hold', style: 'bg-amber-500/15 text-amber-400' },
-  underperform: { label: 'Underperform', style: 'bg-rose-500/15 text-rose-400' },
-  sell: { label: 'Sell', style: 'bg-rose-500/20 text-rose-300' },
 }
 
 function AnalystSection({ f }: { f: Fundamentals }) {

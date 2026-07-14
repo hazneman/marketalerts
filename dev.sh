@@ -41,5 +41,6 @@ case "$choice" in
   2) "$ROOT/scanner/.venv/bin/python" "$ROOT/scanner/scan.py"; dashboard ;;
   3) dashboard ;;
   4) "$ROOT/scanner/.venv/bin/python" -m pytest "$ROOT/scanner/tests" -q ;;
+  5) "$ROOT/scanner/.venv/bin/python" "$ROOT/scanner/build_membership.py" ;;
   *) echo "Unknown choice"; exit 1 ;;
 esac

@@ -120,12 +120,25 @@ def main(argv: list[str] | None = None) -> int:
     alerts.sort(key=lambda a: (a.category, MARKET_ORDER.get(market_of(a.ticker), 9),
                                a.ticker))
 
+    # Latest close for every scanned ticker — written to prices.json below and
+    # fed to the sectors build, which ranks constituents by shares x close.
+    from alerts.base import px_round
+    prices = {}
+    for sym, df in ok.items():
+        c = df["close"]
+        last = float(c.iloc[-1])
+        prices[sym] = {
+            "close": px_round(last),
+            "chg_1d_pct": round((last / float(c.iloc[-2]) - 1.0) * 100, 2)
+            if len(c) > 1 else None,
+        }
+
     # Sector rotation first, so verdicts can factor in whether a US stock's
     # sector is leading or lagging the market. Failure -> empty map -> no effect.
     sector_states: dict[str, str] = {}
     try:
         from sectors import build as build_sectors
-        sec = build_sectors(args.output_dir)
+        sec = build_sectors(args.output_dir, prices=prices)
         sector_states = {r["symbol"]: r["state"] for r in sec["sectors"]}
         logger.info("sectors: %d ranked, bar_date=%s", len(sec["sectors"]), sec["bar_date"])
     except Exception as exc:
@@ -188,17 +201,7 @@ def main(argv: list[str] | None = None) -> int:
 
     # prices.json: latest close for every scanned ticker, so the portfolio
     # page can value any universe holding (not just today's alerted names).
-    from alerts.base import px_round
     from output import write_prices
-    prices = {}
-    for sym, df in ok.items():
-        c = df["close"]
-        last = float(c.iloc[-1])
-        prices[sym] = {
-            "close": px_round(last),
-            "chg_1d_pct": round((last / float(c.iloc[-2]) - 1.0) * 100, 2)
-            if len(c) > 1 else None,
-        }
     write_prices(prices, bar_dates, args.output_dir)
     logger.info("prices.json: %d tickers", len(prices))
 

@@ -157,6 +157,24 @@ export interface ForexData {
   pair_alerts?: AlertItem[]
 }
 
+export interface SectorConstituent {
+  ticker: string
+  name: string
+  cap: number
+  price: number
+  chg_1d_pct: number | null
+  fundamentals?: {
+    score: number
+    rating: 'strong' | 'neutral' | 'weak'
+    forward_pe?: number
+    div_yield_pct?: number
+    rev_growth_pct?: number
+    margin_pct?: number
+    consensus?: string
+    target_upside_pct?: number
+  } | null
+}
+
 export interface SectorRow {
   symbol: string
   name: string
@@ -169,6 +187,7 @@ export interface SectorRow {
   rank: number
   state: 'leading' | 'improving' | 'weakening' | 'lagging'
   comment: string
+  top?: SectorConstituent[]
 }
 
 export interface SectorData {
@@ -186,6 +205,14 @@ export const SECTOR_STATE: Record<string, { label: string; style: string }> = {
   improving: { label: 'Improving', style: 'bg-sky-500/15 text-sky-300 ring-sky-400/25' },
   weakening: { label: 'Weakening', style: 'bg-amber-500/15 text-amber-300 ring-amber-400/25' },
   lagging: { label: 'Lagging', style: 'bg-rose-500/15 text-rose-300 ring-rose-400/25' },
+}
+
+export const CONSENSUS_LABELS: Record<string, { label: string; style: string }> = {
+  strong_buy: { label: 'Strong buy', style: 'bg-emerald-500/20 text-emerald-300' },
+  buy: { label: 'Buy', style: 'bg-emerald-500/15 text-emerald-400' },
+  hold: { label: 'Hold', style: 'bg-amber-500/15 text-amber-400' },
+  underperform: { label: 'Underperform', style: 'bg-rose-500/15 text-rose-400' },
+  sell: { label: 'Sell', style: 'bg-rose-500/20 text-rose-300' },
 }
 
 export const CATEGORY_LABELS: Record<string, string> = {

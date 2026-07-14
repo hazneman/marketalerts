@@ -45,7 +45,12 @@ Pipeline per daily run (`scan.py`):
      on Friday's scan; rare ≈ once/18mo per stock; highest-quality signal per backtests)
    - `RsiOverboughtRule` — RSI(14) crosses >75 while above SMA200 (take-profit alert)
 4. Sector rotation (`sectors.py`): 11 SPDR ETFs vs SPY → relative-strength rank
-   + RRG state (leading/improving/weakening/lagging) → `sectors.json`.
+   + RRG state (leading/improving/weakening/lagging) → `sectors.json`. Each
+   sector also carries `top`: its 10 biggest members (cap = shares from the
+   `sector_membership.json` cache × the close already in memory) with compact
+   fundamentals fetched for just those ~110 tickers (threaded, degrades
+   per-ticker). Rebuilt only from a FULL price set (≥80% membership coverage);
+   partial scans / standalone runs carry the previous lists forward.
 5. **Verdict per alert** (`recommend.py`): buy/hold/sell =
    signal direction × **MACD gate** (momentum disagrees → cap HOLD, the
    false-signal filter) × (5-factor fundamentals score + US-only sector factor
@@ -79,7 +84,9 @@ Pipeline per daily run (`scan.py`):
   support +0.5. Grades: Strong+ ≥7.5 / Strong ≥6 / Good ≥5 / Fair. Expand a row
   for fundamentals table, analyst view (consensus, target-range bar, recent
   rating changes), sector row, Fib ladders, volume. "+ portfolio" quick-add.
-- **Sectors** — rotation leaderboard + returns heatmap (SectorsPage).
+- **Sectors** — rotation leaderboard + returns heatmap (SectorsPage); each row
+  expands to the sector's 10 biggest companies with fundamentals (cap, 1d%,
+  fwd P/E, div yield, rev growth, margin, consensus, target upside, rating).
 - **Forex** — rates/outlook table, pairs board, pair signals.
 - **Portfolio** — trade backlog in **browser localStorage only** (key
   `market-alerts-portfolio-v1`; export/import JSON backup). Open positions
@@ -133,6 +140,10 @@ deliberate boundary.
   the per-market bar logic keeps their last complete bar; self-heals next run.
 - `rates.json` (policy rates + 6m outlooks) is **manual**; verify/update after
   central-bank meetings and bump `as_of`/`outlook_as_of`.
+- `sector_membership.json` (ticker → GICS sector, name, shares outstanding) is
+  a **cache** — refresh occasionally via `dev.sh` option 5 /
+  `build_membership.py` (~5 min, 517 .info calls); index membership and share
+  counts drift slowly, so quarterly is plenty.
 - GitHub disables cron workflows after 60 days of repo inactivity — daily data
   commits keep it alive; if alerts stop, check the Actions tab first.
 - Prices are split-adjusted, NOT dividend-adjusted (TradingView parity);

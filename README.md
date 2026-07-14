@@ -79,6 +79,14 @@ sign of short vs medium RS. Ranked leaders→laggards by a recency-weighted RS
 blend (50% 1m · 35% 3m · 15% 6m). Data: [`scanner/sectors.py`](scanner/sectors.py),
 rides the daily scan like forex.
 
+Click any sector row to expand its **10 largest companies by market cap**, each
+with price/1-day change and compact fundamentals: forward P/E, dividend yield,
+revenue growth, profit margin, analyst consensus, mean-target upside, and the
+same strong/neutral/weak 5-factor rating used for alert verdicts. Market caps
+come from shares outstanding cached in
+[`scanner/sector_membership.json`](scanner/sector_membership.json) × the scan's
+latest close; refresh the cache occasionally with `dev.sh` option 5.
+
 ## Forex page
 
 - **Currencies** (EUR, GBP, JPY, CHF, CAD, AUD, NZD, TRY vs USD benchmark):
