@@ -28,6 +28,14 @@ Every stock alert carries a verdict built from three layers:
 Fundamentals are fetched only for tickers that alerted that day; any fetch
 failure degrades gracefully to a technicals-only verdict. Hover a verdict badge
 for the reasoning. Logic lives in [`scanner/recommend.py`](scanner/recommend.py).
+Exception: RSI>75 alerts are hard-capped at HOLD ("trim, not exit") — they fire
+on uptrends as take-profit signals.
+
+The **Buys** tab lists BUY verdicts as a collapsed list **ranked by a
+display-only quality score** (Strong+/Strong/Good/Fair — confluence across
+fundamentals, sector, volume, analysts, signal rarity, Fib support; formula in
+the page footer). Click a row to expand full detail; "+ portfolio" adds the
+position to the Portfolio tab.
 
 ### Price structure (Fibonacci + volume)
 
@@ -127,7 +135,7 @@ flowchart TD
     end
 
     subgraph DASH["Dashboard (React + TypeScript + Tailwind)"]
-        TABS["Stocks tab | Forex tab"]
+        TABS["Stocks · Buys · Sectors<br/>Forex · Portfolio"]
         STOCKS["alert categories · filters<br/>verdict badges (buy/hold/sell)<br/>↗ TradingView link per ticker"]
         FX["rates + 6m outlook table<br/>pairs board + combined reads<br/>pair signals"]
     end
@@ -168,7 +176,9 @@ Double-click **MarketAlerts.app**, or:
 ./dev.sh
 ```
 
-Menu: `1)` quick scan (10 tickers) + dashboard · `2)` full scan (~5 min) · `3)` dashboard only · `4)` tests (41).
+Menu: `1)` quick scan (10 tickers) + dashboard · `2)` full scan (~5 min) · `3)` dashboard only · `4)` tests (70).
+
+For AI-assistant working knowledge (architecture, conventions, gotchas), see [CLAUDE.md](CLAUDE.md).
 
 ## Research library (docs/)
 
