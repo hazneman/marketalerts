@@ -7,9 +7,20 @@ import PortfolioPage from './components/PortfolioPage'
 import ScanStatus from './components/ScanStatus'
 import SectorsPage from './components/SectorsPage'
 import { useAlerts } from './hooks/useAlerts'
+import Tabs from './components/ui/Tabs'
+import ThemeToggle from './components/ui/ThemeToggle'
 import { CATEGORY_LABELS, MARKET_ORDER, type AlertItem } from './types'
 
 type Page = 'stocks' | 'buys' | 'sectors' | 'forex' | 'portfolio'
+
+const PAGES: Page[] = ['stocks', 'buys', 'sectors', 'forex', 'portfolio']
+const TAGLINES: Record<Page, string> = {
+  stocks: 'S&P 500 + Nasdaq 100 · DAX · BIST',
+  buys: 'Signals where all three layers agree',
+  sectors: 'US sector rotation vs the market',
+  forex: 'Major currencies vs USD',
+  portfolio: 'Your trades · stored in this browser',
+}
 
 export default function App() {
   const { latest, history, error } = useAlerts()
@@ -53,28 +64,28 @@ export default function App() {
 
   if (error) {
     return (
-      <main className="mx-auto max-w-5xl px-4 py-16 text-center text-slate-400">
-        <h1 className="mb-3 text-xl font-semibold text-slate-100">Market Alerts</h1>
+      <main className="mx-auto max-w-6xl px-4 py-16 text-center text-ink-2">
+        <h1 className="mb-3 text-xl font-semibold text-ink">Market Alerts</h1>
         <p>
           No scan data yet ({error}). Run a scan first — locally via{' '}
-          <code className="text-sky-400">./dev.sh</code>, or wait for the daily
+          <code className="text-accent">./dev.sh</code>, or wait for the daily
           GitHub Action.
         </p>
       </main>
     )
   }
   if (!latest) {
-    return <main className="px-4 py-16 text-center text-slate-500">Loading…</main>
+    return <main className="px-4 py-16 text-center text-muted">Loading…</main>
   }
 
   return (
     <div className="min-h-screen">
-      <header className="sticky top-0 z-20 border-b border-white/5 bg-slate-950/70 backdrop-blur-xl">
-        <div className="mx-auto flex max-w-5xl flex-wrap items-center justify-between gap-3 px-4 py-3">
+      <header className="sticky top-0 z-20 border-b border-hair bg-base/80 backdrop-blur-xl">
+        <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-3 px-4 py-2.5">
           <div className="flex items-center gap-4">
             <div className="flex items-center gap-2.5">
               <svg viewBox="0 0 32 32" className="h-7 w-7" aria-hidden="true">
-                <rect width="32" height="32" rx="8" className="fill-sky-500/15" />
+                <rect width="32" height="32" rx="2" className="fill-accent/15" />
                 <path
                   d="M5 20l6-7 5 4 5-9 6 8"
                   fill="none"
@@ -82,43 +93,24 @@ export default function App() {
                   strokeWidth="2.5"
                   strokeLinecap="round"
                   strokeLinejoin="round"
-                  className="text-sky-400"
+                  className="text-accent"
                 />
               </svg>
-              <h1 className="text-lg font-semibold tracking-tight text-white">
+              <h1 className="text-lg font-semibold tracking-tight text-ink">
                 Market Alerts
               </h1>
             </div>
-            <nav className="flex rounded-full bg-white/5 p-1 text-sm ring-1 ring-white/10">
-              {(['stocks', 'buys', 'sectors', 'forex', 'portfolio'] as const).map((p) => (
-                <button
-                  key={p}
-                  onClick={() => setPage(p)}
-                  className={`rounded-full px-3.5 py-1 capitalize transition-colors ${
-                    page === p
-                      ? 'bg-sky-500/20 font-medium text-sky-300 ring-1 ring-sky-400/30'
-                      : 'text-slate-400 hover:text-slate-200'
-                  }`}
-                >
-                  {p}
-                </button>
-              ))}
+            <nav>
+              <Tabs items={PAGES.map((p) => ({ value: p, label: p }))} active={page} onChange={setPage} />
             </nav>
           </div>
-          <span className="hidden text-sm text-slate-500 sm:block">
-            {page === 'stocks'
-              ? 'S&P 500 + Nasdaq 100 · DAX · BIST'
-              : page === 'buys'
-                ? 'Signals where all three layers agree'
-                : page === 'sectors'
-                  ? 'US sector rotation vs the market'
-                  : page === 'portfolio'
-                    ? 'Your trades · stored in this browser'
-                    : 'Major currencies vs USD'}
-          </span>
+          <div className="flex items-center gap-3">
+            <span className="hidden text-sm text-muted sm:block">{TAGLINES[page]}</span>
+            <ThemeToggle />
+          </div>
         </div>
       </header>
-      <main className="mx-auto max-w-5xl space-y-6 px-4 py-8">
+      <main className="mx-auto max-w-6xl space-y-4 px-4 py-5">
 
       {page === 'forex' ? (
         <ForexPage />
