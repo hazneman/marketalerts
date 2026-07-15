@@ -1,3 +1,5 @@
+import type { Tone } from './lib/ui'
+
 export interface AlertItem {
   ticker: string
   rule: string
@@ -57,11 +59,7 @@ export const MARKET_LABELS: Record<string, string> = {
 
 export const MARKET_ORDER: Record<string, number> = { us: 0, de: 1, bist: 2 }
 
-export const MARKET_BADGE_STYLES: Record<string, string> = {
-  us: 'bg-sky-500/10 text-sky-300 ring-sky-400/20',
-  de: 'bg-violet-500/10 text-violet-300 ring-violet-400/20',
-  bist: 'bg-amber-500/10 text-amber-300 ring-amber-400/20',
-}
+export const MARKET_TONES: Record<string, Tone> = { us: 'info', de: 'de', bist: 'accent' }
 
 export interface Fundamentals {
   score: number

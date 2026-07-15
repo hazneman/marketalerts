@@ -1,38 +1,10 @@
 import type { ScanResult } from '../types'
+import Chip from './ui/Chip'
 
 function staleBarWarning(barDate: string): boolean {
   // The bar should never be older than ~4 calendar days (long weekend + holiday)
   const ageDays = (Date.now() - new Date(barDate + 'T21:00:00Z').getTime()) / 86400000
   return ageDays > 4
-}
-
-function Chip({ label, value, tone = 'default', title }: {
-  label: string
-  value: string
-  tone?: 'default' | 'warn'
-  title?: string
-}) {
-  return (
-    <div
-      title={title}
-      className={`flex min-w-[7rem] flex-col gap-0.5 rounded-xl px-3.5 py-2.5 ring-1 ${
-        tone === 'warn'
-          ? 'bg-amber-500/10 ring-amber-400/30'
-          : 'bg-white/[0.03] ring-white/5'
-      }`}
-    >
-      <span className="text-[11px] font-medium uppercase tracking-wider text-slate-500">
-        {label}
-      </span>
-      <span
-        className={`tnum text-sm font-semibold ${
-          tone === 'warn' ? 'text-amber-300' : 'text-slate-100'
-        }`}
-      >
-        {value}
-      </span>
-    </div>
-  )
 }
 
 export default function ScanStatus({ latest }: { latest: ScanResult }) {
