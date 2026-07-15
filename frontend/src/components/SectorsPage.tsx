@@ -1,6 +1,7 @@
 import { Fragment, useState } from 'react'
 import { useSectors } from '../hooks/useAlerts'
 import { tradingViewUrl } from '../lib/tradingview'
+import { badgeFlat, tableWrapCls, theadCls, type Tone } from '../lib/ui'
 import {
   CONSENSUS_LABELS,
   SECTOR_HORIZONS,
@@ -8,17 +9,20 @@ import {
   type SectorConstituent,
   type SectorRow,
 } from '../types'
+import Badge from './ui/Badge'
+import SectionHeading from './ui/SectionHeading'
 
 // Color a return/RS cell: green scales up, red scales down, capped at ±8%.
+// Colors read from the up/down tokens so the heatmap themes in light + dark.
 function HeatCell({ v, suffix = '%' }: { v: number | null; suffix?: string }) {
   if (v === null || v === undefined)
-    return <td className="px-3 py-2.5 text-right text-slate-600">—</td>
+    return <td className="px-3 py-2 text-right text-faint">—</td>
   const t = Math.min(1, Math.abs(v) / 8)
-  const alpha = 0.06 + t * 0.20
-  const bg = v >= 0 ? `rgba(16,185,129,${alpha})` : `rgba(244,63,94,${alpha})`
+  const alpha = 0.06 + t * 0.2
+  const bg = v >= 0 ? `rgb(var(--up) / ${alpha})` : `rgb(var(--down) / ${alpha})`
   return (
-    <td className="px-3 py-2.5 text-right" style={{ backgroundColor: bg }}>
-      <span className={v >= 0 ? 'text-emerald-200' : 'text-rose-200'}>
+    <td className="px-3 py-2 text-right" style={{ backgroundColor: bg }}>
+      <span className={v >= 0 ? 'text-up' : 'text-down'}>
         {v >= 0 ? '+' : ''}
         {v.toFixed(1)}
         {suffix}
@@ -29,11 +33,7 @@ function HeatCell({ v, suffix = '%' }: { v: number | null; suffix?: string }) {
 
 function StateBadge({ state }: { state: SectorRow['state'] }) {
   const s = SECTOR_STATE[state]
-  return (
-    <span className={`inline-block rounded-full px-2.5 py-0.5 text-xs font-semibold ring-1 ${s.style}`}>
-      {s.label}
-    </span>
-  )
+  return <Badge tone={s.tone}>{s.label}</Badge>
 }
 
 function fmtCap(v: number): string {
@@ -44,27 +44,23 @@ function fmtCap(v: number): string {
 
 // Small signed-percent text (no heat background — the sub-table stays quiet)
 function Pct({ v, dash = '—' }: { v: number | null | undefined; dash?: string }) {
-  if (v === null || v === undefined) return <span className="text-slate-600">{dash}</span>
+  if (v === null || v === undefined) return <span className="text-faint">{dash}</span>
   return (
-    <span className={v >= 0 ? 'text-emerald-400' : 'text-rose-400'}>
+    <span className={v >= 0 ? 'text-up' : 'text-down'}>
       {v >= 0 ? '+' : ''}
       {v.toFixed(1)}%
     </span>
   )
 }
 
-const RATING_STYLES: Record<string, string> = {
-  strong: 'bg-emerald-500/15 text-emerald-400',
-  neutral: 'bg-slate-500/15 text-slate-300',
-  weak: 'bg-rose-500/15 text-rose-400',
-}
+const RATING_TONES: Record<string, Tone> = { strong: 'up', neutral: 'neutral', weak: 'down' }
 
 // The 10 biggest companies of an expanded sector, with compact fundamentals.
 function ConstituentsTable({ rows }: { rows: SectorConstituent[] }) {
   return (
-    <div className="overflow-x-auto rounded-lg bg-white/[0.02] ring-1 ring-white/5">
+    <div className="overflow-x-auto bg-raised ring-1 ring-hair">
       <table className="w-full text-left text-xs">
-        <thead className="text-[10px] font-medium uppercase tracking-wider text-slate-500">
+        <thead className={theadCls}>
           <tr>
             <th className="px-3 py-2">#</th>
             <th className="px-3 py-2">Company</th>
@@ -80,25 +76,25 @@ function ConstituentsTable({ rows }: { rows: SectorConstituent[] }) {
             <th className="px-3 py-2 text-right">Fundamentals</th>
           </tr>
         </thead>
-        <tbody className="tnum divide-y divide-white/5">
+        <tbody className="tnum divide-y divide-hair">
           {rows.map((c, i) => {
             const f = c.fundamentals
             const consensus = f?.consensus ? CONSENSUS_LABELS[f.consensus] : null
             return (
-              <tr key={c.ticker} className="text-slate-300">
-                <td className="px-3 py-2 text-slate-600">{i + 1}</td>
+              <tr key={c.ticker} className="text-ink-2">
+                <td className="px-3 py-2 text-faint">{i + 1}</td>
                 <td className="px-3 py-2">
                   <a
                     href={tradingViewUrl(c.ticker)}
                     target="_blank"
                     rel="noreferrer"
-                    className="font-semibold text-sky-400 hover:text-sky-300 hover:underline"
+                    className="font-semibold text-accent hover:underline"
                   >
                     {c.ticker}
                   </a>
-                  <span className="ml-1.5 text-slate-500">{c.name}</span>
+                  <span className="ml-1.5 text-muted">{c.name}</span>
                 </td>
-                <td className="px-3 py-2 text-right text-slate-200">{fmtCap(c.cap)}</td>
+                <td className="px-3 py-2 text-right text-ink">{fmtCap(c.cap)}</td>
                 <td className="px-3 py-2 text-right">{c.price.toFixed(2)}</td>
                 <td className="px-3 py-2 text-right"><Pct v={c.chg_1d_pct} /></td>
                 <td className="px-3 py-2 text-right">
@@ -113,21 +109,21 @@ function ConstituentsTable({ rows }: { rows: SectorConstituent[] }) {
                 </td>
                 <td className="px-3 py-2">
                   {consensus ? (
-                    <span className={`rounded-full px-2 py-0.5 text-[10px] font-semibold ${consensus.style}`}>
+                    <span className={`rounded px-2 py-0.5 text-[10px] font-semibold ${badgeFlat[consensus.tone]}`}>
                       {consensus.label}
                     </span>
                   ) : (
-                    <span className="text-slate-600">—</span>
+                    <span className="text-faint">—</span>
                   )}
                 </td>
                 <td className="px-3 py-2 text-right"><Pct v={f?.target_upside_pct} /></td>
                 <td className="px-3 py-2 text-right">
                   {f ? (
-                    <span className={`rounded-full px-2 py-0.5 text-[10px] font-semibold uppercase ${RATING_STYLES[f.rating]}`}>
+                    <span className={`rounded px-2 py-0.5 text-[10px] font-semibold uppercase ${badgeFlat[RATING_TONES[f.rating] ?? 'neutral']}`}>
                       {f.rating} {f.score >= 0 ? '+' : ''}{f.score}
                     </span>
                   ) : (
-                    <span className="text-slate-600">—</span>
+                    <span className="text-faint">—</span>
                   )}
                 </td>
               </tr>
@@ -148,12 +144,12 @@ function SectorLeaderRow({ s }: { s: SectorRow }) {
         onClick={() => expandable && setOpen(!open)}
         title={s.comment}
         aria-expanded={expandable ? open : undefined}
-        className={`transition-colors hover:bg-white/[0.03] ${expandable ? 'cursor-pointer select-none' : ''}`}
+        className={`transition-colors hover:bg-overlay ${expandable ? 'cursor-pointer select-none' : ''}`}
       >
-        <td className="px-3 py-2.5 text-slate-500">{s.rank}</td>
-        <td className="px-3 py-2.5">
+        <td className="px-3 py-2 text-muted">{s.rank}</td>
+        <td className="px-3 py-2">
           {expandable && (
-            <span className={`mr-1.5 inline-block text-slate-500 transition-transform ${open ? 'rotate-90' : ''}`}>
+            <span className={`mr-1.5 inline-block text-muted transition-transform ${open ? 'rotate-90' : ''}`}>
               ▸
             </span>
           )}
@@ -162,17 +158,17 @@ function SectorLeaderRow({ s }: { s: SectorRow }) {
             target="_blank"
             rel="noreferrer"
             onClick={(e) => e.stopPropagation()}
-            className="font-medium text-slate-100 hover:text-sky-300 hover:underline"
+            className="font-medium text-ink hover:text-accent hover:underline"
           >
             {s.name}
           </a>
-          <span className="ml-1.5 text-xs text-slate-500">{s.symbol}</span>
+          <span className="ml-1.5 text-xs text-muted">{s.symbol}</span>
         </td>
-        <td className="px-3 py-2.5"><StateBadge state={s.state} /></td>
+        <td className="px-3 py-2"><StateBadge state={s.state} /></td>
         <HeatCell v={s.rs['1m']} suffix="" />
         <HeatCell v={s.rs['3m']} suffix="" />
-        <td className="px-3 py-2.5">
-          <span className={s.above_sma200 ? 'text-emerald-400' : 'text-rose-400'}>
+        <td className="px-3 py-2">
+          <span className={s.above_sma200 ? 'text-up' : 'text-down'}>
             {s.above_sma200 ? '▲' : '▼'} SMA200
           </span>
         </td>
@@ -182,8 +178,8 @@ function SectorLeaderRow({ s }: { s: SectorRow }) {
       </tr>
       {open && expandable && (
         <tr>
-          <td colSpan={6 + SECTOR_HORIZONS.length} className="bg-slate-950/40 px-3 pb-3 pt-2 sm:px-4">
-            <div className="mb-1.5 text-xs text-slate-500">
+          <td colSpan={6 + SECTOR_HORIZONS.length} className="bg-inset px-3 pb-3 pt-2 sm:px-4">
+            <div className="mb-1.5 text-xs text-muted">
               10 largest companies in {s.name} by market cap
             </div>
             <ConstituentsTable rows={s.top!} />
@@ -199,96 +195,95 @@ export default function SectorsPage() {
 
   if (error) {
     return (
-      <p className="rounded-xl border border-dashed border-white/10 bg-white/[0.01] px-4 py-8 text-center text-sm text-slate-500">
+      <p className="border border-dashed border-hair bg-raised px-4 py-8 text-center text-sm text-muted">
         No sector data yet — it is generated by the daily scan.
       </p>
     )
   }
-  if (!sectors) return <p className="py-8 text-center text-slate-500">Loading…</p>
+  if (!sectors) return <p className="py-8 text-center text-muted">Loading…</p>
 
   const leaders = sectors.sectors.filter((s) => s.state === 'leading' || s.state === 'improving')
   const laggards = sectors.sectors.filter((s) => s.state === 'lagging' || s.state === 'weakening')
 
   return (
-    <section className="space-y-6">
-      <div className="flex flex-wrap items-baseline justify-between gap-2">
-        <h2 className="flex items-center gap-2 text-base font-semibold tracking-tight text-slate-100">
-          <span className="h-4 w-1 rounded-full bg-sky-400/70" />
-          Sector rotation — where money is flowing
-        </h2>
-        <span className="text-xs text-slate-500">
-          US sectors (SPDR ETFs) vs {sectors.benchmark.symbol} · bar {sectors.bar_date}
-        </span>
-      </div>
+    <section className="space-y-4">
+      <SectionHeading
+        title="Sector rotation — where money is flowing"
+        right={
+          <span className="text-xs text-muted">
+            US sectors (SPDR ETFs) vs {sectors.benchmark.symbol} · bar {sectors.bar_date}
+          </span>
+        }
+      />
 
       {/* Trending / Sinking summary */}
       <div className="grid gap-3 sm:grid-cols-2">
-        <div className="rounded-2xl bg-emerald-500/[0.04] p-4 ring-1 ring-emerald-400/10">
-          <div className="mb-2 flex items-center gap-2 text-sm font-medium text-emerald-300">
+        <div className="bg-up/[0.06] p-4 ring-1 ring-up/20">
+          <div className="mb-2 flex items-center gap-2 text-sm font-medium text-up">
             <span className="text-base">▲</span> Trending — money flowing in
           </div>
           <div className="flex flex-wrap gap-1.5">
             {leaders.map((s) => (
-              <span key={s.symbol} className="tnum rounded-lg bg-white/[0.03] px-2 py-1 text-xs text-slate-200 ring-1 ring-white/5">
+              <span key={s.symbol} className="tnum bg-raised px-2 py-1 text-xs text-ink-2 ring-1 ring-hair">
                 {s.name}{' '}
-                <span className={s.rs['1m'] >= 0 ? 'text-emerald-400' : 'text-rose-400'}>
+                <span className={s.rs['1m'] >= 0 ? 'text-up' : 'text-down'}>
                   {s.rs['1m'] >= 0 ? '+' : ''}
                   {s.rs['1m'].toFixed(1)}
                 </span>
               </span>
             ))}
-            {leaders.length === 0 && <span className="text-xs text-slate-500">None currently leading</span>}
+            {leaders.length === 0 && <span className="text-xs text-muted">None currently leading</span>}
           </div>
         </div>
-        <div className="rounded-2xl bg-rose-500/[0.04] p-4 ring-1 ring-rose-400/10">
-          <div className="mb-2 flex items-center gap-2 text-sm font-medium text-rose-300">
+        <div className="bg-down/[0.06] p-4 ring-1 ring-down/20">
+          <div className="mb-2 flex items-center gap-2 text-sm font-medium text-down">
             <span className="text-base">▼</span> Sinking — money flowing out
           </div>
           <div className="flex flex-wrap gap-1.5">
             {laggards.map((s) => (
-              <span key={s.symbol} className="tnum rounded-lg bg-white/[0.03] px-2 py-1 text-xs text-slate-200 ring-1 ring-white/5">
+              <span key={s.symbol} className="tnum bg-raised px-2 py-1 text-xs text-ink-2 ring-1 ring-hair">
                 {s.name}{' '}
-                <span className={s.rs['1m'] >= 0 ? 'text-emerald-400' : 'text-rose-400'}>
+                <span className={s.rs['1m'] >= 0 ? 'text-up' : 'text-down'}>
                   {s.rs['1m'] >= 0 ? '+' : ''}
                   {s.rs['1m'].toFixed(1)}
                 </span>
               </span>
             ))}
-            {laggards.length === 0 && <span className="text-xs text-slate-500">None currently lagging</span>}
+            {laggards.length === 0 && <span className="text-xs text-muted">None currently lagging</span>}
           </div>
         </div>
       </div>
 
       {/* Leaderboard + heatmap */}
-      <div className="overflow-x-auto rounded-xl bg-slate-900/30 ring-1 ring-white/5">
-        <table className="w-full text-left text-sm">
-          <thead className="bg-white/[0.03] text-[11px] font-medium uppercase tracking-wider text-slate-500">
+      <div className={tableWrapCls}>
+        <table className="w-full text-left text-[13px]">
+          <thead className={theadCls}>
             <tr>
-              <th className="px-3 py-2.5">#</th>
-              <th className="px-3 py-2.5">Sector</th>
-              <th className="px-3 py-2.5">State</th>
-              <th className="px-3 py-2.5 text-right">RS 1m</th>
-              <th className="px-3 py-2.5 text-right">RS 3m</th>
-              <th className="px-3 py-2.5">Trend</th>
+              <th className="px-3 py-2">#</th>
+              <th className="px-3 py-2">Sector</th>
+              <th className="px-3 py-2">State</th>
+              <th className="px-3 py-2 text-right">RS 1m</th>
+              <th className="px-3 py-2 text-right">RS 3m</th>
+              <th className="px-3 py-2">Trend</th>
               {SECTOR_HORIZONS.map((h) => (
-                <th key={h} className="px-3 py-2.5 text-right">{h}</th>
+                <th key={h} className="px-3 py-2 text-right">{h}</th>
               ))}
             </tr>
           </thead>
-          <tbody className="tnum divide-y divide-white/5">
+          <tbody className="tnum divide-y divide-hair">
             {sectors.sectors.map((s) => (
               <SectorLeaderRow key={s.symbol} s={s} />
             ))}
-            <tr className="border-t border-white/10 text-slate-400">
+            <tr className="border-t border-hair-strong text-muted">
               <td />
-              <td className="px-3 py-2.5 font-medium text-slate-300">
+              <td className="px-3 py-2 font-medium text-ink-2">
                 {sectors.benchmark.symbol} (market)
               </td>
               <td /><td /><td /><td />
               {SECTOR_HORIZONS.map((h) => {
                 const v = sectors.benchmark.chg[h]
                 return (
-                  <td key={h} className="px-3 py-2.5 text-right text-slate-400">
+                  <td key={h} className="px-3 py-2 text-right text-muted">
                     {v === null ? '—' : `${v >= 0 ? '+' : ''}${v.toFixed(1)}%`}
                   </td>
                 )
@@ -298,11 +293,11 @@ export default function SectorsPage() {
         </table>
       </div>
 
-      <p className="text-xs text-slate-500">
+      <p className="text-xs text-muted">
         Click a sector row to expand its 10 largest companies by market cap with
         fundamentals (refreshed by the daily scan; membership and share counts
         come from a periodically refreshed cache).{' '}
-        <span className="text-slate-400">RS</span> = relative strength (sector return minus{' '}
+        <span className="text-ink-2">RS</span> = relative strength (sector return minus{' '}
         {sectors.benchmark.symbol} return, in percentage points): positive = outperforming the market.
         Rank is a recency-weighted RS blend (50% 1m · 35% 3m · 15% 6m). State follows the sign of
         1m vs 3m RS — leading (both +), improving (1m + / 3m −), weakening (1m − / 3m +), lagging (both −).
