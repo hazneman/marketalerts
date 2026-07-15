@@ -1,28 +1,82 @@
 @import '@fontsource-variable/inter';
+@import '@fontsource-variable/jetbrains-mono';
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* ── Design tokens ──────────────────────────────────────────────────────────
+   Every color is an "R G B" triplet so Tailwind's `/opacity` utilities keep
+   working via rgb(var(--x) / <alpha-value>) (see tailwind.config.js). Light is
+   the default ("paper terminal"); .dark on <html> swaps to the black terminal.
+   Components never use dark: variants — the variables do the theming.          */
+:root {
+  /* LIGHT — warm paper terminal */
+  --bg-base: 243 239 230;
+  --bg-raised: 251 249 243;
+  --bg-overlay: 236 231 219;
+  --bg-inset: 231 225 211;
+  --border: 216 210 196;
+  --border-strong: 196 188 169;
+  --text-primary: 27 26 22;
+  --text-secondary: 70 67 59;
+  --text-muted: 120 114 102;
+  --text-faint: 154 148 132;
+  --accent: 180 83 9;   /* ochre — amber that survives on paper */
+  --up: 21 128 61;
+  --down: 190 18 60;
+  --info: 3 105 161;
+  --de: 109 40 217;
+  --font-mono: 'JetBrains Mono Variable', ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+
+.dark {
+  /* DARK — black Bloomberg-style terminal */
+  --bg-base: 10 10 12;
+  --bg-raised: 19 19 22;
+  --bg-overlay: 28 29 33;
+  --bg-inset: 6 6 8;
+  --border: 42 42 48;
+  --border-strong: 58 58 66;
+  --text-primary: 237 237 234;
+  --text-secondary: 180 180 176;
+  --text-muted: 124 124 130;
+  --text-faint: 85 85 92;
+  --accent: 245 177 61;   /* bright amber */
+  --up: 52 211 153;
+  --down: 251 113 133;
+  --info: 56 189 248;
+  --de: 167 139 250;
+}
 
 @layer base {
   html {
     @apply antialiased;
   }
   body {
-    @apply bg-slate-950 text-slate-300;
+    @apply bg-base text-ink-2;
+  }
+  /* Ambient glows are a dark-terminal flourish only; paper stays flat. */
+  .dark body {
     background-image:
-      radial-gradient(1100px 550px at 75% -10%, rgba(56, 130, 246, 0.10), transparent 60%),
-      radial-gradient(800px 450px at -5% 0%, rgba(16, 185, 129, 0.05), transparent 55%);
+      radial-gradient(1100px 550px at 75% -10%, rgb(var(--accent) / 0.06), transparent 60%),
+      radial-gradient(800px 450px at -5% 0%, rgb(var(--up) / 0.05), transparent 55%);
     background-attachment: fixed;
   }
   ::selection {
-    @apply bg-sky-500/30 text-white;
+    @apply bg-accent/30 text-ink;
   }
 }
 
 @layer utilities {
-  .tnum {
+  /* Applied to every numeric body/chip/price already — upgrades them all to
+     the mono terminal face with tabular figures + slashed zero in one place. */
+  .tnum,
+  .nums {
+    font-family: var(--font-mono);
     font-variant-numeric: tabular-nums;
+    font-feature-settings: 'tnum', 'zero';
+    letter-spacing: -0.01em;
   }
 }
 
@@ -31,8 +85,7 @@
   width: 10px;
 }
 ::-webkit-scrollbar-thumb {
-  background: rgb(51 65 85 / 0.6);
-  border-radius: 8px;
+  background: rgb(var(--border-strong) / 0.8);
 }
 ::-webkit-scrollbar-track {
   background: transparent;
