@@ -4,7 +4,6 @@
 // the panel / table / input / badge idioms in each component.
 
 // ── Surfaces ────────────────────────────────────────────────────────────────
-export const panelCls = 'bg-raised ring-1 ring-hair'
 export const tableWrapCls = 'overflow-x-auto bg-raised ring-1 ring-hair'
 export const theadCls =
   'bg-overlay text-[10px] font-medium uppercase tracking-wider text-muted'
@@ -16,8 +15,6 @@ export const inputCls =
   'bg-overlay px-2.5 py-1.5 text-sm text-ink placeholder-muted ring-1 ring-hair focus:outline-none focus:ring-accent/50'
 export const inputClsSm =
   'bg-overlay px-2 py-1 text-xs text-ink placeholder-muted ring-1 ring-hair focus:outline-none focus:ring-accent/50'
-export const btnPrimary =
-  'bg-accent/15 px-3 py-1.5 text-sm font-medium text-accent ring-1 ring-accent/30 transition hover:bg-accent/25 disabled:opacity-40'
 export const btnGhost =
   'bg-overlay px-3 py-1.5 text-sm text-ink-2 ring-1 ring-hair transition hover:text-ink'
 

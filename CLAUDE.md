@@ -98,8 +98,30 @@ Pipeline per daily run (`scan.py`):
 
 Shared conventions: `lib/tradingview.ts` maps `.IS→BIST:` / `.DE→XETR:`;
 `tnum` class for tabular numerals; hooks in `hooks/useAlerts.ts`; types in
-`types.ts`. Design system: dark, Inter font, `bg-white/[0.03] ring-1
-ring-white/5` panels, segmented pill controls.
+`types.ts`.
+
+**Design system — "Pro Terminal" (dark + light):** Bloomberg-style: sharp
+edges, monospace numerics (JetBrains Mono via `.tnum`/`.nums`), amber accent,
+green/red signals, dense tables. Every color is a **CSS-variable token** defined
+in `index.css` under `:root` (light "paper") + `.dark` (black terminal) and
+surfaced to Tailwind as semantic names via `rgb(var(--x) / <alpha>)`
+(`tailwind.config.js`) — so components use `bg-raised`/`text-ink`/`text-up`/
+`text-down`/`text-accent`/`ring-hair` etc. and **never `dark:` variants**; the
+`.dark` class on `<html>` swaps everything. Tokens: surfaces
+`base/raised/overlay/inset`, lines `hair/hair-strong`, text
+`ink/ink-2/muted/faint`, signals `accent`(amber/ochre)`/up/down/info/de`. Theme
+persists in `localStorage['ma-theme']`; `useTheme.ts` + a FOUC guard in
+`index.html` resolve it before paint. **Do NOT rename tokens to Tailwind palette
+names** (amber/emerald/…) — they're deliberately non-colliding. Shared UI in
+`lib/ui.ts` (class consts + `badgeRing`/`badgeFlat` tone maps, `Tone` type) and
+`components/ui/` (`Badge`, `Chip`, `Tabs`, `SectionHeading`, `ThemeToggle`) —
+badge/state/verdict/consensus colors come from a single `Tone` per item in
+`types.ts`, not per-file style maps. Sharp radius + mono are global config
+levers (`borderRadius` override, `.tnum` redefinition). The 4 hand-rolled viz
+primitives (sector HeatCell, analyst target-range bar, Fib ladder, P&L
+sparkline) read up/down tokens so they theme; SVG strokes use Tailwind
+`stroke-*` utilities (`var()` resolves in the CSS `stroke` property, not SVG
+presentation attributes).
 
 ## The research library (docs/) — read before changing strategy logic
 
