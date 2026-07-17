@@ -72,6 +72,27 @@ period. **Storage: this browser's localStorage only** — holdings never leave
 your machine; use Export/Import backup to move browsers or protect against
 cleared browser data.
 
+## Track record page
+
+A scoreboard of whether the BUY alerts actually worked. Every `verdict: buy`
+alert is captured at its alert-day close and tracked forward: each daily scan
+updates it with the latest price and its **return since the alert**, compared to
+the stock's **own market index** — US → S&P 500, DE → DAX, BIST → BIST 100 (same
+currency as the stock, so the comparison has no FX distortion). A signal **beats
+its market** when that excess return is positive. The page shows an aggregate
+hit-rate (share that beat their benchmark), average excess/return, and a
+sortable, filterable table (entry date/price, current price, return, benchmark,
+excess, days held, ✓ beat / ✗ lag). Each entry evaluates over ~180 days, then
+freezes. Data: [`scanner/track_record.py`](scanner/track_record.py) →
+`track_record.json`, which — uniquely — **accumulates** across scans rather than
+being recomputed. On first run it backfills from the last 30 days of history.
+
+*Caveats:* prices are split- but not dividend-adjusted (TradingView parity), so
+long-window returns on high-yield names read slightly low; the alert-day close
+is the entry (you couldn't have transacted exactly there in real time). It's a
+running record of signal quality, not a claim that timing beats buy-and-hold —
+the backtests (see below) found it generally doesn't.
+
 ## Sectors page
 
 Sector rotation for US equities via the 11 SPDR Select Sector ETFs, read

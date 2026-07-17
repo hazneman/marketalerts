@@ -70,8 +70,22 @@ Pipeline per daily run (`scan.py`):
    `rates.json` (no free API; bump `as_of` — displayed in UI; also holds
    Claude's discretionary 6-month outlook per currency) + 11 major pairs run
    through the same RULES + carry×trend combined reads.
+9. Track record (`track_record.py` → `track_record.json`): the ONE
+   **accumulating** output — reads its own previous file and ADDS to it (all
+   others recompute). Ingests every `verdict=='buy'` alert from `history.json`
+   (so first-run backfill = last 30 days, steady-state daily adds, and
+   benchmark-outage self-heal are one path), captures entry_date + entry-day
+   close, and updates each entry's return vs its **own-market index** (US→SPY,
+   DE→`^GDAXI`, BIST→`XU100.IS` — same currency as the stock, so excess has no
+   FX distortion). success = beat the benchmark. id = `ticker|rule|entry_date`
+   (re-fires stay distinct). Entries mature at 180 days then freeze. Rides the
+   scan like sectors/forex (failure-isolated; raises on benchmark outage →
+   previous file kept). Byte-stability hinges on `days_held`/benchmark closes
+   deriving from the scan **bar_date**, never `now()` — and the benchmark's
+   "last close" is anchored to each market's bar_date (nearest-prior), so it's
+   immune to an intraday-forming bar when backfilling.
 
-## Frontend (frontend/src/) — 5 tabs
+## Frontend (frontend/src/) — 6 tabs
 
 - **Stocks** — alert categories with market filter (US/DE/BIST badges),
   per-market bar-date chips, nearest-daily-Fib + volume columns, verdict badges.
@@ -87,6 +101,10 @@ Pipeline per daily run (`scan.py`):
 - **Sectors** — rotation leaderboard + returns heatmap (SectorsPage); each row
   expands to the sector's 10 biggest companies with fundamentals (cap, 1d%,
   fwd P/E, div yield, rev growth, margin, consensus, target upside, rating).
+- **Track record** — scoreboard of every BUY alert's forward return vs its own
+  market index (`TrackRecordPage`, `useTrackRecord`, from `track_record.json`):
+  aggregate hit-rate/excess Chips + a sortable, filterable (category/result)
+  table (entry, current, return, bench, excess, held, ✓ beat / ✗ lag).
 - **Forex** — rates/outlook table, pairs board, pair signals.
 - **Portfolio** — trade backlog in **browser localStorage only** (key
   `market-alerts-portfolio-v1`; export/import JSON backup). Open positions
@@ -153,6 +171,14 @@ deliberate boundary.
   or run a FULL `scan.py` first. After any feature that adds fields to alerts,
   run a full scan and commit the data, else the live site serves stale JSON
   without the new fields.
+- **`track_record.json` accumulates** — it merges onto its own previous content
+  and never drops entries, so a bad/partial-scan commit pollutes it permanently
+  (a wrong entry stays until manually pruned). Regenerate cleanly by DELETING it
+  first (`rm frontend/public/data/track_record.json`) then a FULL scan (or
+  `python scanner/track_record.py`, which backfills from the committed
+  `history.json`/`prices.json`). Also: only run/commit it from a scan whose bars
+  are FINAL (the daily Action runs 22:30 UTC post-close) — an intraday run
+  captures live, still-moving closes.
 - Manual pushes: commit, then `git pull --rebase -X theirs origin main`, push.
 
 ## Gotchas

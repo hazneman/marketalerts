@@ -196,6 +196,43 @@ export interface SectorData {
   sectors: SectorRow[]
 }
 
+export interface TrackRecordEntry {
+  id: string
+  ticker: string
+  market: string
+  category: string
+  rule: string
+  direction: string
+  verdict: string
+  entry_date: string
+  entry_price: number
+  benchmark: string | null
+  entry_bench_close: number | null
+  last_date: string | null
+  last_price: number | null
+  stock_return_pct: number | null
+  bench_return_pct: number | null
+  excess_pct: number | null
+  success: boolean | null
+  days_held: number
+  status: 'open' | 'matured'
+}
+
+export interface TrackRecordData {
+  schema_version: number
+  generated_at: string
+  bar_date: string
+  benchmarks: Record<string, { symbol: string; last_date: string; last_close: number }>
+  entries: TrackRecordEntry[]
+}
+
+// Short label for a benchmark index symbol (shown as "vs DAX" etc.)
+export const BENCHMARK_LABELS: Record<string, string> = {
+  SPY: 'S&P 500',
+  '^GDAXI': 'DAX',
+  'XU100.IS': 'BIST 100',
+}
+
 export const SECTOR_HORIZONS = ['1w', '1m', '3m', '6m', '1y'] as const
 
 export const SECTOR_STATE: Record<string, { label: string; tone: Tone }> = {
