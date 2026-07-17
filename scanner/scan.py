@@ -205,6 +205,19 @@ def main(argv: list[str] | None = None) -> int:
     write_prices(prices, bar_dates, args.output_dir)
     logger.info("prices.json: %d tickers", len(prices))
 
+    # Track record rides along: ingests today's BUY verdicts (already persisted
+    # to history.json by write_results) and updates every tracked entry's return
+    # vs its market index. Failure-isolated + accumulates its own JSON.
+    try:
+        from track_record import build as build_track_record
+        tr = build_track_record(args.output_dir, prices=prices, bar_date=bar_date,
+                                bar_dates=bar_dates)
+        wins = sum(1 for e in tr["entries"] if e["success"])
+        logger.info("track_record: %d entries (%d beating benchmark), bar_date=%s",
+                    len(tr["entries"]), wins, tr["bar_date"])
+    except Exception as exc:
+        logger.warning("track_record build failed (%s) — keeping previous track_record.json", exc)
+
     # Forex snapshot rides along (sectors already built above for the verdict);
     # its failure must never sink the stock scan — it keeps its previous JSON.
     try:

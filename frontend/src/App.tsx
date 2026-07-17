@@ -6,20 +6,30 @@ import ForexPage from './components/ForexPage'
 import PortfolioPage from './components/PortfolioPage'
 import ScanStatus from './components/ScanStatus'
 import SectorsPage from './components/SectorsPage'
+import TrackRecordPage from './components/TrackRecordPage'
 import { useAlerts } from './hooks/useAlerts'
 import Tabs from './components/ui/Tabs'
 import ThemeToggle from './components/ui/ThemeToggle'
 import { CATEGORY_LABELS, MARKET_ORDER, type AlertItem } from './types'
 
-type Page = 'stocks' | 'buys' | 'sectors' | 'forex' | 'portfolio'
+type Page = 'stocks' | 'buys' | 'sectors' | 'forex' | 'portfolio' | 'track'
 
-const PAGES: Page[] = ['stocks', 'buys', 'sectors', 'forex', 'portfolio']
+const PAGES: Page[] = ['stocks', 'buys', 'sectors', 'forex', 'portfolio', 'track']
+const PAGE_LABELS: Record<Page, string> = {
+  stocks: 'Stocks',
+  buys: 'Buys',
+  sectors: 'Sectors',
+  forex: 'Forex',
+  portfolio: 'Portfolio',
+  track: 'Track record',
+}
 const TAGLINES: Record<Page, string> = {
   stocks: 'S&P 500 + Nasdaq 100 · DAX · BIST',
   buys: 'Signals where all three layers agree',
   sectors: 'US sector rotation vs the market',
   forex: 'Major currencies vs USD',
   portfolio: 'Your trades · stored in this browser',
+  track: 'Did the BUY alerts beat their market?',
 }
 
 export default function App() {
@@ -102,7 +112,7 @@ export default function App() {
             </div>
             <nav>
               <Tabs
-                items={PAGES.map((p) => ({ value: p, label: p.charAt(0).toUpperCase() + p.slice(1) }))}
+                items={PAGES.map((p) => ({ value: p, label: PAGE_LABELS[p] }))}
                 active={page}
                 onChange={setPage}
               />
@@ -122,6 +132,8 @@ export default function App() {
         <BuysPage />
       ) : page === 'sectors' ? (
         <SectorsPage />
+      ) : page === 'track' ? (
+        <TrackRecordPage />
       ) : page === 'portfolio' ? (
         <PortfolioPage />
       ) : (
