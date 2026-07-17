@@ -253,7 +253,7 @@ function BuyCard({ a, rank, defaultOpen }: { a: AlertItem; rank: number; default
             target="_blank"
             rel="noreferrer"
             onClick={(e) => e.stopPropagation()}
-            className="text-base font-bold text-accent hover:underline"
+            className="text-base font-bold text-info hover:underline"
           >
             {a.ticker} ↗
           </a>

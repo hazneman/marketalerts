@@ -275,7 +275,7 @@ export default function PortfolioPage() {
                   <tr key={p.id} className={rowCls}>
                     <td className={cellCls}>
                       <a href={tradingViewUrl(p.ticker)} target="_blank" rel="noreferrer"
-                         className="font-semibold text-accent hover:underline">
+                         className="font-semibold text-info hover:underline">
                         {p.ticker} ↗
                       </a>
                       <MarketBadge market={p.market} />
@@ -343,7 +343,7 @@ export default function PortfolioPage() {
                   <tr key={t.id} className={rowCls}>
                     <td className={cellCls}>
                       <a href={tradingViewUrl(t.ticker)} target="_blank" rel="noreferrer"
-                         className="font-semibold text-accent hover:underline">{t.ticker} ↗</a>
+                         className="font-semibold text-info hover:underline">{t.ticker} ↗</a>
                       <MarketBadge market={t.market} />
                     </td>
                     <td className={`${cellCls} text-right text-ink`}>{t.shares}</td>

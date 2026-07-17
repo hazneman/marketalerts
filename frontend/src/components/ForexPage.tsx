@@ -60,7 +60,7 @@ function PairsTable({ pairs }: { pairs: ForexPair[] }) {
                   href={`https://www.tradingview.com/chart/?symbol=${p.symbol}`}
                   target="_blank"
                   rel="noreferrer"
-                  className="font-semibold text-accent hover:underline"
+                  className="font-semibold text-info hover:underline"
                 >
                   {p.symbol.slice(0, 3)}/{p.symbol.slice(3)} ↗
                 </a>

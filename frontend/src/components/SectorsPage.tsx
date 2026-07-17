@@ -88,7 +88,7 @@ function ConstituentsTable({ rows }: { rows: SectorConstituent[] }) {
                     href={tradingViewUrl(c.ticker)}
                     target="_blank"
                     rel="noreferrer"
-                    className="font-semibold text-accent hover:underline"
+                    className="font-semibold text-info hover:underline"
                   >
                     {c.ticker}
                   </a>
@@ -158,7 +158,7 @@ function SectorLeaderRow({ s }: { s: SectorRow }) {
             target="_blank"
             rel="noreferrer"
             onClick={(e) => e.stopPropagation()}
-            className="font-medium text-ink hover:text-accent hover:underline"
+            className="font-medium text-ink hover:text-info hover:underline"
           >
             {s.name}
           </a>

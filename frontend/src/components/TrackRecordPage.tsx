@@ -172,7 +172,7 @@ export default function TrackRecordPage() {
                 <tr key={e.id} className={rowCls}>
                   <td className={cellCls}>
                     <a href={tradingViewUrl(e.ticker)} target="_blank" rel="noreferrer"
-                       className="font-semibold text-accent hover:underline">{e.ticker} ↗</a>
+                       className="font-semibold text-info hover:underline">{e.ticker} ↗</a>
                     <MarketBadge market={e.market} />
                   </td>
                   <td className={`${cellCls} text-xs text-muted`}>{CATEGORY_LABELS[e.category] ?? e.category}</td>

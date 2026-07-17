@@ -98,7 +98,7 @@ export default function AlertTable({ alerts }: { alerts: AlertItem[] }) {
                   target="_blank"
                   rel="noreferrer"
                   title="Open in TradingView"
-                  className="font-semibold text-accent hover:underline"
+                  className="font-semibold text-info hover:underline"
                 >
                   {a.ticker} ↗
                 </a>
