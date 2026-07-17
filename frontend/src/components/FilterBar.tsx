@@ -18,9 +18,9 @@ interface Props {
 }
 
 const DIRECTION_ITEMS: TabItem<DirectionFilter>[] = [
-  { value: 'all', label: 'all', tone: 'info' },
-  { value: 'bullish', label: 'bullish', tone: 'up' },
-  { value: 'bearish', label: 'bearish', tone: 'down' },
+  { value: 'all', label: 'All', tone: 'info' },
+  { value: 'bullish', label: 'Bullish', tone: 'up' },
+  { value: 'bearish', label: 'Bearish', tone: 'down' },
 ]
 
 export default function FilterBar({

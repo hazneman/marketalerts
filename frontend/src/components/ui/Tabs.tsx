@@ -39,7 +39,7 @@ export default function Tabs<T extends string>({
           <button
             key={it.value}
             onClick={() => onChange(it.value)}
-            className={`-mb-px border-b-2 capitalize transition-colors ${pad} ${
+            className={`-mb-px border-b-2 transition-colors ${pad} ${
               on
                 ? `bg-base font-medium ${ACTIVE[tone]}`
                 : 'border-transparent text-muted hover:text-ink'

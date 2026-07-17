@@ -114,9 +114,12 @@ persists in `localStorage['ma-theme']`; `useTheme.ts` + a FOUC guard in
 `index.html` resolve it before paint. **Do NOT rename tokens to Tailwind palette
 names** (amber/emerald/…) — they're deliberately non-colliding. Shared UI in
 `lib/ui.ts` (class consts + `badgeRing`/`badgeFlat` tone maps, `Tone` type) and
-`components/ui/` (`Badge`, `Chip`, `Tabs`, `SectionHeading`, `ThemeToggle`) —
-badge/state/verdict/consensus colors come from a single `Tone` per item in
-`types.ts`, not per-file style maps. Sharp radius + mono are global config
+`components/ui/` (`Badge`, `Chip`, `Tabs`, `SectionHeading`, `ThemeToggle`).
+Badge colors are a `Tone` (`up/down/accent/info/de/neutral`), never a per-file
+class-string map: the cross-cutting ones (`SECTOR_STATE`, `CONSENSUS_LABELS`,
+`MARKET_TONES`) live in `types.ts`; page-local ones (verdict, forex
+call/alignment, rating) are tiny `Record<…, Tone>` maps beside their use — all
+resolved through `badgeRing`/`badgeFlat`. Sharp radius + mono are global config
 levers (`borderRadius` override, `.tnum` redefinition). The 4 hand-rolled viz
 primitives (sector HeatCell, analyst target-range bar, Fib ladder, P&L
 sparkline) read up/down tokens so they theme; SVG strokes use Tailwind

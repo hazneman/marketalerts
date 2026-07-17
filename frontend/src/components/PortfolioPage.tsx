@@ -128,10 +128,12 @@ function Performance({ closed }: { closed: ClosedTrade[] }) {
         <Chip label="Trades" value={trades.length} />
         <Chip label="Win rate" value={`${((wins.length / trades.length) * 100).toFixed(0)}%`}
               tone={wins.length >= losses.length ? 'up' : 'down'} />
-        <Chip label="Avg win" value={wins.length ? `+${fmt(wins.reduce((a, b) => a + b, 0) / wins.length)}` : '—'} tone="up" />
+        <Chip label="Avg win" value={wins.length ? `+${fmt(wins.reduce((a, b) => a + b, 0) / wins.length)}` : '—'}
+              tone={wins.length ? 'up' : 'default'} />
         <Chip label="Avg loss" value={losses.length ? fmt(losses.reduce((a, b) => a + b, 0) / losses.length) : '—'}
               tone={losses.length ? 'down' : 'default'} />
-        <Chip label="Best" value={best ? `${best.ticker} ${pnls[trades.indexOf(best)] >= 0 ? '+' : ''}${fmt(pnls[trades.indexOf(best)])}` : '—'} tone="up" />
+        <Chip label="Best" value={best ? `${best.ticker} ${pnls[trades.indexOf(best)] >= 0 ? '+' : ''}${fmt(pnls[trades.indexOf(best)])}` : '—'}
+              tone={pnls[trades.indexOf(best)] >= 0 ? 'up' : 'down'} />
         <Chip label="Worst" value={worst ? `${worst.ticker} ${pnls[trades.indexOf(worst)] >= 0 ? '+' : ''}${fmt(pnls[trades.indexOf(worst)])}` : '—'}
               tone={pnls[trades.indexOf(worst)] < 0 ? 'down' : 'up'} />
       </div>

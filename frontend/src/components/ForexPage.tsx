@@ -194,7 +194,7 @@ export default function ForexPage() {
                 </td>
                 <td
                   className={`${cellCls} text-right ${
-                    (c.vs_usd?.chg_1m_pct ?? 0) >= 0 ? 'text-up' : 'text-down'
+                    !c.vs_usd ? 'text-muted' : c.vs_usd.chg_1m_pct >= 0 ? 'text-up' : 'text-down'
                   }`}
                 >
                   {c.vs_usd ? `${c.vs_usd.chg_1m_pct >= 0 ? '+' : ''}${c.vs_usd.chg_1m_pct.toFixed(2)}%` : '—'}

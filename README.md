@@ -4,6 +4,10 @@ Daily alerts for financial opportunities in US stocks (S&P 500 + Nasdaq 100), Ge
 
 **Live:** https://market-alerts.netlify.app
 
+The dashboard uses a dense "terminal" look with monospace numerics and a
+**light / dark theme toggle** in the header (sun/moon) — dark by default,
+following your OS preference until you pick one; your choice is remembered.
+
 ## Stock alerts
 
 | Category | Rules | Meaning |

@@ -101,7 +101,11 @@ export default function App() {
               </h1>
             </div>
             <nav>
-              <Tabs items={PAGES.map((p) => ({ value: p, label: p }))} active={page} onChange={setPage} />
+              <Tabs
+                items={PAGES.map((p) => ({ value: p, label: p.charAt(0).toUpperCase() + p.slice(1) }))}
+                active={page}
+                onChange={setPage}
+              />
             </nav>
           </div>
           <div className="flex items-center gap-3">
