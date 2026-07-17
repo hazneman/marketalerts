@@ -2,12 +2,12 @@ import { useState } from 'react'
 import { useAlerts, usePortfolio } from '../hooks/useAlerts'
 import { addPosition } from '../lib/portfolio'
 import { tradingViewUrl } from '../lib/tradingview'
+import { badgeFlat, badgeRing, inputClsSm, type Tone } from '../lib/ui'
 import type { AlertItem, FibFrame, Fundamentals } from '../types'
 import { CATEGORY_LABELS, CONSENSUS_LABELS, SECTOR_STATE } from '../types'
 import { MarketBadge } from './AlertTable'
-
-const inputCls =
-  'rounded-lg bg-white/[0.04] px-2 py-1 text-xs text-slate-100 placeholder-slate-500 ring-1 ring-white/10 focus:outline-none focus:ring-sky-400/40'
+import Badge from './ui/Badge'
+import SectionHeading from './ui/SectionHeading'
 
 function AddToPortfolio({ a }: { a: AlertItem }) {
   const { positions } = usePortfolio()
@@ -19,7 +19,7 @@ function AddToPortfolio({ a }: { a: AlertItem }) {
 
   if (held && !open) {
     return (
-      <span className="rounded-full bg-emerald-500/10 px-2.5 py-1 text-xs font-medium text-emerald-300 ring-1 ring-emerald-400/20">
+      <span className={`rounded px-2.5 py-1 text-xs font-medium ${badgeRing.up}`}>
         ✓ in portfolio
       </span>
     )
@@ -28,7 +28,7 @@ function AddToPortfolio({ a }: { a: AlertItem }) {
     return (
       <button
         onClick={() => setOpen(true)}
-        className="rounded-full bg-sky-500/15 px-2.5 py-1 text-xs font-medium text-sky-300 ring-1 ring-sky-400/25 transition hover:bg-sky-500/25"
+        className={`rounded px-2.5 py-1 text-xs font-medium transition ${badgeRing.accent} hover:bg-accent/20`}
       >
         + portfolio
       </button>
@@ -36,11 +36,11 @@ function AddToPortfolio({ a }: { a: AlertItem }) {
   }
   return (
     <span className="flex flex-wrap items-center gap-1.5">
-      <input className={`${inputCls} w-16`} type="number" min="0" step="any" placeholder="qty"
+      <input className={`${inputClsSm} w-16`} type="number" min="0" step="any" placeholder="qty"
              value={shares} onChange={(e) => setShares(e.target.value)} autoFocus />
-      <input className={`${inputCls} w-20`} type="number" min="0" step="any" placeholder="cost"
+      <input className={`${inputClsSm} w-20`} type="number" min="0" step="any" placeholder="cost"
              value={cost} onChange={(e) => setCost(e.target.value)} />
-      <input className={`${inputCls} w-32`} type="date" value={date}
+      <input className={`${inputClsSm} w-32`} type="date" value={date}
              onChange={(e) => setDate(e.target.value)} />
       <button
         disabled={!(Number(shares) > 0 && Number(cost) > 0 && date)}
@@ -51,11 +51,11 @@ function AddToPortfolio({ a }: { a: AlertItem }) {
           })
           setOpen(false)
         }}
-        className="rounded-lg bg-emerald-500/20 px-2.5 py-1 text-xs font-medium text-emerald-300 ring-1 ring-emerald-400/30 disabled:opacity-40"
+        className={`rounded px-2.5 py-1 text-xs font-medium disabled:opacity-40 ${badgeRing.up} hover:bg-up/20`}
       >
         add
       </button>
-      <button onClick={() => setOpen(false)} className="text-xs text-slate-500 hover:text-slate-300">
+      <button onClick={() => setOpen(false)} className="text-xs text-muted hover:text-ink">
         ×
       </button>
     </span>
@@ -71,19 +71,19 @@ function AnalystSection({ f }: { f: Fundamentals }) {
   const consensus = a.consensus ? CONSENSUS_LABELS[a.consensus] : null
   const upside = mid && price ? (mid / price - 1) * 100 : null
   return (
-    <div className="mt-3 rounded-xl bg-white/[0.03] p-3.5 ring-1 ring-white/5">
+    <div className="mt-3 bg-raised p-3.5 ring-1 ring-hair">
       <div className="mb-2 flex flex-wrap items-center gap-2 text-sm">
-        <span className="font-medium text-slate-200">Analyst view</span>
+        <span className="font-medium text-ink">Analyst view</span>
         {consensus && (
-          <span className={`rounded-full px-2.5 py-0.5 text-xs font-semibold ${consensus.style}`}>
+          <span className={`rounded px-2.5 py-0.5 text-xs font-semibold ${badgeFlat[consensus.tone]}`}>
             {consensus.label}
           </span>
         )}
         {a.n_analysts !== undefined && (
-          <span className="text-xs text-slate-500">{a.n_analysts} analysts</span>
+          <span className="text-xs text-muted">{a.n_analysts} analysts</span>
         )}
         {upside !== null && (
-          <span className={`text-xs ${upside >= 0 ? 'text-emerald-400' : 'text-rose-400'}`}>
+          <span className={`text-xs ${upside >= 0 ? 'text-up' : 'text-down'}`}>
             mean target {upside >= 0 ? '+' : ''}
             {upside.toFixed(1)}% from here
           </span>
@@ -91,42 +91,38 @@ function AnalystSection({ f }: { f: Fundamentals }) {
       </div>
       {hasRange && (
         <div className="px-1 pb-1 pt-3">
-          <div className="relative h-1.5 rounded-full bg-slate-700/60">
+          <div className="relative h-1.5 bg-overlay">
             {mid !== undefined && (
               <div
                 title={`Mean target ${mid.toFixed(2)}`}
-                className="absolute top-1/2 h-3.5 w-0.5 -translate-y-1/2 bg-sky-400"
+                className="absolute top-1/2 h-3.5 w-0.5 -translate-y-1/2 bg-accent"
                 style={{ left: `${pos(mid)}%` }}
               />
             )}
             {price !== undefined && (
               <div
                 title={`Current price ${price.toFixed(2)}`}
-                className="absolute top-1/2 h-3 w-3 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-slate-950 bg-slate-100"
+                className="absolute top-1/2 h-3 w-3 -translate-x-1/2 -translate-y-1/2 border-2 border-base bg-ink"
                 style={{ left: `${pos(price)}%` }}
               />
             )}
           </div>
-          <div className="mt-1.5 flex justify-between text-xs text-slate-500">
+          <div className="mt-1.5 flex justify-between text-xs text-muted">
             <span>low {lo!.toFixed(0)}</span>
-            <span className="text-sky-400">mean {mid !== undefined ? mid.toFixed(0) : '—'}</span>
+            <span className="text-accent">mean {mid !== undefined ? mid.toFixed(0) : '—'}</span>
             <span>high {hi!.toFixed(0)}</span>
           </div>
         </div>
       )}
       {(f.rating_changes?.length ?? 0) > 0 && (
-        <ul className="mt-2 space-y-1 border-t border-slate-800/70 pt-2 text-xs">
+        <ul className="mt-2 space-y-1 border-t border-hair pt-2 text-xs">
           {f.rating_changes!.map((c, i) => (
-            <li key={i} className="flex flex-wrap gap-x-2 text-slate-400">
-              <span className="text-slate-500">{c.date}</span>
-              <span className="text-slate-300">{c.firm}</span>
+            <li key={i} className="flex flex-wrap gap-x-2 text-ink-2">
+              <span className="text-muted">{c.date}</span>
+              <span className="text-ink">{c.firm}</span>
               <span
                 className={
-                  c.action === 'up'
-                    ? 'text-emerald-400'
-                    : c.action === 'down'
-                      ? 'text-rose-400'
-                      : 'text-slate-400'
+                  c.action === 'up' ? 'text-up' : c.action === 'down' ? 'text-down' : 'text-muted'
                 }
               >
                 {c.from_grade && c.from_grade !== c.to_grade
@@ -172,15 +168,10 @@ const FACTOR_LABELS: Record<string, { label: string; fmt: (m: Record<string, num
 
 function FactorChip({ value }: { value: number | undefined }) {
   if (value === undefined)
-    return <span className="rounded-full bg-slate-500/15 px-2 py-0.5 text-xs text-slate-500">n/a</span>
-  const style =
-    value > 0
-      ? 'bg-emerald-500/15 text-emerald-400'
-      : value < 0
-        ? 'bg-rose-500/15 text-rose-400'
-        : 'bg-slate-500/15 text-slate-400'
+    return <span className="rounded bg-overlay px-2 py-0.5 text-xs text-muted">n/a</span>
+  const tone: Tone = value > 0 ? 'up' : value < 0 ? 'down' : 'neutral'
   return (
-    <span className={`rounded-full px-2 py-0.5 text-xs font-semibold ${style}`}>
+    <span className={`rounded px-2 py-0.5 text-xs font-semibold ${badgeFlat[tone]}`}>
       {value > 0 ? '+1' : value < 0 ? '−1' : '0'}
     </span>
   )
@@ -217,11 +208,11 @@ export function qualityScore(a: AlertItem): number {
 
 // thresholds scaled to the achievable max of 10 (non-US names top out at 8.5
 // since sector rotation is US-only — evidence-based, noted in the footer)
-const GRADES: { min: number; label: string; style: string }[] = [
-  { min: 7.5, label: 'Strong+', style: 'bg-emerald-500/25 text-emerald-200 ring-emerald-400/40' },
-  { min: 6, label: 'Strong', style: 'bg-emerald-500/15 text-emerald-300 ring-emerald-400/25' },
-  { min: 5, label: 'Good', style: 'bg-sky-500/15 text-sky-300 ring-sky-400/25' },
-  { min: 0, label: 'Fair', style: 'bg-slate-500/15 text-slate-300 ring-white/10' },
+const GRADES: { min: number; label: string; tone: Tone }[] = [
+  { min: 7.5, label: 'Strong+', tone: 'up' },
+  { min: 6, label: 'Strong', tone: 'up' },
+  { min: 5, label: 'Good', tone: 'info' },
+  { min: 0, label: 'Fair', tone: 'neutral' },
 ]
 
 export function gradeOf(score: number) {
@@ -233,7 +224,7 @@ function QualityBadge({ score }: { score: number }) {
   return (
     <span
       title={`Quality score ${score.toFixed(1)} — confluence across fundamentals, sector, volume, analysts, signal rarity, Fib support`}
-      className={`inline-flex items-center gap-1.5 rounded-full px-2.5 py-0.5 text-xs font-semibold ring-1 ${g.style}`}
+      className={`inline-flex items-center gap-1.5 rounded px-2.5 py-0.5 text-xs font-semibold ${badgeRing[g.tone]}`}
     >
       {g.label}
       <span className="tnum font-normal opacity-70">{score.toFixed(1)}</span>
@@ -247,36 +238,36 @@ function BuyCard({ a, rank, defaultOpen }: { a: AlertItem; rank: number; default
   const pct = a.values.sma200 ? ((a.close - a.values.sma200) / a.values.sma200) * 100 : null
   const score = qualityScore(a)
   return (
-    <div className="rounded-2xl bg-gradient-to-b from-slate-900/60 to-slate-900/20 ring-1 ring-white/5 transition hover:ring-sky-400/20">
+    <div className="bg-raised ring-1 ring-hair transition hover:ring-accent/30">
       <div
         role="button"
         aria-expanded={open}
         onClick={() => setOpen(!open)}
-        className="flex cursor-pointer flex-wrap items-center justify-between gap-x-3 gap-y-2 px-5 py-3.5 select-none"
+        className="flex cursor-pointer flex-wrap items-center justify-between gap-x-3 gap-y-2 px-5 py-3 select-none"
       >
         <div className="flex flex-wrap items-center gap-2.5">
-          <span className={`text-slate-500 transition-transform ${open ? 'rotate-90' : ''}`}>▸</span>
-          <span className="w-6 text-right text-sm text-slate-600">{rank}</span>
+          <span className={`text-muted transition-transform ${open ? 'rotate-90' : ''}`}>▸</span>
+          <span className="w-6 text-right text-sm text-faint">{rank}</span>
           <a
             href={tradingViewUrl(a.ticker)}
             target="_blank"
             rel="noreferrer"
             onClick={(e) => e.stopPropagation()}
-            className="text-base font-bold text-sky-400 hover:text-sky-300 hover:underline"
+            className="text-base font-bold text-accent hover:underline"
           >
             {a.ticker} ↗
           </a>
           <MarketBadge market={a.market} />
           <QualityBadge score={score} />
-          <span className="hidden text-xs text-slate-500 sm:inline">
+          <span className="hidden text-xs text-muted sm:inline">
             {CATEGORY_LABELS[a.category] ?? a.category}
           </span>
         </div>
         <div className="flex flex-wrap items-center gap-3">
-          <span className="tnum text-sm text-slate-300">
+          <span className="tnum text-sm text-ink-2">
             {a.close >= 10 ? a.close.toFixed(2) : a.close.toFixed(4)}
             {pct !== null && (
-              <span className={`ml-2 ${pct >= 0 ? 'text-emerald-400' : 'text-rose-400'}`}>
+              <span className={`ml-2 ${pct >= 0 ? 'text-up' : 'text-down'}`}>
                 {pct >= 0 ? '+' : ''}
                 {pct.toFixed(2)}%
               </span>
@@ -289,23 +280,23 @@ function BuyCard({ a, rank, defaultOpen }: { a: AlertItem; rank: number; default
       </div>
 
       {open && (
-        <div className="border-t border-white/5 px-5 pb-5 pt-3">
-          <p className="text-sm text-slate-400">
-            {a.verdict_reason} · <span className="text-emerald-400">MACD confirms</span>
-            <span className="ml-2 text-slate-500">{a.date}</span>
+        <div className="border-t border-hair px-5 pb-5 pt-3">
+          <p className="text-sm text-muted">
+            {a.verdict_reason} · <span className="text-up">MACD confirms</span>
+            <span className="ml-2 text-faint">{a.date}</span>
           </p>
 
           {f ? (
-        <div className="mt-3 rounded-xl bg-white/[0.03] p-3.5 ring-1 ring-white/5">
+        <div className="mt-3 bg-raised p-3.5 ring-1 ring-hair">
           <div className="mb-2 flex items-center gap-2 text-sm">
-            <span className="font-medium text-slate-200">Fundamentals</span>
+            <span className="font-medium text-ink">Fundamentals</span>
             <span
-              className={`rounded-full px-2.5 py-0.5 text-xs font-semibold uppercase ${
+              className={`rounded px-2.5 py-0.5 text-xs font-semibold uppercase ${
                 f.rating === 'strong'
-                  ? 'bg-emerald-500/15 text-emerald-400'
+                  ? badgeFlat.up
                   : f.rating === 'weak'
-                    ? 'bg-rose-500/15 text-rose-400'
-                    : 'bg-slate-500/15 text-slate-300'
+                    ? badgeFlat.down
+                    : badgeFlat.neutral
               }`}
             >
               {f.rating} ({f.score >= 0 ? '+' : ''}
@@ -316,8 +307,8 @@ function BuyCard({ a, rank, defaultOpen }: { a: AlertItem; rank: number; default
             <tbody>
               {Object.entries(FACTOR_LABELS).map(([key, def]) => (
                 <tr key={key}>
-                  <td className="py-1 text-slate-400">{def.label}</td>
-                  <td className="py-1 text-right text-slate-200">{def.fmt(f.metrics ?? {})}</td>
+                  <td className="py-1 text-muted">{def.label}</td>
+                  <td className="tnum py-1 text-right text-ink">{def.fmt(f.metrics ?? {})}</td>
                   <td className="w-12 py-1 text-right">
                     <FactorChip value={f.factors?.[key]} />
                   </td>
@@ -326,21 +317,17 @@ function BuyCard({ a, rank, defaultOpen }: { a: AlertItem; rank: number; default
             </tbody>
           </table>
           {a.sector && (
-            <div className="mt-2 flex items-center justify-between border-t border-white/5 pt-2 text-sm">
-              <span className="text-slate-400">
-                Sector — <span className="text-slate-300">{a.sector.name}</span>
+            <div className="mt-2 flex items-center justify-between border-t border-hair pt-2 text-sm">
+              <span className="text-muted">
+                Sector — <span className="text-ink-2">{a.sector.name}</span>
               </span>
               <span className="flex items-center gap-2">
                 {a.sector.state ? (
-                  <span
-                    className={`rounded-full px-2 py-0.5 text-xs font-semibold ring-1 ${
-                      SECTOR_STATE[a.sector.state].style
-                    }`}
-                  >
+                  <Badge tone={SECTOR_STATE[a.sector.state].tone}>
                     {SECTOR_STATE[a.sector.state].label}
-                  </span>
+                  </Badge>
                 ) : (
-                  <span className="text-xs text-slate-500">no data</span>
+                  <span className="text-xs text-muted">no data</span>
                 )}
                 <span className="w-12 text-right">
                   <FactorChip value={a.sector.factor} />
@@ -351,7 +338,7 @@ function BuyCard({ a, rank, defaultOpen }: { a: AlertItem; rank: number; default
           <AnalystSection f={f} />
         </div>
       ) : (
-        <p className="mt-3 text-sm text-slate-500">
+        <p className="mt-3 text-sm text-muted">
           Fundamentals unavailable for this ticker — verdict is technicals + MACD only.
         </p>
       )}
@@ -367,17 +354,17 @@ function FibLadder({ frame, label }: { frame: FibFrame; label: string }) {
   const clampedPos = Math.max(0, Math.min(100, position_pct))
   return (
     <div className="mt-2">
-      <div className="mb-1 flex items-center justify-between text-xs text-slate-400">
-        <span className="font-medium text-slate-300">{label}</span>
+      <div className="mb-1 flex items-center justify-between text-xs text-muted">
+        <span className="font-medium text-ink-2">{label}</span>
         <span>
           swing {low.toFixed(2)}–{high.toFixed(2)} · at{' '}
-          <span className="text-slate-200">{position_pct.toFixed(0)}%</span> of range
+          <span className="text-ink">{position_pct.toFixed(0)}%</span> of range
         </span>
       </div>
       {/* position within the swing range, with the current price marker */}
-      <div className="relative h-1.5 rounded-full bg-slate-700/50">
+      <div className="relative h-1.5 bg-overlay">
         <div
-          className="absolute top-1/2 h-3 w-3 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-slate-950 bg-slate-100"
+          className="absolute top-1/2 h-3 w-3 -translate-x-1/2 -translate-y-1/2 border-2 border-base bg-ink"
           style={{ left: `${clampedPos}%` }}
           title={`Price at ${position_pct.toFixed(1)}% of the ${low.toFixed(2)}–${high.toFixed(2)} range`}
         />
@@ -388,13 +375,13 @@ function FibLadder({ frame, label }: { frame: FibFrame; label: string }) {
           return (
             <div
               key={l.label}
-              className={`rounded-md px-1 py-1 ${
-                isNear ? 'bg-sky-500/15 ring-1 ring-sky-400/25' : 'bg-white/[0.02]'
+              className={`rounded px-1 py-1 ${
+                isNear ? 'bg-accent/15 ring-1 ring-accent/30' : 'bg-overlay'
               }`}
             >
-              <div className="text-slate-400">{l.label}</div>
-              <div className="text-slate-200">{l.price.toFixed(2)}</div>
-              <div className={l.dist_pct >= 0 ? 'text-emerald-400' : 'text-rose-400'}>
+              <div className="text-muted">{l.label}</div>
+              <div className="tnum text-ink">{l.price.toFixed(2)}</div>
+              <div className={`tnum ${l.dist_pct >= 0 ? 'text-up' : 'text-down'}`}>
                 {l.dist_pct >= 0 ? '+' : ''}
                 {l.dist_pct.toFixed(1)}%
               </div>
@@ -412,17 +399,17 @@ function PriceStructure({ a }: { a: AlertItem }) {
   const vol = a.volume
   if (!daily && !weekly && !vol) return null
   return (
-    <div className="mt-3 rounded-xl bg-white/[0.03] p-3.5 ring-1 ring-white/5">
+    <div className="mt-3 bg-raised p-3.5 ring-1 ring-hair">
       <div className="mb-1 flex items-center gap-2 text-sm">
-        <span className="font-medium text-slate-200">Price structure</span>
-        <span className="text-xs text-slate-500">Fibonacci retracements · nearest level highlighted</span>
+        <span className="font-medium text-ink">Price structure</span>
+        <span className="text-xs text-muted">Fibonacci retracements · nearest level highlighted</span>
       </div>
       {daily && <FibLadder frame={daily} label="Daily (1-year swing)" />}
       {weekly && <FibLadder frame={weekly} label="Weekly (2-year swing)" />}
       {vol && (
-        <div className="mt-3 flex items-center justify-between border-t border-white/5 pt-2 text-sm">
-          <span className="text-slate-400">Volume vs 20-day average</span>
-          <span className={vol.above_avg ? 'text-emerald-400' : 'text-slate-300'}>
+        <div className="mt-3 flex items-center justify-between border-t border-hair pt-2 text-sm">
+          <span className="text-muted">Volume vs 20-day average</span>
+          <span className={`tnum ${vol.above_avg ? 'text-up' : 'text-ink-2'}`}>
             {vol.ratio.toFixed(2)}× {vol.above_avg ? '(above)' : '(below)'}
           </span>
         </div>
@@ -436,12 +423,12 @@ export default function BuysPage() {
 
   if (error) {
     return (
-      <p className="rounded-xl border border-dashed border-white/10 bg-white/[0.01] px-4 py-8 text-center text-sm text-slate-500">
+      <p className="border border-dashed border-hair bg-raised px-4 py-8 text-center text-sm text-muted">
         No scan data yet.
       </p>
     )
   }
-  if (!latest) return <p className="py-8 text-center text-slate-500">Loading…</p>
+  if (!latest) return <p className="py-8 text-center text-muted">Loading…</p>
 
   const buys = latest.alerts
     .filter((a) => a.verdict === 'buy')
@@ -450,14 +437,14 @@ export default function BuysPage() {
 
   return (
     <section className="space-y-4">
-      <div className="flex flex-wrap items-baseline justify-between gap-2">
-        <h2 className="flex items-center gap-2 text-base font-semibold tracking-tight text-slate-100"><span className="h-4 w-1 rounded-full bg-sky-400/70" />
-          BUY verdicts — {latest.bar_date} · ranked by quality
-        </h2>
-        <span className="text-sm text-slate-500">
-          {buys.length} of {latest.alerts.length} alerts passed all three layers
-        </span>
-      </div>
+      <SectionHeading
+        title={`BUY verdicts — ${latest.bar_date} · ranked by quality`}
+        right={
+          <span className="text-sm text-muted">
+            {buys.length} of {latest.alerts.length} alerts passed all three layers
+          </span>
+        }
+      />
 
       {buys.length > 0 ? (
         <div className="space-y-2.5">
@@ -466,15 +453,15 @@ export default function BuysPage() {
           ))}
         </div>
       ) : (
-        <p className="rounded-xl border border-dashed border-white/10 bg-white/[0.01] px-4 py-8 text-center text-sm text-slate-500">
+        <p className="border border-dashed border-hair bg-raised px-4 py-8 text-center text-sm text-muted">
           No BUY verdicts on {latest.bar_date} — signal, MACD, and fundamentals did not align on any name.
         </p>
       )}
 
-      <p className="text-xs text-slate-500">
+      <p className="text-xs text-muted">
         A BUY requires all three layers to agree: a bullish signal, MACD momentum
         confirmation, and fundamentals that are not weak. Click a row to expand its
-        full detail. <span className="text-slate-400">Quality</span> is a display-only
+        full detail. <span className="text-ink-2">Quality</span> is a display-only
         confluence score (it does not change the verdict): base 3 for any BUY, plus
         fundamentals (strong +2 / neutral +1), sector (leading +1.5 / improving +0.5 /
         weakening −0.25 / lagging −0.5; US-only, so non-US names top out lower),

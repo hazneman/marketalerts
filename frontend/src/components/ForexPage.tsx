@@ -1,111 +1,99 @@
 import { useForex } from '../hooks/useAlerts'
+import { badgeFlat, cellCls, rowCls, tableWrapCls, theadCls, type Tone } from '../lib/ui'
 import { CATEGORY_LABELS, type ForexCurrency, type ForexOutlook, type ForexPair } from '../types'
 import CategorySection from './CategorySection'
+import SectionHeading from './ui/SectionHeading'
+
+const CALL_TONES: Record<string, Tone> = {
+  long: 'up',
+  short: 'down',
+  neutral: 'neutral',
+  benchmark: 'neutral',
+}
 
 function CallBadge({ outlook }: { outlook: ForexOutlook | null }) {
-  if (!outlook) return <span className="text-slate-500">—</span>
-  const styles: Record<string, string> = {
-    long: 'bg-emerald-500/15 text-emerald-400',
-    short: 'bg-rose-500/15 text-rose-400',
-    neutral: 'bg-slate-500/15 text-slate-300',
-    benchmark: 'bg-slate-500/15 text-slate-500',
-  }
+  if (!outlook) return <span className="text-muted">—</span>
   return (
     <span
       title={outlook.rationale}
-      className={`inline-block cursor-help rounded-full px-2.5 py-0.5 text-xs font-semibold uppercase ${styles[outlook.call]}`}
+      className={`inline-block cursor-help rounded px-2.5 py-0.5 text-xs font-semibold uppercase ${badgeFlat[CALL_TONES[outlook.call] ?? 'neutral']}`}
     >
       {outlook.call === 'benchmark' ? 'bench' : outlook.call}
     </span>
   )
 }
 
-function suggestionColor(s: string): string {
-  if (s.includes('attractive')) return 'bg-emerald-500/15 text-emerald-400'
-  if (s.includes('at risk') || s.includes('funding')) return 'bg-rose-500/15 text-rose-400'
-  if (s.includes('strengthening')) return 'bg-sky-500/15 text-sky-300'
-  if (s.includes('Benchmark')) return 'bg-slate-500/15 text-slate-300'
-  return 'bg-slate-500/15 text-slate-400'
+function suggestionTone(s: string): Tone {
+  if (s.includes('attractive')) return 'up'
+  if (s.includes('at risk') || s.includes('funding')) return 'down'
+  if (s.includes('strengthening')) return 'info'
+  return 'neutral'
 }
 
-const ALIGNMENT_STYLES: Record<string, string> = {
-  aligned_bull: 'bg-emerald-500/15 text-emerald-400',
-  aligned_bear: 'bg-rose-500/15 text-rose-400',
-  conflict: 'bg-amber-500/15 text-amber-400',
-  trend_only: 'bg-slate-500/15 text-slate-400',
+const ALIGNMENT_TONES: Record<string, Tone> = {
+  aligned_bull: 'up',
+  aligned_bear: 'down',
+  conflict: 'accent',
+  trend_only: 'neutral',
 }
 
 function PairsTable({ pairs }: { pairs: ForexPair[] }) {
   return (
-    <div className="overflow-x-auto rounded-xl bg-slate-900/30 ring-1 ring-white/5">
-      <table className="w-full text-left text-sm">
-        <thead className="bg-white/[0.03] text-[11px] font-medium uppercase tracking-wider text-slate-500">
+    <div className={tableWrapCls}>
+      <table className="w-full text-left text-[13px]">
+        <thead className={theadCls}>
           <tr>
-            <th className="px-4 py-2.5">Pair</th>
-            <th className="px-4 py-2.5 text-right">Price</th>
-            <th className="px-4 py-2.5 text-right">vs SMA 200</th>
-            <th className="px-4 py-2.5">Trend</th>
-            <th className="px-4 py-2.5 text-right">1m</th>
-            <th className="px-4 py-2.5 text-right">Rate balance</th>
-            <th className="px-4 py-2.5">Combined read</th>
+            <th className={cellCls}>Pair</th>
+            <th className={`${cellCls} text-right`}>Price</th>
+            <th className={`${cellCls} text-right`}>vs SMA 200</th>
+            <th className={cellCls}>Trend</th>
+            <th className={`${cellCls} text-right`}>1m</th>
+            <th className={`${cellCls} text-right`}>Rate balance</th>
+            <th className={cellCls}>Combined read</th>
           </tr>
         </thead>
-        <tbody className="tnum divide-y divide-white/5">
+        <tbody className="tnum divide-y divide-hair">
           {pairs.map((p) => (
-            <tr key={p.symbol} className="transition-colors hover:bg-white/[0.03]">
-              <td className="px-4 py-2.5">
+            <tr key={p.symbol} className={rowCls}>
+              <td className={cellCls}>
                 <a
                   href={`https://www.tradingview.com/chart/?symbol=${p.symbol}`}
                   target="_blank"
                   rel="noreferrer"
-                  className="font-semibold text-sky-400 hover:text-sky-300 hover:underline"
+                  className="font-semibold text-accent hover:underline"
                 >
                   {p.symbol.slice(0, 3)}/{p.symbol.slice(3)} ↗
                 </a>
               </td>
-              <td className="px-4 py-2.5 text-right font-medium text-slate-100">
+              <td className={`${cellCls} text-right font-medium text-ink`}>
                 {p.price.toFixed(4)}
               </td>
-              <td
-                className={`px-4 py-2.5 text-right ${
-                  p.vs_sma200_pct >= 0 ? 'text-emerald-400' : 'text-rose-400'
-                }`}
-              >
+              <td className={`${cellCls} text-right ${p.vs_sma200_pct >= 0 ? 'text-up' : 'text-down'}`}>
                 {p.vs_sma200_pct >= 0 ? '+' : ''}
                 {p.vs_sma200_pct.toFixed(2)}%
               </td>
-              <td className="px-4 py-2.5">
-                <span className={p.above_sma200 ? 'text-emerald-400' : 'text-rose-400'}>
+              <td className={cellCls}>
+                <span className={p.above_sma200 ? 'text-up' : 'text-down'}>
                   {p.above_sma200 ? '▲ above' : '▼ below'} SMA200
                 </span>
               </td>
-              <td
-                className={`px-4 py-2.5 text-right ${
-                  p.chg_1m_pct >= 0 ? 'text-emerald-400' : 'text-rose-400'
-                }`}
-              >
+              <td className={`${cellCls} text-right ${p.chg_1m_pct >= 0 ? 'text-up' : 'text-down'}`}>
                 {p.chg_1m_pct >= 0 ? '+' : ''}
                 {p.chg_1m_pct.toFixed(2)}%
               </td>
               <td
-                className={`px-4 py-2.5 text-right ${
-                  (p.carry_pct ?? 0) > 0
-                    ? 'text-emerald-400'
-                    : (p.carry_pct ?? 0) < 0
-                      ? 'text-rose-400'
-                      : 'text-slate-400'
+                className={`${cellCls} text-right ${
+                  (p.carry_pct ?? 0) > 0 ? 'text-up' : (p.carry_pct ?? 0) < 0 ? 'text-down' : 'text-muted'
                 }`}
               >
                 {p.carry_pct !== undefined
                   ? `${p.carry_pct > 0 ? '+' : ''}${p.carry_pct.toFixed(2)}%`
                   : '—'}
               </td>
-              <td className="px-4 py-2.5">
+              <td className={cellCls}>
                 {p.comment ? (
                   <span
-                    className={`inline-block rounded-full px-2.5 py-0.5 text-xs font-medium ${
-                      ALIGNMENT_STYLES[p.alignment ?? 'trend_only']
-                    }`}
+                    className={`inline-block rounded px-2.5 py-0.5 text-xs font-medium ${badgeFlat[ALIGNMENT_TONES[p.alignment ?? 'trend_only'] ?? 'neutral']}`}
                   >
                     {p.comment}
                   </span>
@@ -122,10 +110,10 @@ function PairsTable({ pairs }: { pairs: ForexPair[] }) {
 }
 
 function TrendCell({ c }: { c: ForexCurrency }) {
-  if (!c.vs_usd) return <span className="text-slate-500">—</span>
+  if (!c.vs_usd) return <span className="text-muted">—</span>
   const up = c.vs_usd.above_sma200
   return (
-    <span className={up ? 'text-emerald-400' : 'text-rose-400'}>
+    <span className={up ? 'text-up' : 'text-down'}>
       {up ? '▲ above' : '▼ below'} SMA200
     </span>
   )
@@ -136,96 +124,92 @@ export default function ForexPage() {
 
   if (error) {
     return (
-      <p className="rounded-xl border border-dashed border-white/10 bg-white/[0.01] px-4 py-8 text-center text-sm text-slate-500">
+      <p className="border border-dashed border-hair bg-raised px-4 py-8 text-center text-sm text-muted">
         No forex data yet — it is generated by the daily scan.
       </p>
     )
   }
-  if (!forex) return <p className="py-8 text-center text-slate-500">Loading…</p>
+  if (!forex) return <p className="py-8 text-center text-muted">Loading…</p>
 
   return (
     <section className="space-y-3">
-      <div className="flex flex-wrap items-baseline justify-between gap-2">
-        <h2 className="flex items-center gap-2 text-base font-semibold tracking-tight text-slate-100"><span className="h-4 w-1 rounded-full bg-sky-400/70" />
-          Central bank rates &amp; currency trends
-        </h2>
-        <span className="text-xs text-slate-500">
-          Rates as of {forex.rates_as_of} (manually maintained) · FX bar {forex.bar_date}
-        </span>
-      </div>
-      <div className="overflow-x-auto rounded-xl bg-slate-900/30 ring-1 ring-white/5">
-        <table className="w-full text-left text-sm">
-          <thead className="bg-white/[0.03] text-[11px] font-medium uppercase tracking-wider text-slate-500">
+      <SectionHeading
+        title="Central bank rates & currency trends"
+        right={
+          <span className="text-xs text-muted">
+            Rates as of {forex.rates_as_of} (manually maintained) · FX bar {forex.bar_date}
+          </span>
+        }
+      />
+      <div className={tableWrapCls}>
+        <table className="w-full text-left text-[13px]">
+          <thead className={theadCls}>
             <tr>
-              <th className="px-4 py-2.5">Currency</th>
-              <th className="px-4 py-2.5">Central bank</th>
-              <th className="px-4 py-2.5 text-right">Policy rate</th>
-              <th className="px-4 py-2.5 text-right">Last change</th>
-              <th className="px-4 py-2.5 text-right">Carry vs USD</th>
-              <th className="px-4 py-2.5 text-right">vs USD</th>
-              <th className="px-4 py-2.5">Trend</th>
-              <th className="px-4 py-2.5 text-right">1m</th>
-              <th className="px-4 py-2.5">Suggestion</th>
-              <th className="px-4 py-2.5 text-right">6m rate (fcst)</th>
-              <th className="px-4 py-2.5">6m call</th>
+              <th className={cellCls}>Currency</th>
+              <th className={cellCls}>Central bank</th>
+              <th className={`${cellCls} text-right`}>Policy rate</th>
+              <th className={`${cellCls} text-right`}>Last change</th>
+              <th className={`${cellCls} text-right`}>Carry vs USD</th>
+              <th className={`${cellCls} text-right`}>vs USD</th>
+              <th className={cellCls}>Trend</th>
+              <th className={`${cellCls} text-right`}>1m</th>
+              <th className={cellCls}>Suggestion</th>
+              <th className={`${cellCls} text-right`}>6m rate (fcst)</th>
+              <th className={cellCls}>6m call</th>
             </tr>
           </thead>
-          <tbody className="tnum divide-y divide-white/5">
+          <tbody className="tnum divide-y divide-hair">
             {forex.currencies.map((c) => (
-              <tr key={c.code} className="transition-colors hover:bg-white/[0.03]">
-                <td className="px-4 py-2.5">
-                  <span className="font-semibold text-slate-100">{c.code}</span>{' '}
-                  <span className="text-xs text-slate-500">{c.country}</span>
+              <tr key={c.code} className={rowCls}>
+                <td className={cellCls}>
+                  <span className="font-semibold text-ink">{c.code}</span>{' '}
+                  <span className="text-xs text-muted">{c.country}</span>
                 </td>
-                <td className="px-4 py-2.5 text-slate-400">{c.bank}</td>
-                <td className="px-4 py-2.5 text-right font-medium text-slate-100">
+                <td className={`${cellCls} text-muted`}>{c.bank}</td>
+                <td className={`${cellCls} text-right font-medium text-ink`}>
                   {c.rate.toFixed(2)}%
                 </td>
                 <td
-                  className={`px-4 py-2.5 text-right ${
-                    c.change_bps > 0
-                      ? 'text-emerald-400'
-                      : c.change_bps < 0
-                        ? 'text-rose-400'
-                        : 'text-slate-400'
+                  className={`${cellCls} text-right ${
+                    c.change_bps > 0 ? 'text-up' : c.change_bps < 0 ? 'text-down' : 'text-muted'
                   }`}
                 >
                   {c.change_bps > 0 ? '+' : ''}
                   {c.change_bps} bps
-                  <span className="ml-1 text-xs text-slate-500">{c.changed_on}</span>
+                  <span className="ml-1 text-xs text-muted">{c.changed_on}</span>
                 </td>
                 <td
-                  className={`px-4 py-2.5 text-right ${
-                    c.carry_vs_usd > 0 ? 'text-emerald-400' : c.carry_vs_usd < 0 ? 'text-rose-400' : 'text-slate-400'
+                  className={`${cellCls} text-right ${
+                    c.carry_vs_usd > 0 ? 'text-up' : c.carry_vs_usd < 0 ? 'text-down' : 'text-muted'
                   }`}
                 >
                   {c.carry_vs_usd > 0 ? '+' : ''}
                   {c.carry_vs_usd.toFixed(2)}%
                 </td>
-                <td className="px-4 py-2.5 text-right text-slate-300">
+                <td className={`${cellCls} text-right text-ink-2`}>
                   {c.vs_usd ? c.vs_usd.price.toFixed(4) : '—'}
                 </td>
-                <td className="px-4 py-2.5">
+                <td className={cellCls}>
                   <TrendCell c={c} />
                 </td>
                 <td
-                  className={`px-4 py-2.5 text-right ${
-                    (c.vs_usd?.chg_1m_pct ?? 0) >= 0 ? 'text-emerald-400' : 'text-rose-400'
+                  className={`${cellCls} text-right ${
+                    !c.vs_usd ? 'text-muted' : c.vs_usd.chg_1m_pct >= 0 ? 'text-up' : 'text-down'
                   }`}
                 >
                   {c.vs_usd ? `${c.vs_usd.chg_1m_pct >= 0 ? '+' : ''}${c.vs_usd.chg_1m_pct.toFixed(2)}%` : '—'}
                 </td>
-                <td className="px-4 py-2.5">
+                <td className={cellCls}>
                   <span
-                    className={`inline-block rounded-full px-2.5 py-0.5 text-xs font-medium ${suggestionColor(c.suggestion)}`}
+                    className={`inline-block rounded px-2.5 py-0.5 text-xs font-medium ${badgeFlat[suggestionTone(c.suggestion)]}`}
                   >
                     {c.suggestion}
                   </span>
                 </td>
-                <td className="px-4 py-2.5 text-right text-slate-300">
+                <td className={`${cellCls} text-right text-ink-2`}>
                   {c.outlook?.rate_6m ?? '—'}
                 </td>
-                <td className="px-4 py-2.5">
+                <td className={cellCls}>
                   <CallBadge outlook={c.outlook} />
                 </td>
               </tr>
@@ -233,21 +217,25 @@ export default function ForexPage() {
           </tbody>
         </table>
       </div>
-      <p className="text-xs text-slate-500">
+      <p className="text-xs text-muted">
         Suggestion = transparent rule on carry (policy rate − USD rate) and trend
         (pair vs its 200-day SMA). Trend uses the {'{'}CODE{'}'}USD pair, so
         &quot;above SMA200&quot; always means the currency is strengthening against the
-        dollar. <span className="text-slate-400">6m rate / 6m call = Claude&apos;s
+        dollar. <span className="text-ink-2">6m rate / 6m call = Claude&apos;s
         discretionary view{forex.outlook_as_of ? ` written ${forex.outlook_as_of}` : ''} —
         hover a call for the reasoning. Opinion, not investment advice.</span>
       </p>
 
       {forex.pairs && forex.pairs.length > 0 && (
         <>
-          <h2 className="flex items-center gap-2 pt-4 text-base font-semibold tracking-tight text-slate-100"><span className="h-4 w-1 rounded-full bg-sky-400/70" />Major pairs</h2>
+          <div className="pt-4">
+            <SectionHeading title="Major pairs" />
+          </div>
           <PairsTable pairs={forex.pairs} />
 
-          <h2 className="flex items-center gap-2 pt-4 text-base font-semibold tracking-tight text-slate-100"><span className="h-4 w-1 rounded-full bg-sky-400/70" />Pair signals</h2>
+          <div className="pt-4">
+            <SectionHeading title="Pair signals" />
+          </div>
           {(forex.pair_alerts?.length ?? 0) > 0 ? (
             [...new Set(forex.pair_alerts!.map((a) => a.category))].map((cat) => (
               <CategorySection
@@ -258,7 +246,7 @@ export default function ForexPage() {
               />
             ))
           ) : (
-            <p className="rounded-xl border border-dashed border-white/10 bg-white/[0.01] px-4 py-8 text-center text-sm text-slate-500">
+            <p className="border border-dashed border-hair bg-raised px-4 py-8 text-center text-sm text-muted">
               No pair signals on {forex.bar_date}
             </p>
           )}

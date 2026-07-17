@@ -1,15 +1,15 @@
+import { badgeFlat, badgeRing, cellCls, rowCls, tableWrapCls, theadCls, type Tone } from '../lib/ui'
 import { tradingViewUrl } from '../lib/tradingview'
 import type { AlertItem } from '../types'
-import { MARKET_BADGE_STYLES, MARKET_LABELS } from '../types'
+import { MARKET_LABELS, MARKET_TONES } from '../types'
 import DirectionBadge from './DirectionBadge'
 
 export function MarketBadge({ market }: { market?: string }) {
   if (!market) return null
+  const tone = MARKET_TONES[market] ?? 'neutral'
   return (
     <span
-      className={`ml-1.5 inline-block rounded px-1 py-px align-middle text-[10px] font-semibold tracking-wide ring-1 ${
-        MARKET_BADGE_STYLES[market] ?? 'bg-slate-500/10 text-slate-400 ring-white/10'
-      }`}
+      className={`ml-1.5 inline-block rounded px-1 py-px align-middle text-[10px] font-semibold tracking-wide ${badgeRing[tone]}`}
     >
       {MARKET_LABELS[market] ?? market.toUpperCase()}
     </span>
@@ -20,14 +20,10 @@ function fmtPx(v: number): string {
   return Math.abs(v) >= 10 ? v.toFixed(2) : v.toFixed(4)
 }
 
-const VERDICT_STYLES: Record<string, string> = {
-  buy: 'bg-emerald-500/15 text-emerald-400',
-  hold: 'bg-amber-500/15 text-amber-400',
-  sell: 'bg-rose-500/15 text-rose-400',
-}
+const VERDICT_TONES: Record<string, Tone> = { buy: 'up', hold: 'accent', sell: 'down' }
 
 function VerdictBadge({ a }: { a: AlertItem }) {
-  if (!a.verdict) return <span className="text-slate-500">—</span>
+  if (!a.verdict) return <span className="text-muted">—</span>
   const fund = a.fundamentals
     ? `Fundamentals ${a.fundamentals.rating} (${a.fundamentals.score >= 0 ? '+' : ''}${a.fundamentals.score})`
     : 'Fundamentals unavailable'
@@ -35,7 +31,7 @@ function VerdictBadge({ a }: { a: AlertItem }) {
   return (
     <span
       title={`${a.verdict_reason ?? ''} · ${macd} · ${fund}`}
-      className={`inline-block cursor-help rounded-full px-2.5 py-0.5 text-xs font-semibold uppercase ${VERDICT_STYLES[a.verdict]}`}
+      className={`inline-block cursor-help rounded px-2 py-0.5 text-xs font-semibold uppercase ${badgeFlat[VERDICT_TONES[a.verdict] ?? 'neutral']}`}
     >
       {a.verdict}
     </span>
@@ -52,13 +48,13 @@ function pctFromSma200(a: AlertItem): string | null {
 // Nearest daily Fibonacci level: "61.8% +1.2%" (near a level = tighter |dist|).
 function NearestFib({ a }: { a: AlertItem }) {
   const d = a.fib?.daily
-  if (!d) return <span className="text-slate-600">—</span>
+  if (!d) return <span className="text-faint">—</span>
   const { label, dist_pct } = d.nearest
   const near = Math.abs(dist_pct) <= 1.5 // sitting right on the level
   return (
-    <span className={near ? 'text-sky-300' : 'text-slate-300'}>
+    <span className={near ? 'text-info' : 'text-ink-2'}>
       {label}{' '}
-      <span className={dist_pct >= 0 ? 'text-emerald-400' : 'text-rose-400'}>
+      <span className={dist_pct >= 0 ? 'text-up' : 'text-down'}>
         {dist_pct >= 0 ? '+' : ''}
         {dist_pct.toFixed(1)}%
       </span>
@@ -73,81 +69,81 @@ export default function AlertTable({ alerts }: { alerts: AlertItem[] }) {
   const hasFib = alerts.some((a) => a.fib?.daily)
   const hasVol = alerts.some((a) => a.volume)
   return (
-    <div className="overflow-x-auto rounded-xl bg-slate-900/30 ring-1 ring-white/5">
-      <table className="w-full text-left text-sm">
-        <thead className="bg-white/[0.03] text-[11px] font-medium uppercase tracking-wider text-slate-500">
+    <div className={tableWrapCls}>
+      <table className="w-full text-left text-[13px]">
+        <thead className={theadCls}>
           <tr>
-            <th className="px-4 py-2.5">Signal</th>
-            <th className="px-4 py-2.5">Ticker</th>
-            <th className="px-4 py-2.5">Date</th>
-            <th className="px-4 py-2.5 text-right">Close</th>
-            {hasRsi && <th className="px-4 py-2.5 text-right">RSI</th>}
-            {hasSma50 && <th className="px-4 py-2.5 text-right">SMA 50</th>}
-            <th className="px-4 py-2.5 text-right">SMA 200</th>
-            <th className="px-4 py-2.5 text-right">vs SMA 200</th>
-            {hasFib && <th className="px-4 py-2.5">Fib (D)</th>}
-            {hasVol && <th className="px-4 py-2.5 text-right">Vol</th>}
-            {hasVerdict && <th className="px-4 py-2.5">Verdict</th>}
+            <th className={cellCls}>Signal</th>
+            <th className={cellCls}>Ticker</th>
+            <th className={cellCls}>Date</th>
+            <th className={`${cellCls} text-right`}>Close</th>
+            {hasRsi && <th className={`${cellCls} text-right`}>RSI</th>}
+            {hasSma50 && <th className={`${cellCls} text-right`}>SMA 50</th>}
+            <th className={`${cellCls} text-right`}>SMA 200</th>
+            <th className={`${cellCls} text-right`}>vs SMA 200</th>
+            {hasFib && <th className={cellCls}>Fib (D)</th>}
+            {hasVol && <th className={`${cellCls} text-right`}>Vol</th>}
+            {hasVerdict && <th className={cellCls}>Verdict</th>}
           </tr>
         </thead>
-        <tbody className="tnum divide-y divide-white/5">
+        <tbody className={`tnum divide-y divide-hair`}>
           {alerts.map((a) => (
-            <tr key={`${a.rule}-${a.ticker}`} className="transition-colors hover:bg-white/[0.03]">
-              <td className="px-4 py-2.5">
+            <tr key={`${a.rule}-${a.ticker}`} className={rowCls}>
+              <td className={cellCls}>
                 <DirectionBadge direction={a.direction} />
               </td>
-              <td className="px-4 py-2.5">
+              <td className={cellCls}>
                 <a
                   href={tradingViewUrl(a.ticker)}
                   target="_blank"
                   rel="noreferrer"
                   title="Open in TradingView"
-                  className="font-semibold text-sky-400 hover:text-sky-300 hover:underline"
+                  className="font-semibold text-accent hover:underline"
                 >
                   {a.ticker} ↗
                 </a>
                 <MarketBadge market={a.market} />
               </td>
-              <td className="px-4 py-2.5 text-slate-400">{a.date}</td>
-              <td className="px-4 py-2.5 text-right font-medium text-slate-100">
+              <td className={`${cellCls} text-muted`}>{a.date}</td>
+              <td className={`${cellCls} text-right font-medium text-ink`}>
                 {fmtPx(a.close)}
               </td>
               {hasRsi && (
-                <td className="px-4 py-2.5 text-right text-amber-400">
+                <td className={`${cellCls} text-right text-accent`}>
                   {a.values.rsi?.toFixed(1) ?? '—'}
                 </td>
               )}
               {hasSma50 && (
-                <td className="px-4 py-2.5 text-right text-slate-300">
+                <td className={`${cellCls} text-right text-ink-2`}>
                   {a.values.sma50 !== undefined ? fmtPx(a.values.sma50) : '—'}
                 </td>
               )}
-              <td className="px-4 py-2.5 text-right text-slate-300">
+              <td className={`${cellCls} text-right text-ink-2`}>
                 {a.values.sma200 !== undefined ? fmtPx(a.values.sma200) : '—'}
               </td>
               <td
-                className={`px-4 py-2.5 text-right ${
-                  a.close >= (a.values.sma200 ?? 0) ? 'text-emerald-400' : 'text-rose-400'
+                className={`${cellCls} text-right ${
+                  a.close >= (a.values.sma200 ?? 0) ? 'text-up' : 'text-down'
                 }`}
               >
                 {pctFromSma200(a) ?? '—'}
               </td>
               {hasFib && (
-                <td className="px-4 py-2.5">
+                <td className={cellCls}>
                   <NearestFib a={a} />
                 </td>
               )}
               {hasVol && (
                 <td
-                  className={`px-4 py-2.5 text-right ${
-                    a.volume ? (a.volume.above_avg ? 'text-emerald-400' : 'text-slate-400') : 'text-slate-600'
+                  className={`${cellCls} text-right ${
+                    a.volume ? (a.volume.above_avg ? 'text-up' : 'text-muted') : 'text-faint'
                   }`}
                 >
                   {a.volume ? `${a.volume.ratio.toFixed(1)}×` : '—'}
                 </td>
               )}
               {hasVerdict && (
-                <td className="px-4 py-2.5">
+                <td className={cellCls}>
                   <VerdictBadge a={a} />
                 </td>
               )}

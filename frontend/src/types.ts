@@ -1,3 +1,5 @@
+import type { Tone } from './lib/ui'
+
 export interface AlertItem {
   ticker: string
   rule: string
@@ -57,11 +59,7 @@ export const MARKET_LABELS: Record<string, string> = {
 
 export const MARKET_ORDER: Record<string, number> = { us: 0, de: 1, bist: 2 }
 
-export const MARKET_BADGE_STYLES: Record<string, string> = {
-  us: 'bg-sky-500/10 text-sky-300 ring-sky-400/20',
-  de: 'bg-violet-500/10 text-violet-300 ring-violet-400/20',
-  bist: 'bg-amber-500/10 text-amber-300 ring-amber-400/20',
-}
+export const MARKET_TONES: Record<string, Tone> = { us: 'info', de: 'de', bist: 'accent' }
 
 export interface Fundamentals {
   score: number
@@ -200,19 +198,19 @@ export interface SectorData {
 
 export const SECTOR_HORIZONS = ['1w', '1m', '3m', '6m', '1y'] as const
 
-export const SECTOR_STATE: Record<string, { label: string; style: string }> = {
-  leading: { label: 'Leading', style: 'bg-emerald-500/15 text-emerald-300 ring-emerald-400/25' },
-  improving: { label: 'Improving', style: 'bg-sky-500/15 text-sky-300 ring-sky-400/25' },
-  weakening: { label: 'Weakening', style: 'bg-amber-500/15 text-amber-300 ring-amber-400/25' },
-  lagging: { label: 'Lagging', style: 'bg-rose-500/15 text-rose-300 ring-rose-400/25' },
+export const SECTOR_STATE: Record<string, { label: string; tone: Tone }> = {
+  leading: { label: 'Leading', tone: 'up' },
+  improving: { label: 'Improving', tone: 'info' },
+  weakening: { label: 'Weakening', tone: 'accent' },
+  lagging: { label: 'Lagging', tone: 'down' },
 }
 
-export const CONSENSUS_LABELS: Record<string, { label: string; style: string }> = {
-  strong_buy: { label: 'Strong buy', style: 'bg-emerald-500/20 text-emerald-300' },
-  buy: { label: 'Buy', style: 'bg-emerald-500/15 text-emerald-400' },
-  hold: { label: 'Hold', style: 'bg-amber-500/15 text-amber-400' },
-  underperform: { label: 'Underperform', style: 'bg-rose-500/15 text-rose-400' },
-  sell: { label: 'Sell', style: 'bg-rose-500/20 text-rose-300' },
+export const CONSENSUS_LABELS: Record<string, { label: string; tone: Tone }> = {
+  strong_buy: { label: 'Strong buy', tone: 'up' },
+  buy: { label: 'Buy', tone: 'up' },
+  hold: { label: 'Hold', tone: 'accent' },
+  underperform: { label: 'Underperform', tone: 'down' },
+  sell: { label: 'Sell', tone: 'down' },
 }
 
 export const CATEGORY_LABELS: Record<string, string> = {

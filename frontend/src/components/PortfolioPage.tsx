@@ -5,7 +5,10 @@ import {
   exportPortfolio, importPortfolio, type ClosedTrade, type Position,
 } from '../lib/portfolio'
 import { tradingViewUrl } from '../lib/tradingview'
+import { badgeRing, btnGhost, cellCls, inputCls, rowCls, tableWrapCls, theadCls } from '../lib/ui'
 import { MarketBadge } from './AlertTable'
+import Chip from './ui/Chip'
+import SectionHeading from './ui/SectionHeading'
 
 const today = () => new Date().toISOString().slice(0, 10)
 
@@ -14,7 +17,7 @@ function fmt(v: number, dp = 2): string {
 }
 
 function Pnl({ value, pct }: { value: number; pct?: number | null }) {
-  const cls = value >= 0 ? 'text-emerald-400' : 'text-rose-400'
+  const cls = value >= 0 ? 'text-up' : 'text-down'
   return (
     <span className={cls}>
       {value >= 0 ? '+' : ''}
@@ -29,24 +32,6 @@ function Pnl({ value, pct }: { value: number; pct?: number | null }) {
   )
 }
 
-function Chip({ label, value, tone }: { label: string; value: React.ReactNode; tone?: 'up' | 'down' }) {
-  return (
-    <div className="flex min-w-[8rem] flex-col gap-0.5 rounded-xl bg-white/[0.03] px-3.5 py-2.5 ring-1 ring-white/5">
-      <span className="text-[11px] font-medium uppercase tracking-wider text-slate-500">{label}</span>
-      <span
-        className={`tnum text-sm font-semibold ${
-          tone === 'up' ? 'text-emerald-400' : tone === 'down' ? 'text-rose-400' : 'text-slate-100'
-        }`}
-      >
-        {value}
-      </span>
-    </div>
-  )
-}
-
-const inputCls =
-  'w-full rounded-lg bg-white/[0.04] px-2.5 py-1.5 text-sm text-slate-100 placeholder-slate-500 ring-1 ring-white/10 focus:outline-none focus:ring-sky-400/40'
-
 function AddForm() {
   const [ticker, setTicker] = useState('')
   const [shares, setShares] = useState('')
@@ -55,25 +40,25 @@ function AddForm() {
 
   const valid = ticker.trim() && Number(shares) > 0 && Number(cost) > 0 && date
   return (
-    <div className="flex flex-wrap items-end gap-2 rounded-xl bg-white/[0.02] p-3 ring-1 ring-white/5">
+    <div className="flex flex-wrap items-end gap-2 bg-raised p-3 ring-1 ring-hair">
       <div className="w-28">
-        <label className="mb-1 block text-[11px] uppercase tracking-wider text-slate-500">Ticker</label>
-        <input className={inputCls} value={ticker} placeholder="AAPL"
+        <label className="mb-1 block text-[10px] uppercase tracking-wider text-muted">Ticker</label>
+        <input className={`w-full ${inputCls}`} value={ticker} placeholder="AAPL"
                onChange={(e) => setTicker(e.target.value.toUpperCase())} />
       </div>
       <div className="w-24">
-        <label className="mb-1 block text-[11px] uppercase tracking-wider text-slate-500">Shares</label>
-        <input className={inputCls} type="number" min="0" step="any" value={shares}
+        <label className="mb-1 block text-[10px] uppercase tracking-wider text-muted">Shares</label>
+        <input className={`w-full ${inputCls}`} type="number" min="0" step="any" value={shares}
                onChange={(e) => setShares(e.target.value)} />
       </div>
       <div className="w-28">
-        <label className="mb-1 block text-[11px] uppercase tracking-wider text-slate-500">Avg cost</label>
-        <input className={inputCls} type="number" min="0" step="any" value={cost}
+        <label className="mb-1 block text-[10px] uppercase tracking-wider text-muted">Avg cost</label>
+        <input className={`w-full ${inputCls}`} type="number" min="0" step="any" value={cost}
                onChange={(e) => setCost(e.target.value)} />
       </div>
       <div className="w-36">
-        <label className="mb-1 block text-[11px] uppercase tracking-wider text-slate-500">Buy date</label>
-        <input className={inputCls} type="date" value={date} max={today()}
+        <label className="mb-1 block text-[10px] uppercase tracking-wider text-muted">Buy date</label>
+        <input className={`w-full ${inputCls}`} type="date" value={date} max={today()}
                onChange={(e) => setDate(e.target.value)} />
       </div>
       <button
@@ -87,7 +72,7 @@ function AddForm() {
           })
           setTicker(''); setShares(''); setCost(''); setDate(today())
         }}
-        className="rounded-lg bg-sky-500/20 px-4 py-1.5 text-sm font-medium text-sky-300 ring-1 ring-sky-400/30 transition hover:bg-sky-500/30 disabled:opacity-40"
+        className={`px-4 py-1.5 text-sm font-medium disabled:opacity-40 ${badgeRing.accent} hover:bg-accent/20`}
       >
         Add position
       </button>
@@ -107,11 +92,11 @@ function CloseDialog({ pos, onDone }: { pos: Position; onDone: () => void }) {
       <button
         disabled={!(Number(price) > 0)}
         onClick={() => { closePosition(pos.id, Number(price), date); onDone() }}
-        className="rounded-lg bg-emerald-500/20 px-3 py-1.5 text-xs font-medium text-emerald-300 ring-1 ring-emerald-400/30 disabled:opacity-40"
+        className={`px-3 py-1.5 text-xs font-medium disabled:opacity-40 ${badgeRing.up} hover:bg-up/20`}
       >
         Confirm sell
       </button>
-      <button onClick={onDone} className="text-xs text-slate-500 hover:text-slate-300">cancel</button>
+      <button onClick={onDone} className="text-xs text-muted hover:text-ink">cancel</button>
     </div>
   )
 }
@@ -138,34 +123,36 @@ function Performance({ closed }: { closed: ClosedTrade[] }) {
   const final = cum[cum.length - 1]
 
   return (
-    <div className="space-y-3 rounded-xl bg-white/[0.02] p-3.5 ring-1 ring-white/5">
+    <div className="space-y-3 bg-raised p-3.5 ring-1 ring-hair">
       <div className="flex flex-wrap gap-2.5">
         <Chip label="Trades" value={trades.length} />
         <Chip label="Win rate" value={`${((wins.length / trades.length) * 100).toFixed(0)}%`}
               tone={wins.length >= losses.length ? 'up' : 'down'} />
-        <Chip label="Avg win" value={wins.length ? `+${fmt(wins.reduce((a, b) => a + b, 0) / wins.length)}` : '—'} tone="up" />
+        <Chip label="Avg win" value={wins.length ? `+${fmt(wins.reduce((a, b) => a + b, 0) / wins.length)}` : '—'}
+              tone={wins.length ? 'up' : 'default'} />
         <Chip label="Avg loss" value={losses.length ? fmt(losses.reduce((a, b) => a + b, 0) / losses.length) : '—'}
-              tone={losses.length ? 'down' : undefined} />
-        <Chip label="Best" value={best ? `${best.ticker} ${pnls[trades.indexOf(best)] >= 0 ? '+' : ''}${fmt(pnls[trades.indexOf(best)])}` : '—'} tone="up" />
+              tone={losses.length ? 'down' : 'default'} />
+        <Chip label="Best" value={best ? `${best.ticker} ${pnls[trades.indexOf(best)] >= 0 ? '+' : ''}${fmt(pnls[trades.indexOf(best)])}` : '—'}
+              tone={pnls[trades.indexOf(best)] >= 0 ? 'up' : 'down'} />
         <Chip label="Worst" value={worst ? `${worst.ticker} ${pnls[trades.indexOf(worst)] >= 0 ? '+' : ''}${fmt(pnls[trades.indexOf(worst)])}` : '—'}
               tone={pnls[trades.indexOf(worst)] < 0 ? 'down' : 'up'} />
       </div>
       {cum.length >= 2 && (
         <div>
-          <div className="mb-1 flex items-center justify-between text-xs text-slate-500">
+          <div className="mb-1 flex items-center justify-between text-xs text-muted">
             <span>Cumulative realized P&L over time</span>
-            <span className={final >= 0 ? 'text-emerald-400' : 'text-rose-400'}>
+            <span className={final >= 0 ? 'text-up' : 'text-down'}>
               {final >= 0 ? '+' : ''}
               {fmt(final)}
             </span>
           </div>
           <svg viewBox={`0 0 ${w} ${h}`} className="h-12 w-full" preserveAspectRatio="none"
                role="img" aria-label="Cumulative realized profit and loss by trade close date">
-            <line x1="0" x2={w} y1={y(0)} y2={y(0)} stroke="rgba(148,163,184,0.25)" strokeDasharray="4 4" />
+            <line x1="0" x2={w} y1={y(0)} y2={y(0)} className="stroke-hair" strokeDasharray="4 4" />
             <polyline points={pts} fill="none"
-                      stroke={final >= 0 ? 'rgb(52 211 153)' : 'rgb(251 113 133)'} strokeWidth="2" />
+                      className={final >= 0 ? 'stroke-up' : 'stroke-down'} strokeWidth="2" />
           </svg>
-          <div className="flex justify-between text-[10px] text-slate-600">
+          <div className="flex justify-between text-[10px] text-faint">
             <span>{trades[0].sell_date}</span>
             <span>{trades[trades.length - 1].sell_date}</span>
           </div>
@@ -229,28 +216,27 @@ export default function PortfolioPage() {
   const realized = closed.reduce((s, t) => s + t.shares * (t.sell_price - t.avg_cost), 0)
 
   return (
-    <section className="space-y-6">
-      <div className="flex flex-wrap items-center justify-between gap-2">
-        <h2 className="flex items-center gap-2 text-base font-semibold tracking-tight text-slate-100">
-          <span className="h-4 w-1 rounded-full bg-sky-400/70" />
-          Portfolio — trade backlog
-        </h2>
-        <span className="flex flex-wrap items-center gap-3">
-          <span className="text-xs text-slate-500">
-            {liveAt
-              ? `live prices · ${liveAt}`
-              : `prices from last scan${prices ? ` (${Object.values(prices.bar_dates).join(' / ')})` : ''}`}
+    <section className="space-y-4">
+      <SectionHeading
+        title="Portfolio — trade backlog"
+        right={
+          <span className="flex flex-wrap items-center gap-3">
+            <span className="text-xs text-muted">
+              {liveAt
+                ? `live prices · ${liveAt}`
+                : `prices from last scan${prices ? ` (${Object.values(prices.bar_dates).join(' / ')})` : ''}`}
+            </span>
+            <button
+              onClick={updatePrices}
+              disabled={updating || positions.length === 0}
+              className={`px-3 py-1.5 text-xs font-medium disabled:opacity-40 ${badgeRing.accent} hover:bg-accent/20`}
+            >
+              {updating ? 'Updating…' : '↻ Update prices'}
+            </button>
           </span>
-          <button
-            onClick={updatePrices}
-            disabled={updating || positions.length === 0}
-            className="rounded-lg bg-sky-500/15 px-3 py-1.5 text-xs font-medium text-sky-300 ring-1 ring-sky-400/25 transition hover:bg-sky-500/25 disabled:opacity-40"
-          >
-            {updating ? 'Updating…' : '↻ Update prices'}
-          </button>
-        </span>
-      </div>
-      {priceNote && <p className="text-xs text-amber-400/90">{priceNote}</p>}
+        }
+      />
+      {priceNote && <p className="text-xs text-accent">{priceNote}</p>}
 
       <div className="flex flex-wrap gap-2.5">
         <Chip label="Open positions" value={positions.length} />
@@ -265,56 +251,56 @@ export default function PortfolioPage() {
       <AddForm />
 
       {positions.length > 0 ? (
-        <div className="overflow-x-auto rounded-xl bg-slate-900/30 ring-1 ring-white/5">
-          <table className="w-full text-left text-sm">
-            <thead className="bg-white/[0.03] text-[11px] font-medium uppercase tracking-wider text-slate-500">
+        <div className={tableWrapCls}>
+          <table className="w-full text-left text-[13px]">
+            <thead className={theadCls}>
               <tr>
-                <th className="px-4 py-2.5">Ticker</th>
-                <th className="px-4 py-2.5 text-right">Shares</th>
-                <th className="px-4 py-2.5 text-right">Avg cost</th>
-                <th className="px-4 py-2.5">Buy date</th>
-                <th className="px-4 py-2.5 text-right">Last close</th>
-                <th className="px-4 py-2.5 text-right">Value</th>
-                <th className="px-4 py-2.5 text-right">P&L</th>
-                <th className="px-4 py-2.5">Actions</th>
+                <th className={cellCls}>Ticker</th>
+                <th className={`${cellCls} text-right`}>Shares</th>
+                <th className={`${cellCls} text-right`}>Avg cost</th>
+                <th className={cellCls}>Buy date</th>
+                <th className={`${cellCls} text-right`}>Last close</th>
+                <th className={`${cellCls} text-right`}>Value</th>
+                <th className={`${cellCls} text-right`}>P&L</th>
+                <th className={cellCls}>Actions</th>
               </tr>
             </thead>
-            <tbody className="tnum divide-y divide-white/5">
+            <tbody className="tnum divide-y divide-hair">
               {positions.map((p) => {
                 const px = priceOf(p.ticker)
                 const value = px !== null ? p.shares * px : null
                 const pnl = value !== null ? value - p.shares * p.avg_cost : null
                 const pnlPct = pnl !== null ? (pnl / (p.shares * p.avg_cost)) * 100 : null
                 return (
-                  <tr key={p.id} className="transition-colors hover:bg-white/[0.03]">
-                    <td className="px-4 py-2.5">
+                  <tr key={p.id} className={rowCls}>
+                    <td className={cellCls}>
                       <a href={tradingViewUrl(p.ticker)} target="_blank" rel="noreferrer"
-                         className="font-semibold text-sky-400 hover:text-sky-300 hover:underline">
+                         className="font-semibold text-accent hover:underline">
                         {p.ticker} ↗
                       </a>
                       <MarketBadge market={p.market} />
                     </td>
-                    <td className="px-4 py-2.5 text-right text-slate-200">{p.shares}</td>
-                    <td className="px-4 py-2.5 text-right text-slate-200">{fmt(p.avg_cost)}</td>
-                    <td className="px-4 py-2.5 text-slate-400">{p.date}</td>
-                    <td className="px-4 py-2.5 text-right text-slate-200">
-                      {px !== null ? fmt(px) : <span className="text-slate-600">n/a</span>}
+                    <td className={`${cellCls} text-right text-ink`}>{p.shares}</td>
+                    <td className={`${cellCls} text-right text-ink`}>{fmt(p.avg_cost)}</td>
+                    <td className={`${cellCls} text-muted`}>{p.date}</td>
+                    <td className={`${cellCls} text-right text-ink`}>
+                      {px !== null ? fmt(px) : <span className="text-faint">n/a</span>}
                     </td>
-                    <td className="px-4 py-2.5 text-right text-slate-200">
+                    <td className={`${cellCls} text-right text-ink`}>
                       {value !== null ? fmt(value) : '—'}
                     </td>
-                    <td className="px-4 py-2.5 text-right">
+                    <td className={`${cellCls} text-right`}>
                       {pnl !== null ? <Pnl value={pnl} pct={pnlPct} /> : '—'}
                     </td>
-                    <td className="px-4 py-2.5">
+                    <td className={cellCls}>
                       {closing === p.id ? (
                         <CloseDialog pos={p} onDone={() => setClosing(null)} />
                       ) : (
                         <span className="flex gap-3 text-xs">
                           <button onClick={() => setClosing(p.id)}
-                                  className="text-emerald-400 hover:underline">sell</button>
+                                  className="text-up hover:underline">sell</button>
                           <button onClick={() => deletePosition(p.id)}
-                                  className="text-slate-500 hover:text-rose-400">delete</button>
+                                  className="text-muted hover:text-down">delete</button>
                         </span>
                       )}
                     </td>
@@ -325,57 +311,57 @@ export default function PortfolioPage() {
           </table>
         </div>
       ) : (
-        <p className="rounded-xl border border-dashed border-white/10 bg-white/[0.01] px-4 py-8 text-center text-sm text-slate-500">
+        <p className="border border-dashed border-hair bg-raised px-4 py-8 text-center text-sm text-muted">
           No open positions — add one above, or from a Buy card on the Buys tab.
         </p>
       )}
 
-      <h3 className="flex items-center gap-2 pt-2 text-sm font-semibold text-slate-200">
-        <span className="h-3.5 w-1 rounded-full bg-slate-500/70" />
+      <h3 className="flex items-center gap-2 pt-2 text-sm font-semibold text-ink">
+        <span className="h-3.5 w-1 bg-muted" />
         Closed trades ({closed.length}) — historic P&L
       </h3>
       <Performance closed={closed} />
       {closed.length > 0 ? (
-        <div className="overflow-x-auto rounded-xl bg-slate-900/30 ring-1 ring-white/5">
-          <table className="w-full text-left text-sm">
-            <thead className="bg-white/[0.03] text-[11px] font-medium uppercase tracking-wider text-slate-500">
+        <div className={tableWrapCls}>
+          <table className="w-full text-left text-[13px]">
+            <thead className={theadCls}>
               <tr>
-                <th className="px-4 py-2.5">Ticker</th>
-                <th className="px-4 py-2.5 text-right">Shares</th>
-                <th className="px-4 py-2.5 text-right">Buy</th>
-                <th className="px-4 py-2.5 text-right">Sell</th>
-                <th className="px-4 py-2.5">Held</th>
-                <th className="px-4 py-2.5 text-right">Realized P&L</th>
-                <th className="px-4 py-2.5" />
+                <th className={cellCls}>Ticker</th>
+                <th className={`${cellCls} text-right`}>Shares</th>
+                <th className={`${cellCls} text-right`}>Buy</th>
+                <th className={`${cellCls} text-right`}>Sell</th>
+                <th className={cellCls}>Held</th>
+                <th className={`${cellCls} text-right`}>Realized P&L</th>
+                <th className={cellCls} />
               </tr>
             </thead>
-            <tbody className="tnum divide-y divide-white/5">
+            <tbody className="tnum divide-y divide-hair">
               {closed.map((t: ClosedTrade) => {
                 const pnl = t.shares * (t.sell_price - t.avg_cost)
                 const pct = ((t.sell_price - t.avg_cost) / t.avg_cost) * 100
                 return (
-                  <tr key={t.id} className="transition-colors hover:bg-white/[0.03]">
-                    <td className="px-4 py-2.5">
+                  <tr key={t.id} className={rowCls}>
+                    <td className={cellCls}>
                       <a href={tradingViewUrl(t.ticker)} target="_blank" rel="noreferrer"
-                         className="font-semibold text-sky-400 hover:underline">{t.ticker} ↗</a>
+                         className="font-semibold text-accent hover:underline">{t.ticker} ↗</a>
                       <MarketBadge market={t.market} />
                     </td>
-                    <td className="px-4 py-2.5 text-right text-slate-200">{t.shares}</td>
-                    <td className="px-4 py-2.5 text-right text-slate-300">
-                      {fmt(t.avg_cost)} <span className="text-xs text-slate-500">{t.date}</span>
+                    <td className={`${cellCls} text-right text-ink`}>{t.shares}</td>
+                    <td className={`${cellCls} text-right text-ink-2`}>
+                      {fmt(t.avg_cost)} <span className="text-xs text-muted">{t.date}</span>
                     </td>
-                    <td className="px-4 py-2.5 text-right text-slate-300">
-                      {fmt(t.sell_price)} <span className="text-xs text-slate-500">{t.sell_date}</span>
+                    <td className={`${cellCls} text-right text-ink-2`}>
+                      {fmt(t.sell_price)} <span className="text-xs text-muted">{t.sell_date}</span>
                     </td>
-                    <td className="px-4 py-2.5 text-slate-400">
+                    <td className={`${cellCls} text-muted`}>
                       {Math.max(1, Math.round(
                         (new Date(t.sell_date).getTime() - new Date(t.date).getTime()) / 86400000,
                       ))}d
                     </td>
-                    <td className="px-4 py-2.5 text-right"><Pnl value={pnl} pct={pct} /></td>
-                    <td className="px-4 py-2.5 text-right">
+                    <td className={`${cellCls} text-right`}><Pnl value={pnl} pct={pct} /></td>
+                    <td className={`${cellCls} text-right`}>
                       <button onClick={() => deleteClosed(t.id)}
-                              className="text-xs text-slate-600 hover:text-rose-400">delete</button>
+                              className="text-xs text-faint hover:text-down">delete</button>
                     </td>
                   </tr>
                 )
@@ -384,10 +370,10 @@ export default function PortfolioPage() {
           </table>
         </div>
       ) : (
-        <p className="text-sm text-slate-500">No closed trades yet — sell a position to log it here.</p>
+        <p className="text-sm text-muted">No closed trades yet — sell a position to log it here.</p>
       )}
 
-      <div className="flex flex-wrap items-center gap-3 border-t border-white/5 pt-3 text-xs text-slate-500">
+      <div className="flex flex-wrap items-center gap-3 border-t border-hair pt-3 text-xs text-muted">
         <button
           onClick={() => {
             const blob = new Blob([exportPortfolio()], { type: 'application/json' })
@@ -397,12 +383,11 @@ export default function PortfolioPage() {
             a.click()
             URL.revokeObjectURL(a.href)
           }}
-          className="rounded-lg bg-white/[0.04] px-3 py-1.5 text-slate-300 ring-1 ring-white/10 hover:text-slate-100"
+          className={btnGhost}
         >
           Export backup
         </button>
-        <button onClick={() => fileRef.current?.click()}
-                className="rounded-lg bg-white/[0.04] px-3 py-1.5 text-slate-300 ring-1 ring-white/10 hover:text-slate-100">
+        <button onClick={() => fileRef.current?.click()} className={btnGhost}>
           Import backup
         </button>
         <input ref={fileRef} type="file" accept="application/json" className="hidden"
