@@ -216,6 +216,8 @@ export interface TrackRecordEntry {
   success: boolean | null
   days_held: number
   status: 'open' | 'matured'
+  target_mean?: number | null
+  target_reached?: boolean | null
 }
 
 export interface TrackRecordData {

@@ -99,8 +99,16 @@ def new_entries_from_history(history: dict) -> list[dict]:
                 "entry_date": date,
                 "entry_price": a["close"],
                 "benchmark": MARKET_BENCHMARK.get(m),
+                # analyst mean target as of the alert day (None if unavailable);
+                # lets the scoreboard flag "🎯 target reached" and measure how
+                # often buys actually get there
+                "target_mean": _target_of(a),
             }
     return list(seen.values())
+
+
+def _target_of(a: dict) -> float | None:
+    return ((a.get("fundamentals") or {}).get("analyst") or {}).get("target_mean")
 
 
 def finalize_seed(seed: dict, benches: dict) -> dict:
@@ -166,6 +174,9 @@ def update_entry(entry: dict, prices: dict, benches: dict, bar_date: str) -> dic
     else:
         e["excess_pct"] = None
         e["success"] = None
+
+    tgt = e.get("target_mean")
+    e["target_reached"] = bool(last_price and tgt and last_price >= tgt) if tgt else None
 
     # bar_date only moves forward in production, so this is never negative; the
     # clamp defends against a backfill run against an older bar than an entry.
@@ -233,6 +244,14 @@ def build(output_dir: Path = DEFAULT_OUTPUT_DIR, prices: dict | None = None,
         benches = _fetch_benches(needed, bar_dates)
 
     entries = merge(existing, seeds, benches)
+
+    # migration: entries tracked before the target_mean field existed get it
+    # filled from history while their alert is still inside the window
+    seed_targets = {s["id"]: s.get("target_mean") for s in seeds}
+    for e in entries:
+        if "target_mean" not in e:
+            e["target_mean"] = seed_targets.get(e["id"])
+
     entries = [update_entry(e, prices, benches, bar_date) for e in entries]
     entries.sort(key=lambda e: e["id"])
     entries = _cap(entries)

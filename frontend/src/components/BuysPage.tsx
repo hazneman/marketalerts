@@ -232,7 +232,9 @@ function QualityBadge({ score }: { score: number }) {
   )
 }
 
-function BuyCard({ a, rank, defaultOpen }: { a: AlertItem; rank: number; defaultOpen: boolean }) {
+function BuyCard({ a, rank, defaultOpen, refire = false }: {
+  a: AlertItem; rank: number; defaultOpen: boolean; refire?: boolean
+}) {
   const f = a.fundamentals
   const [open, setOpen] = useState(defaultOpen)
   const pct = a.values.sma200 ? ((a.close - a.values.sma200) / a.values.sma200) * 100 : null
@@ -259,6 +261,12 @@ function BuyCard({ a, rank, defaultOpen }: { a: AlertItem; rank: number; default
           </a>
           <MarketBadge market={a.market} />
           <QualityBadge score={score} />
+          {refire && (
+            <span className="text-[10px] text-muted"
+                  title="Same signal fired within the last 14 days — possible whipsaw around the SMA">
+              ↩ re-entry
+            </span>
+          )}
           <span className="hidden text-xs text-muted sm:inline">
             {CATEGORY_LABELS[a.category] ?? a.category}
           </span>
@@ -419,7 +427,17 @@ function PriceStructure({ a }: { a: AlertItem }) {
 }
 
 export default function BuysPage() {
-  const { latest, error } = useAlerts()
+  const { latest, history, error } = useAlerts()
+
+  // same ticker+rule alerted within the prior 14 days → tag as re-entry
+  const isRefire = (a: AlertItem): boolean => {
+    if (!history) return false
+    const t = new Date(a.date).getTime()
+    return history.days.some((d) =>
+      d.alerts.some((o) =>
+        o.ticker === a.ticker && o.rule === a.rule && o.date < a.date &&
+        t - new Date(o.date).getTime() <= 14 * 86400000))
+  }
 
   if (error) {
     return (
@@ -449,7 +467,7 @@ export default function BuysPage() {
       {buys.length > 0 ? (
         <div className="space-y-2.5">
           {buys.map(({ a }, i) => (
-            <BuyCard key={`${a.rule}-${a.ticker}`} a={a} rank={i + 1} defaultOpen={false} />
+            <BuyCard key={`${a.rule}-${a.ticker}`} a={a} rank={i + 1} defaultOpen={false} refire={isRefire(a)} />
           ))}
         </div>
       ) : (

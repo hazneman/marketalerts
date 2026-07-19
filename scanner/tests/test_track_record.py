@@ -228,6 +228,48 @@ def test_build_raises_on_unavailable_benchmark(tmp_path, monkeypatch):
         build(tmp_path, prices=PRICES, bar_date="2026-07-17", history=history())  # benches=None → fetch
 
 
+def test_seed_carries_target_and_update_flags_reached():
+    h = {"days": [{"bar_date": "2026-06-15", "alerts": [
+        {"ticker": "AAPL", "rule": "R", "category": "c", "direction": "bullish",
+         "date": "2026-06-15", "close": 195.20, "verdict": "buy",
+         "fundamentals": {"analyst": {"target_mean": 205.0}}}]}]}
+    seeds = new_entries_from_history(h)
+    assert seeds[0]["target_mean"] == 205.0
+    e = finalize_seed(seeds[0], benches())
+    out = update_entry(e, {"AAPL": {"close": 210.50}}, benches(), "2026-07-17")
+    assert out["target_reached"] is True
+    below = update_entry(dict(e), {"AAPL": {"close": 199.0}}, benches(), "2026-07-17")
+    assert below["target_reached"] is False
+
+
+def test_update_entry_no_target_gives_none():
+    h = {"days": [{"bar_date": "2026-06-15", "alerts": [
+        {"ticker": "AAPL", "rule": "R", "category": "c", "direction": "bullish",
+         "date": "2026-06-15", "close": 195.20, "verdict": "buy"}]}]}
+    e = finalize_seed(new_entries_from_history(h)[0], benches())
+    out = update_entry(e, PRICES, benches(), "2026-07-17")
+    assert out["target_reached"] is None
+
+
+def test_build_migrates_target_into_existing_entries(tmp_path):
+    # entry tracked BEFORE the field existed…
+    build(tmp_path, prices=PRICES, bar_date="2026-07-16",
+          benches=benches(), history=history(), now=ts(22))
+    data = json.loads((tmp_path / "track_record.json").read_text())
+    for e in data["entries"]:
+        e.pop("target_mean", None)
+        e.pop("target_reached", None)
+    (tmp_path / "track_record.json").write_text(json.dumps(data))
+    # …gets the field filled on the next run while still in the history window
+    h2 = history()
+    h2["days"][0]["alerts"][0]["fundamentals"] = {"analyst": {"target_mean": 205.0}}
+    d = build(tmp_path, prices=PRICES, bar_date="2026-07-17",
+              benches=benches(), history=h2, now=ts(23))
+    aapl = next(e for e in d["entries"] if e["ticker"] == "AAPL")
+    assert aapl["target_mean"] == 205.0
+    assert aapl["target_reached"] is True  # 210.50 >= 205
+
+
 def test_fetch_benches_aligns_last_close_to_bar_date(monkeypatch):
     # index has a later (still-forming) bar than the scan's bar_date; last_close
     # must anchor to the bar_date's close, not the latest bar.

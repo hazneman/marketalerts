@@ -22,6 +22,25 @@ function Pct({ v, dp = 2 }: { v: number | null | undefined; dp?: number }) {
 const mean = (xs: number[]) => (xs.length ? xs.reduce((a, b) => a + b, 0) / xs.length : 0)
 const num = (v: number | null | undefined) => (v === null || v === undefined ? NaN : v)
 
+// Entries younger than this have no meaningful result yet — shown as "pending"
+// and excluded from the hit-rate/average chips.
+const SEASONED_DAYS = 2
+const seasoned = (e: TrackRecordEntry) => e.days_held >= SEASONED_DAYS && e.excess_pct !== null
+
+// Same ticker+rule fired again within this window → tag the later one "re-entry"
+const REFIRE_DAYS = 14
+function refireIds(entries: TrackRecordEntry[]): Set<string> {
+  const out = new Set<string>()
+  const day = 86400000
+  for (const e of entries) {
+    const t = new Date(e.entry_date).getTime()
+    if (entries.some((o) => o.ticker === e.ticker && o.rule === e.rule &&
+        o.entry_date < e.entry_date && t - new Date(o.entry_date).getTime() <= REFIRE_DAYS * day))
+      out.add(e.id)
+  }
+  return out
+}
+
 type SortKey = 'excess_pct' | 'stock_return_pct' | 'entry_date' | 'days_held' | 'ticker'
 type ResultFilter = 'all' | 'beat' | 'lag'
 
@@ -79,11 +98,14 @@ export default function TrackRecordPage() {
             ...[...known, ...rest].map((c) => ({ value: c, label: CATEGORY_LABELS[c] ?? c }))]
   }, [entries])
 
+  const refires = useMemo(() => refireIds(entries), [entries])
+
   const rows = useMemo(() => {
     const filtered = entries.filter(
       (e) =>
         (category === 'all' || e.category === category) &&
-        (result === 'all' || (result === 'beat' ? e.success === true : e.success === false)),
+        (result === 'all' ||
+          (result === 'beat' ? e.success === true && seasoned(e) : e.success === false && seasoned(e))),
     )
     const keyed = (e: TrackRecordEntry) =>
       sort.key === 'ticker' ? e.ticker : sort.key === 'entry_date' ? e.entry_date : num(e[sort.key])
@@ -104,12 +126,14 @@ export default function TrackRecordPage() {
   }
   if (!track) return <p className="py-8 text-center text-muted">Loading…</p>
 
-  const scored = entries.filter((e) => e.excess_pct !== null)
-  const beat = entries.filter((e) => e.success === true).length
+  const scored = entries.filter(seasoned)
+  const pending = entries.length - scored.length
+  const beat = scored.filter((e) => e.success === true).length
   const hitRate = scored.length ? (beat / scored.length) * 100 : 0
   const avgExcess = mean(scored.map((e) => e.excess_pct as number))
-  const avgReturn = mean(entries.filter((e) => e.stock_return_pct !== null).map((e) => e.stock_return_pct as number))
-  const avgDays = mean(entries.map((e) => e.days_held))
+  const avgReturn = mean(scored.map((e) => e.stock_return_pct as number))
+  const avgDays = mean(scored.map((e) => e.days_held))
+  const targetsHit = entries.filter((e) => e.target_reached === true).length
   const ranked = [...scored].sort((a, b) => (b.excess_pct as number) - (a.excess_pct as number))
   const best = ranked[0]
   const worst = ranked[ranked.length - 1]
@@ -126,14 +150,19 @@ export default function TrackRecordPage() {
       />
 
       <div className="flex flex-wrap gap-2.5">
-        <Chip label="Tracked" value={entries.length} />
+        <Chip label="Tracked" value={pending > 0 ? `${entries.length} (${pending} pending)` : entries.length} />
         <Chip label="Beat benchmark" value={`${hitRate.toFixed(0)}%`}
-              tone={hitRate >= 50 ? 'up' : 'down'} />
+              tone={hitRate >= 50 ? 'up' : 'down'}
+              title={`${beat} of ${scored.length} seasoned entries (held ≥${SEASONED_DAYS}d)`} />
         <Chip label="Avg excess" value={`${avgExcess >= 0 ? '+' : ''}${avgExcess.toFixed(2)}pp`}
               tone={avgExcess >= 0 ? 'up' : 'down'} />
         <Chip label="Avg return" value={`${avgReturn >= 0 ? '+' : ''}${avgReturn.toFixed(1)}%`}
               tone={avgReturn >= 0 ? 'up' : 'down'} />
         <Chip label="Avg held" value={`${avgDays.toFixed(0)}d`} />
+        {targetsHit > 0 && (
+          <Chip label="🎯 targets hit" value={targetsHit}
+                title="Entries whose price reached the analyst mean target from their alert day" />
+        )}
         {best && (
           <Chip label="Best" value={`${best.ticker} ${best.excess_pct! >= 0 ? '+' : ''}${best.excess_pct!.toFixed(1)}`}
                 tone="up" />
@@ -174,6 +203,12 @@ export default function TrackRecordPage() {
                     <a href={tradingViewUrl(e.ticker)} target="_blank" rel="noreferrer"
                        className="font-semibold text-info hover:underline">{e.ticker} ↗</a>
                     <MarketBadge market={e.market} />
+                    {refires.has(e.id) && (
+                      <span className="ml-1.5 text-[10px] text-muted"
+                            title={`Same signal re-fired within ${REFIRE_DAYS} days — possible whipsaw`}>
+                        ↩ re-entry
+                      </span>
+                    )}
                   </td>
                   <td className={`${cellCls} text-xs text-muted`}>{CATEGORY_LABELS[e.category] ?? e.category}</td>
                   <td className={`${cellCls} text-xs text-muted`}>
@@ -187,6 +222,10 @@ export default function TrackRecordPage() {
                     {e.last_price !== null
                       ? (e.last_price >= 10 ? e.last_price.toFixed(2) : e.last_price.toFixed(4))
                       : <span className="text-faint">n/a</span>}
+                    {e.target_reached && (
+                      <span className="ml-1 cursor-help"
+                            title={`Analyst mean target reached (${e.target_mean})`}>🎯</span>
+                    )}
                   </td>
                   <td className={`${cellCls} text-right`}><Pct v={e.stock_return_pct} /></td>
                   <td className={`${cellCls} text-right`}><Pct v={e.bench_return_pct} /></td>
@@ -197,6 +236,10 @@ export default function TrackRecordPage() {
                   <td className={cellCls}>
                     {e.success === null ? (
                       <span className="text-faint">—</span>
+                    ) : !seasoned(e) ? (
+                      <Badge tone="neutral" title={`Held <${SEASONED_DAYS} days — too new to judge`}>
+                        pending
+                      </Badge>
                     ) : e.success ? (
                       <Badge tone="up">✓ beat</Badge>
                     ) : (
@@ -219,7 +262,11 @@ export default function TrackRecordPage() {
         tracked forward. <span className="text-ink-2">Excess</span> = the stock's return since the
         alert minus its own market index over the same window (US → S&P 500, DE → DAX, BIST → BIST 100
         — same currency as the stock, so no FX distortion); a signal <span className="text-ink-2">beats</span>
-        its market when excess is positive. Entries evaluate over ~180 days, then freeze (·done).
+        its market when excess is positive. Entries held under {SEASONED_DAYS} days show{' '}
+        <span className="text-ink-2">pending</span> and are excluded from the headline stats;
+        🎯 marks a price that reached the analyst mean target from its alert day; ↩ marks a
+        signal that re-fired within {REFIRE_DAYS} days (possible whipsaw). Entries evaluate over
+        ~180 days, then freeze (·done).
         Prices are split- but not dividend-adjusted (TradingView parity), so long-window returns on
         high-yield names read slightly low. Informational, not investment advice.
       </p>
