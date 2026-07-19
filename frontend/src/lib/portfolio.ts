@@ -10,6 +10,8 @@ export interface Position {
   avg_cost: number
   date: string // YYYY-MM-DD buy date
   added_from?: string // rule that triggered the buy, for the backlog story
+  target_mean?: number // analyst mean target captured at add time (Buy-card adds)
+  target_as_of?: string // date the target was captured — targets go stale
 }
 
 export interface ClosedTrade extends Position {

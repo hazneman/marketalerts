@@ -1,5 +1,7 @@
 import { useRef, useState } from 'react'
-import { usePortfolio, usePrices } from '../hooks/useAlerts'
+import { useAlerts, usePortfolio, usePrices } from '../hooks/useAlerts'
+import { CATEGORY_LABELS } from '../types'
+import DirectionBadge from './DirectionBadge'
 import {
   addPosition, closePosition, deleteClosed, deletePosition,
   exportPortfolio, importPortfolio, type ClosedTrade, type Position,
@@ -165,6 +167,7 @@ function Performance({ closed }: { closed: ClosedTrade[] }) {
 export default function PortfolioPage() {
   const { positions, closed } = usePortfolio()
   const prices = usePrices()
+  const { latest } = useAlerts()
   const [closing, setClosing] = useState<string | null>(null)
   const fileRef = useRef<HTMLInputElement>(null)
   const [live, setLive] = useState<Record<string, number> | null>(null)
@@ -215,6 +218,14 @@ export default function PortfolioPage() {
     .reduce((s, p) => s + p.shares * p.avg_cost, 0))
   const realized = closed.reduce((s, t) => s + t.shares * (t.sell_price - t.avg_cost), 0)
 
+  // Today's warning-side signals on stocks you actually hold: bearish crosses
+  // and the RSI>75 take-profit alert matter MORE once you own the name.
+  const heldTickers = new Set(positions.map((p) => p.ticker))
+  const holdingSignals = (latest?.alerts ?? []).filter(
+    (a) => heldTickers.has(a.ticker) &&
+           (a.direction === 'bearish' || a.category === 'rsi_extended'),
+  )
+
   return (
     <section className="space-y-4">
       <SectionHeading
@@ -248,6 +259,25 @@ export default function PortfolioPage() {
               tone={realized >= 0 ? 'up' : 'down'} />
       </div>
 
+      {holdingSignals.length > 0 && (
+        <div className="bg-down/[0.06] p-3 ring-1 ring-down/20">
+          <div className="mb-1.5 text-sm font-medium text-down">
+            ⚠ Signals on your holdings — {latest?.bar_date}
+          </div>
+          <div className="flex flex-wrap gap-2">
+            {holdingSignals.map((a) => (
+              <span key={`${a.rule}-${a.ticker}`}
+                    title={a.verdict_reason}
+                    className="tnum flex items-center gap-2 bg-raised px-2.5 py-1 text-xs text-ink-2 ring-1 ring-hair">
+                <span className="font-semibold text-ink">{a.ticker}</span>
+                <DirectionBadge direction={a.direction} />
+                {CATEGORY_LABELS[a.category] ?? a.category}
+              </span>
+            ))}
+          </div>
+        </div>
+      )}
+
       <AddForm />
 
       {positions.length > 0 ? (
@@ -260,6 +290,7 @@ export default function PortfolioPage() {
                 <th className={`${cellCls} text-right`}>Avg cost</th>
                 <th className={cellCls}>Buy date</th>
                 <th className={`${cellCls} text-right`}>Last close</th>
+                <th className={`${cellCls} text-right`}>Target</th>
                 <th className={`${cellCls} text-right`}>Value</th>
                 <th className={`${cellCls} text-right`}>P&L</th>
                 <th className={cellCls}>Actions</th>
@@ -285,6 +316,26 @@ export default function PortfolioPage() {
                     <td className={`${cellCls} text-muted`}>{p.date}</td>
                     <td className={`${cellCls} text-right text-ink`}>
                       {px !== null ? fmt(px) : <span className="text-faint">n/a</span>}
+                    </td>
+                    <td className={`${cellCls} text-right`}>
+                      {p.target_mean && px !== null ? (
+                        px >= p.target_mean ? (
+                          <span className="cursor-help text-up"
+                                title={`Analyst mean target ${fmt(p.target_mean)} reached (as of ${p.target_as_of ?? 'add date'})`}>
+                            🎯 {fmt(p.target_mean)}
+                          </span>
+                        ) : (
+                          <span className="cursor-help text-ink-2"
+                                title={`Analyst mean target as of ${p.target_as_of ?? 'add date'}`}>
+                            {fmt(p.target_mean)}
+                            <span className="ml-1 text-xs text-muted">
+                              (+{((p.target_mean / px - 1) * 100).toFixed(1)}%)
+                            </span>
+                          </span>
+                        )
+                      ) : (
+                        <span className="text-faint">—</span>
+                      )}
                     </td>
                     <td className={`${cellCls} text-right text-ink`}>
                       {value !== null ? fmt(value) : '—'}

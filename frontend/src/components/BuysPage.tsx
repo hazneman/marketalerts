@@ -45,9 +45,11 @@ function AddToPortfolio({ a }: { a: AlertItem }) {
       <button
         disabled={!(Number(shares) > 0 && Number(cost) > 0 && date)}
         onClick={() => {
+          const target = a.fundamentals?.analyst?.target_mean
           addPosition({
             ticker: a.ticker, market: a.market, shares: Number(shares),
             avg_cost: Number(cost), date, added_from: a.rule,
+            ...(target ? { target_mean: target, target_as_of: a.date } : {}),
           })
           setOpen(false)
         }}
@@ -428,6 +430,8 @@ function PriceStructure({ a }: { a: AlertItem }) {
 
 export default function BuysPage() {
   const { latest, history, error } = useAlerts()
+  const { positions } = usePortfolio()
+  const [showHeld, setShowHeld] = useState(false)
 
   // same ticker+rule alerted within the prior 14 days → tag as re-entry
   const isRefire = (a: AlertItem): boolean => {
@@ -448,10 +452,14 @@ export default function BuysPage() {
   }
   if (!latest) return <p className="py-8 text-center text-muted">Loading…</p>
 
-  const buys = latest.alerts
+  const held = new Set(positions.map((p) => p.ticker))
+  const all = latest.alerts
     .filter((a) => a.verdict === 'buy')
     .map((a) => ({ a, score: qualityScore(a) }))
     .sort((x, y) => y.score - x.score)
+  // stocks you already own aren't fresh opportunities — group them separately
+  const buys = all.filter(({ a }) => !held.has(a.ticker))
+  const heldBuys = all.filter(({ a }) => held.has(a.ticker))
 
   return (
     <section className="space-y-4">
@@ -459,7 +467,7 @@ export default function BuysPage() {
         title={`BUY verdicts — ${latest.bar_date} · ranked by quality`}
         right={
           <span className="text-sm text-muted">
-            {buys.length} of {latest.alerts.length} alerts passed all three layers
+            {all.length} of {latest.alerts.length} alerts passed all three layers
           </span>
         }
       />
@@ -472,8 +480,27 @@ export default function BuysPage() {
         </div>
       ) : (
         <p className="border border-dashed border-hair bg-raised px-4 py-8 text-center text-sm text-muted">
-          No BUY verdicts on {latest.bar_date} — signal, MACD, and fundamentals did not align on any name.
+          {all.length > 0
+            ? `All ${all.length} BUY verdicts on ${latest.bar_date} are stocks you already hold (below).`
+            : `No BUY verdicts on ${latest.bar_date} — signal, MACD, and fundamentals did not align on any name.`}
         </p>
+      )}
+
+      {heldBuys.length > 0 && (
+        <div className="space-y-2.5">
+          <button
+            onClick={() => setShowHeld(!showHeld)}
+            className="flex items-center gap-2 text-sm text-muted transition-colors hover:text-ink"
+          >
+            <span className={`transition-transform ${showHeld ? 'rotate-90' : ''}`}>▸</span>
+            Already held ({heldBuys.length}) — re-confirming signals on stocks in your portfolio
+          </button>
+          {showHeld &&
+            heldBuys.map(({ a }, i) => (
+              <BuyCard key={`held-${a.rule}-${a.ticker}`} a={a} rank={buys.length + i + 1}
+                       defaultOpen={false} refire={isRefire(a)} />
+            ))}
+        </div>
       )}
 
       <p className="text-xs text-muted">
