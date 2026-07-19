@@ -228,6 +228,12 @@ export interface TrackRecordData {
   entries: TrackRecordEntry[]
 }
 
+export interface TargetsData {
+  schema_version: number
+  generated_at: string
+  targets: Record<string, { target_mean: number | null; n_analysts?: number; as_of: string }>
+}
+
 // Short label for a benchmark index symbol (shown as "vs DAX" etc.)
 export const BENCHMARK_LABELS: Record<string, string> = {
   SPY: 'S&P 500',

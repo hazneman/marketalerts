@@ -1,6 +1,6 @@
 import { useRef, useState } from 'react'
-import { useAlerts, usePortfolio, usePrices, useTrackRecord } from '../hooks/useAlerts'
-import { CATEGORY_LABELS, type AlertHistory, type TrackRecordData } from '../types'
+import { useAlerts, usePortfolio, usePrices, useTargets, useTrackRecord } from '../hooks/useAlerts'
+import { CATEGORY_LABELS, type AlertHistory, type TargetsData, type TrackRecordData } from '../types'
 import DirectionBadge from './DirectionBadge'
 import {
   addPosition, closePosition, deleteClosed, deletePosition,
@@ -84,14 +84,22 @@ function AddForm() {
 }
 
 // Best-known analyst mean target for a position: stored on the position
-// (Buy-card add or manual edit) → else the ticker's most recent tracked BUY →
-// else its most recent alert in the 30-day history (any verdict carries
-// fundamentals). Display-only resolution; editing stores it explicitly.
+// (Buy-card add or manual edit) → else the rolling universe cache
+// (targets.json, ≤~1 week old, covers all scanned tickers) → else the
+// ticker's most recent tracked BUY → else its most recent alert in the
+// 30-day history. Display-only resolution; editing stores it explicitly.
 function resolveTarget(
-  p: Position, track: TrackRecordData | null, history: AlertHistory | null,
+  p: Position, targets: TargetsData | null,
+  track: TrackRecordData | null, history: AlertHistory | null,
 ): { value: number; asOf: string; source: string } | null {
   if (p.target_mean)
     return { value: p.target_mean, asOf: p.target_as_of ?? p.date, source: 'saved on position' }
+  const cached = targets?.targets[p.ticker]
+  if (cached?.target_mean)
+    return {
+      value: cached.target_mean, asOf: cached.as_of,
+      source: cached.n_analysts ? `consensus of ${cached.n_analysts} analysts` : 'analyst consensus',
+    }
   const tracked = (track?.entries ?? [])
     .filter((e) => e.ticker === p.ticker && e.target_mean)
     .sort((a, b) => b.entry_date.localeCompare(a.entry_date))[0]
@@ -106,13 +114,13 @@ function resolveTarget(
   return null
 }
 
-function TargetCell({ p, px, track, history }: {
-  p: Position; px: number | null
+function TargetCell({ p, px, targets, track, history }: {
+  p: Position; px: number | null; targets: TargetsData | null
   track: TrackRecordData | null; history: AlertHistory | null
 }) {
   const [editing, setEditing] = useState(false)
   const [val, setVal] = useState('')
-  const resolved = resolveTarget(p, track, history)
+  const resolved = resolveTarget(p, targets, track, history)
 
   if (editing) {
     return (
@@ -249,6 +257,7 @@ export default function PortfolioPage() {
   const prices = usePrices()
   const { latest, history } = useAlerts()
   const { track } = useTrackRecord()
+  const targets = useTargets()
   const [closing, setClosing] = useState<string | null>(null)
   const fileRef = useRef<HTMLInputElement>(null)
   const [live, setLive] = useState<Record<string, number> | null>(null)
@@ -399,7 +408,7 @@ export default function PortfolioPage() {
                       {px !== null ? fmt(px) : <span className="text-faint">n/a</span>}
                     </td>
                     <td className={`${cellCls} text-right`}>
-                      <TargetCell p={p} px={px} track={track} history={history} />
+                      <TargetCell p={p} px={px} targets={targets} track={track} history={history} />
                     </td>
                     <td className={`${cellCls} text-right text-ink`}>
                       {value !== null ? fmt(value) : '—'}

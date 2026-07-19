@@ -228,6 +228,16 @@ def main(argv: list[str] | None = None) -> int:
     except Exception as exc:
         logger.warning("track_record build failed (%s) — keeping previous track_record.json", exc)
 
+    # Rolling analyst-target cache rides along: refreshes the stalest ~130
+    # tickers each run so every universe ticker's target stays <~1 week old.
+    try:
+        from targets import build as build_targets
+        tg = build_targets(args.output_dir, bar_date=bar_date)
+        logger.info("targets: %d cached (%d refreshed)",
+                    len(tg["targets"]), tg["_refreshed"])
+    except Exception as exc:
+        logger.warning("targets build failed (%s) — keeping previous targets.json", exc)
+
     # Forex snapshot rides along (sectors already built above for the verdict);
     # its failure must never sink the stock scan — it keeps its previous JSON.
     try:

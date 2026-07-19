@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { loadPortfolio, subscribe, type PortfolioStore } from '../lib/portfolio'
-import type { AlertHistory, ForexData, PricesData, ScanResult, SectorData, TrackRecordData } from '../types'
+import type { AlertHistory, ForexData, PricesData, ScanResult, SectorData, TargetsData, TrackRecordData } from '../types'
 
 async function fetchJson<T>(path: string): Promise<T> {
   const res = await fetch(`${path}?t=${Date.now()}`)
@@ -53,6 +53,16 @@ export function useTrackRecord() {
   }, [])
 
   return { track, error }
+}
+
+export function useTargets() {
+  const [targets, setTargets] = useState<TargetsData | null>(null)
+
+  useEffect(() => {
+    fetchJson<TargetsData>('/data/targets.json').then(setTargets).catch(() => setTargets(null))
+  }, [])
+
+  return targets
 }
 
 export function usePrices() {
