@@ -1,5 +1,5 @@
 {
- "bar_date": "2026-07-18",
+ "bar_date": "2026-07-19",
  "currencies": [
   {
    "bank": "Federal Reserve",
@@ -54,9 +54,9 @@
    "suggestion": "Neutral carry, positive trend",
    "vs_usd": {
     "above_sma200": true,
-    "chg_1m_pct": 1.14,
+    "chg_1m_pct": 1.9,
     "price": 1.34524,
-    "sma200": 1.33964
+    "sma200": 1.33968
    }
   },
   {
@@ -180,13 +180,13 @@
    "suggestion": "Positive carry but weakening \u2014 carry at risk",
    "vs_usd": {
     "above_sma200": false,
-    "chg_1m_pct": -1.48,
+    "chg_1m_pct": -1.52,
     "price": 0.02121,
-    "sma200": 0.02271
+    "sma200": 0.02269
    }
   }
  ],
- "generated_at": "2026-07-18T10:18:29Z",
+ "generated_at": "2026-07-19T18:45:28Z",
  "outlook_as_of": "2026-07-06",
  "pair_alerts": [],
  "pairs": [
@@ -205,10 +205,10 @@
    "above_sma200": true,
    "alignment": "trend_only",
    "carry_pct": -0.25,
-   "chg_1m_pct": 1.14,
+   "chg_1m_pct": 1.9,
    "comment": "Flat rate balance \u2014 trend is the whole story (up)",
    "price": 1.34524,
-   "sma200": 1.33964,
+   "sma200": 1.33968,
    "symbol": "GBPUSD",
    "vs_sma200_pct": 0.42
   },
@@ -304,12 +304,12 @@
    "above_sma200": true,
    "alignment": "conflict",
    "carry_pct": -34.0,
-   "chg_1m_pct": 1.5,
+   "chg_1m_pct": 1.55,
    "comment": "Uptrend despite negative carry \u2014 momentum outrunning rates",
    "price": 47.1374,
-   "sma200": 44.09261,
+   "sma200": 44.11946,
    "symbol": "USDTRY",
-   "vs_sma200_pct": 6.91
+   "vs_sma200_pct": 6.84
   }
  ],
  "rates_as_of": "2026-01-28",

@@ -589,9 +589,9 @@
        "consensus": "buy",
        "n_analysts": 9,
        "price": 133.24,
-       "target_high": 170.0,
+       "target_high": 175.0,
        "target_low": 123.0,
-       "target_mean": 147.56
+       "target_mean": 152.56
       },
       "factors": {
        "analyst": 1,
@@ -605,7 +605,7 @@
        "fcf_yield_pct": 5.2,
        "forward_pe": 11.3,
        "rec_mean": 1.8,
-       "target_upside_pct": 10.7
+       "target_upside_pct": 14.5
       },
       "rating": "strong",
       "rating_changes": [
@@ -763,13 +763,11 @@
       "factors": {
        "analyst": 0,
        "earnings_growth": 0,
-       "fcf_yield": -1,
        "target_upside": 0,
        "valuation": 0
       },
       "metrics": {
        "earnings_growth_pct": 8.9,
-       "fcf_yield_pct": -9.5,
        "forward_pe": 17.6,
        "rec_mean": 2.2,
        "target_upside_pct": 9.9
@@ -812,7 +810,7 @@
         "to_grade": "Buy"
        }
       ],
-      "score": -1,
+      "score": 0,
       "sector": "Utilities"
      },
      "macd_confirms": true,
@@ -929,12 +927,10 @@
       },
       "factors": {
        "analyst": 1,
-       "fcf_yield": 0,
        "target_upside": 0,
        "valuation": 1
       },
       "metrics": {
-       "fcf_yield_pct": 3.0,
        "forward_pe": 14.3,
        "rec_mean": 1.9,
        "target_upside_pct": 13.9
@@ -1095,13 +1091,11 @@
       "factors": {
        "analyst": 0,
        "earnings_growth": -1,
-       "fcf_yield": 1,
        "target_upside": 0,
        "valuation": 1
       },
       "metrics": {
        "earnings_growth_pct": -13.2,
-       "fcf_yield_pct": 6.8,
        "forward_pe": 12.4,
        "rec_mean": 2.5,
        "target_upside_pct": 12.5
@@ -1144,7 +1138,7 @@
         "to_grade": "Buy"
        }
       ],
-      "score": 1,
+      "score": 0,
       "sector": "Consumer Cyclical"
      },
      "macd_confirms": true,
@@ -1429,13 +1423,11 @@
       "factors": {
        "analyst": 1,
        "earnings_growth": -1,
-       "fcf_yield": 1,
        "target_upside": 1,
        "valuation": 1
       },
       "metrics": {
        "earnings_growth_pct": -15.8,
-       "fcf_yield_pct": 32.8,
        "forward_pe": 5.4,
        "rec_mean": 1.9,
        "target_upside_pct": 26.0
@@ -1478,7 +1470,7 @@
         "to_grade": "Buy"
        }
       ],
-      "score": 3,
+      "score": 2,
       "sector": "Consumer Cyclical"
      },
      "macd_confirms": false,
@@ -2594,13 +2586,11 @@
       "factors": {
        "analyst": 0,
        "earnings_growth": 1,
-       "fcf_yield": 1,
        "target_upside": 0,
        "valuation": 1
       },
       "metrics": {
        "earnings_growth_pct": 26.0,
-       "fcf_yield_pct": 12.1,
        "forward_pe": 14.9,
        "rec_mean": 3.4,
        "target_upside_pct": -4.6
@@ -2643,7 +2633,7 @@
         "to_grade": "Neutral"
        }
       ],
-      "score": 3,
+      "score": 2,
       "sector": "Financial Services"
      },
      "macd_confirms": false,
@@ -3629,7 +3619,7 @@
        "price": 126.91,
        "target_high": 184.0,
        "target_low": 114.0,
-       "target_mean": 140.8
+       "target_mean": 139.75
       },
       "factors": {
        "analyst": 1,
@@ -3641,7 +3631,7 @@
        "earnings_growth_pct": 3.9,
        "forward_pe": 17.0,
        "rec_mean": 2.0,
-       "target_upside_pct": 10.9
+       "target_upside_pct": 10.1
       },
       "rating": "neutral",
       "rating_changes": [
@@ -4124,7 +4114,7 @@
        "price": 393.82,
        "target_high": 870.0,
        "target_low": 400.0,
-       "target_mean": 558.66
+       "target_mean": 558.21
       },
       "factors": {
        "analyst": 1,
@@ -4138,7 +4128,7 @@
        "fcf_yield_pct": 1.3,
        "forward_pe": 20.3,
        "rec_mean": 1.3,
-       "target_upside_pct": 41.9
+       "target_upside_pct": 41.7
       },
       "rating": "strong",
       "rating_changes": [
@@ -4301,8 +4291,8 @@
        "valuation": 0
       },
       "metrics": {
-       "earnings_growth_pct": 11.3,
-       "fcf_yield_pct": 8.9,
+       "earnings_growth_pct": 11.1,
+       "fcf_yield_pct": 8.7,
        "forward_pe": 18.1,
        "rec_mean": 1.7,
        "target_upside_pct": 42.0
@@ -4797,13 +4787,11 @@
       "factors": {
        "analyst": 1,
        "earnings_growth": 1,
-       "fcf_yield": 0,
        "target_upside": 0,
        "valuation": 0
       },
       "metrics": {
        "earnings_growth_pct": 11.3,
-       "fcf_yield_pct": 2.8,
        "forward_pe": 19.5,
        "rec_mean": 1.6,
        "target_upside_pct": 11.0
@@ -5261,7 +5249,7 @@
       },
       "metrics": {
        "earnings_growth_pct": 57.1,
-       "fcf_yield_pct": 19.0,
+       "fcf_yield_pct": 18.8,
        "forward_pe": 12.7,
        "rec_mean": 2.8,
        "target_upside_pct": -8.8
@@ -5423,13 +5411,11 @@
       "factors": {
        "analyst": 0,
        "earnings_growth": 0,
-       "fcf_yield": -1,
        "target_upside": 0,
        "valuation": 0
       },
       "metrics": {
        "earnings_growth_pct": 8.9,
-       "fcf_yield_pct": -9.5,
        "forward_pe": 17.6,
        "rec_mean": 2.2,
        "target_upside_pct": 9.9
@@ -5472,7 +5458,7 @@
         "to_grade": "Buy"
        }
       ],
-      "score": -1,
+      "score": 0,
       "sector": "Utilities"
      },
      "macd_confirms": true,
@@ -5591,13 +5577,11 @@
       "factors": {
        "analyst": 0,
        "earnings_growth": -1,
-       "fcf_yield": 0,
        "target_upside": 0,
        "valuation": 0
       },
       "metrics": {
        "earnings_growth_pct": -5.1,
-       "fcf_yield_pct": 3.4,
        "forward_pe": 16.3,
        "rec_mean": 2.6,
        "target_upside_pct": 5.8
@@ -5836,7 +5820,7 @@
     }
    ],
    "bar_date": "2026-07-17",
-   "generated_at": "2026-07-18T10:18:22Z",
+   "generated_at": "2026-07-19T18:45:24Z",
    "scanned": 624
   },
   {
