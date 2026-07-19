@@ -83,13 +83,24 @@ Pipeline per daily run (`scan.py`):
    previous file kept). Byte-stability hinges on `days_held`/benchmark closes
    deriving from the scan **bar_date**, never `now()` — and the benchmark's
    "last close" is anchored to each market's bar_date (nearest-prior), so it's
-   immune to an intraday-forming bar when backfilling.
+   immune to an intraday-forming bar when backfilling. Entries also freeze the
+   analyst mean target from their alert day (`target_mean`) and flag
+   `target_reached`.
+10. Alert archive (`archive.py` → `archive/alerts.jsonl`, repo root — NOT
+   served): every alert ever fired with full entry context, one JSON line per
+   event, forever (history.json rolls off at 30 days). Same history-ingestion
+   pattern as track_record (backfill/daily/self-heal in one path); the OLDEST
+   occurrence of a re-scanned event wins (context closest to entry day);
+   byte-stable. Feeds the verifier lab.
 
 ## Frontend (frontend/src/) — 6 tabs
 
 - **Stocks** — alert categories with market filter (US/DE/BIST badges),
   per-market bar-date chips, nearest-daily-Fib + volume columns, verdict badges.
-- **Buys** — BUY verdicts as a **collapsed ranked list** sorted by
+- **Buys** — stocks already in the portfolio are grouped into a collapsed
+  "Already held" section (fresh opportunities only in the main list); ↩
+  re-entry tags on signals that re-fired within 14d. BUY verdicts as a
+  **collapsed ranked list** sorted by
   `qualityScore()` (BuysPage.tsx): display-only confluence score — base 3;
   fundamentals strong +2/neutral +1; sector leading +1.5/improving +0.5/
   weakening −0.25/lagging −0.5 (US-only → non-US max 8.5/10); volume ≥2× +1.5/
@@ -105,6 +116,9 @@ Pipeline per daily run (`scan.py`):
   market index (`TrackRecordPage`, `useTrackRecord`, from `track_record.json`):
   aggregate hit-rate/excess Chips + a sortable, filterable (category/result)
   table (entry, current, return, bench, excess, held, ✓ beat / ✗ lag).
+  Honesty rules: entries held <2d show **pending** and are excluded from the
+  headline chips; ↩ re-entry = same ticker+rule re-fired within 14d; 🎯 =
+  analyst mean target (frozen at entry) reached.
 - **Forex** — rates/outlook table, pairs board, pair signals.
 - **Portfolio** — trade backlog in **browser localStorage only** (key
   `market-alerts-portfolio-v1`; export/import JSON backup). Open positions
@@ -112,7 +126,10 @@ Pipeline per daily run (`scan.py`):
   Netlify function `frontend/netlify/functions/quotes.js` (Yahoo v8 chart
   proxy — the stack's only serverless piece; graceful fallback in local dev).
   Sell flow → closed-trades log with historic P&L (win rate, avg win/loss,
-  best/worst, cumulative realized-P&L sparkline).
+  best/worst, cumulative realized-P&L sparkline). Buy-card adds capture the
+  analyst mean target (`Position.target_mean`/`target_as_of`) → Target column
+  with distance-to-target + 🎯 when reached; a "⚠ Signals on your holdings"
+  strip surfaces today's bearish/RSI-trim alerts on held tickers.
 
 Shared conventions: `lib/tradingview.ts` maps `.IS→BIST:` / `.DE→XETR:`;
 `tnum` class for tabular numerals; hooks in `hooks/useAlerts.ts`; types in
@@ -159,6 +176,14 @@ two-window validation. Tools: `backtest.py` (event study), `strategy_backtest.py
 (sector factor did; Fib/volume are display-only pending backtests). The Buys
 quality score is presentational and may use unbacktested context — that's the
 deliberate boundary.
+
+**Verifier lab** (`scanner/verifier_lab.py` → `docs/VERIFIERS.md`): candidate
+BUY filters are measured counterfactually against the live track record —
+NOTHING is blocked in production. A gate graduates only on a favorable live
+exchange rate over months PLUS two-window backtest validation. First finding
+(Jul 2026): the "extension" gate looked great over one live week and was then
+REFUTED by a 2y event study (710 crosses, no edge) — patterns flip; trust the
+process, not a week.
 
 ## Workflow / operations
 

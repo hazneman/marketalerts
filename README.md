@@ -68,7 +68,11 @@ shares / avg cost / date, prefilled from the alert) or manually on the
 Portfolio tab. Open positions are valued against `prices.json` (latest close
 for every scanned ticker, written by the daily scan) with unrealized P&L;
 selling a position logs it as a closed trade with realized P&L and holding
-period. **Storage: this browser's localStorage only** — holdings never leave
+period. Positions added from a Buy card remember the **analyst mean target**
+(shown with distance; 🎯 when reached), and a **"⚠ Signals on your holdings"**
+strip surfaces any bearish or take-profit alert firing on a stock you own.
+Stocks you hold no longer appear as fresh BUY suggestions — they collapse into
+an "Already held" group on the Buys tab. **Storage: this browser's localStorage only** — holdings never leave
 your machine; use Export/Import backup to move browsers or protect against
 cleared browser data.
 
@@ -82,8 +86,10 @@ currency as the stock, so the comparison has no FX distortion). A signal **beats
 its market** when that excess return is positive. The page shows an aggregate
 hit-rate (share that beat their benchmark), average excess/return, and a
 sortable, filterable table (entry date/price, current price, return, benchmark,
-excess, days held, ✓ beat / ✗ lag). Each entry evaluates over ~180 days, then
-freezes. Data: [`scanner/track_record.py`](scanner/track_record.py) →
+excess, days held, ✓ beat / ✗ lag). Entries held under 2 days show **pending**
+and stay out of the headline stats; ↩ marks a signal that re-fired within 14
+days (possible whipsaw); 🎯 marks a price that reached the analyst mean target
+from its alert day. Each entry evaluates over ~180 days, then freezes. Data: [`scanner/track_record.py`](scanner/track_record.py) →
 `track_record.json`, which — uniquely — **accumulates** across scans rather than
 being recomputed. On first run it backfills from the last 30 days of history.
 
