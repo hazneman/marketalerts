@@ -39,7 +39,7 @@ jobs:
         run: |
           git config user.name "market-alerts-bot"
           git config user.email "actions@github.com"
-          git add frontend/public/data
+          git add frontend/public/data archive
           if git diff --cached --quiet; then
             echo "No data changes — nothing to commit."
             exit 0

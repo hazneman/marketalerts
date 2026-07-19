@@ -205,6 +205,16 @@ def main(argv: list[str] | None = None) -> int:
     write_prices(prices, bar_dates, args.output_dir)
     logger.info("prices.json: %d tickers", len(prices))
 
+    # Permanent alert archive rides along: unions history.json (just written)
+    # into archive/alerts.jsonl so entry context survives the 30-day window.
+    try:
+        from archive import update as update_archive
+        ar = update_archive()
+        logger.info("archive: %d alerts (+%d new%s)", ar["total"], ar["added"],
+                    ", written" if ar["changed"] else "")
+    except Exception as exc:
+        logger.warning("archive update failed (%s) — keeping previous alerts.jsonl", exc)
+
     # Track record rides along: ingests today's BUY verdicts (already persisted
     # to history.json by write_results) and updates every tracked entry's return
     # vs its market index. Failure-isolated + accumulates its own JSON.
