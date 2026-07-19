@@ -64,6 +64,14 @@ export function addPosition(p: Omit<Position, 'id'>): void {
   save(store)
 }
 
+export function updatePosition(id: string, patch: Partial<Omit<Position, 'id'>>): void {
+  const store = loadPortfolio()
+  const pos = store.positions.find((p) => p.id === id)
+  if (!pos) return
+  Object.assign(pos, patch)
+  save(store)
+}
+
 export function deletePosition(id: string): void {
   const store = loadPortfolio()
   store.positions = store.positions.filter((p) => p.id !== id)

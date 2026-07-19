@@ -1,10 +1,11 @@
 import { useRef, useState } from 'react'
-import { useAlerts, usePortfolio, usePrices } from '../hooks/useAlerts'
-import { CATEGORY_LABELS } from '../types'
+import { useAlerts, usePortfolio, usePrices, useTrackRecord } from '../hooks/useAlerts'
+import { CATEGORY_LABELS, type AlertHistory, type TrackRecordData } from '../types'
 import DirectionBadge from './DirectionBadge'
 import {
   addPosition, closePosition, deleteClosed, deletePosition,
-  exportPortfolio, importPortfolio, type ClosedTrade, type Position,
+  exportPortfolio, importPortfolio, updatePosition,
+  type ClosedTrade, type Position,
 } from '../lib/portfolio'
 import { tradingViewUrl } from '../lib/tradingview'
 import { badgeRing, btnGhost, cellCls, inputCls, rowCls, tableWrapCls, theadCls } from '../lib/ui'
@@ -79,6 +80,85 @@ function AddForm() {
         Add position
       </button>
     </div>
+  )
+}
+
+// Best-known analyst mean target for a position: stored on the position
+// (Buy-card add or manual edit) → else the ticker's most recent tracked BUY →
+// else its most recent alert in the 30-day history (any verdict carries
+// fundamentals). Display-only resolution; editing stores it explicitly.
+function resolveTarget(
+  p: Position, track: TrackRecordData | null, history: AlertHistory | null,
+): { value: number; asOf: string; source: string } | null {
+  if (p.target_mean)
+    return { value: p.target_mean, asOf: p.target_as_of ?? p.date, source: 'saved on position' }
+  const tracked = (track?.entries ?? [])
+    .filter((e) => e.ticker === p.ticker && e.target_mean)
+    .sort((a, b) => b.entry_date.localeCompare(a.entry_date))[0]
+  if (tracked)
+    return { value: tracked.target_mean!, asOf: tracked.entry_date, source: 'from tracked alert' }
+  for (const d of history?.days ?? []) { // newest first
+    for (const a of d.alerts) {
+      const t = a.ticker === p.ticker ? a.fundamentals?.analyst?.target_mean : undefined
+      if (t) return { value: t, asOf: a.date, source: 'from recent alert' }
+    }
+  }
+  return null
+}
+
+function TargetCell({ p, px, track, history }: {
+  p: Position; px: number | null
+  track: TrackRecordData | null; history: AlertHistory | null
+}) {
+  const [editing, setEditing] = useState(false)
+  const [val, setVal] = useState('')
+  const resolved = resolveTarget(p, track, history)
+
+  if (editing) {
+    return (
+      <span className="flex items-center justify-end gap-1.5">
+        <input className={`${inputCls} w-24`} type="number" min="0" step="any" autoFocus
+               placeholder="target" value={val} onChange={(e) => setVal(e.target.value)} />
+        <button
+          disabled={!(Number(val) > 0)}
+          onClick={() => {
+            updatePosition(p.id, { target_mean: Number(val), target_as_of: today() })
+            setEditing(false)
+          }}
+          className="text-xs text-up hover:underline disabled:opacity-40">save</button>
+        <button onClick={() => setEditing(false)} className="text-xs text-muted hover:text-ink">×</button>
+      </span>
+    )
+  }
+  if (!resolved) {
+    return (
+      <button onClick={() => { setVal(''); setEditing(true) }}
+              className="text-xs text-muted hover:text-ink" title="Set a price target for this position">
+        set…
+      </button>
+    )
+  }
+  const reached = px !== null && px >= resolved.value
+  return (
+    <span className="group cursor-help"
+          title={`Analyst mean target ${resolved.source} (as of ${resolved.asOf}) — click ✎ to override`}>
+      {reached ? (
+        <span className="text-up">🎯 {fmt(resolved.value)}</span>
+      ) : (
+        <span className="text-ink-2">
+          {fmt(resolved.value)}
+          {px !== null && (
+            <span className="ml-1 text-xs text-muted">
+              (+{((resolved.value / px - 1) * 100).toFixed(1)}%)
+            </span>
+          )}
+        </span>
+      )}
+      <button onClick={() => { setVal(String(resolved.value)); setEditing(true) }}
+              className="ml-1 text-xs text-muted opacity-0 transition-opacity group-hover:opacity-100 hover:text-ink">
+        ✎
+      </button>
+    </span>
   )
 }
 
@@ -167,7 +247,8 @@ function Performance({ closed }: { closed: ClosedTrade[] }) {
 export default function PortfolioPage() {
   const { positions, closed } = usePortfolio()
   const prices = usePrices()
-  const { latest } = useAlerts()
+  const { latest, history } = useAlerts()
+  const { track } = useTrackRecord()
   const [closing, setClosing] = useState<string | null>(null)
   const fileRef = useRef<HTMLInputElement>(null)
   const [live, setLive] = useState<Record<string, number> | null>(null)
@@ -318,24 +399,7 @@ export default function PortfolioPage() {
                       {px !== null ? fmt(px) : <span className="text-faint">n/a</span>}
                     </td>
                     <td className={`${cellCls} text-right`}>
-                      {p.target_mean && px !== null ? (
-                        px >= p.target_mean ? (
-                          <span className="cursor-help text-up"
-                                title={`Analyst mean target ${fmt(p.target_mean)} reached (as of ${p.target_as_of ?? 'add date'})`}>
-                            🎯 {fmt(p.target_mean)}
-                          </span>
-                        ) : (
-                          <span className="cursor-help text-ink-2"
-                                title={`Analyst mean target as of ${p.target_as_of ?? 'add date'}`}>
-                            {fmt(p.target_mean)}
-                            <span className="ml-1 text-xs text-muted">
-                              (+{((p.target_mean / px - 1) * 100).toFixed(1)}%)
-                            </span>
-                          </span>
-                        )
-                      ) : (
-                        <span className="text-faint">—</span>
-                      )}
+                      <TargetCell p={p} px={px} track={track} history={history} />
                     </td>
                     <td className={`${cellCls} text-right text-ink`}>
                       {value !== null ? fmt(value) : '—'}
