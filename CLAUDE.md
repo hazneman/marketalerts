@@ -86,7 +86,15 @@ Pipeline per daily run (`scan.py`):
    immune to an intraday-forming bar when backfilling. Entries also freeze the
    analyst mean target from their alert day (`target_mean`) and flag
    `target_reached`.
-10. Alert archive (`archive.py` → `archive/alerts.jsonl`, repo root — NOT
+10. Position health (`health.py` → `health.json`): daily technical STATE for
+   every scanned ticker (vs SMA200/SMA50, RSI, MACD, 20d trend, drawdown from
+   the 252d peak, sector state) PLUS `recent_warnings` — bearish/RSI-trim
+   alerts from the last 30 days, so a warning you missed on Tuesday is still
+   visible Friday. Alerts are events; this is the state between them. Powers
+   the Portfolio Health column. **Display-only and deliberately NOT an exit
+   rule** — docs/EXITS.md found stop-loss and SMA-exit rules underperformed
+   buy-and-hold; only RSI>75 trim helped, and it's flagged as such.
+11. Alert archive (`archive.py` → `archive/alerts.jsonl`, repo root — NOT
    served): every alert ever fired with full entry context, one JSON line per
    event, forever (history.json rolls off at 30 days). Same history-ingestion
    pattern as track_record (backfill/daily/self-heal in one path); the OLDEST
@@ -129,7 +137,11 @@ Pipeline per daily run (`scan.py`):
   best/worst, cumulative realized-P&L sparkline). Buy-card adds capture the
   analyst mean target (`Position.target_mean`/`target_as_of`) → Target column
   with distance-to-target + 🎯 when reached; a "⚠ Signals on your holdings"
-  strip surfaces today's bearish/RSI-trim alerts on held tickers.
+  strip surfaces today's bearish/RSI-trim alerts on held tickers. A **Health**
+  column (`lib/health.ts` `assessHealth` + `health.json`) grades each holding
+  Strong/OK/Caution/Weak from trend, momentum, drawdown, sector and the 30-day
+  warning memory; click it for the plain-English reasons. Caution only, never
+  an exit instruction.
 
 Shared conventions: `lib/tradingview.ts` maps `.IS→BIST:` / `.DE→XETR:`;
 `tnum` class for tabular numerals; hooks in `hooks/useAlerts.ts`; types in

@@ -205,6 +205,31 @@ def main(argv: list[str] | None = None) -> int:
     write_prices(prices, bar_dates, args.output_dir)
     logger.info("prices.json: %d tickers", len(prices))
 
+    # Per-ticker health snapshot rides along: daily technical STATE (vs SMAs,
+    # RSI, MACD, trend, drawdown, sector) + a 30-day memory of bearish/trim
+    # alerts, so the Portfolio page can warn about a deteriorating holding
+    # instead of only on the day a line is crossed.
+    try:
+        from health import build as build_health
+        # per-ticker sector state via the membership cache -> SPDR -> state
+        tsectors: dict[str, str] = {}
+        try:
+            membership = json.loads(
+                (SCANNER_DIR / "sector_membership.json").read_text())["tickers"]
+            for sym, m in membership.items():
+                spdr = SECTOR_TO_SPDR.get(m.get("sector"))
+                if spdr and spdr in sector_states:
+                    tsectors[sym] = sector_states[spdr]
+        except (OSError, ValueError, KeyError):
+            pass
+        hl = build_health(args.output_dir, frames=ok, bar_date=bar_date,
+                          sector_states=tsectors)
+        logger.info("health: %d tickers, %d with recent warnings",
+                    len(hl["tickers"]),
+                    sum(1 for t in hl["tickers"].values() if t.get("recent_warnings")))
+    except Exception as exc:
+        logger.warning("health build failed (%s) — keeping previous health.json", exc)
+
     # Permanent alert archive rides along: unions history.json (just written)
     # into archive/alerts.jsonl so entry context survives the 30-day window.
     try:

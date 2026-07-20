@@ -71,6 +71,17 @@ selling a position logs it as a closed trade with realized P&L and holding
 period. Positions added from a Buy card remember the **analyst mean target**
 (shown with distance; 🎯 when reached), and a **"⚠ Signals on your holdings"**
 strip surfaces any bearish or take-profit alert firing on a stock you own.
+
+Each holding also carries a **Health** grade — Strong / OK / Caution / Weak —
+so a stock that is *quietly weakening* shows up before it crosses anything.
+It combines where price sits versus its 200- and 50-day averages, MACD
+momentum, the last month's move, how far it has fallen from its 1-year peak,
+its sector's rotation state, and any bearish or take-profit alert **from the
+last 30 days** (so a warning you missed isn't lost the next day). Click the
+grade for the reasons in plain English. *This is a caution flag, not a sell
+signal:* the backtests in `docs/EXITS.md` found stop-loss and moving-average
+exit rules did worse than simply holding — only the RSI>75 trim helped — so
+the page shows you what changed and leaves the decision to you.
 Stocks you hold no longer appear as fresh BUY suggestions — they collapse into
 an "Already held" group on the Buys tab. **Storage: this browser's localStorage only** — holdings never leave
 your machine; use Export/Import backup to move browsers or protect against

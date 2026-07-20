@@ -228,6 +228,29 @@ export interface TrackRecordData {
   entries: TrackRecordEntry[]
 }
 
+export interface TickerHealth {
+  close: number
+  sma200?: number
+  vs_sma200_pct?: number
+  sma50?: number
+  vs_sma50_pct?: number
+  rsi?: number
+  macd_bullish?: boolean
+  chg_20d_pct?: number
+  peak_252d?: number
+  drawdown_pct?: number
+  sector_state?: string
+  recent_warnings?: { date: string; category: string; rule: string; direction: string }[]
+}
+
+export interface HealthData {
+  schema_version: number
+  generated_at: string
+  bar_date: string
+  warn_days: number
+  tickers: Record<string, TickerHealth>
+}
+
 export interface TargetsData {
   schema_version: number
   generated_at: string

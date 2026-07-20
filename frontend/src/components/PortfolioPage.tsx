@@ -1,5 +1,6 @@
-import { useRef, useState } from 'react'
-import { useAlerts, useForex, usePortfolio, usePrices, useTargets, useTrackRecord } from '../hooks/useAlerts'
+import { Fragment, useRef, useState } from 'react'
+import { useAlerts, useForex, useHealth, usePortfolio, usePrices, useTargets, useTrackRecord } from '../hooks/useAlerts'
+import { assessHealth, HEALTH_DOT, type HealthLevel } from '../lib/health'
 import { CATEGORY_LABELS, type AlertHistory, type TargetsData, type TrackRecordData } from '../types'
 import DirectionBadge from './DirectionBadge'
 import Tabs, { type TabItem } from './ui/Tabs'
@@ -193,6 +194,36 @@ function TargetCell({ p, px, targets, track, history }: {
   )
 }
 
+const HEALTH_TONE: Record<HealthLevel, string> = {
+  strong: 'text-up',
+  ok: 'text-muted',
+  caution: 'text-accent',
+  weak: 'text-down',
+}
+
+/** Health cell: a coloured dot + label, click to expand the full reasoning. */
+function HealthCell({ h, open, onToggle }: {
+  h: ReturnType<typeof assessHealth>
+  open: boolean
+  onToggle: () => void
+}) {
+  const quiet = h.level === 'strong' || h.level === 'ok'
+  return (
+    <button
+      onClick={onToggle}
+      className={`flex items-center gap-1.5 text-xs ${HEALTH_TONE[h.level]} hover:underline`}
+      title={quiet ? 'No warnings — click for detail' : h.reasons.map((r) => `• ${r.text}`).join('\n')}
+      aria-expanded={open}
+    >
+      <span>{HEALTH_DOT[h.level]}</span>
+      {h.label}
+      {h.reasons.length > 0 && (
+        <span className="text-muted">({h.reasons.length})</span>
+      )}
+    </button>
+  )
+}
+
 function CloseDialog({ pos, onDone }: { pos: Position; onDone: () => void }) {
   const [price, setPrice] = useState('')
   const [date, setDate] = useState(today())
@@ -323,6 +354,8 @@ export default function PortfolioPage() {
     }
   }
 
+  const health = useHealth()
+  const [openHealth, setOpenHealth] = useState<string | null>(null)
   const { forex } = useForex()
   const [dispCcy, setDispCcyState] = useState<DisplayCcy>(readDisplayCcy)
   const setDispCcy = (c: DisplayCcy) => {
@@ -459,6 +492,7 @@ export default function PortfolioPage() {
                 <th className={`${cellCls} text-right`}>Shares</th>
                 <th className={`${cellCls} text-right`}>Avg cost</th>
                 <th className={cellCls}>Buy date</th>
+                <th className={cellCls}>Health</th>
                 <th className={`${cellCls} text-right`}>Last close</th>
                 <th className={`${cellCls} text-right`}>Target</th>
                 <th className={`${cellCls} text-right`}>Value</th>
@@ -473,8 +507,11 @@ export default function PortfolioPage() {
                 const pnl = value !== null ? value - p.shares * p.avg_cost : null
                 const pnlPct = pnl !== null ? (pnl / (p.shares * p.avg_cost)) * 100 : null
                 const rowSym = CCY_SYM[ccyOf(p.market)] ?? ''
+                const hv = assessHealth(health?.tickers[p.ticker])
+                const hOpen = openHealth === p.id
                 return (
-                  <tr key={p.id} className={rowCls}>
+                  <Fragment key={p.id}>
+                  <tr className={rowCls}>
                     <td className={cellCls}>
                       <a href={tradingViewUrl(p.ticker)} target="_blank" rel="noreferrer"
                          className="font-semibold text-info hover:underline">
@@ -485,6 +522,10 @@ export default function PortfolioPage() {
                     <td className={`${cellCls} text-right text-ink`}>{p.shares}</td>
                     <td className={`${cellCls} text-right text-ink`}>{fmt(p.avg_cost)}</td>
                     <td className={`${cellCls} text-muted`}>{p.date}</td>
+                    <td className={cellCls}>
+                      <HealthCell h={hv} open={hOpen}
+                                  onToggle={() => setOpenHealth(hOpen ? null : p.id)} />
+                    </td>
                     <td className={`${cellCls} text-right text-ink`}>
                       {px !== null ? fmt(px) : <span className="text-faint">n/a</span>}
                     </td>
@@ -510,6 +551,41 @@ export default function PortfolioPage() {
                       )}
                     </td>
                   </tr>
+                  {hOpen && (
+                    <tr>
+                      <td colSpan={9} className="bg-inset px-4 pb-3 pt-2">
+                        <div className="text-xs">
+                          <div className="mb-1 font-medium text-ink">
+                            {p.ticker} — position health
+                          </div>
+                          {hv.reasons.length > 0 ? (
+                            <ul className="space-y-0.5">
+                              {hv.reasons.map((r, i) => (
+                                <li key={i} className={r.severity === 2 ? 'text-down' : 'text-accent'}>
+                                  {r.severity === 2 ? '▼' : '▲'} {r.text}
+                                </li>
+                              ))}
+                            </ul>
+                          ) : (
+                            <p className="text-muted">No warning signs in today's data.</p>
+                          )}
+                          {hv.positives.length > 0 && (
+                            <ul className="mt-1 space-y-0.5">
+                              {hv.positives.map((t, i) => (
+                                <li key={i} className="text-up">● {t}</li>
+                              ))}
+                            </ul>
+                          )}
+                          <p className="mt-1.5 text-faint">
+                            Caution indicator only — backtests (docs/EXITS.md) found stop-loss and
+                            SMA-exit rules underperformed simply holding; RSI&gt;75 was the one
+                            exit hint that helped. Judge for yourself.
+                          </p>
+                        </div>
+                      </td>
+                    </tr>
+                  )}
+                  </Fragment>
                 )
               })}
             </tbody>
