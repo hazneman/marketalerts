@@ -402,7 +402,28 @@ export default function PortfolioPage() {
               tone={realized >= 0 ? 'up' : 'down'} />
         <Tabs items={CCY_ITEMS} active={dispCcy} onChange={setDispCcy} size="sm" />
       </div>
-      {!fxOk && (
+      {fxOk ? (
+        <p className="tnum flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-muted">
+          <span className="text-ink-2">FX used for totals</span>
+          {(['EUR', 'TRY'] as const).map((code) => {
+            const usd = usdPer(code)
+            if (usd === null) return null
+            // show the pair the way each is normally quoted: EURUSD, USDTRY
+            const asPair = code === 'EUR'
+              ? `EUR/USD ${usd.toFixed(4)}`
+              : `USD/TRY ${(1 / usd).toFixed(2)}`
+            return (
+              <span key={code} className="cursor-help"
+                    title={`1 ${code} = $${usd.toFixed(4)} — used to convert ${code} positions into ${dispCcy} totals`}>
+                {asPair}
+              </span>
+            )
+          })}
+          <span className="text-faint">
+            · daily scan{forex?.bar_date ? ` ${forex.bar_date}` : ''} · totals in {dispCcy}
+          </span>
+        </p>
+      ) : (
         <p className="text-xs text-accent">
           * FX rates unavailable — totals are a raw mixed-currency sum until the next scan.
         </p>
