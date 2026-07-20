@@ -1,7 +1,8 @@
 import { useRef, useState } from 'react'
-import { useAlerts, usePortfolio, usePrices, useTargets, useTrackRecord } from '../hooks/useAlerts'
+import { useAlerts, useForex, usePortfolio, usePrices, useTargets, useTrackRecord } from '../hooks/useAlerts'
 import { CATEGORY_LABELS, type AlertHistory, type TargetsData, type TrackRecordData } from '../types'
 import DirectionBadge from './DirectionBadge'
+import Tabs, { type TabItem } from './ui/Tabs'
 import {
   addPosition, closePosition, deleteClosed, deletePosition,
   exportPortfolio, importPortfolio, updatePosition,
@@ -19,11 +20,33 @@ function fmt(v: number, dp = 2): string {
   return v.toLocaleString(undefined, { minimumFractionDigits: dp, maximumFractionDigits: dp })
 }
 
-function Pnl({ value, pct }: { value: number; pct?: number | null }) {
+// Each market trades in its own currency — positions store native amounts
+// (BIST avg costs are lira, DE are euro). Totals convert via the daily FX
+// snapshot (forex.json EURUSD/TRYUSD) into a chosen display currency.
+const MARKET_CCY: Record<string, string> = { us: 'USD', de: 'EUR', bist: 'TRY' }
+const CCY_SYM: Record<string, string> = { USD: '$', EUR: '€', TRY: '₺' }
+type DisplayCcy = 'USD' | 'TRY'
+const CCY_ITEMS: TabItem<DisplayCcy>[] = [
+  { value: 'USD', label: '$ USD', tone: 'info' },
+  { value: 'TRY', label: '₺ TRY', tone: 'info' },
+]
+
+const ccyOf = (market?: string) => MARKET_CCY[market ?? 'us'] ?? 'USD'
+
+function readDisplayCcy(): DisplayCcy {
+  try {
+    return localStorage.getItem('ma-portfolio-ccy') === 'TRY' ? 'TRY' : 'USD'
+  } catch {
+    return 'USD'
+  }
+}
+
+function Pnl({ value, pct, sym = '' }: { value: number; pct?: number | null; sym?: string }) {
   const cls = value >= 0 ? 'text-up' : 'text-down'
   return (
     <span className={cls}>
       {value >= 0 ? '+' : ''}
+      {sym}
       {fmt(value)}
       {pct !== undefined && pct !== null && (
         <span className="ml-1 text-xs opacity-80">
@@ -191,10 +214,15 @@ function CloseDialog({ pos, onDone }: { pos: Position; onDone: () => void }) {
   )
 }
 
-function Performance({ closed }: { closed: ClosedTrade[] }) {
+function Performance({ closed, conv, sym }: {
+  closed: ClosedTrade[]
+  conv: (amount: number, market?: string) => number
+  sym: string
+}) {
   if (closed.length === 0) return null
   const trades = [...closed].sort((a, b) => a.sell_date.localeCompare(b.sell_date))
-  const pnls = trades.map((t) => t.shares * (t.sell_price - t.avg_cost))
+  // per-trade P&L converted to the display currency (at today's FX rate)
+  const pnls = trades.map((t) => conv(t.shares * (t.sell_price - t.avg_cost), t.market))
   const wins = pnls.filter((v) => v > 0)
   const losses = pnls.filter((v) => v <= 0)
   let running = 0
@@ -218,13 +246,13 @@ function Performance({ closed }: { closed: ClosedTrade[] }) {
         <Chip label="Trades" value={trades.length} />
         <Chip label="Win rate" value={`${((wins.length / trades.length) * 100).toFixed(0)}%`}
               tone={wins.length >= losses.length ? 'up' : 'down'} />
-        <Chip label="Avg win" value={wins.length ? `+${fmt(wins.reduce((a, b) => a + b, 0) / wins.length)}` : '—'}
+        <Chip label="Avg win" value={wins.length ? `+${sym}${fmt(wins.reduce((a, b) => a + b, 0) / wins.length)}` : '—'}
               tone={wins.length ? 'up' : 'default'} />
-        <Chip label="Avg loss" value={losses.length ? fmt(losses.reduce((a, b) => a + b, 0) / losses.length) : '—'}
+        <Chip label="Avg loss" value={losses.length ? `${sym.length ? '−' + sym : ''}${fmt(Math.abs(losses.reduce((a, b) => a + b, 0) / losses.length))}` : '—'}
               tone={losses.length ? 'down' : 'default'} />
-        <Chip label="Best" value={best ? `${best.ticker} ${pnls[trades.indexOf(best)] >= 0 ? '+' : ''}${fmt(pnls[trades.indexOf(best)])}` : '—'}
+        <Chip label="Best" value={best ? `${best.ticker} ${pnls[trades.indexOf(best)] >= 0 ? '+' : ''}${sym}${fmt(pnls[trades.indexOf(best)])}` : '—'}
               tone={pnls[trades.indexOf(best)] >= 0 ? 'up' : 'down'} />
-        <Chip label="Worst" value={worst ? `${worst.ticker} ${pnls[trades.indexOf(worst)] >= 0 ? '+' : ''}${fmt(pnls[trades.indexOf(worst)])}` : '—'}
+        <Chip label="Worst" value={worst ? `${worst.ticker} ${pnls[trades.indexOf(worst)] >= 0 ? '+' : ''}${sym}${fmt(pnls[trades.indexOf(worst)])}` : '—'}
               tone={pnls[trades.indexOf(worst)] < 0 ? 'down' : 'up'} />
       </div>
       {cum.length >= 2 && (
@@ -233,6 +261,7 @@ function Performance({ closed }: { closed: ClosedTrade[] }) {
             <span>Cumulative realized P&L over time</span>
             <span className={final >= 0 ? 'text-up' : 'text-down'}>
               {final >= 0 ? '+' : ''}
+              {sym}
               {fmt(final)}
             </span>
           </div>
@@ -294,19 +323,42 @@ export default function PortfolioPage() {
     }
   }
 
+  const { forex } = useForex()
+  const [dispCcy, setDispCcyState] = useState<DisplayCcy>(readDisplayCcy)
+  const setDispCcy = (c: DisplayCcy) => {
+    setDispCcyState(c)
+    try { localStorage.setItem('ma-portfolio-ccy', c) } catch { /* fine */ }
+  }
+
+  // USD value of 1 unit of a currency, from the daily forex snapshot
+  const usdPer = (code: string): number | null =>
+    code === 'USD' ? 1 : forex?.currencies.find((c) => c.code === code)?.vs_usd?.price ?? null
+
+  const neededCcys = [...new Set([...positions, ...closed].map((p) => ccyOf(p.market)))]
+  const fxOk = usdPer(dispCcy) !== null && neededCcys.every((c) => usdPer(c) !== null)
+
+  // native amount in a market's currency → the display currency; identity
+  // fallback when a rate is missing (totals then carry a * note)
+  const conv = (amount: number, market?: string): number => {
+    const from = usdPer(ccyOf(market))
+    const to = usdPer(dispCcy)
+    return fxOk && from !== null && to !== null ? (amount * from) / to : amount
+  }
+  const sym = CCY_SYM[dispCcy]
+
   let totalCost = 0
   let totalValue = 0
   let valuedAll = true
   for (const p of positions) {
-    totalCost += p.shares * p.avg_cost
+    totalCost += conv(p.shares * p.avg_cost, p.market)
     const px = priceOf(p.ticker)
     if (px === null) valuedAll = false
-    else totalValue += p.shares * px
+    else totalValue += conv(p.shares * px, p.market)
   }
   const unrealized = totalValue - (valuedAll ? totalCost : positions
     .filter((p) => priceOf(p.ticker) !== null)
-    .reduce((s, p) => s + p.shares * p.avg_cost, 0))
-  const realized = closed.reduce((s, t) => s + t.shares * (t.sell_price - t.avg_cost), 0)
+    .reduce((s, p) => s + conv(p.shares * p.avg_cost, p.market), 0))
+  const realized = closed.reduce((s, t) => s + conv(t.shares * (t.sell_price - t.avg_cost), t.market), 0)
 
   // Today's warning-side signals on stocks you actually hold: bearish crosses
   // and the RSI>75 take-profit alert matter MORE once you own the name.
@@ -339,15 +391,22 @@ export default function PortfolioPage() {
       />
       {priceNote && <p className="text-xs text-accent">{priceNote}</p>}
 
-      <div className="flex flex-wrap gap-2.5">
+      <div className="flex flex-wrap items-center gap-2.5">
         <Chip label="Open positions" value={positions.length} />
-        <Chip label="Cost basis" value={fmt(totalCost)} />
-        <Chip label="Market value" value={valuedAll ? fmt(totalValue) : `${fmt(totalValue)}*`} />
-        <Chip label="Unrealized P&L" value={<Pnl value={unrealized} />}
+        <Chip label="Cost basis" value={`${sym}${fmt(totalCost)}`} />
+        <Chip label="Market value"
+              value={`${sym}${fmt(totalValue)}${valuedAll && fxOk ? '' : '*'}`} />
+        <Chip label="Unrealized P&L" value={<Pnl value={unrealized} sym={sym} />}
               tone={unrealized >= 0 ? 'up' : 'down'} />
-        <Chip label="Realized P&L" value={<Pnl value={realized} />}
+        <Chip label="Realized P&L" value={<Pnl value={realized} sym={sym} />}
               tone={realized >= 0 ? 'up' : 'down'} />
+        <Tabs items={CCY_ITEMS} active={dispCcy} onChange={setDispCcy} size="sm" />
       </div>
+      {!fxOk && (
+        <p className="text-xs text-accent">
+          * FX rates unavailable — totals are a raw mixed-currency sum until the next scan.
+        </p>
+      )}
 
       {holdingSignals.length > 0 && (
         <div className="bg-down/[0.06] p-3 ring-1 ring-down/20">
@@ -392,6 +451,7 @@ export default function PortfolioPage() {
                 const value = px !== null ? p.shares * px : null
                 const pnl = value !== null ? value - p.shares * p.avg_cost : null
                 const pnlPct = pnl !== null ? (pnl / (p.shares * p.avg_cost)) * 100 : null
+                const rowSym = CCY_SYM[ccyOf(p.market)] ?? ''
                 return (
                   <tr key={p.id} className={rowCls}>
                     <td className={cellCls}>
@@ -411,10 +471,10 @@ export default function PortfolioPage() {
                       <TargetCell p={p} px={px} targets={targets} track={track} history={history} />
                     </td>
                     <td className={`${cellCls} text-right text-ink`}>
-                      {value !== null ? fmt(value) : '—'}
+                      {value !== null ? `${rowSym}${fmt(value)}` : '—'}
                     </td>
                     <td className={`${cellCls} text-right`}>
-                      {pnl !== null ? <Pnl value={pnl} pct={pnlPct} /> : '—'}
+                      {pnl !== null ? <Pnl value={pnl} pct={pnlPct} sym={rowSym} /> : '—'}
                     </td>
                     <td className={cellCls}>
                       {closing === p.id ? (
@@ -444,7 +504,7 @@ export default function PortfolioPage() {
         <span className="h-3.5 w-1 bg-muted" />
         Closed trades ({closed.length}) — historic P&L
       </h3>
-      <Performance closed={closed} />
+      <Performance closed={closed} conv={conv} sym={sym} />
       {closed.length > 0 ? (
         <div className={tableWrapCls}>
           <table className="w-full text-left text-[13px]">
@@ -463,6 +523,7 @@ export default function PortfolioPage() {
               {closed.map((t: ClosedTrade) => {
                 const pnl = t.shares * (t.sell_price - t.avg_cost)
                 const pct = ((t.sell_price - t.avg_cost) / t.avg_cost) * 100
+                const rowSym = CCY_SYM[ccyOf(t.market)] ?? ''
                 return (
                   <tr key={t.id} className={rowCls}>
                     <td className={cellCls}>
@@ -482,7 +543,7 @@ export default function PortfolioPage() {
                         (new Date(t.sell_date).getTime() - new Date(t.date).getTime()) / 86400000,
                       ))}d
                     </td>
-                    <td className={`${cellCls} text-right`}><Pnl value={pnl} pct={pct} /></td>
+                    <td className={`${cellCls} text-right`}><Pnl value={pnl} pct={pct} sym={rowSym} /></td>
                     <td className={`${cellCls} text-right`}>
                       <button onClick={() => deleteClosed(t.id)}
                               className="text-xs text-faint hover:text-down">delete</button>
@@ -522,7 +583,10 @@ export default function PortfolioPage() {
                }} />
         <span>
           Positions live only in this browser's storage — export a backup before clearing
-          browser data or switching machines. * = some tickers priced n/a (outside the scan universe).
+          browser data or switching machines. * = some tickers priced n/a (outside the scan
+          universe) or FX unavailable. Per-row amounts are in each stock's own currency
+          ($ / € / ₺); the summary totals convert everything to {dispCcy} using the daily FX
+          snapshot{forex?.bar_date ? ` (bar ${forex.bar_date})` : ''}.
         </span>
       </div>
     </section>
