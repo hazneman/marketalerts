@@ -10,28 +10,28 @@
   },
   "symbol": "SPY"
  },
- "generated_at": "2026-07-20T20:21:26Z",
+ "generated_at": "2026-07-20T23:30:33Z",
  "schema_version": 1,
  "sectors": [
   {
    "above_sma200": true,
    "chg": {
-    "1m": 6.02,
-    "1w": 2.15,
-    "1y": 33.76,
-    "3m": 5.34,
-    "6m": 21.74
+    "1m": 5.98,
+    "1w": 2.11,
+    "1y": 33.72,
+    "3m": 5.31,
+    "6m": 21.7
    },
    "comment": "Outperforming the market short and medium term \u2014 money flowing in",
    "name": "Energy",
-   "price": 57.96,
+   "price": 57.94,
    "rank": 1,
    "rs": {
-    "1m": 5.87,
-    "3m": 0.84,
-    "6m": 14.54
+    "1m": 5.83,
+    "3m": 0.81,
+    "6m": 14.5
    },
-   "rs_score": 5.41,
+   "rs_score": 5.37,
    "state": "leading",
    "symbol": "XLE",
    "top": [
@@ -206,7 +206,7 @@
      "ticker": "SLB"
     }
    ],
-   "vs_sma200_pct": 11.58
+   "vs_sma200_pct": 11.54
   },
   {
    "above_sma200": true,
@@ -287,7 +287,7 @@
      "fundamentals": {
       "consensus": "buy",
       "div_yield_pct": 2.18,
-      "forward_pe": 18.9,
+      "forward_pe": 18.8,
       "margin_pct": 3.1,
       "rating": "strong",
       "rev_growth_pct": 0.4,
@@ -308,7 +308,7 @@
       "margin_pct": 13.6,
       "rating": "strong",
       "rev_growth_pct": 4.9,
-      "score": 2,
+      "score": 3,
       "target_upside_pct": 7.7
      },
      "name": "Merck & Company, Inc.",
@@ -372,7 +372,7 @@
      "fundamentals": {
       "consensus": "buy",
       "div_yield_pct": 2.44,
-      "forward_pe": 13.7,
+      "forward_pe": 13.8,
       "margin_pct": 31.0,
       "rating": "strong",
       "rev_growth_pct": 4.4,
@@ -624,7 +624,7 @@
      "fundamentals": {
       "consensus": "buy",
       "div_yield_pct": 1.76,
-      "forward_pe": 13.8,
+      "forward_pe": 13.7,
       "margin_pct": 34.9,
       "rating": "strong",
       "rev_growth_pct": 30.4,
@@ -1116,9 +1116,9 @@
       "div_yield_pct": 5.71,
       "forward_pe": 12.7,
       "margin_pct": 39.5,
-      "rating": "neutral",
+      "rating": "strong",
       "rev_growth_pct": 5.3,
-      "score": 1,
+      "score": 2,
       "target_upside_pct": -5.4
      },
      "name": "Altria Group, Inc.",
@@ -1168,7 +1168,7 @@
       "margin_pct": 10.0,
       "rating": "neutral",
       "rev_growth_pct": 8.4,
-      "score": 0,
+      "score": 1,
       "target_upside_pct": 5.8
      },
      "name": "Colgate-Palmolive Company",
@@ -1402,9 +1402,9 @@
       "div_yield_pct": 2.81,
       "forward_pe": 20.0,
       "margin_pct": 29.4,
-      "rating": "strong",
+      "rating": "neutral",
       "rev_growth_pct": 7.3,
-      "score": 2,
+      "score": 1,
       "target_upside_pct": 12.7
      },
      "name": "NextEra Energy, Inc.",
@@ -1419,9 +1419,9 @@
       "div_yield_pct": 3.19,
       "forward_pe": 19.2,
       "margin_pct": 14.5,
-      "rating": "neutral",
+      "rating": "weak",
       "rev_growth_pct": 8.0,
-      "score": -1,
+      "score": -2,
       "target_upside_pct": 7.4
      },
      "name": "Southern Company (The)",
@@ -1506,7 +1506,7 @@
       "margin_pct": 14.4,
       "rating": "strong",
       "rev_growth_pct": -3.9,
-      "score": 3,
+      "score": 2,
       "target_upside_pct": 15.4
      },
      "name": "DBA Sempra",
@@ -1894,7 +1894,7 @@
       "margin_pct": 16.9,
       "rating": "neutral",
       "rev_growth_pct": 8.8,
-      "score": 1,
+      "score": 0,
       "target_upside_pct": 12.2
      },
      "name": "Air Products and Chemicals, Inc",
@@ -1928,7 +1928,7 @@
       "margin_pct": 6.8,
       "rating": "strong",
       "rev_growth_pct": 21.3,
-      "score": 4,
+      "score": 3,
       "target_upside_pct": 15.8
      },
      "name": "Nucor Corporation",
@@ -2012,7 +2012,15 @@
     {
      "cap": 332079739773,
      "chg_1d_pct": -1.72,
-     "fundamentals": null,
+     "fundamentals": {
+      "div_yield_pct": 2.75,
+      "forward_pe": 20.7,
+      "margin_pct": 8.4,
+      "rating": "neutral",
+      "rev_growth_pct": 4.8,
+      "score": -1,
+      "target_upside_pct": 11.2
+     },
      "name": "Home Depot, Inc. (The)",
      "price": 333.04,
      "ticker": "HD"
@@ -2077,7 +2085,7 @@
       "rating": "strong",
       "rev_growth_pct": 11.0,
       "score": 3,
-      "target_upside_pct": 35.1
+      "target_upside_pct": 35.3
      },
      "name": "PDD Holdings Inc.",
      "price": 86.05,
@@ -2103,7 +2111,15 @@
     {
      "cap": 114842310000,
      "chg_1d_pct": -1.93,
-     "fundamentals": null,
+     "fundamentals": {
+      "div_yield_pct": 2.4,
+      "forward_pe": 15.2,
+      "margin_pct": 7.5,
+      "rating": "neutral",
+      "rev_growth_pct": 10.3,
+      "score": 1,
+      "target_upside_pct": 28.8
+     },
      "name": "Lowe's Companies, Inc.",
      "price": 204.71,
      "ticker": "LOW"
