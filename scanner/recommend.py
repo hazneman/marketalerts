@@ -217,13 +217,26 @@ def fundamental_summary(metrics: dict, profile: dict) -> str:
                else "premium" if pe <= 40 else "expensive")
         parts.append(f"{val} valuation (fwd P/E {pe:.0f})")
 
+    # Growth: revenue and earnings can tell different stories, and earnings
+    # growth is what the scored factor judges — so when the two DIVERGE in
+    # direction, show both figures and withhold a single verdict word (never
+    # claim "growing" while the earnings-growth factor chip reads a headwind).
     rg = profile.get("rev_growth")
     eg = metrics.get("earnings_growth_pct")
-    g, src = (rg, "rev") if rg is not None else (eg, "EPS")
-    if g is not None:
-        gl = ("strong growth" if g >= 15 else "growing" if g >= 5
-              else "flat" if g >= 0 else "shrinking")
-        parts.append(f"{gl} ({src} {g:+.0f}%)")
+
+    def growth_word(g: float) -> str:
+        return ("strong growth" if g >= 15 else "growing" if g >= 5
+                else "flat" if g >= 0 else "shrinking")
+
+    if rg is not None and eg is not None:
+        if (rg >= 0) == (eg >= 0):  # same direction — one word, both figures
+            parts.append(f"{growth_word(min(rg, eg))} (rev {rg:+.0f}%, EPS {eg:+.0f}%)")
+        else:  # diverging — name both, no single verdict word
+            parts.append(f"rev {rg:+.0f}% / EPS {eg:+.0f}%")
+    elif rg is not None:
+        parts.append(f"{growth_word(rg)} (rev {rg:+.0f}%)")
+    elif eg is not None:
+        parts.append(f"{growth_word(eg)} (EPS {eg:+.0f}%)")
 
     return " · ".join(parts)
 

@@ -154,7 +154,24 @@ class TestFundamentalSummary:
         assert "highly profitable" in s and "ROE 38%" in s
         assert "low leverage" in s
         assert "premium valuation (fwd P/E 34)" in s
-        assert "growing (rev +9%)" in s
+        # both growth gauges point up -> one word, both figures
+        assert "growing (rev +9%, EPS +20%)" in s
+
+    def test_growth_diverging_withholds_verdict_word(self):
+        # revenue up but earnings down: no "growing" claim (would clash with the
+        # -1 earnings-growth factor chip); show both figures instead
+        s = fundamental_summary({"earnings_growth_pct": -20}, {"rev_growth": 10})
+        assert "rev +10% / EPS -20%" in s
+        assert "growing" not in s
+
+    def test_growth_same_direction_uses_conservative_word(self):
+        # rev +30 / EPS +6 both positive -> word by the weaker (EPS 6 = "growing")
+        s = fundamental_summary({"earnings_growth_pct": 6}, {"rev_growth": 30})
+        assert "growing (rev +30%, EPS +6%)" in s
+
+    def test_growth_single_gauge(self):
+        assert "shrinking (EPS -8%)" in fundamental_summary({"earnings_growth_pct": -8}, {})
+        assert "growing (rev +7%)" in fundamental_summary({}, {"rev_growth": 7})
 
     def test_missing_clauses_dropped(self):
         assert fundamental_summary({}, {}) == ""
