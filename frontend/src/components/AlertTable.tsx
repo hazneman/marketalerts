@@ -1,3 +1,4 @@
+import { useMemo, useState } from 'react'
 import { badgeFlat, badgeRing, cellCls, rowCls, tableWrapCls, theadCls, type Tone } from '../lib/ui'
 import { tradingViewUrl } from '../lib/tradingview'
 import type { AlertItem } from '../types'
@@ -62,32 +63,114 @@ function NearestFib({ a }: { a: AlertItem }) {
   )
 }
 
+// ---- Sorting -------------------------------------------------------------
+// Each column exposes a numeric or string key; undefined values always sink to
+// the bottom regardless of direction, so blanks never crowd out real data.
+type SortDir = 'asc' | 'desc'
+type SortKey = 'ticker' | 'date' | 'close' | 'rsi' | 'sma50' | 'sma200' | 'vs200' | 'vol'
+
+const SORT_ACCESSORS: Record<SortKey, (a: AlertItem) => number | string | undefined> = {
+  ticker: (a) => a.ticker,
+  date: (a) => a.date,
+  close: (a) => a.close,
+  rsi: (a) => a.values.rsi,
+  sma50: (a) => a.values.sma50,
+  sma200: (a) => a.values.sma200,
+  vs200: (a) => (a.values.sma200 ? (a.close - a.values.sma200) / a.values.sma200 : undefined),
+  vol: (a) => a.volume?.ratio,
+}
+
+// Text columns read most naturally A→Z; numbers/dates most-relevant-first.
+const DEFAULT_DIR: Record<SortKey, SortDir> = {
+  ticker: 'asc', date: 'desc', close: 'desc', rsi: 'desc',
+  sma50: 'desc', sma200: 'desc', vs200: 'desc', vol: 'desc',
+}
+
+function SortHeader({
+  label, col, active, dir, onSort, align = 'left',
+}: {
+  label: string
+  col: SortKey
+  active: boolean
+  dir: SortDir
+  onSort: (c: SortKey) => void
+  align?: 'left' | 'right'
+}) {
+  return (
+    <th
+      className={`${cellCls} ${align === 'right' ? 'text-right' : ''}`}
+      aria-sort={active ? (dir === 'asc' ? 'ascending' : 'descending') : 'none'}
+    >
+      <button
+        type="button"
+        onClick={() => onSort(col)}
+        className={`inline-flex items-center gap-1 hover:text-ink ${
+          align === 'right' ? 'flex-row-reverse' : ''
+        } ${active ? 'text-ink' : ''}`}
+      >
+        {label}
+        <span className={`text-[10px] ${active ? 'text-accent' : 'text-faint'}`}>
+          {active ? (dir === 'asc' ? '▲' : '▼') : '↕'}
+        </span>
+      </button>
+    </th>
+  )
+}
+
 export default function AlertTable({ alerts }: { alerts: AlertItem[] }) {
   const hasSma50 = alerts.some((a) => a.values.sma50 !== undefined)
   const hasRsi = alerts.some((a) => a.values.rsi !== undefined)
   const hasVerdict = alerts.some((a) => a.verdict !== undefined)
   const hasFib = alerts.some((a) => a.fib?.daily)
   const hasVol = alerts.some((a) => a.volume)
+
+  // Default view: latest alerts first.
+  const [sortKey, setSortKey] = useState<SortKey>('date')
+  const [sortDir, setSortDir] = useState<SortDir>('desc')
+  const onSort = (col: SortKey) => {
+    if (col === sortKey) setSortDir((d) => (d === 'asc' ? 'desc' : 'asc'))
+    else {
+      setSortKey(col)
+      setSortDir(DEFAULT_DIR[col])
+    }
+  }
+
+  const sorted = useMemo(() => {
+    const get = SORT_ACCESSORS[sortKey]
+    const factor = sortDir === 'asc' ? 1 : -1
+    return [...alerts].sort((a, b) => {
+      const va = get(a)
+      const vb = get(b)
+      // undefined always sinks, independent of direction
+      if (va === undefined && vb === undefined) return 0
+      if (va === undefined) return 1
+      if (vb === undefined) return -1
+      if (va < vb) return -1 * factor
+      if (va > vb) return 1 * factor
+      return 0
+    })
+  }, [alerts, sortKey, sortDir])
+
   return (
     <div className={tableWrapCls}>
       <table className="w-full text-left text-[13px]">
         <thead className={theadCls}>
           <tr>
             <th className={cellCls}>Signal</th>
-            <th className={cellCls}>Ticker</th>
-            <th className={cellCls}>Date</th>
-            <th className={`${cellCls} text-right`}>Close</th>
-            {hasRsi && <th className={`${cellCls} text-right`}>RSI</th>}
-            {hasSma50 && <th className={`${cellCls} text-right`}>SMA 50</th>}
-            <th className={`${cellCls} text-right`}>SMA 200</th>
-            <th className={`${cellCls} text-right`}>vs SMA 200</th>
+            <SortHeader label="Ticker" col="ticker" active={sortKey === 'ticker'} dir={sortDir} onSort={onSort} />
+            <SortHeader label="Date" col="date" active={sortKey === 'date'} dir={sortDir} onSort={onSort} />
+            <SortHeader label="Close" col="close" active={sortKey === 'close'} dir={sortDir} onSort={onSort} align="right" />
+            {hasRsi && <SortHeader label="RSI" col="rsi" active={sortKey === 'rsi'} dir={sortDir} onSort={onSort} align="right" />}
+            {hasSma50 && <SortHeader label="SMA 50" col="sma50" active={sortKey === 'sma50'} dir={sortDir} onSort={onSort} align="right" />}
+            <SortHeader label="SMA 200" col="sma200" active={sortKey === 'sma200'} dir={sortDir} onSort={onSort} align="right" />
+            <SortHeader label="vs SMA 200" col="vs200" active={sortKey === 'vs200'} dir={sortDir} onSort={onSort} align="right" />
             {hasFib && <th className={cellCls}>Fib (D)</th>}
-            {hasVol && <th className={`${cellCls} text-right`}>Vol</th>}
+            {hasVol && <SortHeader label="Vol" col="vol" active={sortKey === 'vol'} dir={sortDir} onSort={onSort} align="right" />}
             {hasVerdict && <th className={cellCls}>Verdict</th>}
           </tr>
         </thead>
         <tbody className={`tnum divide-y divide-hair`}>
-          {alerts.map((a) => (
+          {sorted.map((a) => (
             <tr key={`${a.rule}-${a.ticker}`} className={rowCls}>
               <td className={cellCls}>
                 <DirectionBadge direction={a.direction} />
