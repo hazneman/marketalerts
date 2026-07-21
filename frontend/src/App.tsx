@@ -32,6 +32,43 @@ const TAGLINES: Record<Page, string> = {
   track: 'Did the BUY alerts beat their market?',
 }
 
+// Footer build stamp — compare this commit against the repo's latest to see
+// whether the deployed site is up to date with development. Values are injected
+// at build time (vite.config.ts).
+function BuildStamp() {
+  const t = __BUILD_TIME__
+  const when = t.length >= 16 ? `${t.slice(0, 10)} ${t.slice(11, 16)} UTC` : t
+  const isProd = __BUILD_CONTEXT__ === 'production'
+  const known = __BUILD_SHA__ !== 'unknown'
+  return (
+    <footer className="mx-auto max-w-6xl px-4 pb-6 pt-2 text-center text-[11px] text-faint">
+      <span className="tnum">
+        build{' '}
+        {known ? (
+          <a
+            href={`https://github.com/hazneman/marketalerts/commit/${__BUILD_SHA__}`}
+            target="_blank"
+            rel="noreferrer"
+            className="text-muted hover:text-ink hover:underline"
+          >
+            {__BUILD_SHA__}
+          </a>
+        ) : (
+          <span className="text-muted">{__BUILD_SHA__}</span>
+        )}
+        {' · '}
+        {when}
+        {!isProd && (
+          <>
+            {' · '}
+            <span className="text-accent">{__BUILD_CONTEXT__}</span>
+          </>
+        )}
+      </span>
+    </footer>
+  )
+}
+
 export default function App() {
   const { latest, history, error } = useAlerts()
   const [page, setPage] = useState<Page>('stocks')
@@ -164,6 +201,7 @@ export default function App() {
         </>
       )}
       </main>
+      <BuildStamp />
     </div>
   )
 }
