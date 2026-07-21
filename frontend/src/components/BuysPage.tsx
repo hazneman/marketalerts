@@ -461,6 +461,14 @@ export default function BuysPage() {
   const { positions } = usePortfolio()
   const [showHeld, setShowHeld] = useState(false)
   const [sort, setSort] = useState<SortMode>('quality')
+  const [showRecent, setShowRecent] = useState(false)
+  const [openDays, setOpenDays] = useState<Set<string>>(new Set())
+  const toggleDay = (d: string) =>
+    setOpenDays((prev) => {
+      const next = new Set(prev)
+      next.has(d) ? next.delete(d) : next.add(d)
+      return next
+    })
 
   // same ticker+rule alerted within the prior 14 days → tag as re-entry
   const isRefire = (a: AlertItem): boolean => {
@@ -501,6 +509,20 @@ export default function BuysPage() {
   // stocks you already own aren't fresh opportunities — group them separately
   const buys = all.filter(({ a }) => !held.has(a.ticker))
   const heldBuys = all.filter(({ a }) => held.has(a.ticker))
+
+  // the previous 5 scan days' BUY verdicts (today is the main list above),
+  // each day quality-ranked — history.days is newest-first
+  const recentDays = (history?.days ?? [])
+    .filter((d) => d.bar_date !== latest.bar_date)
+    .slice(0, 5)
+    .map((d) => ({
+      date: d.bar_date,
+      buys: d.alerts
+        .filter((a) => a.verdict === 'buy')
+        .map((a) => ({ a, score: qualityScore(a) }))
+        .sort((x, y) => y.score - x.score),
+    }))
+    .filter((d) => d.buys.length > 0)
 
   return (
     <section className="space-y-4">
@@ -558,6 +580,45 @@ export default function BuysPage() {
               <BuyCard key={`held-${a.rule}-${a.ticker}`} a={a} rank={buys.length + i + 1}
                        defaultOpen={false} refDate={refDateFor(a)} refire={isRefire(a)} />
             ))}
+        </div>
+      )}
+
+      {recentDays.length > 0 && (
+        <div className="space-y-2.5 border-t border-hair pt-4">
+          <button
+            onClick={() => setShowRecent(!showRecent)}
+            className="flex items-center gap-2 text-sm text-muted transition-colors hover:text-ink"
+          >
+            <span className={`transition-transform ${showRecent ? 'rotate-90' : ''}`}>▸</span>
+            Earlier BUY verdicts — last {recentDays.length} scan day
+            {recentDays.length > 1 ? 's' : ''} ({recentDays.reduce((n, d) => n + d.buys.length, 0)})
+          </button>
+          {showRecent && (
+            <div className="space-y-2.5 border-l border-hair pl-3">
+              {recentDays.map(({ date, buys: dayBuys }) => {
+                const dayOpen = openDays.has(date)
+                return (
+                  <div key={date} className="space-y-2.5">
+                    <button
+                      onClick={() => toggleDay(date)}
+                      className="flex items-center gap-2 text-sm text-ink-2 transition-colors hover:text-ink"
+                    >
+                      <span className={`transition-transform ${dayOpen ? 'rotate-90' : ''}`}>▸</span>
+                      <span className="tnum">{date}</span>
+                      <span className="text-muted">
+                        — {dayBuys.length} BUY{dayBuys.length > 1 ? 's' : ''}
+                      </span>
+                    </button>
+                    {dayOpen &&
+                      dayBuys.map(({ a }, i) => (
+                        <BuyCard key={`${date}-${a.rule}-${a.ticker}`} a={a} rank={i + 1}
+                                 defaultOpen={false} refDate={date} refire={isRefire(a)} />
+                      ))}
+                  </div>
+                )
+              })}
+            </div>
+          )}
         </div>
       )}
 
