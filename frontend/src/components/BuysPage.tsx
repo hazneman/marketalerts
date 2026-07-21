@@ -179,6 +179,56 @@ function FactorChip({ value }: { value: number | undefined }) {
   )
 }
 
+// ---- Company profile: display-only fundamentals context (not scored) ----
+const pct1 = (v: number) => `${v.toFixed(1)}%`
+const signed1 = (v: number) => `${v >= 0 ? '+' : ''}${v.toFixed(1)}%`
+const mult1 = (v: number) => `${v.toFixed(1)}×`
+const mult2 = (v: number) => `${v.toFixed(2)}×`
+
+const PROFILE_ROWS: { key: string; label: string; fmt: (v: number) => string }[] = [
+  { key: 'roe', label: 'Return on equity', fmt: pct1 },
+  { key: 'gross_margin', label: 'Gross margin', fmt: pct1 },
+  { key: 'op_margin', label: 'Operating margin', fmt: pct1 },
+  { key: 'net_margin', label: 'Net margin', fmt: pct1 },
+  { key: 'rev_growth', label: 'Revenue growth', fmt: signed1 },
+  { key: 'net_debt_to_ebitda', label: 'Net debt / EBITDA', fmt: mult1 },
+  { key: 'debt_to_equity', label: 'Debt / equity', fmt: mult1 },
+  { key: 'current_ratio', label: 'Current ratio', fmt: mult2 },
+  { key: 'ev_ebitda', label: 'EV / EBITDA', fmt: mult1 },
+  { key: 'peg', label: 'PEG', fmt: mult2 },
+  { key: 'p_fcf', label: 'Price / FCF', fmt: mult1 },
+  { key: 'div_yield', label: 'Dividend yield', fmt: pct1 },
+  { key: 'payout', label: 'Payout ratio', fmt: pct1 },
+]
+
+const FLAG_LABELS: Record<string, string> = {
+  high_leverage: '⚠ High leverage',
+  value_trap: '⚠ Possible value trap',
+  earnings_not_cash_backed: '⚠ Earnings not cash-backed',
+}
+
+function ProfileTable({ profile }: { profile: Record<string, number> }) {
+  const rows = PROFILE_ROWS.filter((r) => profile[r.key] !== undefined)
+  if (rows.length === 0) return null
+  return (
+    <div className="mt-2 border-t border-hair pt-2">
+      <div className="mb-1 text-xs text-muted">
+        Company profile <span className="text-faint">· context, not part of the score</span>
+      </div>
+      <table className="w-full text-sm">
+        <tbody>
+          {rows.map((r) => (
+            <tr key={r.key}>
+              <td className="py-1 text-muted">{r.label}</td>
+              <td className="tnum py-1 text-right text-ink">{r.fmt(profile[r.key])}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  )
+}
+
 // ---- Suggestion quality: presentational ranking of BUYs by confluence ----
 // Purely a display score (the verdict itself is unchanged): how many
 // independent lenses agree with this buy, weighted by what backtests showed
@@ -324,7 +374,7 @@ function BuyCard({ a, rank, defaultOpen, refDate, refire = false }: {
 
           {f ? (
         <div className="mt-3 bg-raised p-3.5 ring-1 ring-hair">
-          <div className="mb-2 flex items-center gap-2 text-sm">
+          <div className="mb-2 flex flex-wrap items-center gap-2 text-sm">
             <span className="font-medium text-ink">Fundamentals</span>
             <span
               className={`rounded px-2.5 py-0.5 text-xs font-semibold uppercase ${
@@ -338,7 +388,21 @@ function BuyCard({ a, rank, defaultOpen, refDate, refire = false }: {
               {f.rating} ({f.score >= 0 ? '+' : ''}
               {f.score})
             </span>
+            {f.coverage && (
+              <span
+                className="text-xs text-muted"
+                title="How many of the 5 scored factors had data — fewer means a thinner read"
+              >
+                {f.coverage.present}/{f.coverage.total} metrics
+              </span>
+            )}
+            {f.flags?.map((flag) => (
+              <span key={flag} className={`rounded px-2 py-0.5 text-xs font-semibold ${badgeRing.down}`}>
+                {FLAG_LABELS[flag] ?? flag}
+              </span>
+            ))}
           </div>
+          {f.summary && <p className="mb-2 text-sm text-ink-2">{f.summary}</p>}
           <table className="w-full text-sm">
             <tbody>
               {Object.entries(FACTOR_LABELS).map(([key, def]) => (
@@ -352,6 +416,7 @@ function BuyCard({ a, rank, defaultOpen, refDate, refire = false }: {
               ))}
             </tbody>
           </table>
+          {f.profile && <ProfileTable profile={f.profile} />}
           {a.sector && (
             <div className="mt-2 flex items-center justify-between border-t border-hair pt-2 text-sm">
               <span className="text-muted">
