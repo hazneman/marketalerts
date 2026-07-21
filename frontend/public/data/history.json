@@ -4,6 +4,6800 @@
    "alerts": [
     {
      "category": "price_sma200",
+     "close": 132.86,
+     "date": "2026-07-21",
+     "direction": "bullish",
+     "fib": {
+      "daily": {
+       "high": 160.27,
+       "levels": [
+        {
+         "dist_pct": -10.24,
+         "label": "23.6%",
+         "price": 148.0169
+        },
+        {
+         "dist_pct": -5.4,
+         "label": "38.2%",
+         "price": 140.4366
+        },
+        {
+         "dist_pct": -1.08,
+         "label": "50.0%",
+         "price": 134.31
+        },
+        {
+         "dist_pct": 3.65,
+         "label": "61.8%",
+         "price": 128.1834
+        },
+        {
+         "dist_pct": 11.22,
+         "label": "78.6%",
+         "price": 119.4609
+        }
+       ],
+       "low": 108.35,
+       "nearest": {
+        "dist_pct": -1.08,
+        "label": "50.0%",
+        "price": 134.31
+       },
+       "position_pct": 47.2
+      },
+      "weekly": {
+       "high": 160.27,
+       "levels": [
+        {
+         "dist_pct": -8.5,
+         "label": "23.6%",
+         "price": 145.2038
+        },
+        {
+         "dist_pct": -2.22,
+         "label": "38.2%",
+         "price": 135.8831
+        },
+        {
+         "dist_pct": 3.51,
+         "label": "50.0%",
+         "price": 128.35
+        },
+        {
+         "dist_pct": 9.97,
+         "label": "61.8%",
+         "price": 120.8169
+        },
+        {
+         "dist_pct": 20.68,
+         "label": "78.6%",
+         "price": 110.0918
+        }
+       ],
+       "low": 96.43,
+       "nearest": {
+        "dist_pct": -2.22,
+        "label": "38.2%",
+        "price": 135.8831
+       },
+       "position_pct": 57.1
+      }
+     },
+     "fundamentals": {
+      "analyst": {
+       "consensus": "buy",
+       "n_analysts": 19,
+       "price": 132.86,
+       "target_high": 185.0,
+       "target_low": 135.0,
+       "target_mean": 159.32
+      },
+      "coverage": {
+       "present": 5,
+       "total": 5
+      },
+      "factors": {
+       "analyst": 1,
+       "earnings_growth": 1,
+       "fcf_yield": 0,
+       "target_upside": 1,
+       "valuation": 0
+      },
+      "flags": [],
+      "metrics": {
+       "earnings_growth_pct": 60.0,
+       "fcf_yield_pct": 2.5,
+       "forward_pe": 20.1,
+       "rec_mean": 1.6,
+       "target_upside_pct": 19.9
+      },
+      "profile": {
+       "current_ratio": 2.1,
+       "debt_to_equity": 0.5,
+       "div_yield": 0.77,
+       "ev_ebitda": 19.1,
+       "fcf_to_net_income": 0.66,
+       "gross_margin": 52.6,
+       "net_debt_to_ebitda": 0.86,
+       "net_margin": 19.6,
+       "op_margin": 23.7,
+       "p_fcf": 40.3,
+       "payout": 20.2,
+       "peg": 1.15,
+       "rev_growth": 10.0,
+       "roe": 21.3
+      },
+      "rating": "strong",
+      "rating_changes": [
+       {
+        "action": "main",
+        "date": "2026-07-06",
+        "firm": "Evercore ISI Group",
+        "from_grade": "Outperform",
+        "to_grade": "Outperform"
+       },
+       {
+        "action": "main",
+        "date": "2026-06-24",
+        "firm": "Barclays",
+        "from_grade": "Overweight",
+        "to_grade": "Overweight"
+       },
+       {
+        "action": "init",
+        "date": "2026-06-11",
+        "firm": "Piper Sandler",
+        "from_grade": "Overweight",
+        "to_grade": "Neutral"
+       },
+       {
+        "action": "main",
+        "date": "2026-06-03",
+        "firm": "HSBC",
+        "from_grade": "Buy",
+        "to_grade": "Buy"
+       },
+       {
+        "action": "main",
+        "date": "2026-06-02",
+        "firm": "B of A Securities",
+        "from_grade": "Buy",
+        "to_grade": "Buy"
+       }
+      ],
+      "score": 3,
+      "sector": "Healthcare",
+      "summary": "highly profitable (op margin 24%, ROE 21%) \u00b7 low leverage (0.9\u00d7 net debt/EBITDA) \u00b7 fair valuation (fwd P/E 20) \u00b7 growing (rev +10%, EPS +60%)"
+     },
+     "macd_confirms": false,
+     "market": "us",
+     "rule": "PRICE_SMA200_BULL",
+     "sector": {
+      "factor": 1,
+      "name": "Healthcare",
+      "state": "leading",
+      "symbol": "XLV"
+     },
+     "ticker": "A",
+     "values": {
+      "sma200": 131.05
+     },
+     "verdict": "hold",
+     "verdict_reason": "MACD momentum does not confirm \u2014 possible false break",
+     "volume": {
+      "above_avg": false,
+      "avg20": 2273198,
+      "ratio": 0.82,
+      "today": 1863060
+     }
+    },
+    {
+     "category": "price_sma200",
+     "close": 175.05,
+     "date": "2026-07-21",
+     "direction": "bearish",
+     "fib": {
+      "daily": {
+       "high": 192.51,
+       "levels": [
+        {
+         "dist_pct": -4.59,
+         "label": "23.6%",
+         "price": 183.4759
+        },
+        {
+         "dist_pct": -1.59,
+         "label": "38.2%",
+         "price": 177.887
+        },
+        {
+         "dist_pct": 0.97,
+         "label": "50.0%",
+         "price": 173.37
+        },
+        {
+         "dist_pct": 3.67,
+         "label": "61.8%",
+         "price": 168.853
+        },
+        {
+         "dist_pct": 7.77,
+         "label": "78.6%",
+         "price": 162.4219
+        }
+       ],
+       "low": 154.23,
+       "nearest": {
+        "dist_pct": 0.97,
+        "label": "50.0%",
+        "price": 173.37
+       },
+       "position_pct": 54.4
+      },
+      "weekly": {
+       "high": 192.51,
+       "levels": [
+        {
+         "dist_pct": -0.56,
+         "label": "23.6%",
+         "price": 176.0348
+        },
+        {
+         "dist_pct": 5.55,
+         "label": "38.2%",
+         "price": 165.8426
+        },
+        {
+         "dist_pct": 11.07,
+         "label": "50.0%",
+         "price": 157.605
+        },
+        {
+         "dist_pct": 17.19,
+         "label": "61.8%",
+         "price": 149.3674
+        },
+        {
+         "dist_pct": 27.18,
+         "label": "78.6%",
+         "price": 137.6393
+        }
+       ],
+       "low": 122.7,
+       "nearest": {
+        "dist_pct": -0.56,
+        "label": "23.6%",
+        "price": 176.0348
+       },
+       "position_pct": 75.0
+      }
+     },
+     "fundamentals": {
+      "analyst": {
+       "consensus": "hold",
+       "n_analysts": 12,
+       "price": 175.05,
+       "target_high": 206.0,
+       "target_low": 170.0,
+       "target_mean": 188.42
+      },
+      "coverage": {
+       "present": 5,
+       "total": 5
+      },
+      "factors": {
+       "analyst": 0,
+       "earnings_growth": 1,
+       "fcf_yield": -1,
+       "target_upside": 0,
+       "valuation": 0
+      },
+      "flags": [
+       "earnings_not_cash_backed"
+      ],
+      "metrics": {
+       "earnings_growth_pct": 14.5,
+       "fcf_yield_pct": -7.6,
+       "forward_pe": 19.4,
+       "rec_mean": 2.7,
+       "target_upside_pct": 7.6
+      },
+      "profile": {
+       "current_ratio": 1.0,
+       "debt_to_equity": 0.65,
+       "div_yield": 2.29,
+       "ev_ebitda": 15.4,
+       "fcf_to_net_income": -1.64,
+       "gross_margin": 61.0,
+       "net_debt_to_ebitda": 3.74,
+       "net_margin": 27.6,
+       "op_margin": 39.3,
+       "payout": 46.1,
+       "peg": 2.14,
+       "rev_growth": 0.6,
+       "roe": 9.6
+      },
+      "rating": "neutral",
+      "rating_changes": [
+       {
+        "action": "main",
+        "date": "2026-07-17",
+        "firm": "Truist Securities",
+        "from_grade": "Hold",
+        "to_grade": "Hold"
+       },
+       {
+        "action": "main",
+        "date": "2026-07-14",
+        "firm": "JP Morgan",
+        "from_grade": "Overweight",
+        "to_grade": "Overweight"
+       },
+       {
+        "action": "main",
+        "date": "2026-07-14",
+        "firm": "Barclays",
+        "from_grade": "Equal-Weight",
+        "to_grade": "Equal-Weight"
+       },
+       {
+        "action": "init",
+        "date": "2026-07-13",
+        "firm": "Wells Fargo",
+        "from_grade": null,
+        "to_grade": "Overweight"
+       },
+       {
+        "action": "main",
+        "date": "2026-07-02",
+        "firm": "Argus Research",
+        "from_grade": "Buy",
+        "to_grade": "Buy"
+       }
+      ],
+      "score": 0,
+      "sector": "Utilities",
+      "summary": "highly profitable (op margin 39%, ROE 10%) \u00b7 moderate leverage (3.7\u00d7 net debt/EBITDA) \u00b7 fair valuation (fwd P/E 19) \u00b7 flat (rev +1%, EPS +14%)"
+     },
+     "macd_confirms": false,
+     "market": "us",
+     "rule": "PRICE_SMA200_BEAR",
+     "sector": {
+      "factor": 0,
+      "name": "Utilities",
+      "state": "improving",
+      "symbol": "XLU"
+     },
+     "ticker": "ATO",
+     "values": {
+      "sma200": 176.25
+     },
+     "verdict": "hold",
+     "verdict_reason": "MACD momentum does not confirm \u2014 possible false breakdown",
+     "volume": {
+      "above_avg": false,
+      "avg20": 1194119,
+      "ratio": 0.47,
+      "today": 565885
+     }
+    },
+    {
+     "category": "price_sma200",
+     "close": 511.17,
+     "date": "2026-07-21",
+     "direction": "bearish",
+     "fib": {
+      "daily": {
+       "high": 885.92,
+       "levels": [
+        {
+         "dist_pct": -32.46,
+         "label": "23.6%",
+         "price": 756.8492
+        },
+        {
+         "dist_pct": -24.49,
+         "label": "38.2%",
+         "price": 677.0004
+        },
+        {
+         "dist_pct": -16.54,
+         "label": "50.0%",
+         "price": 612.465
+        },
+        {
+         "dist_pct": -6.71,
+         "label": "61.8%",
+         "price": 547.9296
+        },
+        {
+         "dist_pct": 12.09,
+         "label": "78.6%",
+         "price": 456.0487
+        }
+       ],
+       "low": 339.01,
+       "nearest": {
+        "dist_pct": -6.71,
+        "label": "61.8%",
+        "price": 547.9296
+       },
+       "position_pct": 31.5
+      },
+      "weekly": {
+       "high": 885.92,
+       "levels": [
+        {
+         "dist_pct": -31.17,
+         "label": "23.6%",
+         "price": 742.6916
+        },
+        {
+         "dist_pct": -21.85,
+         "label": "38.2%",
+         "price": 654.0842
+        },
+        {
+         "dist_pct": -12.24,
+         "label": "50.0%",
+         "price": 582.47
+        },
+        {
+         "dist_pct": 0.06,
+         "label": "61.8%",
+         "price": 510.8558
+        },
+        {
+         "dist_pct": 25.01,
+         "label": "78.6%",
+         "price": 408.8966
+        }
+       ],
+       "low": 279.02,
+       "nearest": {
+        "dist_pct": 0.06,
+        "label": "61.8%",
+        "price": 510.8558
+       },
+       "position_pct": 38.3
+      }
+     },
+     "fundamentals": {
+      "analyst": {
+       "consensus": "buy",
+       "n_analysts": 19,
+       "price": 511.17,
+       "target_high": 825.0,
+       "target_low": 409.68,
+       "target_mean": 660.88
+      },
+      "coverage": {
+       "present": 5,
+       "total": 5
+      },
+      "factors": {
+       "analyst": 1,
+       "earnings_growth": 1,
+       "fcf_yield": 0,
+       "target_upside": 1,
+       "valuation": -1
+      },
+      "flags": [
+       "high_leverage",
+       "earnings_not_cash_backed"
+      ],
+      "metrics": {
+       "earnings_growth_pct": 89.8,
+       "fcf_yield_pct": 0.2,
+       "forward_pe": 48.6,
+       "rec_mean": 1.7,
+       "target_upside_pct": 29.3
+      },
+      "profile": {
+       "current_ratio": 2.27,
+       "debt_to_equity": 0.52,
+       "ev_ebitda": 424.1,
+       "fcf_to_net_income": 0.3,
+       "gross_margin": 59.5,
+       "net_debt_to_ebitda": 10.73,
+       "net_margin": 6.9,
+       "op_margin": 3.7,
+       "p_fcf": 658.0,
+       "payout": 0.0,
+       "peg": 4.17,
+       "rev_growth": 33.7,
+       "roe": 6.8
+      },
+      "rating": "strong",
+      "rating_changes": [
+       {
+        "action": "main",
+        "date": "2026-07-13",
+        "firm": "Piper Sandler",
+        "from_grade": "Overweight",
+        "to_grade": "Overweight"
+       },
+       {
+        "action": "main",
+        "date": "2026-07-06",
+        "firm": "Needham",
+        "from_grade": "Buy",
+        "to_grade": "Buy"
+       },
+       {
+        "action": "reit",
+        "date": "2026-06-25",
+        "firm": "Citizens",
+        "from_grade": "Market Outperform",
+        "to_grade": "Market Outperform"
+       },
+       {
+        "action": "main",
+        "date": "2026-05-08",
+        "firm": "Barclays",
+        "from_grade": "Overweight",
+        "to_grade": "Overweight"
+       },
+       {
+        "action": "main",
+        "date": "2026-05-07",
+        "firm": "UBS",
+        "from_grade": "Neutral",
+        "to_grade": "Neutral"
+       }
+      ],
+      "score": 2,
+      "sector": "Industrials",
+      "summary": "thin margins (op margin 4%, ROE 7%) \u00b7 high leverage (10.7\u00d7 net debt/EBITDA) \u00b7 expensive valuation (fwd P/E 49) \u00b7 strong growth (rev +34%, EPS +90%)"
+     },
+     "macd_confirms": true,
+     "market": "us",
+     "rule": "PRICE_SMA200_BEAR",
+     "sector": {
+      "factor": -1,
+      "name": "Industrials",
+      "state": "lagging",
+      "symbol": "XLI"
+     },
+     "ticker": "AXON",
+     "values": {
+      "sma200": 522.86
+     },
+     "verdict": "sell",
+     "verdict_reason": "Bearish signal confirmed by MACD, sector lagging",
+     "volume": {
+      "above_avg": false,
+      "avg20": 1094634,
+      "ratio": 0.56,
+      "today": 616585
+     }
+    },
+    {
+     "category": "price_sma200",
+     "close": 56.38,
+     "date": "2026-07-21",
+     "direction": "bullish",
+     "fib": {
+      "daily": {
+       "high": 70.41,
+       "levels": [
+        {
+         "dist_pct": -10.66,
+         "label": "23.6%",
+         "price": 63.1082
+        },
+        {
+         "dist_pct": -3.77,
+         "label": "38.2%",
+         "price": 58.5909
+        },
+        {
+         "dist_pct": 2.62,
+         "label": "50.0%",
+         "price": 54.94
+        },
+        {
+         "dist_pct": 9.93,
+         "label": "61.8%",
+         "price": 51.2891
+        },
+        {
+         "dist_pct": 22.32,
+         "label": "78.6%",
+         "price": 46.0912
+        }
+       ],
+       "low": 39.47,
+       "nearest": {
+        "dist_pct": 2.62,
+        "label": "50.0%",
+        "price": 54.94
+       },
+       "position_pct": 54.7
+      },
+      "weekly": {
+       "high": 70.41,
+       "levels": [
+        {
+         "dist_pct": -8.18,
+         "label": "23.6%",
+         "price": 61.4042
+        },
+        {
+         "dist_pct": 0.98,
+         "label": "38.2%",
+         "price": 55.8329
+        },
+        {
+         "dist_pct": 9.84,
+         "label": "50.0%",
+         "price": 51.33
+        },
+        {
+         "dist_pct": 20.4,
+         "label": "61.8%",
+         "price": 46.8271
+        },
+        {
+         "dist_pct": 39.5,
+         "label": "78.6%",
+         "price": 40.4162
+        }
+       ],
+       "low": 32.25,
+       "nearest": {
+        "dist_pct": 0.98,
+        "label": "38.2%",
+        "price": 55.8329
+       },
+       "position_pct": 63.2
+      }
+     },
+     "fundamentals": {
+      "analyst": {
+       "consensus": "buy",
+       "n_analysts": 22,
+       "price": 56.38,
+       "target_high": 85.0,
+       "target_low": 48.0,
+       "target_mean": 70.32
+      },
+      "coverage": {
+       "present": 5,
+       "total": 5
+      },
+      "factors": {
+       "analyst": 1,
+       "earnings_growth": 1,
+       "fcf_yield": 1,
+       "target_upside": 1,
+       "valuation": 0
+      },
+      "flags": [],
+      "metrics": {
+       "earnings_growth_pct": 132.5,
+       "fcf_yield_pct": 5.6,
+       "forward_pe": 19.8,
+       "rec_mean": 1.7,
+       "target_upside_pct": 24.7
+      },
+      "profile": {
+       "current_ratio": 2.13,
+       "debt_to_equity": 0.83,
+       "div_yield": 1.63,
+       "ev_ebitda": 11.7,
+       "fcf_to_net_income": 1.01,
+       "gross_margin": 23.6,
+       "net_debt_to_ebitda": 0.05,
+       "net_margin": 11.2,
+       "op_margin": 12.3,
+       "p_fcf": 17.7,
+       "payout": 29.4,
+       "peg": 2.21,
+       "rev_growth": 2.5,
+       "roe": 17.2
+      },
+      "rating": "strong",
+      "rating_changes": [
+       {
+        "action": "main",
+        "date": "2026-07-16",
+        "firm": "Barclays",
+        "from_grade": "Equal-Weight",
+        "to_grade": "Equal-Weight"
+       },
+       {
+        "action": "main",
+        "date": "2026-07-14",
+        "firm": "Piper Sandler",
+        "from_grade": "Overweight",
+        "to_grade": "Overweight"
+       },
+       {
+        "action": "main",
+        "date": "2026-07-08",
+        "firm": "Citigroup",
+        "from_grade": "Buy",
+        "to_grade": "Buy"
+       },
+       {
+        "action": "main",
+        "date": "2026-07-08",
+        "firm": "Susquehanna",
+        "from_grade": "Positive",
+        "to_grade": "Positive"
+       },
+       {
+        "action": "main",
+        "date": "2026-07-02",
+        "firm": "TD Cowen",
+        "from_grade": "Buy",
+        "to_grade": "Buy"
+       }
+      ],
+      "score": 4,
+      "sector": "Energy",
+      "summary": "profitable (op margin 12%, ROE 17%) \u00b7 low leverage (0.1\u00d7 net debt/EBITDA) \u00b7 fair valuation (fwd P/E 20) \u00b7 flat (rev +2%, EPS +132%)"
+     },
+     "macd_confirms": true,
+     "market": "us",
+     "rule": "PRICE_SMA200_BULL",
+     "sector": {
+      "factor": 1,
+      "name": "Energy",
+      "state": "leading",
+      "symbol": "XLE"
+     },
+     "ticker": "BKR",
+     "values": {
+      "sma200": 56.08
+     },
+     "verdict": "buy",
+     "verdict_reason": "Bullish signal, MACD confirms, strong fundamentals, sector leading",
+     "volume": {
+      "above_avg": true,
+      "avg20": 9557804,
+      "ratio": 1.18,
+      "today": 11252490
+     }
+    },
+    {
+     "category": "price_sma200",
+     "close": 489.65,
+     "date": "2026-07-21",
+     "direction": "bearish",
+     "fib": {
+      "daily": {
+       "high": 516.85,
+       "levels": [
+        {
+         "dist_pct": -2.52,
+         "label": "23.6%",
+         "price": 502.2982
+        },
+        {
+         "dist_pct": -0.74,
+         "label": "38.2%",
+         "price": 493.2959
+        },
+        {
+         "dist_pct": 0.75,
+         "label": "50.0%",
+         "price": 486.02
+        },
+        {
+         "dist_pct": 2.28,
+         "label": "61.8%",
+         "price": 478.7441
+        },
+        {
+         "dist_pct": 4.54,
+         "label": "78.6%",
+         "price": 468.3852
+        }
+       ],
+       "low": 455.19,
+       "nearest": {
+        "dist_pct": -0.74,
+        "label": "38.2%",
+        "price": 493.2959
+       },
+       "position_pct": 55.9
+      },
+      "weekly": {
+       "high": 542.07,
+       "levels": [
+        {
+         "dist_pct": -3.99,
+         "label": "23.6%",
+         "price": 509.9834
+        },
+        {
+         "dist_pct": -0.1,
+         "label": "38.2%",
+         "price": 490.1333
+        },
+        {
+         "dist_pct": 3.28,
+         "label": "50.0%",
+         "price": 474.09
+        },
+        {
+         "dist_pct": 6.9,
+         "label": "61.8%",
+         "price": 458.0467
+        },
+        {
+         "dist_pct": 12.51,
+         "label": "78.6%",
+         "price": 435.2054
+        }
+       ],
+       "low": 406.11,
+       "nearest": {
+        "dist_pct": -0.1,
+        "label": "38.2%",
+        "price": 490.1333
+       },
+       "position_pct": 61.4
+      }
+     },
+     "fundamentals": {
+      "analyst": {
+       "consensus": "buy",
+       "n_analysts": 3,
+       "price": 489.65,
+       "target_high": 570.0,
+       "target_low": 481.0,
+       "target_mean": 520.33
+      },
+      "coverage": {
+       "present": 5,
+       "total": 5
+      },
+      "factors": {
+       "analyst": 1,
+       "earnings_growth": 1,
+       "fcf_yield": 1,
+       "target_upside": 0,
+       "valuation": 0
+      },
+      "flags": [],
+      "metrics": {
+       "earnings_growth_pct": 119.6,
+       "fcf_yield_pct": 5.8,
+       "forward_pe": 22.8,
+       "rec_mean": 2.0,
+       "target_upside_pct": 6.3
+      },
+      "profile": {
+       "current_ratio": 2.88,
+       "debt_to_equity": 0.18,
+       "fcf_to_net_income": 0.84,
+       "gross_margin": 27.8,
+       "net_debt_to_ebitda": -2.28,
+       "net_margin": 19.3,
+       "op_margin": 14.4,
+       "p_fcf": 17.2,
+       "payout": 0.0,
+       "peg": 10.06,
+       "rev_growth": 4.4,
+       "roe": 10.5
+      },
+      "rating": "strong",
+      "rating_changes": [
+       {
+        "action": "main",
+        "date": "2026-05-04",
+        "firm": "UBS",
+        "from_grade": "Buy",
+        "to_grade": "Buy"
+       }
+      ],
+      "score": 3,
+      "sector": "Financial Services",
+      "summary": "profitable (op margin 14%, ROE 10%) \u00b7 net cash \u00b7 fair valuation (fwd P/E 23) \u00b7 flat (rev +4%, EPS +120%)"
+     },
+     "macd_confirms": true,
+     "market": "us",
+     "rule": "PRICE_SMA200_BEAR",
+     "sector": {
+      "factor": 1,
+      "name": "Financial Services",
+      "state": "leading",
+      "symbol": "XLF"
+     },
+     "ticker": "BRK-B",
+     "values": {
+      "sma200": 490.19
+     },
+     "verdict": "hold",
+     "verdict_reason": "Bearish signal but fundamentals/sector strong \u2014 trim rather than exit",
+     "volume": {
+      "above_avg": false,
+      "avg20": 4581524,
+      "ratio": 0.97,
+      "today": 4456879
+     }
+    },
+    {
+     "category": "price_sma200",
+     "close": 274.4,
+     "date": "2026-07-21",
+     "direction": "bearish",
+     "fib": {
+      "daily": {
+       "high": 371.18,
+       "levels": [
+        {
+         "dist_pct": -18.62,
+         "label": "23.6%",
+         "price": 337.1889
+        },
+        {
+         "dist_pct": -13.21,
+         "label": "38.2%",
+         "price": 316.1605
+        },
+        {
+         "dist_pct": -8.28,
+         "label": "50.0%",
+         "price": 299.165
+        },
+        {
+         "dist_pct": -2.75,
+         "label": "61.8%",
+         "price": 282.1695
+        },
+        {
+         "dist_pct": 6.37,
+         "label": "78.6%",
+         "price": 257.9724
+        }
+       ],
+       "low": 227.15,
+       "nearest": {
+        "dist_pct": -2.75,
+        "label": "61.8%",
+        "price": 282.1695
+       },
+       "position_pct": 32.8
+      },
+      "weekly": {
+       "high": 371.18,
+       "levels": [
+        {
+         "dist_pct": -15.92,
+         "label": "23.6%",
+         "price": 326.373
+        },
+        {
+         "dist_pct": -8.12,
+         "label": "38.2%",
+         "price": 298.6535
+        },
+        {
+         "dist_pct": -0.67,
+         "label": "50.0%",
+         "price": 276.25
+        },
+        {
+         "dist_pct": 8.1,
+         "label": "61.8%",
+         "price": 253.8465
+        },
+        {
+         "dist_pct": 23.63,
+         "label": "78.6%",
+         "price": 221.95
+        }
+       ],
+       "low": 181.32,
+       "nearest": {
+        "dist_pct": -0.67,
+        "label": "50.0%",
+        "price": 276.25
+       },
+       "position_pct": 49.0
+      }
+     },
+     "fundamentals": {
+      "analyst": {
+       "consensus": "hold",
+       "n_analysts": 14,
+       "price": 274.4,
+       "target_high": 375.0,
+       "target_low": 258.0,
+       "target_mean": 308.93
+      },
+      "coverage": {
+       "present": 5,
+       "total": 5
+      },
+      "factors": {
+       "analyst": 0,
+       "earnings_growth": 1,
+       "fcf_yield": 0,
+       "target_upside": 0,
+       "valuation": 0
+      },
+      "flags": [],
+      "metrics": {
+       "earnings_growth_pct": 54.4,
+       "fcf_yield_pct": 3.5,
+       "forward_pe": 18.3,
+       "rec_mean": 3.0,
+       "target_upside_pct": 12.6
+      },
+      "profile": {
+       "current_ratio": 1.39,
+       "debt_to_equity": 0.29,
+       "div_yield": 1.05,
+       "ev_ebitda": 16.0,
+       "fcf_to_net_income": 0.82,
+       "gross_margin": 54.1,
+       "net_debt_to_ebitda": -0.31,
+       "net_margin": 25.8,
+       "op_margin": 39.7,
+       "p_fcf": 28.6,
+       "payout": 23.8,
+       "peg": 2.62,
+       "rev_growth": 6.5,
+       "roe": 25.1
+      },
+      "rating": "neutral",
+      "rating_changes": [
+       {
+        "action": "main",
+        "date": "2026-07-20",
+        "firm": "TD Cowen",
+        "from_grade": "Hold",
+        "to_grade": "Hold"
+       },
+       {
+        "action": "main",
+        "date": "2026-07-15",
+        "firm": "Piper Sandler",
+        "from_grade": "Overweight",
+        "to_grade": "Overweight"
+       },
+       {
+        "action": "main",
+        "date": "2026-07-09",
+        "firm": "Barclays",
+        "from_grade": "Overweight",
+        "to_grade": "Overweight"
+       },
+       {
+        "action": "main",
+        "date": "2026-05-04",
+        "firm": "UBS",
+        "from_grade": "Neutral",
+        "to_grade": "Neutral"
+       },
+       {
+        "action": "main",
+        "date": "2026-05-04",
+        "firm": "TD Cowen",
+        "from_grade": "Hold",
+        "to_grade": "Hold"
+       }
+      ],
+      "score": 1,
+      "sector": "Financial Services",
+      "summary": "highly profitable (op margin 40%, ROE 25%) \u00b7 net cash \u00b7 fair valuation (fwd P/E 18) \u00b7 growing (rev +6%, EPS +54%)"
+     },
+     "macd_confirms": false,
+     "market": "us",
+     "rule": "PRICE_SMA200_BEAR",
+     "sector": {
+      "factor": 1,
+      "name": "Financial Services",
+      "state": "leading",
+      "symbol": "XLF"
+     },
+     "ticker": "CBOE",
+     "values": {
+      "sma200": 276.84
+     },
+     "verdict": "hold",
+     "verdict_reason": "MACD momentum does not confirm \u2014 possible false breakdown",
+     "volume": {
+      "above_avg": false,
+      "avg20": 1381658,
+      "ratio": 0.43,
+      "today": 587767
+     }
+    },
+    {
+     "category": "price_sma200",
+     "close": 139.26,
+     "date": "2026-07-21",
+     "direction": "bullish",
+     "fib": {
+      "daily": {
+       "high": 165.15,
+       "levels": [
+        {
+         "dist_pct": -10.22,
+         "label": "23.6%",
+         "price": 155.1176
+        },
+        {
+         "dist_pct": -6.48,
+         "label": "38.2%",
+         "price": 148.9112
+        },
+        {
+         "dist_pct": -3.22,
+         "label": "50.0%",
+         "price": 143.895
+        },
+        {
+         "dist_pct": 0.27,
+         "label": "61.8%",
+         "price": 138.8788
+        },
+        {
+         "dist_pct": 5.71,
+         "label": "78.6%",
+         "price": 131.7371
+        }
+       ],
+       "low": 122.64,
+       "nearest": {
+        "dist_pct": 0.27,
+        "label": "61.8%",
+        "price": 138.8788
+       },
+       "position_pct": 39.1
+      },
+      "weekly": {
+       "high": 165.15,
+       "levels": [
+        {
+         "dist_pct": -5.54,
+         "label": "23.6%",
+         "price": 147.4288
+        },
+        {
+         "dist_pct": 2.05,
+         "label": "38.2%",
+         "price": 136.4656
+        },
+        {
+         "dist_pct": 9.13,
+         "label": "50.0%",
+         "price": 127.605
+        },
+        {
+         "dist_pct": 17.28,
+         "label": "61.8%",
+         "price": 118.7444
+        },
+        {
+         "dist_pct": 31.22,
+         "label": "78.6%",
+         "price": 106.1293
+        }
+       ],
+       "low": 90.06,
+       "nearest": {
+        "dist_pct": 2.05,
+        "label": "38.2%",
+        "price": 136.4656
+       },
+       "position_pct": 65.5
+      }
+     },
+     "fundamentals": {
+      "analyst": {
+       "consensus": "buy",
+       "n_analysts": 27,
+       "price": 139.26,
+       "target_high": 203.0,
+       "target_low": 104.0,
+       "target_mean": 163.54
+      },
+      "coverage": {
+       "present": 5,
+       "total": 5
+      },
+      "factors": {
+       "analyst": 1,
+       "earnings_growth": 1,
+       "fcf_yield": 1,
+       "target_upside": 1,
+       "valuation": 0
+      },
+      "flags": [],
+      "metrics": {
+       "earnings_growth_pct": 27.9,
+       "fcf_yield_pct": 4.2,
+       "forward_pe": 19.4,
+       "rec_mean": 1.9,
+       "target_upside_pct": 17.4
+      },
+      "profile": {
+       "current_ratio": 0.87,
+       "debt_to_equity": 0.69,
+       "div_yield": 1.59,
+       "ev_ebitda": 15.4,
+       "fcf_to_net_income": 1.34,
+       "gross_margin": 52.7,
+       "net_debt_to_ebitda": 2.09,
+       "net_margin": 13.4,
+       "op_margin": 24.2,
+       "p_fcf": 23.8,
+       "payout": 50.1,
+       "peg": 1.9,
+       "rev_growth": 2.9,
+       "roe": 12.3
+      },
+      "rating": "strong",
+      "rating_changes": [
+       {
+        "action": "up",
+        "date": "2026-07-17",
+        "firm": "JP Morgan",
+        "from_grade": "Neutral",
+        "to_grade": "Overweight"
+       },
+       {
+        "action": "init",
+        "date": "2026-06-16",
+        "firm": "DA Davidson",
+        "from_grade": null,
+        "to_grade": "Neutral"
+       },
+       {
+        "action": "init",
+        "date": "2026-06-10",
+        "firm": "Bernstein",
+        "from_grade": null,
+        "to_grade": "Outperform"
+       },
+       {
+        "action": "main",
+        "date": "2026-05-07",
+        "firm": "Wells Fargo",
+        "from_grade": "Equal-Weight",
+        "to_grade": "Equal-Weight"
+       },
+       {
+        "action": "main",
+        "date": "2026-05-06",
+        "firm": "RBC Capital",
+        "from_grade": "Outperform",
+        "to_grade": "Outperform"
+       }
+      ],
+      "score": 4,
+      "sector": "Industrials",
+      "summary": "highly profitable (op margin 24%, ROE 12%) \u00b7 moderate leverage (2.1\u00d7 net debt/EBITDA) \u00b7 fair valuation (fwd P/E 19) \u00b7 flat (rev +3%, EPS +28%)"
+     },
+     "macd_confirms": false,
+     "market": "us",
+     "rule": "PRICE_SMA200_BULL",
+     "sector": {
+      "factor": -1,
+      "name": "Industrials",
+      "state": "lagging",
+      "symbol": "XLI"
+     },
+     "ticker": "EMR",
+     "values": {
+      "sma200": 138.96
+     },
+     "verdict": "hold",
+     "verdict_reason": "MACD momentum does not confirm \u2014 possible false break",
+     "volume": {
+      "above_avg": false,
+      "avg20": 2568747,
+      "ratio": 0.46,
+      "today": 1179933
+     }
+    },
+    {
+     "category": "price_sma200",
+     "close": 246.95,
+     "date": "2026-07-21",
+     "direction": "bearish",
+     "fib": {
+      "daily": {
+       "high": 432.88,
+       "levels": [
+        {
+         "dist_pct": -34.04,
+         "label": "23.6%",
+         "price": 374.3803
+        },
+        {
+         "dist_pct": -26.98,
+         "label": "38.2%",
+         "price": 338.1898
+        },
+        {
+         "dist_pct": -20.07,
+         "label": "50.0%",
+         "price": 308.94
+        },
+        {
+         "dist_pct": -11.71,
+         "label": "61.8%",
+         "price": 279.6902
+        },
+        {
+         "dist_pct": 3.74,
+         "label": "78.6%",
+         "price": 238.0463
+        }
+       ],
+       "low": 185.0,
+       "nearest": {
+        "dist_pct": 3.74,
+        "label": "78.6%",
+        "price": 238.0463
+       },
+       "position_pct": 25.0
+      },
+      "weekly": {
+       "high": 499.87,
+       "levels": [
+        {
+         "dist_pct": -41.97,
+         "label": "23.6%",
+         "price": 425.5607
+        },
+        {
+         "dist_pct": -34.94,
+         "label": "38.2%",
+         "price": 379.5897
+        },
+        {
+         "dist_pct": -27.88,
+         "label": "50.0%",
+         "price": 342.435
+        },
+        {
+         "dist_pct": -19.11,
+         "label": "61.8%",
+         "price": 305.2803
+        },
+        {
+         "dist_pct": -2.15,
+         "label": "78.6%",
+         "price": 252.3822
+        }
+       ],
+       "low": 185.0,
+       "nearest": {
+        "dist_pct": -2.15,
+        "label": "78.6%",
+        "price": 252.3822
+       },
+       "position_pct": 19.7
+      }
+     },
+     "fundamentals": {
+      "analyst": {
+       "consensus": "hold",
+       "n_analysts": 16,
+       "price": 246.95,
+       "target_high": 340.0,
+       "target_low": 210.0,
+       "target_mean": 254.44
+      },
+      "coverage": {
+       "present": 5,
+       "total": 5
+      },
+      "factors": {
+       "analyst": 0,
+       "earnings_growth": -1,
+       "fcf_yield": 1,
+       "target_upside": 0,
+       "valuation": 1
+      },
+      "flags": [],
+      "metrics": {
+       "earnings_growth_pct": -9.6,
+       "fcf_yield_pct": 7.1,
+       "forward_pe": 12.5,
+       "rec_mean": 3.3,
+       "target_upside_pct": 3.0
+      },
+      "profile": {
+       "current_ratio": 0.68,
+       "debt_to_equity": 0.77,
+       "div_yield": 1.88,
+       "ev_ebitda": 11.1,
+       "fcf_to_net_income": 1.1,
+       "gross_margin": 51.4,
+       "net_debt_to_ebitda": 1.36,
+       "net_margin": 23.2,
+       "op_margin": 30.5,
+       "p_fcf": 14.1,
+       "payout": 29.4,
+       "peg": 1.14,
+       "rev_growth": 6.4,
+       "roe": 27.0
+      },
+      "rating": "neutral",
+      "rating_changes": [
+       {
+        "action": "main",
+        "date": "2026-07-06",
+        "firm": "Barclays",
+        "from_grade": "Underweight",
+        "to_grade": "Underweight"
+       },
+       {
+        "action": "main",
+        "date": "2026-07-02",
+        "firm": "Jefferies",
+        "from_grade": "Hold",
+        "to_grade": "Hold"
+       },
+       {
+        "action": "main",
+        "date": "2026-07-02",
+        "firm": "B of A Securities",
+        "from_grade": "Underperform",
+        "to_grade": "Underperform"
+       },
+       {
+        "action": "main",
+        "date": "2026-07-02",
+        "firm": "Deutsche Bank",
+        "from_grade": "Hold",
+        "to_grade": "Hold"
+       },
+       {
+        "action": "reit",
+        "date": "2026-07-02",
+        "firm": "RBC Capital",
+        "from_grade": "Sector Perform",
+        "to_grade": "Sector Perform"
+       }
+      ],
+      "score": 1,
+      "sector": "Financial Services",
+      "summary": "highly profitable (op margin 30%, ROE 27%) \u00b7 moderate leverage (1.4\u00d7 net debt/EBITDA) \u00b7 cheap valuation (fwd P/E 12) \u00b7 rev +6% / EPS -10%"
+     },
+     "macd_confirms": false,
+     "market": "us",
+     "rule": "PRICE_SMA200_BEAR",
+     "sector": {
+      "factor": 1,
+      "name": "Financial Services",
+      "state": "leading",
+      "symbol": "XLF"
+     },
+     "ticker": "FDS",
+     "values": {
+      "sma200": 248.44
+     },
+     "verdict": "hold",
+     "verdict_reason": "MACD momentum does not confirm \u2014 possible false breakdown",
+     "volume": {
+      "above_avg": false,
+      "avg20": 1008203,
+      "ratio": 0.51,
+      "today": 510668
+     }
+    },
+    {
+     "category": "price_sma200",
+     "close": 130.28,
+     "date": "2026-07-21",
+     "direction": "bearish",
+     "fib": {
+      "daily": {
+       "high": 157.29,
+       "levels": [
+        {
+         "dist_pct": -10.52,
+         "label": "23.6%",
+         "price": 145.5986
+        },
+        {
+         "dist_pct": -5.84,
+         "label": "38.2%",
+         "price": 138.3657
+        },
+        {
+         "dist_pct": -1.69,
+         "label": "50.0%",
+         "price": 132.52
+        },
+        {
+         "dist_pct": 2.85,
+         "label": "61.8%",
+         "price": 126.6743
+        },
+        {
+         "dist_pct": 10.08,
+         "label": "78.6%",
+         "price": 118.3516
+        }
+       ],
+       "low": 107.75,
+       "nearest": {
+        "dist_pct": -1.69,
+        "label": "50.0%",
+        "price": 132.52
+       },
+       "position_pct": 45.5
+      },
+      "weekly": {
+       "high": 157.29,
+       "levels": [
+        {
+         "dist_pct": -4.82,
+         "label": "23.6%",
+         "price": 136.8736
+        },
+        {
+         "dist_pct": 4.86,
+         "label": "38.2%",
+         "price": 124.2432
+        },
+        {
+         "dist_pct": 14.25,
+         "label": "50.0%",
+         "price": 114.035
+        },
+        {
+         "dist_pct": 25.48,
+         "label": "61.8%",
+         "price": 103.8268
+        },
+        {
+         "dist_pct": 45.9,
+         "label": "78.6%",
+         "price": 89.2931
+        }
+       ],
+       "low": 70.78,
+       "nearest": {
+        "dist_pct": -4.82,
+        "label": "23.6%",
+        "price": 136.8736
+       },
+       "position_pct": 68.8
+      }
+     },
+     "fundamentals": {
+      "analyst": {
+       "consensus": "buy",
+       "n_analysts": 27,
+       "price": 130.28,
+       "target_high": 180.0,
+       "target_low": 120.0,
+       "target_mean": 158.3
+      },
+      "coverage": {
+       "present": 5,
+       "total": 5
+      },
+      "factors": {
+       "analyst": 1,
+       "earnings_growth": 1,
+       "fcf_yield": 1,
+       "target_upside": 1,
+       "valuation": 1
+      },
+      "flags": [],
+      "metrics": {
+       "earnings_growth_pct": 54.8,
+       "fcf_yield_pct": 4.9,
+       "forward_pe": 13.5,
+       "rec_mean": 1.6,
+       "target_upside_pct": 21.5
+      },
+      "profile": {
+       "current_ratio": 1.97,
+       "debt_to_equity": 0.95,
+       "div_yield": 2.52,
+       "ev_ebitda": 12.1,
+       "fcf_to_net_income": 0.86,
+       "gross_margin": 79.4,
+       "net_debt_to_ebitda": 0.84,
+       "net_margin": 31.0,
+       "op_margin": 39.3,
+       "p_fcf": 20.4,
+       "payout": 43.4,
+       "peg": 2.14,
+       "rev_growth": 4.4,
+       "roe": 43.4
+      },
+      "rating": "strong",
+      "rating_changes": [
+       {
+        "action": "down",
+        "date": "2026-07-21",
+        "firm": "Leerink Partners",
+        "from_grade": "Outperform",
+        "to_grade": "Market Perform"
+       },
+       {
+        "action": "main",
+        "date": "2026-07-08",
+        "firm": "Morgan Stanley",
+        "from_grade": "Overweight",
+        "to_grade": "Overweight"
+       },
+       {
+        "action": "main",
+        "date": "2026-07-07",
+        "firm": "RBC Capital",
+        "from_grade": "Sector Perform",
+        "to_grade": "Sector Perform"
+       },
+       {
+        "action": "main",
+        "date": "2026-07-07",
+        "firm": "Truist Securities",
+        "from_grade": "Buy",
+        "to_grade": "Buy"
+       },
+       {
+        "action": "reit",
+        "date": "2026-07-06",
+        "firm": "Cantor Fitzgerald",
+        "from_grade": "Overweight",
+        "to_grade": "Overweight"
+       }
+      ],
+      "score": 5,
+      "sector": "Healthcare",
+      "summary": "highly profitable (op margin 39%, ROE 43%) \u00b7 low leverage (0.8\u00d7 net debt/EBITDA) \u00b7 cheap valuation (fwd P/E 14) \u00b7 flat (rev +4%, EPS +55%)"
+     },
+     "macd_confirms": false,
+     "market": "us",
+     "rule": "PRICE_SMA200_BEAR",
+     "sector": {
+      "factor": 1,
+      "name": "Healthcare",
+      "state": "leading",
+      "symbol": "XLV"
+     },
+     "ticker": "GILD",
+     "values": {
+      "sma200": 131.14
+     },
+     "verdict": "hold",
+     "verdict_reason": "MACD momentum does not confirm \u2014 possible false breakdown",
+     "volume": {
+      "above_avg": true,
+      "avg20": 7717666,
+      "ratio": 1.08,
+      "today": 8348010
+     }
+    },
+    {
+     "category": "price_sma200",
+     "close": 79.52,
+     "date": "2026-07-21",
+     "direction": "bullish",
+     "fib": {
+      "daily": {
+       "high": 87.62,
+       "levels": [
+        {
+         "dist_pct": 1.33,
+         "label": "23.6%",
+         "price": 78.475
+        },
+        {
+         "dist_pct": 9.2,
+         "label": "38.2%",
+         "price": 72.8175
+        },
+        {
+         "dist_pct": 16.52,
+         "label": "50.0%",
+         "price": 68.245
+        },
+        {
+         "dist_pct": 24.89,
+         "label": "61.8%",
+         "price": 63.6725
+        },
+        {
+         "dist_pct": 39.11,
+         "label": "78.6%",
+         "price": 57.1625
+        }
+       ],
+       "low": 48.87,
+       "nearest": {
+        "dist_pct": 1.33,
+        "label": "23.6%",
+        "price": 78.475
+       },
+       "position_pct": 79.1
+      },
+      "weekly": {
+       "high": 87.62,
+       "levels": [
+        {
+         "dist_pct": 4.44,
+         "label": "23.6%",
+         "price": 76.1362
+        },
+        {
+         "dist_pct": 15.19,
+         "label": "38.2%",
+         "price": 69.0319
+        },
+        {
+         "dist_pct": 25.64,
+         "label": "50.0%",
+         "price": 63.29
+        },
+        {
+         "dist_pct": 38.18,
+         "label": "61.8%",
+         "price": 57.5481
+        },
+        {
+         "dist_pct": 61.06,
+         "label": "78.6%",
+         "price": 49.3732
+        }
+       ],
+       "low": 38.96,
+       "nearest": {
+        "dist_pct": 4.44,
+        "label": "23.6%",
+        "price": 76.1362
+       },
+       "position_pct": 83.4
+      }
+     },
+     "fundamentals": {
+      "analyst": {
+       "consensus": "buy",
+       "n_analysts": 26,
+       "price": 79.52,
+       "target_high": 131.0,
+       "target_low": 60.0,
+       "target_mean": 95.85
+      },
+      "coverage": {
+       "present": 5,
+       "total": 5
+      },
+      "factors": {
+       "analyst": 1,
+       "earnings_growth": -1,
+       "fcf_yield": 1,
+       "target_upside": 1,
+       "valuation": 1
+      },
+      "flags": [
+       "high_leverage",
+       "value_trap"
+      ],
+      "metrics": {
+       "earnings_growth_pct": -15.8,
+       "fcf_yield_pct": 31.3,
+       "forward_pe": 5.6,
+       "rec_mean": 1.9,
+       "target_upside_pct": 20.5
+      },
+      "profile": {
+       "current_ratio": 1.15,
+       "debt_to_equity": 1.99,
+       "div_yield": 0.91,
+       "ev_ebitda": 9.6,
+       "fcf_to_net_income": 9.23,
+       "gross_margin": 11.1,
+       "net_debt_to_ebitda": 5.71,
+       "net_margin": 1.4,
+       "op_margin": 9.4,
+       "p_fcf": 3.2,
+       "payout": 23.0,
+       "peg": 0.33,
+       "rev_growth": -0.9,
+       "roe": 4.0
+      },
+      "rating": "strong",
+      "rating_changes": [
+       {
+        "action": "main",
+        "date": "2026-07-13",
+        "firm": "RBC Capital",
+        "from_grade": "Outperform",
+        "to_grade": "Outperform"
+       },
+       {
+        "action": "main",
+        "date": "2026-07-08",
+        "firm": "JP Morgan",
+        "from_grade": "Overweight",
+        "to_grade": "Overweight"
+       },
+       {
+        "action": "main",
+        "date": "2026-06-25",
+        "firm": "Wells Fargo",
+        "from_grade": "Underweight",
+        "to_grade": "Underweight"
+       },
+       {
+        "action": "reit",
+        "date": "2026-06-11",
+        "firm": "RBC Capital",
+        "from_grade": "Outperform",
+        "to_grade": "Outperform"
+       },
+       {
+        "action": "main",
+        "date": "2026-06-01",
+        "firm": "Citigroup",
+        "from_grade": "Buy",
+        "to_grade": "Buy"
+       }
+      ],
+      "score": 3,
+      "sector": "Consumer Cyclical",
+      "summary": "profitable (op margin 9%, ROE 4%) \u00b7 high leverage (5.7\u00d7 net debt/EBITDA) \u00b7 cheap valuation (fwd P/E 6) \u00b7 shrinking (rev -1%, EPS -16%)"
+     },
+     "macd_confirms": true,
+     "market": "us",
+     "rule": "PRICE_SMA200_BULL",
+     "sector": {
+      "factor": -1,
+      "name": "Consumer Cyclical",
+      "state": "lagging",
+      "symbol": "XLY"
+     },
+     "ticker": "GM",
+     "values": {
+      "sma200": 76.24
+     },
+     "verdict": "buy",
+     "verdict_reason": "Bullish signal, MACD confirms, strong fundamentals, sector lagging",
+     "volume": {
+      "above_avg": true,
+      "avg20": 7155151,
+      "ratio": 1.48,
+      "today": 10560129
+     }
+    },
+    {
+     "category": "price_sma200",
+     "close": 119.12,
+     "date": "2026-07-21",
+     "direction": "bearish",
+     "fib": {
+      "daily": {
+       "high": 151.57,
+       "levels": [
+        {
+         "dist_pct": -13.19,
+         "label": "23.6%",
+         "price": 137.2236
+        },
+        {
+         "dist_pct": -7.19,
+         "label": "38.2%",
+         "price": 128.3482
+        },
+        {
+         "dist_pct": -1.7,
+         "label": "50.0%",
+         "price": 121.175
+        },
+        {
+         "dist_pct": 4.49,
+         "label": "61.8%",
+         "price": 114.0018
+        },
+        {
+         "dist_pct": 14.77,
+         "label": "78.6%",
+         "price": 103.7891
+        }
+       ],
+       "low": 90.78,
+       "nearest": {
+        "dist_pct": -1.7,
+        "label": "50.0%",
+        "price": 121.175
+       },
+       "position_pct": 46.6
+      },
+      "weekly": {
+       "high": 151.57,
+       "levels": [
+        {
+         "dist_pct": -13.19,
+         "label": "23.6%",
+         "price": 137.2236
+        },
+        {
+         "dist_pct": -7.19,
+         "label": "38.2%",
+         "price": 128.3482
+        },
+        {
+         "dist_pct": -1.7,
+         "label": "50.0%",
+         "price": 121.175
+        },
+        {
+         "dist_pct": 4.49,
+         "label": "61.8%",
+         "price": 114.0018
+        },
+        {
+         "dist_pct": 14.77,
+         "label": "78.6%",
+         "price": 103.7891
+        }
+       ],
+       "low": 90.78,
+       "nearest": {
+        "dist_pct": -1.7,
+        "label": "50.0%",
+        "price": 121.175
+       },
+       "position_pct": 46.6
+      }
+     },
+     "fundamentals": {
+      "analyst": {
+       "consensus": "buy",
+       "n_analysts": 8,
+       "price": 119.12,
+       "target_high": 150.0,
+       "target_low": 124.0,
+       "target_mean": 134.62
+      },
+      "coverage": {
+       "present": 5,
+       "total": 5
+      },
+      "factors": {
+       "analyst": 1,
+       "earnings_growth": -1,
+       "fcf_yield": 1,
+       "target_upside": 0,
+       "valuation": 1
+      },
+      "flags": [],
+      "metrics": {
+       "earnings_growth_pct": -2.1,
+       "fcf_yield_pct": 4.6,
+       "forward_pe": 14.3,
+       "rec_mean": 2.1,
+       "target_upside_pct": 13.0
+      },
+      "profile": {
+       "current_ratio": 1.09,
+       "debt_to_equity": 1.49,
+       "div_yield": 3.57,
+       "ev_ebitda": 11.3,
+       "fcf_to_net_income": 12.57,
+       "gross_margin": 37.5,
+       "net_debt_to_ebitda": 3.05,
+       "net_margin": 0.2,
+       "op_margin": 5.8,
+       "p_fcf": 21.9,
+       "payout": 943.8,
+       "peg": 1.32,
+       "rev_growth": 6.8,
+       "roe": 1.3
+      },
+      "rating": "strong",
+      "rating_changes": [
+       {
+        "action": "main",
+        "date": "2026-07-06",
+        "firm": "DA Davidson",
+        "from_grade": "Buy",
+        "to_grade": "Buy"
+       },
+       {
+        "action": "init",
+        "date": "2026-06-16",
+        "firm": "DA Davidson",
+        "from_grade": null,
+        "to_grade": "Buy"
+       }
+      ],
+      "score": 2,
+      "sector": "Consumer Cyclical",
+      "summary": "thin margins (op margin 6%, ROE 1%) \u00b7 moderate leverage (3.0\u00d7 net debt/EBITDA) \u00b7 cheap valuation (fwd P/E 14) \u00b7 rev +7% / EPS -2%"
+     },
+     "macd_confirms": true,
+     "market": "us",
+     "rule": "PRICE_SMA200_BEAR",
+     "sector": {
+      "factor": -1,
+      "name": "Consumer Cyclical",
+      "state": "lagging",
+      "symbol": "XLY"
+     },
+     "ticker": "GPC",
+     "values": {
+      "sma200": 119.54
+     },
+     "verdict": "sell",
+     "verdict_reason": "Bearish signal confirmed by MACD, sector lagging",
+     "volume": {
+      "above_avg": true,
+      "avg20": 2169895,
+      "ratio": 1.71,
+      "today": 3710708
+     }
+    },
+    {
+     "category": "price_sma200",
+     "close": 33.19,
+     "date": "2026-07-21",
+     "direction": "bearish",
+     "fib": {
+      "daily": {
+       "high": 43.59,
+       "levels": [
+        {
+         "dist_pct": -12.8,
+         "label": "23.6%",
+         "price": 38.0629
+        },
+        {
+         "dist_pct": -4.2,
+         "label": "38.2%",
+         "price": 34.6436
+        },
+        {
+         "dist_pct": 4.11,
+         "label": "50.0%",
+         "price": 31.88
+        },
+        {
+         "dist_pct": 13.99,
+         "label": "61.8%",
+         "price": 29.1164
+        },
+        {
+         "dist_pct": 31.8,
+         "label": "78.6%",
+         "price": 25.1819
+        }
+       ],
+       "low": 20.17,
+       "nearest": {
+        "dist_pct": 4.11,
+        "label": "50.0%",
+        "price": 31.88
+       },
+       "position_pct": 55.6
+      },
+      "weekly": {
+       "high": 43.59,
+       "levels": [
+        {
+         "dist_pct": -12.01,
+         "label": "23.6%",
+         "price": 37.7207
+        },
+        {
+         "dist_pct": -2.64,
+         "label": "38.2%",
+         "price": 34.0897
+        },
+        {
+         "dist_pct": 6.53,
+         "label": "50.0%",
+         "price": 31.155
+        },
+        {
+         "dist_pct": 17.61,
+         "label": "61.8%",
+         "price": 28.2203
+        },
+        {
+         "dist_pct": 38.05,
+         "label": "78.6%",
+         "price": 24.0422
+        }
+       ],
+       "low": 18.72,
+       "nearest": {
+        "dist_pct": -2.64,
+        "label": "38.2%",
+        "price": 34.0897
+       },
+       "position_pct": 58.2
+      }
+     },
+     "fundamentals": {
+      "analyst": {
+       "consensus": "buy",
+       "n_analysts": 25,
+       "price": 33.19,
+       "target_high": 55.0,
+       "target_low": 28.0,
+       "target_mean": 44.04
+      },
+      "coverage": {
+       "present": 5,
+       "total": 5
+      },
+      "factors": {
+       "analyst": 1,
+       "earnings_growth": 1,
+       "fcf_yield": 1,
+       "target_upside": 1,
+       "valuation": 1
+      },
+      "flags": [],
+      "metrics": {
+       "earnings_growth_pct": 133.5,
+       "fcf_yield_pct": 7.3,
+       "forward_pe": 11.3,
+       "rec_mean": 1.8,
+       "target_upside_pct": 32.7
+      },
+      "profile": {
+       "current_ratio": 2.08,
+       "debt_to_equity": 0.75,
+       "div_yield": 2.05,
+       "ev_ebitda": 8.6,
+       "fcf_to_net_income": 1.32,
+       "gross_margin": 15.3,
+       "net_debt_to_ebitda": 1.47,
+       "net_margin": 6.9,
+       "op_margin": 12.6,
+       "p_fcf": 13.7,
+       "payout": 37.6,
+       "peg": 0.92,
+       "rev_growth": -0.3,
+       "roe": 14.6
+      },
+      "rating": "strong",
+      "rating_changes": [
+       {
+        "action": "up",
+        "date": "2026-07-14",
+        "firm": "Piper Sandler",
+        "from_grade": "Neutral",
+        "to_grade": "Overweight"
+       },
+       {
+        "action": "main",
+        "date": "2026-07-08",
+        "firm": "Susquehanna",
+        "from_grade": "Positive",
+        "to_grade": "Positive"
+       },
+       {
+        "action": "main",
+        "date": "2026-07-02",
+        "firm": "UBS",
+        "from_grade": "Neutral",
+        "to_grade": "Neutral"
+       },
+       {
+        "action": "main",
+        "date": "2026-06-03",
+        "firm": "Citigroup",
+        "from_grade": "Buy",
+        "to_grade": "Buy"
+       },
+       {
+        "action": "up",
+        "date": "2026-05-08",
+        "firm": "Barclays",
+        "from_grade": "Equal-Weight",
+        "to_grade": "Overweight"
+       }
+      ],
+      "score": 5,
+      "sector": "Energy",
+      "summary": "profitable (op margin 13%, ROE 15%) \u00b7 moderate leverage (1.5\u00d7 net debt/EBITDA) \u00b7 cheap valuation (fwd P/E 11) \u00b7 rev -0% / EPS +134%"
+     },
+     "macd_confirms": false,
+     "market": "us",
+     "rule": "PRICE_SMA200_BEAR",
+     "sector": {
+      "factor": 1,
+      "name": "Energy",
+      "state": "leading",
+      "symbol": "XLE"
+     },
+     "ticker": "HAL",
+     "values": {
+      "sma200": 33.39
+     },
+     "verdict": "hold",
+     "verdict_reason": "MACD momentum does not confirm \u2014 possible false breakdown",
+     "volume": {
+      "above_avg": true,
+      "avg20": 11895665,
+      "ratio": 2.6,
+      "today": 30887103
+     }
+    },
+    {
+     "category": "price_sma200",
+     "close": 88.78,
+     "date": "2026-07-21",
+     "direction": "bullish",
+     "fib": {
+      "daily": {
+       "high": 106.98,
+       "levels": [
+        {
+         "dist_pct": -9.53,
+         "label": "23.6%",
+         "price": 98.1347
+        },
+        {
+         "dist_pct": -4.19,
+         "label": "38.2%",
+         "price": 92.6626
+        },
+        {
+         "dist_pct": 0.61,
+         "label": "50.0%",
+         "price": 88.24
+        },
+        {
+         "dist_pct": 5.92,
+         "label": "61.8%",
+         "price": 83.8174
+        },
+        {
+         "dist_pct": 14.52,
+         "label": "78.6%",
+         "price": 77.5207
+        }
+       ],
+       "low": 69.5,
+       "nearest": {
+        "dist_pct": 0.61,
+        "label": "50.0%",
+        "price": 88.24
+       },
+       "position_pct": 51.4
+      },
+      "weekly": {
+       "high": 106.98,
+       "levels": [
+        {
+         "dist_pct": -4.84,
+         "label": "23.6%",
+         "price": 93.2967
+        },
+        {
+         "dist_pct": 4.65,
+         "label": "38.2%",
+         "price": 84.8316
+        },
+        {
+         "dist_pct": 13.84,
+         "label": "50.0%",
+         "price": 77.99
+        },
+        {
+         "dist_pct": 24.78,
+         "label": "61.8%",
+         "price": 71.1484
+        },
+        {
+         "dist_pct": 44.57,
+         "label": "78.6%",
+         "price": 61.4077
+        }
+       ],
+       "low": 49.0,
+       "nearest": {
+        "dist_pct": 4.65,
+        "label": "38.2%",
+        "price": 84.8316
+       },
+       "position_pct": 68.6
+      }
+     },
+     "fundamentals": {
+      "analyst": {
+       "consensus": "strong_buy",
+       "n_analysts": 14,
+       "price": 88.78,
+       "target_high": 125.0,
+       "target_low": 85.0,
+       "target_mean": 108.29
+      },
+      "coverage": {
+       "present": 5,
+       "total": 5
+      },
+      "factors": {
+       "analyst": 1,
+       "earnings_growth": 1,
+       "fcf_yield": 1,
+       "target_upside": 1,
+       "valuation": 1
+      },
+      "flags": [
+       "high_leverage",
+       "value_trap"
+      ],
+      "metrics": {
+       "earnings_growth_pct": 98.6,
+       "fcf_yield_pct": 4.4,
+       "forward_pe": 13.9,
+       "rec_mean": 1.5,
+       "target_upside_pct": 22.0
+      },
+      "profile": {
+       "current_ratio": 1.65,
+       "debt_to_equity": 5.74,
+       "div_yield": 3.15,
+       "ev_ebitda": 11.1,
+       "gross_margin": 63.7,
+       "net_debt_to_ebitda": 1.98,
+       "net_margin": -4.6,
+       "op_margin": 27.6,
+       "p_fcf": 22.9,
+       "payout": 92.4,
+       "peg": 1.76,
+       "rev_growth": 12.7,
+       "roe": -23.3
+      },
+      "rating": "strong",
+      "rating_changes": [
+       {
+        "action": "main",
+        "date": "2026-07-16",
+        "firm": "Jefferies",
+        "from_grade": "Buy",
+        "to_grade": "Buy"
+       },
+       {
+        "action": "main",
+        "date": "2026-07-16",
+        "firm": "B of A Securities",
+        "from_grade": "Buy",
+        "to_grade": "Buy"
+       },
+       {
+        "action": "main",
+        "date": "2026-07-15",
+        "firm": "BNP Paribas",
+        "from_grade": "Outperform",
+        "to_grade": "Outperform"
+       },
+       {
+        "action": "main",
+        "date": "2026-07-14",
+        "firm": "Roth Capital",
+        "from_grade": "Buy",
+        "to_grade": "Buy"
+       },
+       {
+        "action": "main",
+        "date": "2026-07-10",
+        "firm": "Citigroup",
+        "from_grade": "Buy",
+        "to_grade": "Buy"
+       }
+      ],
+      "score": 5,
+      "sector": "Consumer Cyclical",
+      "summary": "highly profitable (op margin 28%, ROE -23%) \u00b7 high leverage (D/E 5.7\u00d7) \u00b7 cheap valuation (fwd P/E 14) \u00b7 growing (rev +13%, EPS +99%)"
+     },
+     "macd_confirms": true,
+     "market": "us",
+     "rule": "PRICE_SMA200_BULL",
+     "sector": {
+      "factor": -1,
+      "name": "Consumer Cyclical",
+      "state": "lagging",
+      "symbol": "XLY"
+     },
+     "ticker": "HAS",
+     "values": {
+      "sma200": 86.7
+     },
+     "verdict": "buy",
+     "verdict_reason": "Bullish signal, MACD confirms, strong fundamentals, sector lagging",
+     "volume": {
+      "above_avg": true,
+      "avg20": 2381362,
+      "ratio": 3.31,
+      "today": 7883746
+     }
+    },
+    {
+     "category": "price_sma200",
+     "close": 106.36,
+     "date": "2026-07-21",
+     "direction": "bullish",
+     "fib": {
+      "daily": {
+       "high": 153.86,
+       "levels": [
+        {
+         "dist_pct": -19.75,
+         "label": "23.6%",
+         "price": 132.5386
+        },
+        {
+         "dist_pct": -10.88,
+         "label": "38.2%",
+         "price": 119.3482
+        },
+        {
+         "dist_pct": -2.14,
+         "label": "50.0%",
+         "price": 108.6875
+        },
+        {
+         "dist_pct": 8.5,
+         "label": "61.8%",
+         "price": 98.0268
+        },
+        {
+         "dist_pct": 28.38,
+         "label": "78.6%",
+         "price": 82.8488
+        }
+       ],
+       "low": 63.515,
+       "nearest": {
+        "dist_pct": -2.14,
+        "label": "50.0%",
+        "price": 108.6875
+       },
+       "position_pct": 47.4
+      },
+      "weekly": {
+       "high": 153.86,
+       "levels": [
+        {
+         "dist_pct": -11.99,
+         "label": "23.6%",
+         "price": 120.8483
+        },
+        {
+         "dist_pct": 5.91,
+         "label": "38.2%",
+         "price": 100.4258
+        },
+        {
+         "dist_pct": 26.74,
+         "label": "50.0%",
+         "price": 83.92
+        },
+        {
+         "dist_pct": 57.77,
+         "label": "61.8%",
+         "price": 67.4142
+        },
+        {
+         "dist_pct": 142.2,
+         "label": "78.6%",
+         "price": 43.9143
+        }
+       ],
+       "low": 13.98,
+       "nearest": {
+        "dist_pct": 5.91,
+        "label": "38.2%",
+        "price": 100.4258
+       },
+       "position_pct": 66.0
+      }
+     },
+     "fundamentals": {
+      "analyst": {
+       "consensus": "buy",
+       "n_analysts": 26,
+       "price": 106.36,
+       "target_high": 160.0,
+       "target_low": 52.0,
+       "target_mean": 119.44
+      },
+      "coverage": {
+       "present": 4,
+       "total": 5
+      },
+      "factors": {
+       "analyst": 1,
+       "earnings_growth": 0,
+       "target_upside": 0,
+       "valuation": 0
+      },
+      "flags": [],
+      "metrics": {
+       "earnings_growth_pct": 2.7,
+       "forward_pe": 34.6,
+       "rec_mean": 1.7,
+       "target_upside_pct": 12.3
+      },
+      "profile": {
+       "current_ratio": 1.11,
+       "debt_to_equity": 1.4,
+       "gross_margin": 92.2,
+       "net_margin": 41.1,
+       "op_margin": 38.5,
+       "payout": 0.0,
+       "peg": 2.69,
+       "rev_growth": 15.1,
+       "roe": 21.5
+      },
+      "rating": "neutral",
+      "rating_changes": [
+       {
+        "action": "main",
+        "date": "2026-07-21",
+        "firm": "Needham",
+        "from_grade": "Buy",
+        "to_grade": "Buy"
+       },
+       {
+        "action": "main",
+        "date": "2026-07-20",
+        "firm": "Bernstein",
+        "from_grade": "Outperform",
+        "to_grade": "Outperform"
+       },
+       {
+        "action": "main",
+        "date": "2026-07-16",
+        "firm": "Goldman Sachs",
+        "from_grade": "Buy",
+        "to_grade": "Buy"
+       },
+       {
+        "action": "main",
+        "date": "2026-07-10",
+        "firm": "Morgan Stanley",
+        "from_grade": "Equal-Weight",
+        "to_grade": "Equal-Weight"
+       },
+       {
+        "action": "main",
+        "date": "2026-07-09",
+        "firm": "Barclays",
+        "from_grade": "Overweight",
+        "to_grade": "Overweight"
+       }
+      ],
+      "score": 1,
+      "sector": "Financial Services",
+      "summary": "highly profitable (op margin 38%, ROE 22%) \u00b7 moderate leverage (D/E 1.4\u00d7) \u00b7 premium valuation (fwd P/E 35) \u00b7 flat (rev +15%, EPS +3%)"
+     },
+     "macd_confirms": false,
+     "market": "us",
+     "rule": "PRICE_SMA200_BULL",
+     "sector": {
+      "factor": 1,
+      "name": "Financial Services",
+      "state": "leading",
+      "symbol": "XLF"
+     },
+     "ticker": "HOOD",
+     "values": {
+      "sma200": 101.36
+     },
+     "verdict": "hold",
+     "verdict_reason": "MACD momentum does not confirm \u2014 possible false break",
+     "volume": {
+      "above_avg": false,
+      "avg20": 25403866,
+      "ratio": 0.76,
+      "today": 19339310
+     }
+    },
+    {
+     "category": "price_sma200",
+     "close": 561.74,
+     "date": "2026-07-21",
+     "direction": "bearish",
+     "fib": {
+      "daily": {
+       "high": 644.77,
+       "levels": [
+        {
+         "dist_pct": -8.04,
+         "label": "23.6%",
+         "price": 610.8592
+        },
+        {
+         "dist_pct": -4.77,
+         "label": "38.2%",
+         "price": 589.8804
+        },
+        {
+         "dist_pct": -1.95,
+         "label": "50.0%",
+         "price": 572.925
+        },
+        {
+         "dist_pct": 1.04,
+         "label": "61.8%",
+         "price": 555.9696
+        },
+        {
+         "dist_pct": 5.62,
+         "label": "78.6%",
+         "price": 531.8297
+        }
+       ],
+       "low": 501.08,
+       "nearest": {
+        "dist_pct": 1.04,
+        "label": "61.8%",
+        "price": 555.9696
+       },
+       "position_pct": 42.2
+      },
+      "weekly": {
+       "high": 644.77,
+       "levels": [
+        {
+         "dist_pct": -7.53,
+         "label": "23.6%",
+         "price": 607.4749
+        },
+        {
+         "dist_pct": -3.88,
+         "label": "38.2%",
+         "price": 584.4025
+        },
+        {
+         "dist_pct": -0.71,
+         "label": "50.0%",
+         "price": 565.755
+        },
+        {
+         "dist_pct": 2.67,
+         "label": "61.8%",
+         "price": 547.1075
+        },
+        {
+         "dist_pct": 7.91,
+         "label": "78.6%",
+         "price": 520.5584
+        }
+       ],
+       "low": 486.74,
+       "nearest": {
+        "dist_pct": -0.71,
+        "label": "50.0%",
+        "price": 565.755
+       },
+       "position_pct": 47.5
+      }
+     },
+     "fundamentals": {
+      "analyst": {
+       "consensus": "strong_buy",
+       "n_analysts": 17,
+       "price": 561.74,
+       "target_high": 760.0,
+       "target_low": 570.0,
+       "target_mean": 704.59
+      },
+      "coverage": {
+       "present": 5,
+       "total": 5
+      },
+      "factors": {
+       "analyst": 1,
+       "earnings_growth": 1,
+       "fcf_yield": 0,
+       "target_upside": 1,
+       "valuation": 0
+      },
+      "flags": [],
+      "metrics": {
+       "earnings_growth_pct": 49.1,
+       "fcf_yield_pct": 3.0,
+       "forward_pe": 24.5,
+       "rec_mean": 1.5,
+       "target_upside_pct": 25.4
+      },
+      "profile": {
+       "current_ratio": 0.86,
+       "div_yield": 1.46,
+       "ev_ebitda": 27.2,
+       "fcf_to_net_income": 0.91,
+       "gross_margin": 82.9,
+       "net_debt_to_ebitda": 3.26,
+       "net_margin": 40.7,
+       "op_margin": 53.7,
+       "p_fcf": 33.9,
+       "payout": 42.5,
+       "peg": 2.01,
+       "rev_growth": 14.1
+      },
+      "rating": "strong",
+      "rating_changes": [
+       {
+        "action": "main",
+        "date": "2026-07-20",
+        "firm": "JP Morgan",
+        "from_grade": "Overweight",
+        "to_grade": "Overweight"
+       },
+       {
+        "action": "init",
+        "date": "2026-07-17",
+        "firm": "Jefferies",
+        "from_grade": null,
+        "to_grade": "Buy"
+       },
+       {
+        "action": "main",
+        "date": "2026-07-10",
+        "firm": "Barclays",
+        "from_grade": "Overweight",
+        "to_grade": "Overweight"
+       },
+       {
+        "action": "main",
+        "date": "2026-07-10",
+        "firm": "B of A Securities",
+        "from_grade": "Buy",
+        "to_grade": "Buy"
+       },
+       {
+        "action": "main",
+        "date": "2026-07-08",
+        "firm": "Raymond James",
+        "from_grade": "Strong Buy",
+        "to_grade": "Strong Buy"
+       }
+      ],
+      "score": 3,
+      "sector": "Financial Services",
+      "summary": "highly profitable (op margin 54%) \u00b7 moderate leverage (3.3\u00d7 net debt/EBITDA) \u00b7 fair valuation (fwd P/E 24) \u00b7 growing (rev +14%, EPS +49%)"
+     },
+     "macd_confirms": true,
+     "market": "us",
+     "rule": "PRICE_SMA200_BEAR",
+     "sector": {
+      "factor": 1,
+      "name": "Financial Services",
+      "state": "leading",
+      "symbol": "XLF"
+     },
+     "ticker": "MSCI",
+     "values": {
+      "sma200": 572.2
+     },
+     "verdict": "hold",
+     "verdict_reason": "Bearish signal but fundamentals/sector strong \u2014 trim rather than exit",
+     "volume": {
+      "above_avg": true,
+      "avg20": 779505,
+      "ratio": 2.57,
+      "today": 2007107
+     }
+    },
+    {
+     "category": "price_sma200",
+     "close": 148.1,
+     "date": "2026-07-21",
+     "direction": "bearish",
+     "fib": {
+      "daily": {
+       "high": 167.25,
+       "levels": [
+        {
+         "dist_pct": -7.59,
+         "label": "23.6%",
+         "price": 160.2573
+        },
+        {
+         "dist_pct": -5.02,
+         "label": "38.2%",
+         "price": 155.9313
+        },
+        {
+         "dist_pct": -2.84,
+         "label": "50.0%",
+         "price": 152.435
+        },
+        {
+         "dist_pct": -0.56,
+         "label": "61.8%",
+         "price": 148.9387
+        },
+        {
+         "dist_pct": 2.88,
+         "label": "78.6%",
+         "price": 143.9608
+        }
+       ],
+       "low": 137.62,
+       "nearest": {
+        "dist_pct": -0.56,
+        "label": "61.8%",
+        "price": 148.9387
+       },
+       "position_pct": 35.4
+      },
+      "weekly": {
+       "high": 180.43,
+       "levels": [
+        {
+         "dist_pct": -13.05,
+         "label": "23.6%",
+         "price": 170.3268
+        },
+        {
+         "dist_pct": -9.74,
+         "label": "38.2%",
+         "price": 164.0766
+        },
+        {
+         "dist_pct": -6.87,
+         "label": "50.0%",
+         "price": 159.025
+        },
+        {
+         "dist_pct": -3.81,
+         "label": "61.8%",
+         "price": 153.9734
+        },
+        {
+         "dist_pct": 0.9,
+         "label": "78.6%",
+         "price": 146.7813
+        }
+       ],
+       "low": 137.62,
+       "nearest": {
+        "dist_pct": 0.9,
+        "label": "78.6%",
+        "price": 146.7813
+       },
+       "position_pct": 24.5
+      }
+     },
+     "fundamentals": {
+      "analyst": {
+       "consensus": "buy",
+       "n_analysts": 23,
+       "price": 148.1,
+       "target_high": 186.0,
+       "target_low": 145.0,
+       "target_mean": 163.35
+      },
+      "coverage": {
+       "present": 5,
+       "total": 5
+      },
+      "factors": {
+       "analyst": 1,
+       "earnings_growth": 0,
+       "fcf_yield": 0,
+       "target_upside": 0,
+       "valuation": 0
+      },
+      "flags": [],
+      "metrics": {
+       "earnings_growth_pct": 5.8,
+       "fcf_yield_pct": 3.7,
+       "forward_pe": 21.0,
+       "rec_mean": 2.0,
+       "target_upside_pct": 10.3
+      },
+      "profile": {
+       "current_ratio": 0.73,
+       "debt_to_equity": 0.68,
+       "div_yield": 2.94,
+       "ev_ebitda": 14.9,
+       "fcf_to_net_income": 0.78,
+       "gross_margin": 51.0,
+       "net_debt_to_ebitda": 0.99,
+       "net_margin": 19.2,
+       "op_margin": 23.0,
+       "p_fcf": 27.1,
+       "payout": 61.8,
+       "peg": 4.19,
+       "rev_growth": 7.4,
+       "roe": 31.1
+      },
+      "rating": "neutral",
+      "rating_changes": [
+       {
+        "action": "main",
+        "date": "2026-07-21",
+        "firm": "Barclays",
+        "from_grade": "Equal-Weight",
+        "to_grade": "Equal-Weight"
+       },
+       {
+        "action": "main",
+        "date": "2026-07-16",
+        "firm": "JP Morgan",
+        "from_grade": "Overweight",
+        "to_grade": "Overweight"
+       },
+       {
+        "action": "main",
+        "date": "2026-07-10",
+        "firm": "B of A Securities",
+        "from_grade": "Buy",
+        "to_grade": "Buy"
+       },
+       {
+        "action": "init",
+        "date": "2026-06-11",
+        "firm": "Bernstein",
+        "from_grade": null,
+        "to_grade": "Market Perform"
+       },
+       {
+        "action": "main",
+        "date": "2026-04-27",
+        "firm": "UBS",
+        "from_grade": "Buy",
+        "to_grade": "Buy"
+       }
+      ],
+      "score": 1,
+      "sector": "Consumer Defensive",
+      "summary": "highly profitable (op margin 23%, ROE 31%) \u00b7 low leverage (1.0\u00d7 net debt/EBITDA) \u00b7 fair valuation (fwd P/E 21) \u00b7 growing (rev +7%, EPS +6%)"
+     },
+     "macd_confirms": true,
+     "market": "us",
+     "rule": "PRICE_SMA200_BEAR",
+     "sector": {
+      "factor": 0,
+      "name": "Consumer Defensive",
+      "state": "improving",
+      "symbol": "XLP"
+     },
+     "ticker": "PG",
+     "values": {
+      "sma200": 148.2
+     },
+     "verdict": "sell",
+     "verdict_reason": "Bearish signal confirmed by MACD",
+     "volume": {
+      "above_avg": false,
+      "avg20": 9143914,
+      "ratio": 0.74,
+      "today": 6776075
+     }
+    },
+    {
+     "category": "price_sma200",
+     "close": 124.26,
+     "date": "2026-07-21",
+     "direction": "bullish",
+     "fib": {
+      "daily": {
+       "high": 144.5,
+       "levels": [
+        {
+         "dist_pct": -8.61,
+         "label": "23.6%",
+         "price": 135.9615
+        },
+        {
+         "dist_pct": -4.91,
+         "label": "38.2%",
+         "price": 130.6792
+        },
+        {
+         "dist_pct": -1.7,
+         "label": "50.0%",
+         "price": 126.41
+        },
+        {
+         "dist_pct": 1.74,
+         "label": "61.8%",
+         "price": 122.1408
+        },
+        {
+         "dist_pct": 7.06,
+         "label": "78.6%",
+         "price": 116.0625
+        }
+       ],
+       "low": 108.32,
+       "nearest": {
+        "dist_pct": -1.7,
+        "label": "50.0%",
+        "price": 126.41
+       },
+       "position_pct": 44.1
+      },
+      "weekly": {
+       "high": 149.47,
+       "levels": [
+        {
+         "dist_pct": -7.94,
+         "label": "23.6%",
+         "price": 134.9796
+        },
+        {
+         "dist_pct": -1.39,
+         "label": "38.2%",
+         "price": 126.0152
+        },
+        {
+         "dist_pct": 4.62,
+         "label": "50.0%",
+         "price": 118.77
+        },
+        {
+         "dist_pct": 11.42,
+         "label": "61.8%",
+         "price": 111.5248
+        },
+        {
+         "dist_pct": 22.77,
+         "label": "78.6%",
+         "price": 101.2096
+        }
+       ],
+       "low": 88.07,
+       "nearest": {
+        "dist_pct": -1.39,
+        "label": "38.2%",
+        "price": 126.0152
+       },
+       "position_pct": 58.9
+      }
+     },
+     "fundamentals": {
+      "analyst": {
+       "consensus": "buy",
+       "n_analysts": 13,
+       "price": 124.26,
+       "target_high": 162.0,
+       "target_low": 100.0,
+       "target_mean": 139.77
+      },
+      "coverage": {
+       "present": 5,
+       "total": 5
+      },
+      "factors": {
+       "analyst": 1,
+       "earnings_growth": -1,
+       "fcf_yield": 1,
+       "target_upside": 0,
+       "valuation": 1
+      },
+      "flags": [],
+      "metrics": {
+       "earnings_growth_pct": -30.4,
+       "fcf_yield_pct": 6.3,
+       "forward_pe": 11.2,
+       "rec_mean": 2.2,
+       "target_upside_pct": 12.5
+      },
+      "profile": {
+       "current_ratio": 7.14,
+       "debt_to_equity": 0.19,
+       "div_yield": 0.84,
+       "ev_ebitda": 8.3,
+       "fcf_to_net_income": 0.73,
+       "gross_margin": 26.1,
+       "net_debt_to_ebitda": 0.22,
+       "net_margin": 12.1,
+       "op_margin": 13.1,
+       "p_fcf": 16.0,
+       "payout": 9.3,
+       "peg": 1.12,
+       "rev_growth": -12.4,
+       "roe": 16.2
+      },
+      "rating": "strong",
+      "rating_changes": [
+       {
+        "action": "main",
+        "date": "2026-07-14",
+        "firm": "Barclays",
+        "from_grade": "Equal-Weight",
+        "to_grade": "Equal-Weight"
+       },
+       {
+        "action": "main",
+        "date": "2026-07-06",
+        "firm": "Wells Fargo",
+        "from_grade": "Overweight",
+        "to_grade": "Overweight"
+       },
+       {
+        "action": "main",
+        "date": "2026-04-24",
+        "firm": "Evercore ISI Group",
+        "from_grade": "Outperform",
+        "to_grade": "Outperform"
+       },
+       {
+        "action": "main",
+        "date": "2026-04-24",
+        "firm": "UBS",
+        "from_grade": "Buy",
+        "to_grade": "Buy"
+       },
+       {
+        "action": "main",
+        "date": "2026-04-24",
+        "firm": "Wells Fargo",
+        "from_grade": "Overweight",
+        "to_grade": "Overweight"
+       }
+      ],
+      "score": 2,
+      "sector": "Consumer Cyclical",
+      "summary": "profitable (op margin 13%, ROE 16%) \u00b7 low leverage (0.2\u00d7 net debt/EBITDA) \u00b7 cheap valuation (fwd P/E 11) \u00b7 shrinking (rev -12%, EPS -30%)"
+     },
+     "macd_confirms": false,
+     "market": "us",
+     "rule": "PRICE_SMA200_BULL",
+     "sector": {
+      "factor": -1,
+      "name": "Consumer Cyclical",
+      "state": "lagging",
+      "symbol": "XLY"
+     },
+     "ticker": "PHM",
+     "values": {
+      "sma200": 124.16
+     },
+     "verdict": "hold",
+     "verdict_reason": "MACD momentum does not confirm \u2014 possible false break",
+     "volume": {
+      "above_avg": true,
+      "avg20": 1802190,
+      "ratio": 1.09,
+      "today": 1968394
+     }
+    },
+    {
+     "category": "price_sma200",
+     "close": 287.9,
+     "date": "2026-07-21",
+     "direction": "bullish",
+     "fib": {
+      "daily": {
+       "high": 366.5,
+       "levels": [
+        {
+         "dist_pct": -14.0,
+         "label": "23.6%",
+         "price": 334.7816
+        },
+        {
+         "dist_pct": -8.65,
+         "label": "38.2%",
+         "price": 315.1592
+        },
+        {
+         "dist_pct": -3.81,
+         "label": "50.0%",
+         "price": 299.3
+        },
+        {
+         "dist_pct": 1.57,
+         "label": "61.8%",
+         "price": 283.4408
+        },
+        {
+         "dist_pct": 10.37,
+         "label": "78.6%",
+         "price": 260.8616
+        }
+       ],
+       "low": 232.1,
+       "nearest": {
+        "dist_pct": 1.57,
+        "label": "61.8%",
+        "price": 283.4408
+       },
+       "position_pct": 41.5
+      },
+      "weekly": {
+       "high": 366.5,
+       "levels": [
+        {
+         "dist_pct": -7.34,
+         "label": "23.6%",
+         "price": 310.7049
+        },
+        {
+         "dist_pct": 4.24,
+         "label": "38.2%",
+         "price": 276.1876
+        },
+        {
+         "dist_pct": 15.95,
+         "label": "50.0%",
+         "price": 248.29
+        },
+        {
+         "dist_pct": 30.63,
+         "label": "61.8%",
+         "price": 220.3924
+        },
+        {
+         "dist_pct": 59.35,
+         "label": "78.6%",
+         "price": 180.6739
+        }
+       ],
+       "low": 130.08,
+       "nearest": {
+        "dist_pct": 4.24,
+        "label": "38.2%",
+        "price": 276.1876
+       },
+       "position_pct": 66.8
+      }
+     },
+     "fundamentals": {
+      "analyst": {
+       "consensus": "buy",
+       "n_analysts": 27,
+       "price": 287.9,
+       "target_high": 425.0,
+       "target_low": 255.0,
+       "target_mean": 338.33
+      },
+      "coverage": {
+       "present": 5,
+       "total": 5
+      },
+      "factors": {
+       "analyst": 1,
+       "earnings_growth": 1,
+       "fcf_yield": -1,
+       "target_upside": 1,
+       "valuation": 1
+      },
+      "flags": [
+       "high_leverage",
+       "value_trap",
+       "earnings_not_cash_backed"
+      ],
+      "metrics": {
+       "earnings_growth_pct": 28.9,
+       "fcf_yield_pct": -0.3,
+       "forward_pe": 14.4,
+       "rec_mean": 1.7,
+       "target_upside_pct": 17.5
+      },
+      "profile": {
+       "current_ratio": 0.2,
+       "debt_to_equity": 2.17,
+       "div_yield": 1.74,
+       "ev_ebitda": 14.2,
+       "fcf_to_net_income": -0.04,
+       "gross_margin": 50.9,
+       "net_debt_to_ebitda": 3.08,
+       "net_margin": 24.4,
+       "op_margin": 26.2,
+       "payout": 25.9,
+       "peg": 1.37,
+       "rev_growth": 11.3,
+       "roe": 49.6
+      },
+      "rating": "strong",
+      "rating_changes": [
+       {
+        "action": "main",
+        "date": "2026-07-21",
+        "firm": "Citigroup",
+        "from_grade": "Buy",
+        "to_grade": "Buy"
+       },
+       {
+        "action": "init",
+        "date": "2026-07-08",
+        "firm": "BMO Capital",
+        "from_grade": null,
+        "to_grade": "Outperform"
+       },
+       {
+        "action": "main",
+        "date": "2026-06-22",
+        "firm": "Wells Fargo",
+        "from_grade": "Overweight",
+        "to_grade": "Overweight"
+       },
+       {
+        "action": "main",
+        "date": "2026-06-16",
+        "firm": "Citigroup",
+        "from_grade": "Buy",
+        "to_grade": "Buy"
+       },
+       {
+        "action": "init",
+        "date": "2026-06-03",
+        "firm": "Freedom Broker",
+        "from_grade": null,
+        "to_grade": "Buy"
+       }
+      ],
+      "score": 3,
+      "sector": "Consumer Cyclical",
+      "summary": "highly profitable (op margin 26%, ROE 50%) \u00b7 high leverage (D/E 2.2\u00d7) \u00b7 cheap valuation (fwd P/E 14) \u00b7 growing (rev +11%, EPS +29%)"
+     },
+     "macd_confirms": false,
+     "market": "us",
+     "rule": "PRICE_SMA200_BULL",
+     "sector": {
+      "factor": -1,
+      "name": "Consumer Cyclical",
+      "state": "lagging",
+      "symbol": "XLY"
+     },
+     "ticker": "RCL",
+     "values": {
+      "sma200": 286.54
+     },
+     "verdict": "hold",
+     "verdict_reason": "MACD momentum does not confirm \u2014 possible false break",
+     "volume": {
+      "above_avg": false,
+      "avg20": 2471658,
+      "ratio": 0.43,
+      "today": 1070854
+     }
+    },
+    {
+     "category": "price_sma200",
+     "close": 214.63,
+     "date": "2026-07-21",
+     "direction": "bearish",
+     "fib": {
+      "daily": {
+       "high": 246.25,
+       "levels": [
+        {
+         "dist_pct": -8.47,
+         "label": "23.6%",
+         "price": 234.4878
+        },
+        {
+         "dist_pct": -5.54,
+         "label": "38.2%",
+         "price": 227.2111
+        },
+        {
+         "dist_pct": -3.03,
+         "label": "50.0%",
+         "price": 221.33
+        },
+        {
+         "dist_pct": -0.38,
+         "label": "61.8%",
+         "price": 215.4489
+        },
+        {
+         "dist_pct": 3.65,
+         "label": "78.6%",
+         "price": 207.0758
+        }
+       ],
+       "low": 196.41,
+       "nearest": {
+        "dist_pct": -0.38,
+        "label": "61.8%",
+        "price": 215.4489
+       },
+       "position_pct": 36.6
+      },
+      "weekly": {
+       "high": 258.75,
+       "levels": [
+        {
+         "dist_pct": -11.4,
+         "label": "23.6%",
+         "price": 242.2465
+        },
+        {
+         "dist_pct": -7.5,
+         "label": "38.2%",
+         "price": 232.0367
+        },
+        {
+         "dist_pct": -4.09,
+         "label": "50.0%",
+         "price": 223.785
+        },
+        {
+         "dist_pct": -0.42,
+         "label": "61.8%",
+         "price": 215.5333
+        },
+        {
+         "dist_pct": 5.32,
+         "label": "78.6%",
+         "price": 203.785
+        }
+       ],
+       "low": 188.82,
+       "nearest": {
+        "dist_pct": -0.42,
+        "label": "61.8%",
+        "price": 215.5333
+       },
+       "position_pct": 36.9
+      }
+     },
+     "fundamentals": {
+      "analyst": {
+       "consensus": "buy",
+       "n_analysts": 24,
+       "price": 214.63,
+       "target_high": 270.0,
+       "target_low": 200.0,
+       "target_mean": 244.62
+      },
+      "coverage": {
+       "present": 5,
+       "total": 5
+      },
+      "factors": {
+       "analyst": 1,
+       "earnings_growth": 0,
+       "fcf_yield": 0,
+       "target_upside": 0,
+       "valuation": 0
+      },
+      "flags": [],
+      "metrics": {
+       "earnings_growth_pct": 7.5,
+       "fcf_yield_pct": 2.7,
+       "forward_pe": 26.6,
+       "rec_mean": 2.0,
+       "target_upside_pct": 14.0
+      },
+      "profile": {
+       "current_ratio": 0.67,
+       "debt_to_equity": 1.18,
+       "div_yield": 1.16,
+       "ev_ebitda": 15.4,
+       "fcf_to_net_income": 0.83,
+       "gross_margin": 43.0,
+       "net_debt_to_ebitda": 2.69,
+       "net_margin": 13.0,
+       "op_margin": 20.2,
+       "p_fcf": 36.5,
+       "payout": 35.2,
+       "peg": 3.2,
+       "rev_growth": 2.6,
+       "roe": 18.3
+      },
+      "rating": "neutral",
+      "rating_changes": [
+       {
+        "action": "main",
+        "date": "2026-07-10",
+        "firm": "Citigroup",
+        "from_grade": "Buy",
+        "to_grade": "Buy"
+       },
+       {
+        "action": "main",
+        "date": "2026-05-12",
+        "firm": "UBS",
+        "from_grade": "Neutral",
+        "to_grade": "Neutral"
+       },
+       {
+        "action": "main",
+        "date": "2026-05-12",
+        "firm": "Citigroup",
+        "from_grade": "Buy",
+        "to_grade": "Buy"
+       },
+       {
+        "action": "down",
+        "date": "2026-05-11",
+        "firm": "Argus Research",
+        "from_grade": "Buy",
+        "to_grade": "Hold"
+       },
+       {
+        "action": "main",
+        "date": "2026-05-11",
+        "firm": "Barclays",
+        "from_grade": "Equal-Weight",
+        "to_grade": "Equal-Weight"
+       }
+      ],
+      "score": 1,
+      "sector": "Industrials",
+      "summary": "highly profitable (op margin 20%, ROE 18%) \u00b7 moderate leverage (2.7\u00d7 net debt/EBITDA) \u00b7 premium valuation (fwd P/E 27) \u00b7 flat (rev +3%, EPS +8%)"
+     },
+     "macd_confirms": true,
+     "market": "us",
+     "rule": "PRICE_SMA200_BEAR",
+     "sector": {
+      "factor": -1,
+      "name": "Industrials",
+      "state": "lagging",
+      "symbol": "XLI"
+     },
+     "ticker": "RSG",
+     "values": {
+      "sma200": 214.8
+     },
+     "verdict": "sell",
+     "verdict_reason": "Bearish signal confirmed by MACD, sector lagging",
+     "volume": {
+      "above_avg": false,
+      "avg20": 1372285,
+      "ratio": 0.69,
+      "today": 949594
+     }
+    },
+    {
+     "category": "price_sma200",
+     "close": 431.26,
+     "date": "2026-07-21",
+     "direction": "bearish",
+     "fib": {
+      "daily": {
+       "high": 547.824,
+       "levels": [
+        {
+         "dist_pct": -14.39,
+         "label": "23.6%",
+         "price": 503.7409
+        },
+        {
+         "dist_pct": -9.49,
+         "label": "38.2%",
+         "price": 476.4692
+        },
+        {
+         "dist_pct": -5.1,
+         "label": "50.0%",
+         "price": 454.4276
+        },
+        {
+         "dist_pct": -0.26,
+         "label": "61.8%",
+         "price": 432.3861
+        },
+        {
+         "dist_pct": 7.54,
+         "label": "78.6%",
+         "price": 401.0049
+        }
+       ],
+       "low": 361.0312,
+       "nearest": {
+        "dist_pct": -0.26,
+        "label": "61.8%",
+        "price": 432.3861
+       },
+       "position_pct": 37.6
+      },
+      "weekly": {
+       "high": 547.824,
+       "levels": [
+        {
+         "dist_pct": -14.39,
+         "label": "23.6%",
+         "price": 503.7409
+        },
+        {
+         "dist_pct": -9.49,
+         "label": "38.2%",
+         "price": 476.4692
+        },
+        {
+         "dist_pct": -5.1,
+         "label": "50.0%",
+         "price": 454.4276
+        },
+        {
+         "dist_pct": -0.26,
+         "label": "61.8%",
+         "price": 432.3861
+        },
+        {
+         "dist_pct": 7.54,
+         "label": "78.6%",
+         "price": 401.0049
+        }
+       ],
+       "low": 361.0312,
+       "nearest": {
+        "dist_pct": -0.26,
+        "label": "61.8%",
+        "price": 432.3861
+       },
+       "position_pct": 37.6
+      }
+     },
+     "fundamentals": {
+      "analyst": {
+       "consensus": "strong_buy",
+       "n_analysts": 18,
+       "price": 431.26,
+       "target_high": 555.0,
+       "target_low": 444.0,
+       "target_mean": 517.56
+      },
+      "coverage": {
+       "present": 5,
+       "total": 5
+      },
+      "factors": {
+       "analyst": 1,
+       "earnings_growth": 1,
+       "fcf_yield": 1,
+       "target_upside": 1,
+       "valuation": 0
+      },
+      "flags": [],
+      "metrics": {
+       "earnings_growth_pct": 32.5,
+       "fcf_yield_pct": 4.2,
+       "forward_pe": 21.2,
+       "rec_mean": 1.3,
+       "target_upside_pct": 20.0
+      },
+      "profile": {
+       "current_ratio": 0.68,
+       "debt_to_equity": 0.38,
+       "div_yield": 0.9,
+       "ev_ebitda": 18.4,
+       "fcf_to_net_income": 1.11,
+       "gross_margin": 70.5,
+       "net_debt_to_ebitda": 1.54,
+       "net_margin": 30.4,
+       "op_margin": 44.3,
+       "p_fcf": 24.1,
+       "payout": 24.4,
+       "peg": 1.86,
+       "rev_growth": 10.4,
+       "roe": 13.9
+      },
+      "rating": "strong",
+      "rating_changes": [
+       {
+        "action": "main",
+        "date": "2026-07-21",
+        "firm": "Baird",
+        "from_grade": "Outperform",
+        "to_grade": "Outperform"
+       },
+       {
+        "action": "main",
+        "date": "2026-07-20",
+        "firm": "JP Morgan",
+        "from_grade": "Overweight",
+        "to_grade": "Overweight"
+       },
+       {
+        "action": "main",
+        "date": "2026-07-17",
+        "firm": "Stifel",
+        "from_grade": "Buy",
+        "to_grade": "Buy"
+       },
+       {
+        "action": "main",
+        "date": "2026-07-10",
+        "firm": "B of A Securities",
+        "from_grade": "Buy",
+        "to_grade": "Buy"
+       },
+       {
+        "action": "main",
+        "date": "2026-07-08",
+        "firm": "JP Morgan",
+        "from_grade": "Overweight",
+        "to_grade": "Overweight"
+       }
+      ],
+      "score": 4,
+      "sector": "Financial Services",
+      "summary": "highly profitable (op margin 44%, ROE 14%) \u00b7 moderate leverage (1.5\u00d7 net debt/EBITDA) \u00b7 fair valuation (fwd P/E 21) \u00b7 growing (rev +10%, EPS +32%)"
+     },
+     "macd_confirms": false,
+     "market": "us",
+     "rule": "PRICE_SMA200_BEAR",
+     "sector": {
+      "factor": 1,
+      "name": "Financial Services",
+      "state": "leading",
+      "symbol": "XLF"
+     },
+     "ticker": "SPGI",
+     "values": {
+      "sma200": 436.07
+     },
+     "verdict": "hold",
+     "verdict_reason": "MACD momentum does not confirm \u2014 possible false breakdown",
+     "volume": {
+      "above_avg": false,
+      "avg20": 2458186,
+      "ratio": 0.55,
+      "today": 1357271
+     }
+    },
+    {
+     "category": "price_sma200",
+     "close": 195.25,
+     "date": "2026-07-21",
+     "direction": "bearish",
+     "fib": {
+      "daily": {
+       "high": 303.72,
+       "levels": [
+        {
+         "dist_pct": -27.37,
+         "label": "23.6%",
+         "price": 268.8439
+        },
+        {
+         "dist_pct": -21.04,
+         "label": "38.2%",
+         "price": 247.268
+        },
+        {
+         "dist_pct": -15.05,
+         "label": "50.0%",
+         "price": 229.83
+        },
+        {
+         "dist_pct": -8.07,
+         "label": "61.8%",
+         "price": 212.392
+        },
+        {
+         "dist_pct": 4.1,
+         "label": "78.6%",
+         "price": 187.5649
+        }
+       ],
+       "low": 155.94,
+       "nearest": {
+        "dist_pct": 4.1,
+        "label": "78.6%",
+        "price": 187.5649
+       },
+       "position_pct": 26.6
+      },
+      "weekly": {
+       "high": 322.92,
+       "levels": [
+        {
+         "dist_pct": -31.13,
+         "label": "23.6%",
+         "price": 283.5127
+        },
+        {
+         "dist_pct": -24.65,
+         "label": "38.2%",
+         "price": 259.1336
+        },
+        {
+         "dist_pct": -18.45,
+         "label": "50.0%",
+         "price": 239.43
+        },
+        {
+         "dist_pct": -11.14,
+         "label": "61.8%",
+         "price": 219.7264
+        },
+        {
+         "dist_pct": 1.87,
+         "label": "78.6%",
+         "price": 191.6737
+        }
+       ],
+       "low": 155.94,
+       "nearest": {
+        "dist_pct": 1.87,
+        "label": "78.6%",
+        "price": 191.6737
+       },
+       "position_pct": 23.5
+      }
+     },
+     "fundamentals": {
+      "analyst": {
+       "consensus": "buy",
+       "n_analysts": 17,
+       "price": 195.25,
+       "target_high": 275.0,
+       "target_low": 185.0,
+       "target_mean": 222.24
+      },
+      "coverage": {
+       "present": 5,
+       "total": 5
+      },
+      "factors": {
+       "analyst": 0,
+       "earnings_growth": 0,
+       "fcf_yield": 0,
+       "target_upside": 0,
+       "valuation": 0
+      },
+      "flags": [],
+      "metrics": {
+       "earnings_growth_pct": 4.8,
+       "fcf_yield_pct": 3.7,
+       "forward_pe": 22.5,
+       "rec_mean": 2.2,
+       "target_upside_pct": 13.8
+      },
+      "profile": {
+       "current_ratio": 1.02,
+       "div_yield": 1.02,
+       "ev_ebitda": 20.2,
+       "fcf_to_net_income": 1.04,
+       "gross_margin": 70.0,
+       "net_debt_to_ebitda": 2.72,
+       "net_margin": 29.3,
+       "op_margin": 45.0,
+       "p_fcf": 27.1,
+       "payout": 28.2,
+       "peg": 1.96,
+       "rev_growth": 3.9
+      },
+      "rating": "neutral",
+      "rating_changes": [
+       {
+        "action": "main",
+        "date": "2026-05-19",
+        "firm": "B of A Securities",
+        "from_grade": "Neutral",
+        "to_grade": "Neutral"
+       },
+       {
+        "action": "main",
+        "date": "2026-04-30",
+        "firm": "JP Morgan",
+        "from_grade": "Overweight",
+        "to_grade": "Overweight"
+       }
+      ],
+      "score": 0,
+      "sector": "Industrials",
+      "summary": "highly profitable (op margin 45%) \u00b7 moderate leverage (2.7\u00d7 net debt/EBITDA) \u00b7 fair valuation (fwd P/E 22) \u00b7 flat (rev +4%, EPS +5%)"
+     },
+     "macd_confirms": false,
+     "market": "us",
+     "rule": "PRICE_SMA200_BEAR",
+     "sector": {
+      "factor": -1,
+      "name": "Industrials",
+      "state": "lagging",
+      "symbol": "XLI"
+     },
+     "ticker": "VRSK",
+     "values": {
+      "sma200": 200.92
+     },
+     "verdict": "hold",
+     "verdict_reason": "MACD momentum does not confirm \u2014 possible false breakdown",
+     "volume": {
+      "above_avg": false,
+      "avg20": 2104510,
+      "ratio": 0.62,
+      "today": 1298391
+     }
+    },
+    {
+     "category": "price_sma200",
+     "close": 59.45,
+     "date": "2026-07-20",
+     "direction": "bearish",
+     "fib": {
+      "daily": {
+       "high": 66.8,
+       "levels": [
+        {
+         "dist_pct": -6.6,
+         "label": "23.6%",
+         "price": 63.6494
+        },
+        {
+         "dist_pct": -3.65,
+         "label": "38.2%",
+         "price": 61.7003
+        },
+        {
+         "dist_pct": -1.12,
+         "label": "50.0%",
+         "price": 60.125
+        },
+        {
+         "dist_pct": 1.54,
+         "label": "61.8%",
+         "price": 58.5497
+        },
+        {
+         "dist_pct": 5.58,
+         "label": "78.6%",
+         "price": 56.3069
+        }
+       ],
+       "low": 53.45,
+       "nearest": {
+        "dist_pct": -1.12,
+        "label": "50.0%",
+        "price": 60.125
+       },
+       "position_pct": 44.9
+      },
+      "weekly": {
+       "high": 66.8,
+       "levels": [
+        {
+         "dist_pct": -0.93,
+         "label": "23.6%",
+         "price": 60.0079
+        },
+        {
+         "dist_pct": 6.53,
+         "label": "38.2%",
+         "price": 55.806
+        },
+        {
+         "dist_pct": 13.43,
+         "label": "50.0%",
+         "price": 52.41
+        },
+        {
+         "dist_pct": 21.29,
+         "label": "61.8%",
+         "price": 49.014
+        },
+        {
+         "dist_pct": 34.57,
+         "label": "78.6%",
+         "price": 44.1789
+        }
+       ],
+       "low": 38.02,
+       "nearest": {
+        "dist_pct": -0.93,
+        "label": "23.6%",
+        "price": 60.0079
+       },
+       "position_pct": 74.5
+      }
+     },
+     "fundamentals": {
+      "analyst": {
+       "consensus": "buy",
+       "n_analysts": 17,
+       "price": 59.25,
+       "target_high": 75.0,
+       "target_low": 51.0,
+       "target_mean": 66.35
+      },
+      "coverage": {
+       "present": 5,
+       "total": 5
+      },
+      "factors": {
+       "analyst": 1,
+       "earnings_growth": 0,
+       "fcf_yield": 0,
+       "target_upside": 0,
+       "valuation": 0
+      },
+      "flags": [],
+      "metrics": {
+       "earnings_growth_pct": 6.6,
+       "fcf_yield_pct": 2.8,
+       "forward_pe": 16.4,
+       "rec_mean": 2.2,
+       "target_upside_pct": 12.0
+      },
+      "profile": {
+       "current_ratio": 1.11,
+       "debt_to_equity": 0.1,
+       "div_yield": 2.19,
+       "ev_ebitda": 13.3,
+       "fcf_to_net_income": 0.66,
+       "gross_margin": 37.6,
+       "net_debt_to_ebitda": -0.23,
+       "net_margin": 7.6,
+       "op_margin": 10.7,
+       "p_fcf": 35.1,
+       "payout": 44.9,
+       "peg": 1.18,
+       "rev_growth": 1.2,
+       "roe": 16.6
+      },
+      "rating": "neutral",
+      "rating_changes": [],
+      "score": 1,
+      "sector": "Industrials",
+      "summary": "profitable (op margin 11%, ROE 17%) \u00b7 net cash \u00b7 fair valuation (fwd P/E 16) \u00b7 flat (rev +1%, EPS +7%)"
+     },
+     "macd_confirms": true,
+     "market": "de",
+     "rule": "PRICE_SMA200_BEAR",
+     "sector": null,
+     "ticker": "G1A.DE",
+     "values": {
+      "sma200": 59.92
+     },
+     "verdict": "sell",
+     "verdict_reason": "Bearish signal confirmed by MACD",
+     "volume": {
+      "above_avg": false,
+      "avg20": 321436,
+      "ratio": 0.72,
+      "today": 230293
+     }
+    },
+    {
+     "category": "price_sma200",
+     "close": 49.86,
+     "date": "2026-07-20",
+     "direction": "bullish",
+     "fib": {
+      "daily": {
+       "high": 60.0,
+       "levels": [
+        {
+         "dist_pct": -10.26,
+         "label": "23.6%",
+         "price": 55.5585
+        },
+        {
+         "dist_pct": -5.59,
+         "label": "38.2%",
+         "price": 52.8108
+        },
+        {
+         "dist_pct": -1.44,
+         "label": "50.0%",
+         "price": 50.59
+        },
+        {
+         "dist_pct": 3.08,
+         "label": "61.8%",
+         "price": 48.3692
+        },
+        {
+         "dist_pct": 10.29,
+         "label": "78.6%",
+         "price": 45.2075
+        }
+       ],
+       "low": 41.18,
+       "nearest": {
+        "dist_pct": -1.44,
+        "label": "50.0%",
+        "price": 50.59
+       },
+       "position_pct": 46.1
+      },
+      "weekly": {
+       "high": 60.0,
+       "levels": [
+        {
+         "dist_pct": -5.61,
+         "label": "23.6%",
+         "price": 52.8256
+        },
+        {
+         "dist_pct": 3.04,
+         "label": "38.2%",
+         "price": 48.3872
+        },
+        {
+         "dist_pct": 11.29,
+         "label": "50.0%",
+         "price": 44.8
+        },
+        {
+         "dist_pct": 20.98,
+         "label": "61.8%",
+         "price": 41.2128
+        },
+        {
+         "dist_pct": 38.09,
+         "label": "78.6%",
+         "price": 36.1056
+        }
+       ],
+       "low": 29.6,
+       "nearest": {
+        "dist_pct": 3.04,
+        "label": "38.2%",
+        "price": 48.3872
+       },
+       "position_pct": 66.6
+      }
+     },
+     "fundamentals": {
+      "analyst": {
+       "n_analysts": 6,
+       "price": 50.65,
+       "target_high": 80.28,
+       "target_low": 65.0,
+       "target_mean": 72.2
+      },
+      "coverage": {
+       "present": 4,
+       "total": 5
+      },
+      "factors": {
+       "earnings_growth": 1,
+       "fcf_yield": -1,
+       "target_upside": 1,
+       "valuation": 1
+      },
+      "flags": [
+       "value_trap",
+       "earnings_not_cash_backed"
+      ],
+      "metrics": {
+       "earnings_growth_pct": 80.4,
+       "fcf_yield_pct": -3.9,
+       "forward_pe": 8.4,
+       "target_upside_pct": 42.5
+      },
+      "profile": {
+       "current_ratio": 0.96,
+       "debt_to_equity": 0.63,
+       "div_yield": 1.46,
+       "ev_ebitda": 9.7,
+       "fcf_to_net_income": -0.56,
+       "gross_margin": 19.3,
+       "net_debt_to_ebitda": 2.78,
+       "net_margin": 7.4,
+       "op_margin": 3.3,
+       "payout": 20.7,
+       "peg": 1.85,
+       "rev_growth": -0.2,
+       "roe": 10.5
+      },
+      "rating": "strong",
+      "rating_changes": [],
+      "score": 2,
+      "sector": "Basic Materials",
+      "summary": "thin margins (op margin 3%, ROE 10%) \u00b7 moderate leverage (2.8\u00d7 net debt/EBITDA) \u00b7 cheap valuation (fwd P/E 8) \u00b7 rev -0% / EPS +80%"
+     },
+     "macd_confirms": true,
+     "market": "bist",
+     "rule": "PRICE_SMA200_BULL",
+     "sector": null,
+     "ticker": "CIMSA.IS",
+     "values": {
+      "sma200": 49.0
+     },
+     "verdict": "buy",
+     "verdict_reason": "Bullish signal, MACD confirms, strong fundamentals",
+     "volume": {
+      "above_avg": true,
+      "avg20": 7206084,
+      "ratio": 1.43,
+      "today": 10297361
+     }
+    },
+    {
+     "category": "price_sma200_weekly",
+     "close": 255.27,
+     "date": "2026-07-17",
+     "direction": "bullish",
+     "fib": {
+      "daily": {
+       "high": 315.98,
+       "levels": [
+        {
+         "dist_pct": -13.85,
+         "label": "23.6%",
+         "price": 285.8145
+        },
+        {
+         "dist_pct": -7.84,
+         "label": "38.2%",
+         "price": 267.1528
+        },
+        {
+         "dist_pct": -2.32,
+         "label": "50.0%",
+         "price": 252.07
+        },
+        {
+         "dist_pct": 3.9,
+         "label": "61.8%",
+         "price": 236.9872
+        },
+        {
+         "dist_pct": 14.25,
+         "label": "78.6%",
+         "price": 215.5135
+        }
+       ],
+       "low": 188.16,
+       "nearest": {
+        "dist_pct": -2.32,
+        "label": "50.0%",
+        "price": 252.07
+       },
+       "position_pct": 45.4
+      },
+      "weekly": {
+       "high": 329.93,
+       "levels": [
+        {
+         "dist_pct": -16.95,
+         "label": "23.6%",
+         "price": 296.4723
+        },
+        {
+         "dist_pct": -10.72,
+         "label": "38.2%",
+         "price": 275.7739
+        },
+        {
+         "dist_pct": -4.95,
+         "label": "50.0%",
+         "price": 259.045
+        },
+        {
+         "dist_pct": 1.61,
+         "label": "61.8%",
+         "price": 242.3161
+        },
+        {
+         "dist_pct": 12.69,
+         "label": "78.6%",
+         "price": 218.4988
+        }
+       ],
+       "low": 188.16,
+       "nearest": {
+        "dist_pct": 1.61,
+        "label": "61.8%",
+        "price": 242.3161
+       },
+       "position_pct": 41.0
+      }
+     },
+     "fundamentals": {
+      "analyst": {
+       "consensus": "hold",
+       "n_analysts": 15,
+       "price": 246.22,
+       "target_high": 305.0,
+       "target_low": 190.0,
+       "target_mean": 253.47
+      },
+      "coverage": {
+       "present": 5,
+       "total": 5
+      },
+      "factors": {
+       "analyst": 0,
+       "earnings_growth": 1,
+       "fcf_yield": 1,
+       "target_upside": 0,
+       "valuation": 0
+      },
+      "flags": [],
+      "metrics": {
+       "earnings_growth_pct": 10.5,
+       "fcf_yield_pct": 4.8,
+       "forward_pe": 20.2,
+       "rec_mean": 2.7,
+       "target_upside_pct": 2.9
+      },
+      "profile": {
+       "current_ratio": 1.04,
+       "debt_to_equity": 0.69,
+       "div_yield": 2.76,
+       "ev_ebitda": 16.3,
+       "fcf_to_net_income": 1.09,
+       "gross_margin": 48.5,
+       "net_debt_to_ebitda": 0.18,
+       "net_margin": 20.1,
+       "op_margin": 30.2,
+       "p_fcf": 20.7,
+       "payout": 60.5,
+       "peg": 2.39,
+       "rev_growth": 7.0,
+       "roe": 71.2
+      },
+      "rating": "strong",
+      "rating_changes": [
+       {
+        "action": "reit",
+        "date": "2026-07-21",
+        "firm": "Guggenheim",
+        "from_grade": "Buy",
+        "to_grade": "Buy"
+       },
+       {
+        "action": "main",
+        "date": "2026-07-09",
+        "firm": "Wells Fargo",
+        "from_grade": "Equal-Weight",
+        "to_grade": "Equal-Weight"
+       },
+       {
+        "action": "main",
+        "date": "2026-07-08",
+        "firm": "Stifel",
+        "from_grade": "Hold",
+        "to_grade": "Hold"
+       },
+       {
+        "action": "main",
+        "date": "2026-07-06",
+        "firm": "TD Cowen",
+        "from_grade": "Hold",
+        "to_grade": "Hold"
+       },
+       {
+        "action": "up",
+        "date": "2026-05-18",
+        "firm": "Wells Fargo",
+        "from_grade": "Underweight",
+        "to_grade": "Equal-Weight"
+       }
+      ],
+      "score": 2,
+      "sector": "Technology",
+      "summary": "highly profitable (op margin 30%, ROE 71%) \u00b7 low leverage (0.2\u00d7 net debt/EBITDA) \u00b7 fair valuation (fwd P/E 20) \u00b7 growing (rev +7%, EPS +10%)"
+     },
+     "macd_confirms": true,
+     "market": "us",
+     "rule": "PRICE_SMA200W_BULL",
+     "sector": {
+      "factor": 0,
+      "name": "Technology",
+      "state": "weakening",
+      "symbol": "XLK"
+     },
+     "ticker": "ADP",
+     "values": {
+      "sma200": 255.0
+     },
+     "verdict": "buy",
+     "verdict_reason": "Bullish signal, MACD confirms, strong fundamentals",
+     "volume": {
+      "above_avg": true,
+      "avg20": 2690648,
+      "ratio": 1.06,
+      "today": 2839268
+     }
+    },
+    {
+     "category": "price_sma200_weekly",
+     "close": 126.91,
+     "date": "2026-07-17",
+     "direction": "bullish",
+     "fib": {
+      "daily": {
+       "high": 190.09,
+       "levels": [
+        {
+         "dist_pct": -26.64,
+         "label": "23.6%",
+         "price": 169.237
+        },
+        {
+         "dist_pct": -20.59,
+         "label": "38.2%",
+         "price": 156.3365
+        },
+        {
+         "dist_pct": -14.91,
+         "label": "50.0%",
+         "price": 145.91
+        },
+        {
+         "dist_pct": -8.37,
+         "label": "61.8%",
+         "price": 135.4835
+        },
+        {
+         "dist_pct": 2.91,
+         "label": "78.6%",
+         "price": 120.639
+        }
+       ],
+       "low": 101.73,
+       "nearest": {
+        "dist_pct": 2.91,
+        "label": "78.6%",
+        "price": 120.639
+       },
+       "position_pct": 25.4
+      },
+      "weekly": {
+       "high": 200.96,
+       "levels": [
+        {
+         "dist_pct": -30.07,
+         "label": "23.6%",
+         "price": 177.5417
+        },
+        {
+         "dist_pct": -23.86,
+         "label": "38.2%",
+         "price": 163.0541
+        },
+        {
+         "dist_pct": -17.97,
+         "label": "50.0%",
+         "price": 151.345
+        },
+        {
+         "dist_pct": -11.09,
+         "label": "61.8%",
+         "price": 139.6359
+        },
+        {
+         "dist_pct": 0.96,
+         "label": "78.6%",
+         "price": 122.9652
+        }
+       ],
+       "low": 101.73,
+       "nearest": {
+        "dist_pct": 0.96,
+        "label": "78.6%",
+        "price": 122.9652
+       },
+       "position_pct": 22.6
+      }
+     },
+     "fundamentals": {
+      "analyst": {
+       "consensus": "buy",
+       "n_analysts": 20,
+       "price": 124.15,
+       "target_high": 184.0,
+       "target_low": 114.0,
+       "target_mean": 139.95
+      },
+      "coverage": {
+       "present": 4,
+       "total": 5
+      },
+      "factors": {
+       "analyst": 1,
+       "earnings_growth": 0,
+       "target_upside": 0,
+       "valuation": 0
+      },
+      "flags": [],
+      "metrics": {
+       "earnings_growth_pct": 3.9,
+       "forward_pe": 16.7,
+       "rec_mean": 2.0,
+       "target_upside_pct": 12.7
+      },
+      "profile": {
+       "current_ratio": 0.9,
+       "debt_to_equity": 0.72,
+       "div_yield": 4.0,
+       "gross_margin": 100.0,
+       "net_margin": 21.2,
+       "op_margin": 38.0,
+       "payout": 121.5,
+       "peg": 1.46,
+       "rev_growth": 5.7,
+       "roe": 29.5
+      },
+      "rating": "neutral",
+      "rating_changes": [
+       {
+        "action": "main",
+        "date": "2026-07-17",
+        "firm": "Oppenheimer",
+        "from_grade": "Outperform",
+        "to_grade": "Outperform"
+       },
+       {
+        "action": "main",
+        "date": "2026-07-16",
+        "firm": "JP Morgan",
+        "from_grade": "Neutral",
+        "to_grade": "Neutral"
+       },
+       {
+        "action": "main",
+        "date": "2026-07-13",
+        "firm": "Evercore ISI Group",
+        "from_grade": "Outperform",
+        "to_grade": "Outperform"
+       },
+       {
+        "action": "main",
+        "date": "2026-07-13",
+        "firm": "RBC Capital",
+        "from_grade": "Outperform",
+        "to_grade": "Outperform"
+       },
+       {
+        "action": "main",
+        "date": "2026-07-09",
+        "firm": "Citizens",
+        "from_grade": "Market Outperform",
+        "to_grade": "Market Outperform"
+       }
+      ],
+      "score": 1,
+      "sector": "Financial Services",
+      "summary": "highly profitable (op margin 38%, ROE 30%) \u00b7 moderate leverage (D/E 0.7\u00d7) \u00b7 fair valuation (fwd P/E 17) \u00b7 flat (rev +6%, EPS +4%)"
+     },
+     "macd_confirms": true,
+     "market": "us",
+     "rule": "PRICE_SMA200W_BULL",
+     "sector": {
+      "factor": 1,
+      "name": "Financial Services",
+      "state": "leading",
+      "symbol": "XLF"
+     },
+     "ticker": "BX",
+     "values": {
+      "sma200": 126.88
+     },
+     "verdict": "buy",
+     "verdict_reason": "Bullish signal, MACD confirms, strong fundamentals, sector leading",
+     "volume": {
+      "above_avg": false,
+      "avg20": 4646198,
+      "ratio": 0.56,
+      "today": 2605456
+     }
+    },
+    {
+     "category": "price_sma200_weekly",
+     "close": 148.16,
+     "date": "2026-07-17",
+     "direction": "bullish",
+     "fib": {
+      "daily": {
+       "high": 155.19,
+       "levels": [
+        {
+         "dist_pct": -1.81,
+         "label": "23.6%",
+         "price": 148.2327
+        },
+        {
+         "dist_pct": 1.13,
+         "label": "38.2%",
+         "price": 143.9286
+        },
+        {
+         "dist_pct": 3.63,
+         "label": "50.0%",
+         "price": 140.45
+        },
+        {
+         "dist_pct": 6.26,
+         "label": "61.8%",
+         "price": 136.9714
+        },
+        {
+         "dist_pct": 10.25,
+         "label": "78.6%",
+         "price": 132.0187
+        }
+       ],
+       "low": 125.71,
+       "nearest": {
+        "dist_pct": 1.13,
+        "label": "38.2%",
+        "price": 143.9286
+       },
+       "position_pct": 67.3
+      },
+      "weekly": {
+       "high": 184.87,
+       "levels": [
+        {
+         "dist_pct": -14.28,
+         "label": "23.6%",
+         "price": 169.8038
+        },
+        {
+         "dist_pct": -9.31,
+         "label": "38.2%",
+         "price": 160.4831
+        },
+        {
+         "dist_pct": -4.84,
+         "label": "50.0%",
+         "price": 152.95
+        },
+        {
+         "dist_pct": 0.09,
+         "label": "61.8%",
+         "price": 145.4169
+        },
+        {
+         "dist_pct": 8.06,
+         "label": "78.6%",
+         "price": 134.6918
+        }
+       ],
+       "low": 121.03,
+       "nearest": {
+        "dist_pct": 0.09,
+        "label": "61.8%",
+        "price": 145.4169
+       },
+       "position_pct": 38.4
+      }
+     },
+     "fundamentals": {
+      "analyst": {
+       "consensus": "buy",
+       "n_analysts": 20,
+       "price": 145.55,
+       "target_high": 178.0,
+       "target_low": 140.0,
+       "target_mean": 156.45
+      },
+      "coverage": {
+       "present": 5,
+       "total": 5
+      },
+      "factors": {
+       "analyst": 0,
+       "earnings_growth": -1,
+       "fcf_yield": 1,
+       "target_upside": 0,
+       "valuation": 0
+      },
+      "flags": [
+       "high_leverage"
+      ],
+      "metrics": {
+       "earnings_growth_pct": -10.6,
+       "fcf_yield_pct": 4.2,
+       "forward_pe": 30.6,
+       "rec_mean": 2.3,
+       "target_upside_pct": 7.5
+      },
+      "profile": {
+       "current_ratio": 0.69,
+       "debt_to_equity": 0.98,
+       "div_yield": 4.45,
+       "ev_ebitda": 20.0,
+       "fcf_to_net_income": 1.42,
+       "gross_margin": 74.8,
+       "net_debt_to_ebitda": 6.04,
+       "net_margin": 27.1,
+       "op_margin": 44.0,
+       "p_fcf": 24.0,
+       "payout": 145.6,
+       "peg": 6.36,
+       "rev_growth": 3.8,
+       "roe": 6.8
+      },
+      "rating": "neutral",
+      "rating_changes": [
+       {
+        "action": "main",
+        "date": "2026-07-10",
+        "firm": "UBS",
+        "from_grade": "Buy",
+        "to_grade": "Buy"
+       },
+       {
+        "action": "main",
+        "date": "2026-07-10",
+        "firm": "Barclays",
+        "from_grade": "Overweight",
+        "to_grade": "Overweight"
+       },
+       {
+        "action": "main",
+        "date": "2026-07-06",
+        "firm": "Evercore ISI Group",
+        "from_grade": "In-Line",
+        "to_grade": "In-Line"
+       },
+       {
+        "action": "main",
+        "date": "2026-06-18",
+        "firm": "Truist Securities",
+        "from_grade": "Hold",
+        "to_grade": "Hold"
+       },
+       {
+        "action": "up",
+        "date": "2026-06-16",
+        "firm": "B of A Securities",
+        "from_grade": "Underperform",
+        "to_grade": "Neutral"
+       }
+      ],
+      "score": 0,
+      "sector": "Real Estate",
+      "summary": "highly profitable (op margin 44%, ROE 7%) \u00b7 high leverage (6.0\u00d7 net debt/EBITDA) \u00b7 premium valuation (fwd P/E 31) \u00b7 rev +4% / EPS -11%"
+     },
+     "macd_confirms": false,
+     "market": "us",
+     "rule": "PRICE_SMA200W_BULL",
+     "sector": {
+      "factor": 0,
+      "name": "Real Estate",
+      "state": "improving",
+      "symbol": "XLRE"
+     },
+     "ticker": "EXR",
+     "values": {
+      "sma200": 147.9
+     },
+     "verdict": "hold",
+     "verdict_reason": "MACD momentum does not confirm \u2014 possible false break",
+     "volume": {
+      "above_avg": false,
+      "avg20": 1025612,
+      "ratio": 0.87,
+      "today": 888336
+     }
+    },
+    {
+     "category": "price_sma200_weekly",
+     "close": 100.94,
+     "date": "2026-07-17",
+     "direction": "bullish",
+     "fib": {
+      "daily": {
+       "high": 153.87,
+       "levels": [
+        {
+         "dist_pct": -29.15,
+         "label": "23.6%",
+         "price": 137.0668
+        },
+        {
+         "dist_pct": -23.34,
+         "label": "38.2%",
+         "price": 126.6716
+        },
+        {
+         "dist_pct": -17.89,
+         "label": "50.0%",
+         "price": 118.27
+        },
+        {
+         "dist_pct": -11.61,
+         "label": "61.8%",
+         "price": 109.8684
+        },
+        {
+         "dist_pct": -0.81,
+         "label": "78.6%",
+         "price": 97.9068
+        }
+       ],
+       "low": 82.67,
+       "nearest": {
+        "dist_pct": -0.81,
+        "label": "78.6%",
+        "price": 97.9068
+       },
+       "position_pct": 20.3
+      },
+      "weekly": {
+       "high": 170.4,
+       "levels": [
+        {
+         "dist_pct": -35.13,
+         "label": "23.6%",
+         "price": 149.6957
+        },
+        {
+         "dist_pct": -29.06,
+         "label": "38.2%",
+         "price": 136.8871
+        },
+        {
+         "dist_pct": -23.25,
+         "label": "50.0%",
+         "price": 126.535
+        },
+        {
+         "dist_pct": -16.42,
+         "label": "61.8%",
+         "price": 116.1829
+        },
+        {
+         "dist_pct": -4.27,
+         "label": "78.6%",
+         "price": 101.4442
+        }
+       ],
+       "low": 82.67,
+       "nearest": {
+        "dist_pct": -4.27,
+        "label": "78.6%",
+        "price": 101.4442
+       },
+       "position_pct": 16.5
+      }
+     },
+     "fundamentals": {
+      "analyst": {
+       "consensus": "buy",
+       "n_analysts": 19,
+       "price": 97.11,
+       "target_high": 153.0,
+       "target_low": 105.0,
+       "target_mean": 124.08
+      },
+      "coverage": {
+       "present": 3,
+       "total": 5
+      },
+      "factors": {
+       "analyst": 1,
+       "target_upside": 1,
+       "valuation": 1
+      },
+      "flags": [],
+      "metrics": {
+       "forward_pe": 13.2,
+       "rec_mean": 1.6,
+       "target_upside_pct": 27.8
+      },
+      "profile": {
+       "current_ratio": 0.86,
+       "debt_to_equity": 0.69,
+       "div_yield": 0.77,
+       "gross_margin": 55.5,
+       "net_margin": 11.7,
+       "op_margin": 11.0,
+       "payout": 25.2,
+       "peg": 0.53,
+       "rev_growth": -6.6,
+       "roe": 7.7
+      },
+      "rating": "strong",
+      "rating_changes": [
+       {
+        "action": "main",
+        "date": "2026-07-21",
+        "firm": "Morgan Stanley",
+        "from_grade": "Overweight",
+        "to_grade": "Overweight"
+       },
+       {
+        "action": "main",
+        "date": "2026-07-20",
+        "firm": "HSBC",
+        "from_grade": "Buy",
+        "to_grade": "Buy"
+       },
+       {
+        "action": "main",
+        "date": "2026-07-17",
+        "firm": "Oppenheimer",
+        "from_grade": "Outperform",
+        "to_grade": "Outperform"
+       },
+       {
+        "action": "main",
+        "date": "2026-07-13",
+        "firm": "Evercore ISI Group",
+        "from_grade": "Outperform",
+        "to_grade": "Outperform"
+       },
+       {
+        "action": "main",
+        "date": "2026-07-13",
+        "firm": "RBC Capital",
+        "from_grade": "Outperform",
+        "to_grade": "Outperform"
+       }
+      ],
+      "score": 3,
+      "sector": "Financial Services",
+      "summary": "profitable (op margin 11%, ROE 8%) \u00b7 moderate leverage (D/E 0.7\u00d7) \u00b7 cheap valuation (fwd P/E 13) \u00b7 shrinking (rev -7%)"
+     },
+     "macd_confirms": true,
+     "market": "us",
+     "rule": "PRICE_SMA200W_BULL",
+     "sector": {
+      "factor": 1,
+      "name": "Financial Services",
+      "state": "leading",
+      "symbol": "XLF"
+     },
+     "ticker": "KKR",
+     "values": {
+      "sma200": 97.4
+     },
+     "verdict": "buy",
+     "verdict_reason": "Bullish signal, MACD confirms, strong fundamentals, sector leading",
+     "volume": {
+      "above_avg": false,
+      "avg20": 4581235,
+      "ratio": 0.46,
+      "today": 2097906
+     }
+    },
+    {
+     "category": "price_sma200_weekly",
+     "close": 393.82,
+     "date": "2026-07-17",
+     "direction": "bullish",
+     "fib": {
+      "daily": {
+       "high": 555.45,
+       "levels": [
+        {
+         "dist_pct": -21.51,
+         "label": "23.6%",
+         "price": 506.775
+        },
+        {
+         "dist_pct": -16.56,
+         "label": "38.2%",
+         "price": 476.6625
+        },
+        {
+         "dist_pct": -12.07,
+         "label": "50.0%",
+         "price": 452.325
+        },
+        {
+         "dist_pct": -7.07,
+         "label": "61.8%",
+         "price": 427.9875
+        },
+        {
+         "dist_pct": 1.12,
+         "label": "78.6%",
+         "price": 393.3375
+        }
+       ],
+       "low": 349.2,
+       "nearest": {
+        "dist_pct": 1.12,
+        "label": "78.6%",
+        "price": 393.3375
+       },
+       "position_pct": 23.5
+      },
+      "weekly": {
+       "high": 555.45,
+       "levels": [
+        {
+         "dist_pct": -21.35,
+         "label": "23.6%",
+         "price": 505.7343
+        },
+        {
+         "dist_pct": -16.26,
+         "label": "38.2%",
+         "price": 474.9779
+        },
+        {
+         "dist_pct": -11.63,
+         "label": "50.0%",
+         "price": 450.12
+        },
+        {
+         "dist_pct": -6.47,
+         "label": "61.8%",
+         "price": 425.2621
+        },
+        {
+         "dist_pct": 2.02,
+         "label": "78.6%",
+         "price": 389.8712
+        }
+       ],
+       "low": 344.79,
+       "nearest": {
+        "dist_pct": 2.02,
+        "label": "78.6%",
+        "price": 389.8712
+       },
+       "position_pct": 25.1
+      }
+     },
+     "fundamentals": {
+      "analyst": {
+       "consensus": "strong_buy",
+       "n_analysts": 56,
+       "price": 397.75,
+       "target_high": 870.0,
+       "target_low": 400.0,
+       "target_mean": 557.79
+      },
+      "coverage": {
+       "present": 5,
+       "total": 5
+      },
+      "factors": {
+       "analyst": 1,
+       "earnings_growth": 1,
+       "fcf_yield": 0,
+       "target_upside": 1,
+       "valuation": 0
+      },
+      "flags": [
+       "earnings_not_cash_backed"
+      ],
+      "metrics": {
+       "earnings_growth_pct": 23.4,
+       "fcf_yield_pct": 1.3,
+       "forward_pe": 20.5,
+       "rec_mean": 1.3,
+       "target_upside_pct": 40.2
+      },
+      "profile": {
+       "current_ratio": 1.28,
+       "debt_to_equity": 0.3,
+       "div_yield": 0.92,
+       "ev_ebitda": 16.3,
+       "fcf_to_net_income": 0.3,
+       "gross_margin": 68.3,
+       "net_debt_to_ebitda": 0.26,
+       "net_margin": 39.3,
+       "op_margin": 46.3,
+       "p_fcf": 79.8,
+       "payout": 20.7,
+       "peg": 1.24,
+       "rev_growth": 18.3,
+       "roe": 34.0
+      },
+      "rating": "strong",
+      "rating_changes": [
+       {
+        "action": "init",
+        "date": "2026-07-20",
+        "firm": "CLSA",
+        "from_grade": null,
+        "to_grade": "Outperform"
+       },
+       {
+        "action": "main",
+        "date": "2026-07-15",
+        "firm": "Evercore ISI Group",
+        "from_grade": "Outperform",
+        "to_grade": "Outperform"
+       },
+       {
+        "action": "main",
+        "date": "2026-07-15",
+        "firm": "Mizuho",
+        "from_grade": "Outperform",
+        "to_grade": "Outperform"
+       },
+       {
+        "action": "main",
+        "date": "2026-07-15",
+        "firm": "Citigroup",
+        "from_grade": "Buy",
+        "to_grade": "Buy"
+       },
+       {
+        "action": "main",
+        "date": "2026-07-15",
+        "firm": "Wells Fargo",
+        "from_grade": "Overweight",
+        "to_grade": "Overweight"
+       }
+      ],
+      "score": 3,
+      "sector": "Technology",
+      "summary": "highly profitable (op margin 46%, ROE 34%) \u00b7 low leverage (0.3\u00d7 net debt/EBITDA) \u00b7 fair valuation (fwd P/E 20) \u00b7 strong growth (rev +18%, EPS +23%)"
+     },
+     "macd_confirms": true,
+     "market": "us",
+     "rule": "PRICE_SMA200W_BULL",
+     "sector": {
+      "factor": 0,
+      "name": "Technology",
+      "state": "weakening",
+      "symbol": "XLK"
+     },
+     "ticker": "MSFT",
+     "values": {
+      "sma200": 389.15
+     },
+     "verdict": "buy",
+     "verdict_reason": "Bullish signal, MACD confirms, strong fundamentals",
+     "volume": {
+      "above_avg": false,
+      "avg20": 44203837,
+      "ratio": 0.54,
+      "today": 23964731
+     }
+    },
+    {
+     "category": "price_sma200_weekly",
+     "close": 68.95,
+     "date": "2026-07-17",
+     "direction": "bearish",
+     "fib": {
+      "daily": {
+       "high": 126.71,
+       "levels": [
+        {
+         "dist_pct": -38.78,
+         "label": "23.6%",
+         "price": 112.1653
+        },
+        {
+         "dist_pct": -33.44,
+         "label": "38.2%",
+         "price": 103.1673
+        },
+        {
+         "dist_pct": -28.39,
+         "label": "50.0%",
+         "price": 95.895
+        },
+        {
+         "dist_pct": -22.51,
+         "label": "61.8%",
+         "price": 88.6227
+        },
+        {
+         "dist_pct": -12.26,
+         "label": "78.6%",
+         "price": 78.2688
+        }
+       ],
+       "low": 65.08,
+       "nearest": {
+        "dist_pct": -12.26,
+        "label": "78.6%",
+        "price": 78.2688
+       },
+       "position_pct": 5.8
+      },
+      "weekly": {
+       "high": 134.115,
+       "levels": [
+        {
+         "dist_pct": -40.96,
+         "label": "23.6%",
+         "price": 116.318
+        },
+        {
+         "dist_pct": -34.79,
+         "label": "38.2%",
+         "price": 105.308
+        },
+        {
+         "dist_pct": -28.77,
+         "label": "50.0%",
+         "price": 96.4095
+        },
+        {
+         "dist_pct": -21.53,
+         "label": "61.8%",
+         "price": 87.511
+        },
+        {
+         "dist_pct": -8.25,
+         "label": "78.6%",
+         "price": 74.842
+        }
+       ],
+       "low": 58.704,
+       "nearest": {
+        "dist_pct": -8.25,
+        "label": "78.6%",
+        "price": 74.842
+       },
+       "position_pct": 13.2
+      }
+     },
+     "fundamentals": {
+      "analyst": {
+       "consensus": "buy",
+       "n_analysts": 44,
+       "price": 68.67,
+       "target_high": 136.32,
+       "target_low": 70.0,
+       "target_mean": 97.7
+      },
+      "coverage": {
+       "present": 5,
+       "total": 5
+      },
+      "factors": {
+       "analyst": 1,
+       "earnings_growth": 1,
+       "fcf_yield": 1,
+       "target_upside": 1,
+       "valuation": 0
+      },
+      "flags": [],
+      "metrics": {
+       "earnings_growth_pct": 11.1,
+       "fcf_yield_pct": 8.9,
+       "forward_pe": 18.0,
+       "rec_mean": 1.7,
+       "target_upside_pct": 42.3
+      },
+      "profile": {
+       "current_ratio": 1.14,
+       "debt_to_equity": 0.55,
+       "ev_ebitda": 19.6,
+       "fcf_to_net_income": 1.86,
+       "gross_margin": 49.1,
+       "net_debt_to_ebitda": 0.51,
+       "net_margin": 28.2,
+       "op_margin": 33.4,
+       "p_fcf": 11.3,
+       "payout": 0.0,
+       "peg": 1.51,
+       "rev_growth": 13.4,
+       "roe": 49.5
+      },
+      "rating": "strong",
+      "rating_changes": [
+       {
+        "action": "main",
+        "date": "2026-07-17",
+        "firm": "Goldman Sachs",
+        "from_grade": "Buy",
+        "to_grade": "Buy"
+       },
+       {
+        "action": "main",
+        "date": "2026-07-17",
+        "firm": "Piper Sandler",
+        "from_grade": "Overweight",
+        "to_grade": "Overweight"
+       },
+       {
+        "action": "main",
+        "date": "2026-07-17",
+        "firm": "JP Morgan",
+        "from_grade": "Overweight",
+        "to_grade": "Overweight"
+       },
+       {
+        "action": "main",
+        "date": "2026-07-17",
+        "firm": "Morgan Stanley",
+        "from_grade": "Overweight",
+        "to_grade": "Overweight"
+       },
+       {
+        "action": "down",
+        "date": "2026-07-17",
+        "firm": "KGI Securities",
+        "from_grade": "Outperform",
+        "to_grade": "Neutral"
+       }
+      ],
+      "score": 4,
+      "sector": "Communication Services",
+      "summary": "highly profitable (op margin 33%, ROE 50%) \u00b7 low leverage (0.5\u00d7 net debt/EBITDA) \u00b7 fair valuation (fwd P/E 18) \u00b7 growing (rev +13%, EPS +11%)"
+     },
+     "macd_confirms": true,
+     "market": "us",
+     "rule": "PRICE_SMA200W_BEAR",
+     "sector": {
+      "factor": 0,
+      "name": "Communication Services",
+      "state": "improving",
+      "symbol": "XLC"
+     },
+     "ticker": "NFLX",
+     "values": {
+      "sma200": 70.74
+     },
+     "verdict": "hold",
+     "verdict_reason": "Bearish signal but fundamentals/sector strong \u2014 trim rather than exit",
+     "volume": {
+      "above_avg": true,
+      "avg20": 52128818,
+      "ratio": 1.08,
+      "today": 56183353
+     }
+    },
+    {
+     "category": "price_sma200_weekly",
+     "close": 319.87,
+     "date": "2026-07-17",
+     "direction": "bearish",
+     "fib": {
+      "daily": {
+       "high": 404.87,
+       "levels": [
+        {
+         "dist_pct": -16.25,
+         "label": "23.6%",
+         "price": 375.6367
+        },
+        {
+         "dist_pct": -12.02,
+         "label": "38.2%",
+         "price": 357.5517
+        },
+        {
+         "dist_pct": -8.27,
+         "label": "50.0%",
+         "price": 342.935
+        },
+        {
+         "dist_pct": -4.18,
+         "label": "61.8%",
+         "price": 328.3183
+        },
+        {
+         "dist_pct": 2.3,
+         "label": "78.6%",
+         "price": 307.5082
+        }
+       ],
+       "low": 281.0,
+       "nearest": {
+        "dist_pct": 2.3,
+        "label": "78.6%",
+        "price": 307.5082
+       },
+       "position_pct": 27.1
+      },
+      "weekly": {
+       "high": 406.19,
+       "levels": [
+        {
+         "dist_pct": -16.48,
+         "label": "23.6%",
+         "price": 376.6452
+        },
+        {
+         "dist_pct": -12.22,
+         "label": "38.2%",
+         "price": 358.3674
+        },
+        {
+         "dist_pct": -8.44,
+         "label": "50.0%",
+         "price": 343.595
+        },
+        {
+         "dist_pct": -4.33,
+         "label": "61.8%",
+         "price": 328.8226
+        },
+        {
+         "dist_pct": 2.21,
+         "label": "78.6%",
+         "price": 307.7907
+        }
+       ],
+       "low": 281.0,
+       "nearest": {
+        "dist_pct": 2.21,
+        "label": "78.6%",
+        "price": 307.7907
+       },
+       "position_pct": 26.8
+      }
+     },
+     "fundamentals": {
+      "analyst": {
+       "consensus": "buy",
+       "n_analysts": 25,
+       "price": 314.58,
+       "target_high": 465.0,
+       "target_low": 315.0,
+       "target_mean": 386.52
+      },
+      "coverage": {
+       "present": 5,
+       "total": 5
+      },
+      "factors": {
+       "analyst": 1,
+       "earnings_growth": 1,
+       "fcf_yield": 0,
+       "target_upside": 1,
+       "valuation": 0
+      },
+      "flags": [],
+      "metrics": {
+       "earnings_growth_pct": 14.2,
+       "fcf_yield_pct": 3.6,
+       "forward_pe": 18.8,
+       "rec_mean": 1.6,
+       "target_upside_pct": 22.9
+      },
+      "profile": {
+       "current_ratio": 2.11,
+       "debt_to_equity": 0.66,
+       "div_yield": 1.12,
+       "ev_ebitda": 19.2,
+       "fcf_to_net_income": 1.31,
+       "gross_margin": 64.7,
+       "net_debt_to_ebitda": 1.77,
+       "net_margin": 13.2,
+       "op_margin": 17.8,
+       "p_fcf": 27.7,
+       "payout": 39.8,
+       "peg": 1.52,
+       "rev_growth": 2.6,
+       "roe": 15.2
+      },
+      "rating": "strong",
+      "rating_changes": [
+       {
+        "action": "init",
+        "date": "2026-07-09",
+        "firm": "BMO Capital",
+        "from_grade": "Market Perform",
+        "to_grade": "Outperform"
+       },
+       {
+        "action": "main",
+        "date": "2026-07-06",
+        "firm": "Evercore ISI Group",
+        "from_grade": "Outperform",
+        "to_grade": "Outperform"
+       },
+       {
+        "action": "main",
+        "date": "2026-06-05",
+        "firm": "Leerink Partners",
+        "from_grade": "Outperform",
+        "to_grade": "Outperform"
+       },
+       {
+        "action": "reit",
+        "date": "2026-05-04",
+        "firm": "Truist Securities",
+        "from_grade": "Hold",
+        "to_grade": "Hold"
+       },
+       {
+        "action": "main",
+        "date": "2026-05-04",
+        "firm": "Barclays",
+        "from_grade": "Overweight",
+        "to_grade": "Overweight"
+       }
+      ],
+      "score": 3,
+      "sector": "Healthcare",
+      "summary": "profitable (op margin 18%, ROE 15%) \u00b7 moderate leverage (1.8\u00d7 net debt/EBITDA) \u00b7 fair valuation (fwd P/E 19) \u00b7 flat (rev +3%, EPS +14%)"
+     },
+     "macd_confirms": true,
+     "market": "us",
+     "rule": "PRICE_SMA200W_BEAR",
+     "sector": {
+      "factor": 1,
+      "name": "Healthcare",
+      "state": "leading",
+      "symbol": "XLV"
+     },
+     "ticker": "SYK",
+     "values": {
+      "sma200": 327.1
+     },
+     "verdict": "hold",
+     "verdict_reason": "Bearish signal but fundamentals/sector strong \u2014 trim rather than exit",
+     "volume": {
+      "above_avg": false,
+      "avg20": 2639248,
+      "ratio": 0.52,
+      "today": 1379664
+     }
+    },
+    {
+     "category": "price_sma200_weekly",
+     "close": 21.81,
+     "date": "2026-07-17",
+     "direction": "bullish",
+     "fib": {
+      "daily": {
+       "high": 29.79,
+       "levels": [
+        {
+         "dist_pct": -18.92,
+         "label": "23.6%",
+         "price": 27.4536
+        },
+        {
+         "dist_pct": -14.41,
+         "label": "38.2%",
+         "price": 26.0082
+        },
+        {
+         "dist_pct": -10.39,
+         "label": "50.0%",
+         "price": 24.84
+        },
+        {
+         "dist_pct": -5.96,
+         "label": "61.8%",
+         "price": 23.6718
+        },
+        {
+         "dist_pct": 1.14,
+         "label": "78.6%",
+         "price": 22.0086
+        }
+       ],
+       "low": 19.89,
+       "nearest": {
+        "dist_pct": 1.14,
+        "label": "78.6%",
+        "price": 22.0086
+       },
+       "position_pct": 23.9
+      },
+      "weekly": {
+       "high": 29.79,
+       "levels": [
+        {
+         "dist_pct": -17.68,
+         "label": "23.6%",
+         "price": 27.0406
+        },
+        {
+         "dist_pct": -12.15,
+         "label": "38.2%",
+         "price": 25.3397
+        },
+        {
+         "dist_pct": -7.11,
+         "label": "50.0%",
+         "price": 23.965
+        },
+        {
+         "dist_pct": -1.46,
+         "label": "61.8%",
+         "price": 22.5903
+        },
+        {
+         "dist_pct": 7.88,
+         "label": "78.6%",
+         "price": 20.6331
+        }
+       ],
+       "low": 18.14,
+       "nearest": {
+        "dist_pct": -1.46,
+        "label": "61.8%",
+        "price": 22.5903
+       },
+       "position_pct": 35.4
+      }
+     },
+     "fundamentals": {
+      "analyst": {
+       "consensus": "buy",
+       "n_analysts": 23,
+       "price": 22.26,
+       "target_high": 36.0,
+       "target_low": 18.0,
+       "target_mean": 29.03
+      },
+      "coverage": {
+       "present": 5,
+       "total": 5
+      },
+      "factors": {
+       "analyst": 1,
+       "earnings_growth": -1,
+       "fcf_yield": 1,
+       "target_upside": 1,
+       "valuation": 1
+      },
+      "flags": [
+       "earnings_not_cash_backed"
+      ],
+      "metrics": {
+       "earnings_growth_pct": -11.3,
+       "fcf_yield_pct": 5.7,
+       "forward_pe": 8.7,
+       "rec_mean": 2.1,
+       "target_upside_pct": 30.4
+      },
+      "profile": {
+       "current_ratio": 0.92,
+       "debt_to_equity": 1.27,
+       "div_yield": 4.99,
+       "ev_ebitda": 7.2,
+       "fcf_to_net_income": 0.41,
+       "gross_margin": 59.4,
+       "net_debt_to_ebitda": 3.39,
+       "net_margin": 16.9,
+       "op_margin": 22.7,
+       "p_fcf": 17.5,
+       "payout": 37.4,
+       "peg": 1.53,
+       "rev_growth": 2.9,
+       "roe": 18.4
+      },
+      "rating": "strong",
+      "rating_changes": [
+       {
+        "action": "main",
+        "date": "2026-07-20",
+        "firm": "RBC Capital",
+        "from_grade": "Outperform",
+        "to_grade": "Outperform"
+       },
+       {
+        "action": "main",
+        "date": "2026-07-15",
+        "firm": "Scotiabank",
+        "from_grade": "Sector Perform",
+        "to_grade": "Sector Perform"
+       },
+       {
+        "action": "main",
+        "date": "2026-07-08",
+        "firm": "Barclays",
+        "from_grade": "Equal-Weight",
+        "to_grade": "Equal-Weight"
+       },
+       {
+        "action": "init",
+        "date": "2026-07-08",
+        "firm": "Wells Fargo",
+        "from_grade": null,
+        "to_grade": "Underweight"
+       },
+       {
+        "action": "main",
+        "date": "2026-07-07",
+        "firm": "Morgan Stanley",
+        "from_grade": "Overweight",
+        "to_grade": "Overweight"
+       }
+      ],
+      "score": 3,
+      "sector": "Communication Services",
+      "summary": "highly profitable (op margin 23%, ROE 18%) \u00b7 moderate leverage (3.4\u00d7 net debt/EBITDA) \u00b7 cheap valuation (fwd P/E 9) \u00b7 rev +3% / EPS -11%"
+     },
+     "macd_confirms": true,
+     "market": "us",
+     "rule": "PRICE_SMA200W_BULL",
+     "sector": {
+      "factor": 0,
+      "name": "Communication Services",
+      "state": "improving",
+      "symbol": "XLC"
+     },
+     "ticker": "T",
+     "values": {
+      "sma200": 21.26
+     },
+     "verdict": "buy",
+     "verdict_reason": "Bullish signal, MACD confirms, strong fundamentals",
+     "volume": {
+      "above_avg": true,
+      "avg20": 83182100,
+      "ratio": 1.57,
+      "today": 130272208
+     }
+    },
+    {
+     "category": "price_sma200_weekly",
+     "close": 532.48,
+     "date": "2026-07-17",
+     "direction": "bullish",
+     "fib": {
+      "daily": {
+       "high": 643.99,
+       "levels": [
+        {
+         "dist_pct": -10.86,
+         "label": "23.6%",
+         "price": 587.2013
+        },
+        {
+         "dist_pct": -5.18,
+         "label": "38.2%",
+         "price": 552.0693
+        },
+        {
+         "dist_pct": -0.04,
+         "label": "50.0%",
+         "price": 523.675
+        },
+        {
+         "dist_pct": 5.69,
+         "label": "61.8%",
+         "price": 495.2806
+        },
+        {
+         "dist_pct": 15.08,
+         "label": "78.6%",
+         "price": 454.8548
+        }
+       ],
+       "low": 403.36,
+       "nearest": {
+        "dist_pct": -0.04,
+        "label": "50.0%",
+        "price": 523.675
+       },
+       "position_pct": 49.9
+      },
+      "weekly": {
+       "high": 643.99,
+       "levels": [
+        {
+         "dist_pct": -10.21,
+         "label": "23.6%",
+         "price": 582.9769
+        },
+        {
+         "dist_pct": -3.99,
+         "label": "38.2%",
+         "price": 545.2315
+        },
+        {
+         "dist_pct": 1.7,
+         "label": "50.0%",
+         "price": 514.725
+        },
+        {
+         "dist_pct": 8.1,
+         "label": "61.8%",
+         "price": 484.2185
+        },
+        {
+         "dist_pct": 18.76,
+         "label": "78.6%",
+         "price": 440.7854
+        }
+       ],
+       "low": 385.46,
+       "nearest": {
+        "dist_pct": 1.7,
+        "label": "50.0%",
+        "price": 514.725
+       },
+       "position_pct": 53.4
+      }
+     },
+     "fundamentals": {
+      "analyst": {
+       "consensus": "buy",
+       "n_analysts": 26,
+       "price": 523.46,
+       "target_high": 750.0,
+       "target_low": 490.0,
+       "target_mean": 591.27
+      },
+      "coverage": {
+       "present": 5,
+       "total": 5
+      },
+      "factors": {
+       "analyst": 1,
+       "earnings_growth": 1,
+       "fcf_yield": 0,
+       "target_upside": 0,
+       "valuation": 0
+      },
+      "flags": [],
+      "metrics": {
+       "earnings_growth_pct": 11.3,
+       "fcf_yield_pct": 2.8,
+       "forward_pe": 19.2,
+       "rec_mean": 1.6,
+       "target_upside_pct": 13.0
+      },
+      "profile": {
+       "current_ratio": 1.53,
+       "debt_to_equity": 0.83,
+       "div_yield": 0.36,
+       "ev_ebitda": 20.9,
+       "fcf_to_net_income": 0.81,
+       "gross_margin": 40.9,
+       "net_debt_to_ebitda": 3.53,
+       "net_margin": 15.2,
+       "op_margin": 17.9,
+       "p_fcf": 35.2,
+       "payout": 9.7,
+       "peg": 1.74,
+       "rev_growth": 6.2,
+       "roe": 13.5
+      },
+      "rating": "strong",
+      "rating_changes": [
+       {
+        "action": "main",
+        "date": "2026-07-06",
+        "firm": "Evercore ISI Group",
+        "from_grade": "Outperform",
+        "to_grade": "Outperform"
+       },
+       {
+        "action": "init",
+        "date": "2026-06-11",
+        "firm": "Piper Sandler",
+        "from_grade": null,
+        "to_grade": "Neutral"
+       },
+       {
+        "action": "down",
+        "date": "2026-06-03",
+        "firm": "HSBC",
+        "from_grade": "Buy",
+        "to_grade": "Hold"
+       },
+       {
+        "action": "main",
+        "date": "2026-05-08",
+        "firm": "Wells Fargo",
+        "from_grade": "Overweight",
+        "to_grade": "Overweight"
+       },
+       {
+        "action": "main",
+        "date": "2026-04-24",
+        "firm": "Stifel",
+        "from_grade": "Buy",
+        "to_grade": "Buy"
+       }
+      ],
+      "score": 2,
+      "sector": "Healthcare",
+      "summary": "profitable (op margin 18%, ROE 14%) \u00b7 moderate leverage (3.5\u00d7 net debt/EBITDA) \u00b7 fair valuation (fwd P/E 19) \u00b7 growing (rev +6%, EPS +11%)"
+     },
+     "macd_confirms": false,
+     "market": "us",
+     "rule": "PRICE_SMA200W_BULL",
+     "sector": {
+      "factor": 1,
+      "name": "Healthcare",
+      "state": "leading",
+      "symbol": "XLV"
+     },
+     "ticker": "TMO",
+     "values": {
+      "sma200": 529.11
+     },
+     "verdict": "hold",
+     "verdict_reason": "MACD momentum does not confirm \u2014 possible false break",
+     "volume": {
+      "above_avg": true,
+      "avg20": 2114278,
+      "ratio": 1.67,
+      "today": 3524169
+     }
+    },
+    {
+     "category": "price_sma200_weekly",
+     "close": 96.64,
+     "date": "2026-07-17",
+     "direction": "bearish",
+     "fib": {
+      "daily": {
+       "high": 134.72,
+       "levels": [
+        {
+         "dist_pct": -24.24,
+         "label": "23.6%",
+         "price": 124.9095
+        },
+        {
+         "dist_pct": -20.37,
+         "label": "38.2%",
+         "price": 118.8403
+        },
+        {
+         "dist_pct": -16.94,
+         "label": "50.0%",
+         "price": 113.935
+        },
+        {
+         "dist_pct": -13.21,
+         "label": "61.8%",
+         "price": 109.0297
+        },
+        {
+         "dist_pct": -7.27,
+         "label": "78.6%",
+         "price": 102.046
+        }
+       ],
+       "low": 93.15,
+       "nearest": {
+        "dist_pct": -7.27,
+        "label": "78.6%",
+        "price": 102.046
+       },
+       "position_pct": 3.6
+      },
+      "weekly": {
+       "high": 134.72,
+       "levels": [
+        {
+         "dist_pct": -20.03,
+         "label": "23.6%",
+         "price": 118.3251
+        },
+        {
+         "dist_pct": -12.53,
+         "label": "38.2%",
+         "price": 108.1825
+        },
+        {
+         "dist_pct": -5.36,
+         "label": "50.0%",
+         "price": 99.985
+        },
+        {
+         "dist_pct": 3.1,
+         "label": "61.8%",
+         "price": 91.7875
+        },
+        {
+         "dist_pct": 18.12,
+         "label": "78.6%",
+         "price": 80.1166
+        }
+       ],
+       "low": 65.25,
+       "nearest": {
+        "dist_pct": 3.1,
+        "label": "61.8%",
+        "price": 91.7875
+       },
+       "position_pct": 42.3
+      }
+     },
+     "fundamentals": {
+      "analyst": {
+       "consensus": "strong_buy",
+       "n_analysts": 19,
+       "price": 94.63,
+       "target_high": 145.0,
+       "target_low": 118.0,
+       "target_mean": 134.0
+      },
+      "coverage": {
+       "present": 5,
+       "total": 5
+      },
+      "factors": {
+       "analyst": 1,
+       "earnings_growth": 1,
+       "fcf_yield": 0,
+       "target_upside": 1,
+       "valuation": 0
+      },
+      "flags": [
+       "high_leverage"
+      ],
+      "metrics": {
+       "earnings_growth_pct": 50.9,
+       "fcf_yield_pct": 3.6,
+       "forward_pe": 17.8,
+       "rec_mean": 1.2,
+       "target_upside_pct": 41.6
+      },
+      "profile": {
+       "current_ratio": 1.24,
+       "div_yield": 1.06,
+       "ev_ebitda": 11.0,
+       "fcf_to_net_income": 0.95,
+       "gross_margin": 68.1,
+       "net_debt_to_ebitda": 5.89,
+       "net_margin": 5.1,
+       "op_margin": 15.3,
+       "p_fcf": 27.5,
+       "payout": 28.6,
+       "peg": 1.61,
+       "rev_growth": 9.2
+      },
+      "rating": "strong",
+      "rating_changes": [
+       {
+        "action": "main",
+        "date": "2026-07-16",
+        "firm": "Stifel",
+        "from_grade": "Buy",
+        "to_grade": "Buy"
+       },
+       {
+        "action": "main",
+        "date": "2026-07-15",
+        "firm": "JP Morgan",
+        "from_grade": "Overweight",
+        "to_grade": "Overweight"
+       },
+       {
+        "action": "main",
+        "date": "2026-07-14",
+        "firm": "Wells Fargo",
+        "from_grade": "Overweight",
+        "to_grade": "Overweight"
+       },
+       {
+        "action": "main",
+        "date": "2026-07-09",
+        "firm": "Barclays",
+        "from_grade": "Overweight",
+        "to_grade": "Overweight"
+       },
+       {
+        "action": "init",
+        "date": "2026-07-08",
+        "firm": "Truist Securities",
+        "from_grade": null,
+        "to_grade": "Buy"
+       }
+      ],
+      "score": 3,
+      "sector": "Consumer Cyclical",
+      "summary": "profitable (op margin 15%) \u00b7 high leverage (5.9\u00d7 net debt/EBITDA) \u00b7 fair valuation (fwd P/E 18) \u00b7 growing (rev +9%, EPS +51%)"
+     },
+     "macd_confirms": true,
+     "market": "us",
+     "rule": "PRICE_SMA200W_BEAR",
+     "sector": {
+      "factor": -1,
+      "name": "Consumer Cyclical",
+      "state": "lagging",
+      "symbol": "XLY"
+     },
+     "ticker": "WYNN",
+     "values": {
+      "sma200": 97.46
+     },
+     "verdict": "hold",
+     "verdict_reason": "Bearish signal but fundamentals/sector strong \u2014 trim rather than exit",
+     "volume": {
+      "above_avg": false,
+      "avg20": 1394636,
+      "ratio": 0.87,
+      "today": 1212318
+     }
+    },
+    {
+     "category": "price_sma200_weekly",
+     "close": 27.91,
+     "date": "2026-07-17",
+     "direction": "bullish",
+     "fib": {
+      "daily": {
+       "high": 28.58,
+       "levels": [
+        {
+         "dist_pct": 8.09,
+         "label": "23.6%",
+         "price": 26.2271
+        },
+        {
+         "dist_pct": 14.45,
+         "label": "38.2%",
+         "price": 24.7715
+        },
+        {
+         "dist_pct": 20.15,
+         "label": "50.0%",
+         "price": 23.595
+        },
+        {
+         "dist_pct": 26.46,
+         "label": "61.8%",
+         "price": 22.4185
+        },
+        {
+         "dist_pct": 36.67,
+         "label": "78.6%",
+         "price": 20.7436
+        }
+       ],
+       "low": 18.61,
+       "nearest": {
+        "dist_pct": 8.09,
+        "label": "23.6%",
+        "price": 26.2271
+       },
+       "position_pct": 97.7
+      },
+      "weekly": {
+       "high": 40.08,
+       "levels": [
+        {
+         "dist_pct": -19.03,
+         "label": "23.6%",
+         "price": 35.0131
+        },
+        {
+         "dist_pct": -11.07,
+         "label": "38.2%",
+         "price": 31.8785
+        },
+        {
+         "dist_pct": -3.39,
+         "label": "50.0%",
+         "price": 29.345
+        },
+        {
+         "dist_pct": 5.74,
+         "label": "61.8%",
+         "price": 26.8115
+        },
+        {
+         "dist_pct": 22.17,
+         "label": "78.6%",
+         "price": 23.2046
+        }
+       ],
+       "low": 18.61,
+       "nearest": {
+        "dist_pct": -3.39,
+        "label": "50.0%",
+        "price": 29.345
+       },
+       "position_pct": 45.4
+      }
+     },
+     "fundamentals": {
+      "analyst": {
+       "consensus": "buy",
+       "n_analysts": 22,
+       "price": 28.23,
+       "target_high": 53.0,
+       "target_low": 20.0,
+       "target_mean": 35.36
+      },
+      "coverage": {
+       "present": 4,
+       "total": 5
+      },
+      "factors": {
+       "analyst": 1,
+       "fcf_yield": 1,
+       "target_upside": 1,
+       "valuation": 0
+      },
+      "flags": [],
+      "metrics": {
+       "fcf_yield_pct": 16.2,
+       "forward_pe": 15.2,
+       "rec_mean": 1.6,
+       "target_upside_pct": 25.3
+      },
+      "profile": {
+       "current_ratio": 1.09,
+       "debt_to_equity": 0.52,
+       "ev_ebitda": 14.0,
+       "fcf_to_net_income": 10.02,
+       "gross_margin": 39.8,
+       "net_debt_to_ebitda": 0.28,
+       "net_margin": 0.9,
+       "op_margin": -2.7,
+       "p_fcf": 6.2,
+       "payout": 0.0,
+       "peg": 0.82,
+       "rev_growth": 23.8,
+       "roe": 4.3
+      },
+      "rating": "strong",
+      "rating_changes": [],
+      "score": 3,
+      "sector": "Consumer Cyclical",
+      "summary": "unprofitable (op margin -3%, ROE 4%) \u00b7 low leverage (0.3\u00d7 net debt/EBITDA) \u00b7 fair valuation (fwd P/E 15) \u00b7 strong growth (rev +24%)"
+     },
+     "macd_confirms": true,
+     "market": "de",
+     "rule": "PRICE_SMA200W_BULL",
+     "sector": null,
+     "ticker": "ZAL.DE",
+     "values": {
+      "sma200": 27.01
+     },
+     "verdict": "buy",
+     "verdict_reason": "Bullish signal, MACD confirms, strong fundamentals",
+     "volume": {
+      "above_avg": false,
+      "avg20": 1138655,
+      "ratio": 0.9,
+      "today": 1030257
+     }
+    },
+    {
+     "category": "rsi_extended",
+     "close": 212.27,
+     "date": "2026-07-21",
+     "direction": "bearish",
+     "fib": {
+      "daily": {
+       "high": 212.39,
+       "levels": [
+        {
+         "dist_pct": 11.64,
+         "label": "23.6%",
+         "price": 190.1305
+        },
+        {
+         "dist_pct": 20.36,
+         "label": "38.2%",
+         "price": 176.3598
+        },
+        {
+         "dist_pct": 28.47,
+         "label": "50.0%",
+         "price": 165.23
+        },
+        {
+         "dist_pct": 37.75,
+         "label": "61.8%",
+         "price": 154.1002
+        },
+        {
+         "dist_pct": 53.54,
+         "label": "78.6%",
+         "price": 138.2545
+        }
+       ],
+       "low": 118.07,
+       "nearest": {
+        "dist_pct": 11.64,
+        "label": "23.6%",
+        "price": 190.1305
+       },
+       "position_pct": 99.9
+      },
+      "weekly": {
+       "high": 207.14,
+       "levels": [
+        {
+         "dist_pct": 18.1,
+         "label": "23.6%",
+         "price": 179.7333
+        },
+        {
+         "dist_pct": 30.4,
+         "label": "38.2%",
+         "price": 162.7783
+        },
+        {
+         "dist_pct": 42.39,
+         "label": "50.0%",
+         "price": 149.075
+        },
+        {
+         "dist_pct": 56.81,
+         "label": "61.8%",
+         "price": 135.3717
+        },
+        {
+         "dist_pct": 83.21,
+         "label": "78.6%",
+         "price": 115.8618
+        }
+       ],
+       "low": 91.01,
+       "nearest": {
+        "dist_pct": 18.1,
+        "label": "23.6%",
+        "price": 179.7333
+       },
+       "position_pct": 104.4
+      }
+     },
+     "fundamentals": {
+      "analyst": {
+       "consensus": "buy",
+       "n_analysts": 18,
+       "price": 212.27,
+       "target_high": 235.0,
+       "target_low": 138.0,
+       "target_mean": 199.17
+      },
+      "coverage": {
+       "present": 5,
+       "total": 5
+      },
+      "factors": {
+       "analyst": 1,
+       "earnings_growth": -1,
+       "fcf_yield": -1,
+       "target_upside": -1,
+       "valuation": 1
+      },
+      "flags": [
+       "value_trap",
+       "earnings_not_cash_backed"
+      ],
+      "metrics": {
+       "earnings_growth_pct": -56.8,
+       "fcf_yield_pct": -1.3,
+       "forward_pe": 11.6,
+       "rec_mean": 2.1,
+       "target_upside_pct": -6.2
+      },
+      "profile": {
+       "current_ratio": 1.13,
+       "debt_to_equity": 0.91,
+       "div_yield": 2.39,
+       "ev_ebitda": 15.2,
+       "fcf_to_net_income": -0.28,
+       "gross_margin": 12.5,
+       "net_debt_to_ebitda": 3.12,
+       "net_margin": 3.1,
+       "op_margin": 0.6,
+       "payout": 48.1,
+       "peg": 1.21,
+       "rev_growth": 6.9,
+       "roe": 14.5
+      },
+      "rating": "neutral",
+      "rating_changes": [
+       {
+        "action": "main",
+        "date": "2026-07-21",
+        "firm": "TD Cowen",
+        "from_grade": "Buy",
+        "to_grade": "Buy"
+       },
+       {
+        "action": "main",
+        "date": "2026-07-14",
+        "firm": "Citigroup",
+        "from_grade": "Neutral",
+        "to_grade": "Neutral"
+       },
+       {
+        "action": "main",
+        "date": "2026-07-13",
+        "firm": "Evercore ISI Group",
+        "from_grade": "Outperform",
+        "to_grade": "Outperform"
+       },
+       {
+        "action": "main",
+        "date": "2026-07-13",
+        "firm": "Raymond James",
+        "from_grade": "Outperform",
+        "to_grade": "Outperform"
+       },
+       {
+        "action": "main",
+        "date": "2026-07-09",
+        "firm": "Jefferies",
+        "from_grade": "Hold",
+        "to_grade": "Hold"
+       }
+      ],
+      "score": -1,
+      "sector": "Energy",
+      "summary": "thin margins (op margin 1%, ROE 14%) \u00b7 moderate leverage (3.1\u00d7 net debt/EBITDA) \u00b7 cheap valuation (fwd P/E 12) \u00b7 rev +7% / EPS -57%"
+     },
+     "macd_confirms": false,
+     "market": "us",
+     "rule": "RSI_OVERBOUGHT",
+     "sector": {
+      "factor": 1,
+      "name": "Energy",
+      "state": "leading",
+      "symbol": "XLE"
+     },
+     "ticker": "PSX",
+     "values": {
+      "rsi": 75.8,
+      "sma200": 157.05
+     },
+     "verdict": "hold",
+     "verdict_reason": "Overbought in an uptrend \u2014 take-profit/trim signal, not an exit",
+     "volume": {
+      "above_avg": false,
+      "avg20": 2704964,
+      "ratio": 0.65,
+      "today": 1770990
+     }
+    },
+    {
+     "category": "sma50_sma200",
+     "close": 68.31,
+     "date": "2026-07-21",
+     "direction": "bullish",
+     "fib": {
+      "daily": {
+       "high": 79.33,
+       "levels": [
+        {
+         "dist_pct": -5.57,
+         "label": "23.6%",
+         "price": 72.342
+        },
+        {
+         "dist_pct": 0.43,
+         "label": "38.2%",
+         "price": 68.019
+        },
+        {
+         "dist_pct": 5.87,
+         "label": "50.0%",
+         "price": 64.525
+        },
+        {
+         "dist_pct": 11.93,
+         "label": "61.8%",
+         "price": 61.031
+        },
+        {
+         "dist_pct": 21.86,
+         "label": "78.6%",
+         "price": 56.0565
+        }
+       ],
+       "low": 49.72,
+       "nearest": {
+        "dist_pct": 0.43,
+        "label": "38.2%",
+        "price": 68.019
+       },
+       "position_pct": 62.8
+      },
+      "weekly": {
+       "high": 90.11,
+       "levels": [
+        {
+         "dist_pct": -15.22,
+         "label": "23.6%",
+         "price": 80.578
+        },
+        {
+         "dist_pct": -8.53,
+         "label": "38.2%",
+         "price": 74.681
+        },
+        {
+         "dist_pct": -2.3,
+         "label": "50.0%",
+         "price": 69.915
+        },
+        {
+         "dist_pct": 4.85,
+         "label": "61.8%",
+         "price": 65.149
+        },
+        {
+         "dist_pct": 17.04,
+         "label": "78.6%",
+         "price": 58.3635
+        }
+       ],
+       "low": 49.72,
+       "nearest": {
+        "dist_pct": -2.3,
+        "label": "50.0%",
+        "price": 69.915
+       },
+       "position_pct": 46.0
+      }
+     },
+     "fundamentals": {
+      "analyst": {
+       "consensus": "buy",
+       "n_analysts": 20,
+       "price": 68.31,
+       "target_high": 91.0,
+       "target_low": 58.0,
+       "target_mean": 70.65
+      },
+      "coverage": {
+       "present": 5,
+       "total": 5
+      },
+      "factors": {
+       "analyst": 1,
+       "earnings_growth": 1,
+       "fcf_yield": 1,
+       "target_upside": 0,
+       "valuation": 0
+      },
+      "flags": [
+       "high_leverage"
+      ],
+      "metrics": {
+       "earnings_growth_pct": 65.5,
+       "fcf_yield_pct": 7.7,
+       "forward_pe": 33.3,
+       "rec_mean": 2.1,
+       "target_upside_pct": 3.4
+      },
+      "profile": {
+       "current_ratio": 0.98,
+       "debt_to_equity": 2.12,
+       "div_yield": 4.1,
+       "ev_ebitda": 18.3,
+       "fcf_to_net_income": 2.97,
+       "gross_margin": 56.1,
+       "net_debt_to_ebitda": 9.92,
+       "net_margin": 10.0,
+       "op_margin": 25.7,
+       "p_fcf": 12.9,
+       "payout": 154.8,
+       "peg": 3.1,
+       "rev_growth": 0.6,
+       "roe": 5.5
+      },
+      "rating": "strong",
+      "rating_changes": [
+       {
+        "action": "main",
+        "date": "2026-07-21",
+        "firm": "Scotiabank",
+        "from_grade": "Sector Outperform",
+        "to_grade": "Sector Outperform"
+       },
+       {
+        "action": "main",
+        "date": "2026-07-21",
+        "firm": "Piper Sandler",
+        "from_grade": "Overweight",
+        "to_grade": "Overweight"
+       },
+       {
+        "action": "main",
+        "date": "2026-07-21",
+        "firm": "Mizuho",
+        "from_grade": "Neutral",
+        "to_grade": "Neutral"
+       },
+       {
+        "action": "main",
+        "date": "2026-07-21",
+        "firm": "Barclays",
+        "from_grade": "Overweight",
+        "to_grade": "Overweight"
+       },
+       {
+        "action": "main",
+        "date": "2026-07-08",
+        "firm": "Ladenburg Thalmann",
+        "from_grade": "Buy",
+        "to_grade": "Buy"
+       }
+      ],
+      "score": 3,
+      "sector": "Real Estate",
+      "summary": "highly profitable (op margin 26%, ROE 6%) \u00b7 high leverage (9.9\u00d7 net debt/EBITDA) \u00b7 premium valuation (fwd P/E 33) \u00b7 flat (rev +1%, EPS +66%)"
+     },
+     "macd_confirms": false,
+     "market": "us",
+     "rule": "GOLDEN_CROSS",
+     "sector": {
+      "factor": 0,
+      "name": "Real Estate",
+      "state": "improving",
+      "symbol": "XLRE"
+     },
+     "ticker": "BXP",
+     "values": {
+      "sma200": 64.05,
+      "sma50": 64.1
+     },
+     "verdict": "hold",
+     "verdict_reason": "MACD momentum does not confirm \u2014 possible false break",
+     "volume": {
+      "above_avg": false,
+      "avg20": 1269378,
+      "ratio": 0.72,
+      "today": 919955
+     }
+    },
+    {
+     "category": "sma50_sma200",
+     "close": 81.22,
+     "date": "2026-07-21",
+     "direction": "bullish",
+     "fib": {
+      "daily": {
+       "high": 91.85,
+       "levels": [
+        {
+         "dist_pct": -5.85,
+         "label": "23.6%",
+         "price": 86.2662
+        },
+        {
+         "dist_pct": -1.92,
+         "label": "38.2%",
+         "price": 82.8119
+        },
+        {
+         "dist_pct": 1.5,
+         "label": "50.0%",
+         "price": 80.02
+        },
+        {
+         "dist_pct": 5.17,
+         "label": "61.8%",
+         "price": 77.2281
+        },
+        {
+         "dist_pct": 10.88,
+         "label": "78.6%",
+         "price": 73.2532
+        }
+       ],
+       "low": 68.19,
+       "nearest": {
+        "dist_pct": 1.5,
+        "label": "50.0%",
+        "price": 80.02
+       },
+       "position_pct": 55.1
+      },
+      "weekly": {
+       "high": 91.85,
+       "levels": [
+        {
+         "dist_pct": -5.57,
+         "label": "23.6%",
+         "price": 86.0137
+        },
+        {
+         "dist_pct": -1.44,
+         "label": "38.2%",
+         "price": 82.4031
+        },
+        {
+         "dist_pct": 2.18,
+         "label": "50.0%",
+         "price": 79.485
+        },
+        {
+         "dist_pct": 6.08,
+         "label": "61.8%",
+         "price": 76.5669
+        },
+        {
+         "dist_pct": 12.16,
+         "label": "78.6%",
+         "price": 72.4122
+        }
+       ],
+       "low": 67.12,
+       "nearest": {
+        "dist_pct": -1.44,
+        "label": "38.2%",
+        "price": 82.4031
+       },
+       "position_pct": 57.0
+      }
+     },
+     "fundamentals": {
+      "analyst": {
+       "consensus": "buy",
+       "n_analysts": 14,
+       "price": 81.22,
+       "target_high": 100.0,
+       "target_low": 77.0,
+       "target_mean": 87.5
+      },
+      "coverage": {
+       "present": 5,
+       "total": 5
+      },
+      "factors": {
+       "analyst": 0,
+       "earnings_growth": -1,
+       "fcf_yield": 1,
+       "target_upside": 0,
+       "valuation": 0
+      },
+      "flags": [
+       "high_leverage"
+      ],
+      "metrics": {
+       "earnings_growth_pct": -13.5,
+       "fcf_yield_pct": 4.8,
+       "forward_pe": 16.4,
+       "rec_mean": 2.3,
+       "target_upside_pct": 7.7
+      },
+      "profile": {
+       "current_ratio": 1.33,
+       "debt_to_equity": 6.7,
+       "div_yield": 2.71,
+       "ev_ebitda": 11.4,
+       "fcf_to_net_income": 1.08,
+       "gross_margin": 18.5,
+       "net_debt_to_ebitda": 2.96,
+       "net_margin": 2.1,
+       "op_margin": 3.7,
+       "p_fcf": 20.8,
+       "payout": 60.0,
+       "peg": 1.59,
+       "rev_growth": 4.7,
+       "roe": 81.9
+      },
+      "rating": "neutral",
+      "rating_changes": [
+       {
+        "action": "main",
+        "date": "2026-07-16",
+        "firm": "Morgan Stanley",
+        "from_grade": "Equal-Weight",
+        "to_grade": "Equal-Weight"
+       },
+       {
+        "action": "main",
+        "date": "2026-04-29",
+        "firm": "Bernstein",
+        "from_grade": "Market Perform",
+        "to_grade": "Market Perform"
+       },
+       {
+        "action": "main",
+        "date": "2026-04-29",
+        "firm": "Citigroup",
+        "from_grade": "Neutral",
+        "to_grade": "Neutral"
+       },
+       {
+        "action": "main",
+        "date": "2026-04-29",
+        "firm": "Barclays",
+        "from_grade": "Overweight",
+        "to_grade": "Overweight"
+       }
+      ],
+      "score": 0,
+      "sector": "Consumer Defensive",
+      "summary": "thin margins (op margin 4%, ROE 82%) \u00b7 high leverage (D/E 6.7\u00d7) \u00b7 fair valuation (fwd P/E 16) \u00b7 rev +5% / EPS -14%"
+     },
+     "macd_confirms": false,
+     "market": "us",
+     "rule": "GOLDEN_CROSS",
+     "sector": {
+      "factor": 0,
+      "name": "Consumer Defensive",
+      "state": "improving",
+      "symbol": "XLP"
+     },
+     "ticker": "SYY",
+     "values": {
+      "sma200": 78.41,
+      "sma50": 78.52
+     },
+     "verdict": "hold",
+     "verdict_reason": "MACD momentum does not confirm \u2014 possible false break",
+     "volume": {
+      "above_avg": false,
+      "avg20": 3333065,
+      "ratio": 0.47,
+      "today": 1582005
+     }
+    }
+   ],
+   "bar_date": "2026-07-21",
+   "generated_at": "2026-07-21T23:29:44Z",
+   "scanned": 624
+  },
+  {
+   "alerts": [
+    {
+     "category": "price_sma200",
      "close": 130.26,
      "date": "2026-07-20",
      "direction": "bearish",
