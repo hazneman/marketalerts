@@ -1,5 +1,6 @@
 import { Fragment, useRef, useState } from 'react'
 import { useAlerts, useForex, useHealth, usePortfolio, usePrices, useTargets, useTrackRecord } from '../hooks/useAlerts'
+import { usePortfolioSync, type SyncStatus } from '../hooks/usePortfolioSync'
 import { assessHealth, HEALTH_DOT, type HealthLevel } from '../lib/health'
 import { CATEGORY_LABELS, type AlertHistory, type TargetsData, type TrackRecordData } from '../types'
 import DirectionBadge from './DirectionBadge'
@@ -308,6 +309,116 @@ function Performance({ closed, conv, sym }: {
           </div>
         </div>
       )}
+    </div>
+  )
+}
+
+function syncedAgo(iso: string | null): string {
+  if (!iso) return ''
+  const secs = Math.max(0, Math.round((Date.now() - Date.parse(iso)) / 1000))
+  if (secs < 45) return 'just now'
+  if (secs < 3600) return `${Math.round(secs / 60)}m ago`
+  if (secs < 86400) return `${Math.round(secs / 3600)}h ago`
+  return iso.slice(0, 10)
+}
+
+const SYNC_TONE: Record<SyncStatus, string> = {
+  off: 'text-muted',
+  syncing: 'text-accent',
+  synced: 'text-up',
+  error: 'text-down',
+}
+
+function SyncPanel() {
+  const { code, status, lastSyncedAt, error, enable, connect, disconnect, syncNow } =
+    usePortfolioSync()
+  const [input, setInput] = useState('')
+  const [reveal, setReveal] = useState(false)
+  const [copied, setCopied] = useState(false)
+  const busy = status === 'syncing'
+
+  const statusLabel =
+    status === 'syncing'
+      ? 'Syncing…'
+      : status === 'error'
+        ? 'Offline'
+        : status === 'synced'
+          ? `Synced${lastSyncedAt ? ` · ${syncedAgo(lastSyncedAt)}` : ''}`
+          : ''
+
+  if (!code) {
+    return (
+      <div className="space-y-2 border-t border-hair pt-3 text-xs text-muted">
+        <div className="text-sm font-medium text-ink">Sync across devices</div>
+        <p>
+          Your portfolio is saved only in this browser. Enable sync to see the same
+          positions on your phone and other computers — free, no account needed.
+        </p>
+        <div className="flex flex-wrap items-center gap-2">
+          <button onClick={() => enable()} className={btnGhost} disabled={busy}>
+            {busy ? 'Enabling…' : 'Enable sync'}
+          </button>
+          <span>or</span>
+          <input
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
+            placeholder="paste an existing sync code"
+            className={`${inputCls} w-56`}
+          />
+          <button
+            onClick={() => connect(input)}
+            className={btnGhost}
+            disabled={!input.trim() || busy}
+          >
+            Connect
+          </button>
+        </div>
+        {error && <p className="text-down">{error}</p>}
+      </div>
+    )
+  }
+
+  return (
+    <div className="space-y-2 border-t border-hair pt-3 text-xs text-muted">
+      <div className="flex flex-wrap items-center gap-2">
+        <span className="text-sm font-medium text-ink">Sync across devices</span>
+        {statusLabel && <span className={SYNC_TONE[status]}>{statusLabel}</span>}
+      </div>
+      <div className="flex flex-wrap items-center gap-x-3 gap-y-1.5">
+        <span>Sync code</span>
+        <code className="tnum rounded bg-inset px-2 py-0.5 text-ink">
+          {reveal ? code : '••••••••••••'}
+        </code>
+        <button onClick={() => setReveal((r) => !r)} className="hover:text-ink">
+          {reveal ? 'hide' : 'show'}
+        </button>
+        <button
+          onClick={async () => {
+            try {
+              await navigator.clipboard.writeText(code)
+              setCopied(true)
+              setTimeout(() => setCopied(false), 1500)
+            } catch {
+              setReveal(true) // clipboard blocked — at least reveal it to copy by hand
+            }
+          }}
+          className="text-accent hover:underline"
+        >
+          {copied ? 'copied ✓' : 'copy'}
+        </button>
+        <button onClick={() => syncNow()} className={btnGhost} disabled={busy}>
+          Sync now
+        </button>
+        <button onClick={() => disconnect()} className="text-faint hover:text-down">
+          disconnect
+        </button>
+      </div>
+      <p>
+        Enter this code on another device under Portfolio → Sync to load the same
+        portfolio. Anyone with the code can view and edit it, so keep it private — it is
+        the only key to your data.
+      </p>
+      {error && <p className="text-down">{error}</p>}
     </div>
   )
 }
@@ -654,6 +765,8 @@ export default function PortfolioPage() {
       ) : (
         <p className="text-sm text-muted">No closed trades yet — sell a position to log it here.</p>
       )}
+
+      <SyncPanel />
 
       <div className="flex flex-wrap items-center gap-3 border-t border-hair pt-3 text-xs text-muted">
         <button
