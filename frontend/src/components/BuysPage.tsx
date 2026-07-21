@@ -454,10 +454,13 @@ function PriceStructure({ a }: { a: AlertItem }) {
   )
 }
 
+type SortMode = 'quality' | 'newest'
+
 export default function BuysPage() {
   const { latest, history, error } = useAlerts()
   const { positions } = usePortfolio()
   const [showHeld, setShowHeld] = useState(false)
+  const [sort, setSort] = useState<SortMode>('quality')
 
   // same ticker+rule alerted within the prior 14 days → tag as re-entry
   const isRefire = (a: AlertItem): boolean => {
@@ -481,12 +484,20 @@ export default function BuysPage() {
   // reference "latest bar" per market — a stale market keeps its own last bar,
   // so freshness is judged against the right calendar, not the global one
   const refDateFor = (a: AlertItem) => latest.bar_dates?.[a.market ?? 'us'] ?? latest.bar_date
+  // days between the signal and its market's latest bar (0 = NEW), matching the
+  // freshness chip; "newest" sorts by this, quality breaking ties
+  const ageDays = (a: AlertItem) =>
+    Math.round((Date.parse(refDateFor(a)) - Date.parse(a.date)) / 86400000)
 
   const held = new Set(positions.map((p) => p.ticker))
   const all = latest.alerts
     .filter((a) => a.verdict === 'buy')
     .map((a) => ({ a, score: qualityScore(a) }))
-    .sort((x, y) => y.score - x.score)
+    .sort((x, y) =>
+      sort === 'newest'
+        ? ageDays(x.a) - ageDays(y.a) || y.score - x.score
+        : y.score - x.score,
+    )
   // stocks you already own aren't fresh opportunities — group them separately
   const buys = all.filter(({ a }) => !held.has(a.ticker))
   const heldBuys = all.filter(({ a }) => held.has(a.ticker))
@@ -494,11 +505,27 @@ export default function BuysPage() {
   return (
     <section className="space-y-4">
       <SectionHeading
-        title={`BUY verdicts — ${latest.bar_date} · ranked by quality`}
+        title={`BUY verdicts — ${latest.bar_date} · ${sort === 'newest' ? 'newest first' : 'ranked by quality'}`}
         right={
-          <span className="text-sm text-muted">
-            {all.length} of {latest.alerts.length} alerts passed all three layers
-          </span>
+          <div className="flex flex-wrap items-center gap-x-3 gap-y-1.5">
+            <div className="flex items-center gap-1 text-xs">
+              <span className="text-muted">Sort</span>
+              {(['quality', 'newest'] as const).map((m) => (
+                <button
+                  key={m}
+                  onClick={() => setSort(m)}
+                  className={`rounded px-2 py-0.5 font-medium transition ${
+                    sort === m ? badgeRing.accent : 'text-muted hover:text-ink'
+                  }`}
+                >
+                  {m === 'quality' ? 'Quality' : 'Newest'}
+                </button>
+              ))}
+            </div>
+            <span className="text-sm text-muted">
+              {all.length} of {latest.alerts.length} alerts passed all three layers
+            </span>
+          </div>
         }
       />
 
