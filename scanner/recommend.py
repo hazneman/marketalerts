@@ -151,11 +151,35 @@ def profile_metrics(info: dict) -> dict[str, float]:
     return m
 
 
+def leverage_level(profile: dict) -> tuple[str, str] | None:
+    """Single source of truth for leverage — used by BOTH the summary wording
+    and the high_leverage flag so they can never disagree. Returns
+    (level, detail) where level is net cash / low / moderate / high and detail is
+    the figure that DRIVES that level (net-debt/EBITDA or D/E), or None when
+    neither gauge is available. "high" == the flag threshold: net-debt/EBITDA > 4
+    OR D/E > 2 (either gauge stretched); the driver metric is what gets shown.
+    """
+    nde = profile.get("net_debt_to_ebitda")
+    de = profile.get("debt_to_equity")
+    if nde is None and de is None:
+        return None
+    # 'high' if either gauge is stretched — surface whichever one drives it
+    if de is not None and de > 2 and (nde is None or nde <= 4):
+        return "high", f"D/E {de:.1f}×"
+    if nde is not None and nde > 4:
+        return "high", f"{nde:.1f}× net debt/EBITDA"
+    if nde is not None:
+        if nde < 0:
+            return "net cash", f"{nde:.1f}× net debt/EBITDA"
+        return ("low" if nde <= 1 else "moderate"), f"{nde:.1f}× net debt/EBITDA"
+    return ("low" if de <= 0.5 else "moderate"), f"D/E {de:.1f}×"
+
+
 def fundamental_flags(factors: dict, profile: dict) -> list[str]:
     """Risk/quality caveats surfaced in the review (display-only)."""
     flags: list[str] = []
-    nde = profile.get("net_debt_to_ebitda")
-    high_lev = (nde is not None and nde > 4) or profile.get("debt_to_equity", 0) > 2
+    lev = leverage_level(profile)
+    high_lev = lev is not None and lev[0] == "high"
     if high_lev:
         flags.append("high_leverage")
     # cheap on P/E but a shaky balance sheet or burning cash = classic value trap
@@ -182,15 +206,10 @@ def fundamental_summary(metrics: dict, profile: dict) -> str:
     elif roe is not None:
         parts.append(f"ROE {roe:.0f}%")
 
-    nde = profile.get("net_debt_to_ebitda")
-    de = profile.get("debt_to_equity")
-    if nde is not None:
-        lev = ("net cash" if nde < 0 else "low leverage" if nde <= 1
-               else "moderate leverage" if nde <= 3 else "high leverage")
-        parts.append(lev if nde < 0 else f"{lev} ({nde:.1f}× net debt/EBITDA)")
-    elif de is not None:
-        lev = "low" if de <= 0.5 else "moderate" if de <= 1.5 else "high"
-        parts.append(f"{lev} leverage (D/E {de:.1f}×)")
+    lev = leverage_level(profile)
+    if lev is not None:
+        level, detail = lev
+        parts.append("net cash" if level == "net cash" else f"{level} leverage ({detail})")
 
     pe = metrics.get("forward_pe")
     if pe is not None and pe > 0:
