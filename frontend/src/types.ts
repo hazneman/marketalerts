@@ -66,6 +66,11 @@ export interface Fundamentals {
   rating: 'strong' | 'neutral' | 'weak'
   factors?: Record<string, number>
   metrics?: Record<string, number>
+  // Display-only enrichment (NOT part of the verdict score):
+  profile?: Record<string, number>
+  flags?: string[]
+  coverage?: { present: number; total: number }
+  summary?: string
   analyst?: {
     n_analysts?: number
     consensus?: string

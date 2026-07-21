@@ -57,7 +57,13 @@ Pipeline per daily run (`scan.py`):
    leading +1 / lagging −1). Special case: `rsi_extended` is **hard-capped at
    HOLD** ("trim, not exit") — per docs/EXITS.md, exiting uptrend strength
    outright loses. Fundamentals (yfinance `.info`) fetched **only for alerted
-   tickers**; every failure degrades to technicals-only.
+   tickers**; every failure degrades to technicals-only. The scored gate stays
+   the audited 5 factors, but each fundamentals block also carries **display-only**
+   enrichment (`recommend.py`: `profile_metrics` — ROE/margins/leverage/growth/
+   valuation-breadth/dividend; `coverage` present-of-5; `flags` value-trap /
+   high-leverage / earnings-not-cash-backed; `summary` one-line synthesis). These
+   feed the Buys review UI and **never touch `score`/`verdict`** — richer scoring
+   is a separate, backtest-gated track (Lane B), per the display-vs-verdict rule.
 6. Alert enrichment (display-only, all markets): `levels.fib_block` — Fibonacci
    retracement ladders, daily (252-day swing) + weekly (104-week swing),
    deterministic highest-high/lowest-low anchors; `indicators.volume_signal`

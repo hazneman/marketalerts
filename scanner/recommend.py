@@ -93,6 +93,122 @@ def score_info(info: dict) -> dict:
     return {"score": score, "rating": rating, "factors": factors, "metrics": metrics}
 
 
+def profile_metrics(info: dict) -> dict[str, float]:
+    """Display-only company metrics — profitability, balance sheet, growth,
+    valuation breadth, income. These make the review richer but DELIBERATELY do
+    NOT feed the verdict: the gate stays the audited 5-factor score_info model
+    (repo discipline: verdict factors need backtest validation; display does not).
+    Only keys with usable data are returned.
+    """
+    m: dict[str, float] = {}
+
+    def as_pct(key: str, dst: str, digits: int = 1) -> None:
+        v = info.get(key)
+        if isinstance(v, (int, float)):
+            m[dst] = round(v * 100, digits)
+
+    as_pct("returnOnEquity", "roe")
+    as_pct("grossMargins", "gross_margin")
+    as_pct("operatingMargins", "op_margin")
+    as_pct("profitMargins", "net_margin")
+    as_pct("revenueGrowth", "rev_growth")
+    as_pct("payoutRatio", "payout")
+
+    de = info.get("debtToEquity")
+    if isinstance(de, (int, float)) and de >= 0:
+        m["debt_to_equity"] = round(de / 100, 2)  # Yahoo reports it as a percent
+
+    debt, cash, ebitda = info.get("totalDebt"), info.get("totalCash"), info.get("ebitda")
+    if isinstance(debt, (int, float)) and isinstance(ebitda, (int, float)) and ebitda > 0:
+        m["net_debt_to_ebitda"] = round((debt - (cash or 0)) / ebitda, 2)
+
+    peg = info.get("trailingPegRatio") or info.get("pegRatio")
+    if isinstance(peg, (int, float)) and peg > 0:
+        m["peg"] = round(peg, 2)
+
+    ev_ebitda = info.get("enterpriseToEbitda")
+    if isinstance(ev_ebitda, (int, float)) and ev_ebitda > 0:
+        m["ev_ebitda"] = round(ev_ebitda, 1)
+
+    fcf, mcap = info.get("freeCashflow"), info.get("marketCap")
+    if isinstance(fcf, (int, float)) and fcf > 0 and mcap:
+        m["p_fcf"] = round(mcap / fcf, 1)
+
+    # earnings quality: is reported profit backed by cash?
+    ni = info.get("netIncomeToCommon")
+    if isinstance(fcf, (int, float)) and isinstance(ni, (int, float)) and ni > 0:
+        m["fcf_to_net_income"] = round(fcf / ni, 2)
+
+    # dividend yield from the $ rate to dodge yfinance's fraction/percent ambiguity
+    rate, price = info.get("dividendRate"), info.get("currentPrice")
+    if isinstance(rate, (int, float)) and rate > 0 and price:
+        m["div_yield"] = round(rate / price * 100, 2)
+
+    cr = info.get("currentRatio")
+    if isinstance(cr, (int, float)) and cr > 0:
+        m["current_ratio"] = round(cr, 2)
+
+    return m
+
+
+def fundamental_flags(factors: dict, profile: dict) -> list[str]:
+    """Risk/quality caveats surfaced in the review (display-only)."""
+    flags: list[str] = []
+    nde = profile.get("net_debt_to_ebitda")
+    high_lev = (nde is not None and nde > 4) or profile.get("debt_to_equity", 0) > 2
+    if high_lev:
+        flags.append("high_leverage")
+    # cheap on P/E but a shaky balance sheet or burning cash = classic value trap
+    if factors.get("valuation", 0) == 1 and (high_lev or factors.get("fcf_yield", 0) == -1):
+        flags.append("value_trap")
+    f2ni = profile.get("fcf_to_net_income")
+    if f2ni is not None and f2ni < 0.6:
+        flags.append("earnings_not_cash_backed")
+    return flags
+
+
+def fundamental_summary(metrics: dict, profile: dict) -> str:
+    """One-line plain-English synthesis of the fundamental picture. Deterministic
+    (same inputs -> same string, so it stays byte-stable); clauses are dropped
+    when their data is missing."""
+    parts: list[str] = []
+
+    op, roe = profile.get("op_margin"), profile.get("roe")
+    if op is not None:
+        label = ("highly profitable" if op >= 20 else "profitable" if op >= 8
+                 else "thin margins" if op > 0 else "unprofitable")
+        extra = f", ROE {roe:.0f}%" if roe is not None else ""
+        parts.append(f"{label} (op margin {op:.0f}%{extra})")
+    elif roe is not None:
+        parts.append(f"ROE {roe:.0f}%")
+
+    nde = profile.get("net_debt_to_ebitda")
+    de = profile.get("debt_to_equity")
+    if nde is not None:
+        lev = ("net cash" if nde < 0 else "low leverage" if nde <= 1
+               else "moderate leverage" if nde <= 3 else "high leverage")
+        parts.append(lev if nde < 0 else f"{lev} ({nde:.1f}× net debt/EBITDA)")
+    elif de is not None:
+        lev = "low" if de <= 0.5 else "moderate" if de <= 1.5 else "high"
+        parts.append(f"{lev} leverage (D/E {de:.1f}×)")
+
+    pe = metrics.get("forward_pe")
+    if pe is not None and pe > 0:
+        val = ("cheap" if pe <= 15 else "fair" if pe <= 25
+               else "premium" if pe <= 40 else "expensive")
+        parts.append(f"{val} valuation (fwd P/E {pe:.0f})")
+
+    rg = profile.get("rev_growth")
+    eg = metrics.get("earnings_growth_pct")
+    g, src = (rg, "rev") if rg is not None else (eg, "EPS")
+    if g is not None:
+        gl = ("strong growth" if g >= 15 else "growing" if g >= 5
+              else "flat" if g >= 0 else "shrinking")
+        parts.append(f"{gl} ({src} {g:+.0f}%)")
+
+    return " · ".join(parts)
+
+
 def analyst_block(info: dict) -> dict | None:
     """Fresh analyst view from .info: consensus, coverage, target range."""
     out: dict = {}
@@ -149,6 +265,12 @@ def fetch_fundamentals(ticker: str) -> dict | None:
     result["analyst"] = analyst_block(info)
     result["rating_changes"] = recent_rating_changes(tkr)
     result["sector"] = info.get("sector")  # raw GICS name; mapped in scan.py
+    # Display-only enrichment (does not touch score/verdict):
+    profile = profile_metrics(info)
+    result["profile"] = profile
+    result["flags"] = fundamental_flags(result["factors"], profile)
+    result["coverage"] = {"present": len(result["factors"]), "total": 5}
+    result["summary"] = fundamental_summary(result["metrics"], profile)
     return result
 
 

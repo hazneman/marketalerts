@@ -1,4 +1,5 @@
-from recommend import analyst_block, score_info, sector_factor, verdict
+from recommend import (analyst_block, fundamental_flags, fundamental_summary,
+                       profile_metrics, score_info, sector_factor, verdict)
 
 
 class TestAnalystBlock:
@@ -47,6 +48,70 @@ class TestScoreInfo:
         assert s["score"] == 0
         assert s["rating"] == "neutral"
         assert s["factors"] == {}
+
+
+class TestProfileMetrics:
+    def test_extracts_and_scales(self):
+        p = profile_metrics({
+            "returnOnEquity": 0.223, "operatingMargins": 0.31, "grossMargins": 0.68,
+            "profitMargins": 0.24, "revenueGrowth": 0.092, "debtToEquity": 88.4,
+            "totalDebt": 30e9, "totalCash": 10e9, "ebitda": 20e9,  # nd/ebitda = 1.0
+            "enterpriseToEbitda": 18.2, "trailingPegRatio": 1.6,
+            "freeCashflow": 8e9, "marketCap": 2e11, "netIncomeToCommon": 10e9,
+            "dividendRate": 3.0, "currentPrice": 100.0, "currentRatio": 1.4,
+        })
+        assert p["roe"] == 22.3
+        assert p["op_margin"] == 31.0
+        assert p["debt_to_equity"] == 0.88          # Yahoo percent -> ratio
+        assert p["net_debt_to_ebitda"] == 1.0
+        assert p["p_fcf"] == 25.0
+        assert p["fcf_to_net_income"] == 0.8
+        assert p["div_yield"] == 3.0                 # from $ rate, not the ambiguous field
+        assert p["ev_ebitda"] == 18.2
+
+    def test_missing_data_omits_keys(self):
+        assert profile_metrics({}) == {}
+        assert "peg" not in profile_metrics({"pegRatio": 0})  # non-positive dropped
+
+    def test_display_metrics_never_touch_the_score(self):
+        # a name with rich profile data but no scoring factors stays neutral/0
+        info = {"returnOnEquity": 0.4, "operatingMargins": 0.5, "marketCap": 1e11}
+        assert score_info(info)["score"] == 0
+        assert profile_metrics(info)  # ...yet profile is populated
+
+
+class TestFundamentalFlags:
+    def test_high_leverage(self):
+        assert "high_leverage" in fundamental_flags({}, {"net_debt_to_ebitda": 5.0})
+        assert "high_leverage" in fundamental_flags({}, {"debt_to_equity": 2.5})
+
+    def test_value_trap_cheap_but_shaky(self):
+        flags = fundamental_flags({"valuation": 1, "fcf_yield": -1}, {})
+        assert "value_trap" in flags
+
+    def test_no_trap_when_cheap_and_healthy(self):
+        flags = fundamental_flags({"valuation": 1}, {"net_debt_to_ebitda": 0.5})
+        assert "value_trap" not in flags
+
+    def test_earnings_not_cash_backed(self):
+        assert "earnings_not_cash_backed" in fundamental_flags({}, {"fcf_to_net_income": 0.4})
+        assert "earnings_not_cash_backed" not in fundamental_flags({}, {"fcf_to_net_income": 0.9})
+
+
+class TestFundamentalSummary:
+    def test_full_synthesis(self):
+        s = fundamental_summary(
+            {"forward_pe": 34, "earnings_growth_pct": 20},
+            {"op_margin": 45, "roe": 38, "net_debt_to_ebitda": 0.5, "rev_growth": 9},
+        )
+        assert "highly profitable" in s and "ROE 38%" in s
+        assert "low leverage" in s
+        assert "premium valuation (fwd P/E 34)" in s
+        assert "growing (rev +9%)" in s
+
+    def test_missing_clauses_dropped(self):
+        assert fundamental_summary({}, {}) == ""
+        assert fundamental_summary({"forward_pe": 12}, {}) == "cheap valuation (fwd P/E 12)"
 
 
 class TestVerdict:
