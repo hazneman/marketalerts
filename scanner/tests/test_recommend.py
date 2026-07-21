@@ -1,5 +1,6 @@
 from recommend import (analyst_block, fundamental_flags, fundamental_summary,
-                       profile_metrics, score_info, sector_factor, verdict)
+                       leverage_level, profile_metrics, score_info, sector_factor,
+                       verdict)
 
 
 class TestAnalystBlock:
@@ -98,6 +99,52 @@ class TestFundamentalFlags:
         assert "earnings_not_cash_backed" not in fundamental_flags({}, {"fcf_to_net_income": 0.9})
 
 
+class TestLeverageCoherence:
+    """The summary wording and the high_leverage flag must never disagree —
+    both derive from leverage_level (coherence gap #1 fix)."""
+
+    def _summary_and_flags(self, profile):
+        return (fundamental_summary({}, profile), fundamental_flags({}, profile))
+
+    def test_high_via_de_shows_de_and_flags(self):
+        # low net-debt/EBITDA but high D/E: must read "high leverage" AND flag it,
+        # citing the driver (D/E) — the old code said "low leverage" + a high badge
+        p = {"net_debt_to_ebitda": 0.8, "debt_to_equity": 2.5}
+        assert leverage_level(p) == ("high", "D/E 2.5×")
+        summary, flags = self._summary_and_flags(p)
+        assert "high leverage (D/E 2.5×)" in summary
+        assert "high_leverage" in flags
+
+    def test_between_thresholds_is_moderate_and_unflagged(self):
+        # net-debt/EBITDA 3.5 is below the flag bar (>4): summary must NOT say
+        # "high leverage" while no badge shows
+        p = {"net_debt_to_ebitda": 3.5}
+        assert leverage_level(p)[0] == "moderate"
+        summary, flags = self._summary_and_flags(p)
+        assert "moderate leverage (3.5× net debt/EBITDA)" in summary
+        assert "high_leverage" not in flags
+
+    def test_high_via_nde_shows_nde(self):
+        assert leverage_level({"net_debt_to_ebitda": 5.0}) == ("high", "5.0× net debt/EBITDA")
+
+    def test_net_cash(self):
+        level, _ = leverage_level({"net_debt_to_ebitda": -0.5})
+        assert level == "net cash"
+        assert "net cash" in fundamental_summary({}, {"net_debt_to_ebitda": -0.5})
+
+    def test_none_when_no_gauge(self):
+        assert leverage_level({}) is None
+
+    def test_flag_set_matches_high_level_exactly(self):
+        # the flag fires iff leverage_level says "high", across a spread of inputs
+        for p in ({"net_debt_to_ebitda": 4.1}, {"debt_to_equity": 2.1},
+                  {"net_debt_to_ebitda": 1.0}, {"debt_to_equity": 0.4},
+                  {"net_debt_to_ebitda": 0.5, "debt_to_equity": 3.0}):
+            lev = leverage_level(p)
+            is_high = lev is not None and lev[0] == "high"
+            assert ("high_leverage" in fundamental_flags({}, p)) == is_high
+
+
 class TestFundamentalSummary:
     def test_full_synthesis(self):
         s = fundamental_summary(
@@ -107,7 +154,24 @@ class TestFundamentalSummary:
         assert "highly profitable" in s and "ROE 38%" in s
         assert "low leverage" in s
         assert "premium valuation (fwd P/E 34)" in s
-        assert "growing (rev +9%)" in s
+        # both growth gauges point up -> one word, both figures
+        assert "growing (rev +9%, EPS +20%)" in s
+
+    def test_growth_diverging_withholds_verdict_word(self):
+        # revenue up but earnings down: no "growing" claim (would clash with the
+        # -1 earnings-growth factor chip); show both figures instead
+        s = fundamental_summary({"earnings_growth_pct": -20}, {"rev_growth": 10})
+        assert "rev +10% / EPS -20%" in s
+        assert "growing" not in s
+
+    def test_growth_same_direction_uses_conservative_word(self):
+        # rev +30 / EPS +6 both positive -> word by the weaker (EPS 6 = "growing")
+        s = fundamental_summary({"earnings_growth_pct": 6}, {"rev_growth": 30})
+        assert "growing (rev +30%, EPS +6%)" in s
+
+    def test_growth_single_gauge(self):
+        assert "shrinking (EPS -8%)" in fundamental_summary({"earnings_growth_pct": -8}, {})
+        assert "growing (rev +7%)" in fundamental_summary({}, {"rev_growth": 7})
 
     def test_missing_clauses_dropped(self):
         assert fundamental_summary({}, {}) == ""

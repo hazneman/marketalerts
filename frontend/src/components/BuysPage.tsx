@@ -391,9 +391,9 @@ function BuyCard({ a, rank, defaultOpen, refDate, refire = false }: {
             {f.coverage && (
               <span
                 className="text-xs text-muted"
-                title="How many of the 5 scored factors had data — fewer means a thinner read"
+                title="How many of the 5 scored factors had data — fewer means a thinner read. Separate from the company-profile metrics below."
               >
-                {f.coverage.present}/{f.coverage.total} metrics
+                {f.coverage.present}/{f.coverage.total} factors
               </span>
             )}
             {f.flags?.map((flag) => (
