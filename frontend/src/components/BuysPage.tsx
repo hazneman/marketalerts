@@ -234,8 +234,33 @@ function QualityBadge({ score }: { score: number }) {
   )
 }
 
-function BuyCard({ a, rank, defaultOpen, refire = false }: {
-  a: AlertItem; rank: number; defaultOpen: boolean; refire?: boolean
+// How fresh is this signal? Compared against the latest bar for its OWN market
+// (markets have different holidays/close times), so a daily cross that fired on
+// the latest bar reads NEW while a 200-week cross — which only ever carries the
+// prior completed Friday — correctly reads a few days old.
+function FreshnessChip({ date, refDate }: { date: string; refDate: string }) {
+  const days = Math.round((Date.parse(refDate) - Date.parse(date)) / 86400000)
+  const fresh = days <= 0
+  const label = fresh ? 'NEW' : days === 1 ? '1d old' : `${days}d old`
+  return (
+    <span
+      title={
+        fresh
+          ? `Signal fired ${date} — the latest bar for this market, so it is today's cross`
+          : `Signal fired ${date} · ${days} day${days === 1 ? '' : 's'} before this market's latest bar (${refDate})`
+      }
+      className={`inline-flex items-center gap-1 rounded px-2 py-0.5 text-[10px] font-semibold ${
+        fresh ? badgeRing.up : badgeRing.neutral
+      }`}
+    >
+      {label}
+      <span className="tnum font-normal opacity-70">{date}</span>
+    </span>
+  )
+}
+
+function BuyCard({ a, rank, defaultOpen, refDate, refire = false }: {
+  a: AlertItem; rank: number; defaultOpen: boolean; refDate: string; refire?: boolean
 }) {
   const f = a.fundamentals
   const [open, setOpen] = useState(defaultOpen)
@@ -263,6 +288,7 @@ function BuyCard({ a, rank, defaultOpen, refire = false }: {
           </a>
           <MarketBadge market={a.market} />
           <QualityBadge score={score} />
+          <FreshnessChip date={a.date} refDate={refDate} />
           {refire && (
             <span className="text-[10px] text-muted"
                   title="Same signal fired within the last 14 days — possible whipsaw around the SMA">
@@ -452,6 +478,10 @@ export default function BuysPage() {
   }
   if (!latest) return <p className="py-8 text-center text-muted">Loading…</p>
 
+  // reference "latest bar" per market — a stale market keeps its own last bar,
+  // so freshness is judged against the right calendar, not the global one
+  const refDateFor = (a: AlertItem) => latest.bar_dates?.[a.market ?? 'us'] ?? latest.bar_date
+
   const held = new Set(positions.map((p) => p.ticker))
   const all = latest.alerts
     .filter((a) => a.verdict === 'buy')
@@ -475,7 +505,8 @@ export default function BuysPage() {
       {buys.length > 0 ? (
         <div className="space-y-2.5">
           {buys.map(({ a }, i) => (
-            <BuyCard key={`${a.rule}-${a.ticker}`} a={a} rank={i + 1} defaultOpen={false} refire={isRefire(a)} />
+            <BuyCard key={`${a.rule}-${a.ticker}`} a={a} rank={i + 1} defaultOpen={false}
+                     refDate={refDateFor(a)} refire={isRefire(a)} />
           ))}
         </div>
       ) : (
@@ -498,7 +529,7 @@ export default function BuysPage() {
           {showHeld &&
             heldBuys.map(({ a }, i) => (
               <BuyCard key={`held-${a.rule}-${a.ticker}`} a={a} rank={buys.length + i + 1}
-                       defaultOpen={false} refire={isRefire(a)} />
+                       defaultOpen={false} refDate={refDateFor(a)} refire={isRefire(a)} />
             ))}
         </div>
       )}
@@ -514,7 +545,11 @@ export default function BuysPage() {
         (strong buy +0.5 / buy +0.25 — the fundamentals rating already counts analyst
         factors), signal rarity (200-week cross +1 / golden cross +0.5), and price
         sitting on Fib support (+0.5). Strong+ ≥7.5 · Strong ≥6 · Good ≥5 · Fair
-        below. Informational, not investment advice.
+        below. The <span className="text-up">NEW</span> / <span className="text-ink-2">Nd
+        old</span> chip shows when each signal actually crossed relative to its market's
+        latest bar — daily crosses read NEW, while a 200-week cross carries the prior
+        completed Friday and so reads a few days old even when freshly listed.
+        Informational, not investment advice.
       </p>
     </section>
   )
