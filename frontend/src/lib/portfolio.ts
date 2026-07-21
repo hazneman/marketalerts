@@ -25,6 +25,7 @@ export interface PortfolioStore {
 }
 
 const KEY = 'market-alerts-portfolio-v1'
+const STAMP_KEY = 'market-alerts-portfolio-updated-at'
 const EVENT = 'portfolio-changed'
 
 export function loadPortfolio(): PortfolioStore {
@@ -41,9 +42,30 @@ export function loadPortfolio(): PortfolioStore {
   }
 }
 
-function save(store: PortfolioStore) {
+function save(store: PortfolioStore, updatedAt: string = new Date().toISOString()) {
   localStorage.setItem(KEY, JSON.stringify(store))
+  try {
+    localStorage.setItem(STAMP_KEY, updatedAt)
+  } catch {
+    /* stamp is best-effort; sync degrades to last-write-wins on push */
+  }
   window.dispatchEvent(new CustomEvent(EVENT))
+}
+
+// When this browser's copy last changed — the clock cross-device sync uses to
+// decide which side is newer. Empty until the first local edit.
+export function localUpdatedAt(): string {
+  try {
+    return localStorage.getItem(STAMP_KEY) ?? ''
+  } catch {
+    return ''
+  }
+}
+
+// Replace the whole store, preserving a specific timestamp (used when adopting
+// a cloud copy so it is not mistaken for a fresh local edit that must push back).
+export function adoptStore(store: PortfolioStore, updatedAt: string): void {
+  save({ positions: store.positions, closed: store.closed }, updatedAt)
 }
 
 export function subscribe(cb: () => void): () => void {
