@@ -27,6 +27,8 @@ from statistics import mean, median
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
+from recommend import weak_balance_sheet  # noqa: E402  (needs sys.path above)
+
 SCANNER_DIR = Path(__file__).resolve().parent
 ROOT = SCANNER_DIR.parent
 ARCHIVE_PATH = ROOT / "archive" / "alerts.jsonl"
@@ -49,6 +51,8 @@ def gates_for(a: dict, prior: dict[tuple[str, str], list[str]]) -> dict[str, boo
     ext = (a["close"] / s200 - 1) * 100 if s200 else 0.0
     fibd = ((((a.get("fib") or {}).get("daily") or {}).get("nearest") or {}).get("dist_pct"))
     m = ((a.get("fundamentals") or {}).get("metrics")) or {}
+    prof = ((a.get("fundamentals") or {}).get("profile")) or {}
+    sector_name = (a.get("fundamentals") or {}).get("sector")
     entry = dt.date.fromisoformat(a["date"])
     refire = any(
         0 < (entry - dt.date.fromisoformat(d)).days <= REFIRE_DAYS
@@ -62,6 +66,7 @@ def gates_for(a: dict, prior: dict[tuple[str, str], list[str]]) -> dict[str, boo
         "extended_and_resistance": extended and resistance,
         "lagging_sector": ((a.get("sector") or {}).get("state")) == "lagging",
         "neg_earnings_growth": (m.get("earnings_growth_pct") or 0) < 0,
+        "weak_balance_sheet": weak_balance_sheet(prof, sector_name),
         "refire": refire,
     }
 
@@ -72,6 +77,7 @@ GATE_LABELS = {
     "extended_and_resistance": "Extended AND resistance overhead",
     "lagging_sector": "Sector lagging at entry",
     "neg_earnings_growth": "Earnings growth negative",
+    "weak_balance_sheet": "Weak balance sheet (lev/liquidity, ex fin/REIT/util)",
     "refire": f"Re-fire within {REFIRE_DAYS}d (whipsaw)",
 }
 
