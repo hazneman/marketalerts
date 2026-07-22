@@ -8,6 +8,7 @@ import ScanStatus from './components/ScanStatus'
 import SectorsPage from './components/SectorsPage'
 import TrackRecordPage from './components/TrackRecordPage'
 import { useAlerts } from './hooks/useAlerts'
+import { PortfolioSyncContext, usePortfolioSync } from './hooks/usePortfolioSync'
 import Tabs from './components/ui/Tabs'
 import ThemeToggle from './components/ui/ThemeToggle'
 import { CATEGORY_LABELS, MARKET_ORDER, type AlertItem } from './types'
@@ -71,6 +72,9 @@ function BuildStamp() {
 
 export default function App() {
   const { latest, history, error } = useAlerts()
+  // App-level so the sync engine (initial pull + push-on-edit) runs on every
+  // tab, not only while Portfolio is mounted. Provided to SyncPanel via context.
+  const sync = usePortfolioSync()
   const [page, setPage] = useState<Page>('stocks')
   const [search, setSearch] = useState('')
   const [direction, setDirection] = useState<DirectionFilter>('all')
@@ -126,6 +130,7 @@ export default function App() {
   }
 
   return (
+    <PortfolioSyncContext.Provider value={sync}>
     <div className="min-h-screen">
       <header className="sticky top-0 z-20 border-b border-hair bg-base/80 backdrop-blur-xl">
         <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-3 px-4 py-2.5">
@@ -203,5 +208,6 @@ export default function App() {
       </main>
       <BuildStamp />
     </div>
+    </PortfolioSyncContext.Provider>
   )
 }

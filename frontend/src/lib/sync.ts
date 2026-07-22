@@ -66,6 +66,24 @@ export async function push(
   if (!r.ok) throw new Error(`sync push failed (${r.status})`)
 }
 
+// Best-effort push that survives page unload (tab close / navigation). Uses
+// sendBeacon so a pending edit made in the last moment still reaches the cloud;
+// the function accepts POST as well as PUT. Returns false if the browser can't
+// queue it (caller keeps the debounced push as the normal path).
+export function pushBeacon(
+  code: string,
+  store: PortfolioStore,
+  updated_at: string,
+): boolean {
+  if (typeof navigator === 'undefined' || typeof navigator.sendBeacon !== 'function') {
+    return false
+  }
+  const body = new Blob([JSON.stringify({ store, updated_at })], {
+    type: 'application/json',
+  })
+  return navigator.sendBeacon(`${ENDPOINT}?code=${encodeURIComponent(code)}`, body)
+}
+
 export function isEmpty(store: PortfolioStore | null | undefined): boolean {
   return !store || store.positions.length + store.closed.length === 0
 }

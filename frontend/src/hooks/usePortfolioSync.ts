@@ -1,7 +1,10 @@
-import { useCallback, useEffect, useRef, useState } from 'react'
-import { adoptStore, loadPortfolio, localUpdatedAt, subscribe } from '../lib/portfolio'
+import { createContext, useCallback, useContext, useEffect, useRef, useState } from 'react'
 import {
-  clearSyncCode, CODE_RE, generateSyncCode, getSyncCode, isEmpty, pull, push, setSyncCode,
+  adoptStore, loadPortfolio, localUpdatedAt, subscribe, type PortfolioStore,
+} from '../lib/portfolio'
+import {
+  clearSyncCode, CODE_RE, generateSyncCode, getSyncCode, isEmpty, pull, push, pushBeacon,
+  setSyncCode,
 } from '../lib/sync'
 
 export type SyncStatus = 'off' | 'syncing' | 'synced' | 'error'
@@ -34,6 +37,18 @@ export function usePortfolioSync(): PortfolioSync {
   const codeRef = useRef<string | null>(getSyncCode())
   codeRef.current = code
 
+  // Adopt a remote copy while suppressing the change-event → push loop. The
+  // reset MUST run even if adoptStore throws (quota / private mode), else the
+  // suppress ref sticks true and no edit ever syncs again for the session.
+  const adoptSuppressed = useCallback((store: PortfolioStore, at: string) => {
+    suppress.current = true
+    try {
+      adoptStore(store, at)
+    } finally {
+      suppress.current = false
+    }
+  }, [])
+
   const doPush = useCallback(async (c: string) => {
     setStatus('syncing')
     setError(null)
@@ -57,19 +72,13 @@ export function usePortfolioSync(): PortfolioSync {
       const remote = await pull(c)
       const localAt = localUpdatedAt()
       if (remote.store && remote.updated_at && (!localAt || remote.updated_at > localAt)) {
-        suppress.current = true
-        adoptStore(remote.store, remote.updated_at)
-        suppress.current = false
+        adoptSuppressed(remote.store, remote.updated_at)
         setLastSyncedAt(remote.updated_at)
         setStatus('synced')
       } else {
         const at = localAt || new Date().toISOString()
         await push(c, loadPortfolio(), at)
-        if (!localAt) {
-          suppress.current = true
-          adoptStore(loadPortfolio(), at) // stamp so we don't re-push endlessly
-          suppress.current = false
-        }
+        if (!localAt) adoptSuppressed(loadPortfolio(), at) // stamp so we don't re-push endlessly
         setLastSyncedAt(at)
         setStatus('synced')
       }
@@ -88,14 +97,40 @@ export function usePortfolioSync(): PortfolioSync {
 
   // Push local edits up (debounced), unless the edit came from an adopt.
   useEffect(() => {
-    return subscribe(() => {
+    const unsub = subscribe(() => {
       if (suppress.current) return
       const c = codeRef.current
       if (!c) return
       if (timer.current) clearTimeout(timer.current)
       timer.current = setTimeout(() => doPush(c), PUSH_DEBOUNCE_MS)
     })
+    return () => {
+      unsub()
+      if (timer.current) clearTimeout(timer.current) // no push firing after unmount
+    }
   }, [doPush])
+
+  // If the page is hidden/closing with a push still pending in the debounce
+  // window, flush it via sendBeacon so a last-second edit isn't lost.
+  useEffect(() => {
+    const flush = () => {
+      if (!timer.current) return
+      clearTimeout(timer.current)
+      timer.current = null
+      const c = codeRef.current
+      if (!c) return
+      pushBeacon(c, loadPortfolio(), localUpdatedAt() || new Date().toISOString())
+    }
+    const onVis = () => {
+      if (document.visibilityState === 'hidden') flush()
+    }
+    window.addEventListener('pagehide', flush)
+    document.addEventListener('visibilitychange', onVis)
+    return () => {
+      window.removeEventListener('pagehide', flush)
+      document.removeEventListener('visibilitychange', onVis)
+    }
+  }, [])
 
   const enable = useCallback(async () => {
     const c = generateSyncCode()
@@ -125,22 +160,16 @@ export function usePortfolioSync(): PortfolioSync {
             `Cancel = keep this device and overwrite the cloud`,
         )
         if (useCloud) {
-          suppress.current = true
-          adoptStore(remote.store!, remote.updated_at || new Date().toISOString())
-          suppress.current = false
+          adoptSuppressed(remote.store!, remote.updated_at || new Date().toISOString())
           setLastSyncedAt(remote.updated_at)
         } else {
           const at = new Date().toISOString()
           await push(c, local, at)
-          suppress.current = true
-          adoptStore(local, at)
-          suppress.current = false
+          adoptSuppressed(local, at)
           setLastSyncedAt(at)
         }
       } else if (!isEmpty(remote.store)) {
-        suppress.current = true
-        adoptStore(remote.store!, remote.updated_at || new Date().toISOString())
-        suppress.current = false
+        adoptSuppressed(remote.store!, remote.updated_at || new Date().toISOString())
         setLastSyncedAt(remote.updated_at)
       } else {
         const at = localUpdatedAt() || new Date().toISOString()
@@ -171,4 +200,16 @@ export function usePortfolioSync(): PortfolioSync {
   }, [reconcile])
 
   return { code, status, lastSyncedAt, error, enable, connect, disconnect, syncNow }
+}
+
+// The sync engine must run app-wide, not only while the Portfolio tab is
+// mounted — otherwise a "+ portfolio" add from the Buys/Stocks tab is saved
+// locally but never pushed. App calls usePortfolioSync() once and provides it
+// here; SyncPanel consumes it via usePortfolioSyncCtx().
+export const PortfolioSyncContext = createContext<PortfolioSync | null>(null)
+
+export function usePortfolioSyncCtx(): PortfolioSync {
+  const ctx = useContext(PortfolioSyncContext)
+  if (!ctx) throw new Error('usePortfolioSyncCtx must be used within PortfolioSyncContext')
+  return ctx
 }
