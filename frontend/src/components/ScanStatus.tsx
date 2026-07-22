@@ -9,7 +9,6 @@ function staleBarWarning(barDate: string): boolean {
 
 export default function ScanStatus({ latest }: { latest: ScanResult }) {
   const failed = latest.failures.length
-  const stale = staleBarWarning(latest.bar_date)
   const scanTime = new Date(latest.generated_at).toLocaleString(undefined, {
     dateStyle: 'medium',
     timeStyle: 'short',
@@ -27,7 +26,7 @@ export default function ScanStatus({ latest }: { latest: ScanResult }) {
           key={m}
           label={m === 'bar' ? 'Bar date' : `${m.toUpperCase()} bar`}
           value={d}
-          tone={stale ? 'warn' : 'default'}
+          tone={staleBarWarning(d) ? 'warn' : 'default'}
         />
       ))}
       <Chip label="Scanned" value={`${latest.scanned}/${latest.universe_count}`} />

@@ -133,7 +133,8 @@ export default function TrackRecordPage() {
   const avgExcess = mean(scored.map((e) => e.excess_pct as number))
   const avgReturn = mean(scored.map((e) => e.stock_return_pct as number))
   const avgDays = mean(scored.map((e) => e.days_held))
-  const targetsHit = entries.filter((e) => e.target_reached === true).length
+  // seasoned only, to match every other headline stat's honesty rule
+  const targetsHit = scored.filter((e) => e.target_reached === true).length
   const ranked = [...scored].sort((a, b) => (b.excess_pct as number) - (a.excess_pct as number))
   const best = ranked[0]
   const worst = ranked[ranked.length - 1]
@@ -165,7 +166,7 @@ export default function TrackRecordPage() {
         )}
         {best && (
           <Chip label="Best" value={`${best.ticker} ${best.excess_pct! >= 0 ? '+' : ''}${best.excess_pct!.toFixed(1)}`}
-                tone="up" />
+                tone={best.excess_pct! >= 0 ? 'up' : 'down'} />
         )}
         {worst && worst !== best && (
           <Chip label="Worst" value={`${worst.ticker} ${worst.excess_pct! >= 0 ? '+' : ''}${worst.excess_pct!.toFixed(1)}`}

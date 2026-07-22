@@ -154,20 +154,24 @@ class TestFundamentalSummary:
         assert "highly profitable" in s and "ROE 38%" in s
         assert "low leverage" in s
         assert "premium valuation (fwd P/E 34)" in s
-        # both growth gauges point up -> one word, both figures
-        assert "growing (rev +9%, EPS +20%)" in s
+        # rev +9% (growing) vs EPS +20% (strong) are different tiers -> show both
+        assert "rev +9% / EPS +20%" in s
 
-    def test_growth_diverging_withholds_verdict_word(self):
-        # revenue up but earnings down: no "growing" claim (would clash with the
-        # -1 earnings-growth factor chip); show both figures instead
+    def test_growth_same_tier_gets_one_word(self):
+        # both land in the "growing" tier -> single word, both figures
+        s = fundamental_summary({"earnings_growth_pct": 10}, {"rev_growth": 8})
+        assert "growing (rev +8%, EPS +10%)" in s
+
+    def test_growth_flat_revenue_but_surging_eps_shows_both(self):
+        # the reported case: must NOT call a +132% EPS "flat" off +2% revenue
+        s = fundamental_summary({"earnings_growth_pct": 132}, {"rev_growth": 2})
+        assert "rev +2% / EPS +132%" in s
+        assert "flat" not in s
+
+    def test_growth_diverging_sign_withholds_verdict_word(self):
         s = fundamental_summary({"earnings_growth_pct": -20}, {"rev_growth": 10})
         assert "rev +10% / EPS -20%" in s
         assert "growing" not in s
-
-    def test_growth_same_direction_uses_conservative_word(self):
-        # rev +30 / EPS +6 both positive -> word by the weaker (EPS 6 = "growing")
-        s = fundamental_summary({"earnings_growth_pct": 6}, {"rev_growth": 30})
-        assert "growing (rev +30%, EPS +6%)" in s
 
     def test_growth_single_gauge(self):
         assert "shrinking (EPS -8%)" in fundamental_summary({"earnings_growth_pct": -8}, {})

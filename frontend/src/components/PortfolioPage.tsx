@@ -256,7 +256,7 @@ function Performance({ closed, conv, sym }: {
   // per-trade P&L converted to the display currency (at today's FX rate)
   const pnls = trades.map((t) => conv(t.shares * (t.sell_price - t.avg_cost), t.market))
   const wins = pnls.filter((v) => v > 0)
-  const losses = pnls.filter((v) => v <= 0)
+  const losses = pnls.filter((v) => v < 0) // break-even (0) is neither win nor loss
   let running = 0
   const cum = pnls.map((v) => (running += v))
   const best = trades[pnls.indexOf(Math.max(...pnls))]
