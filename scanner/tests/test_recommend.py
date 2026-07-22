@@ -1,6 +1,6 @@
 from recommend import (analyst_block, fundamental_flags, fundamental_summary,
                        leverage_level, profile_metrics, score_info, sector_factor,
-                       verdict)
+                       verdict, weak_balance_sheet)
 
 
 class TestAnalystBlock:
@@ -176,6 +176,35 @@ class TestFundamentalSummary:
     def test_missing_clauses_dropped(self):
         assert fundamental_summary({}, {}) == ""
         assert fundamental_summary({"forward_pe": 12}, {}) == "cheap valuation (fwd P/E 12)"
+
+
+class TestWeakBalanceSheet:
+    """Candidate balance-sheet risk (Lane B) — verifier-lab/measurement only,
+    must never influence score_info/verdict."""
+
+    def test_over_levered_flags(self):
+        assert weak_balance_sheet({"net_debt_to_ebitda": 4.0}, "Industrials")
+
+    def test_illiquid_flags(self):
+        assert weak_balance_sheet({"current_ratio": 0.8}, "Technology")
+
+    def test_healthy_is_clean(self):
+        assert not weak_balance_sheet({"net_debt_to_ebitda": 1.0, "current_ratio": 2.0}, "Energy")
+
+    def test_exempt_sectors_never_flag(self):
+        # leverage is structural for these — a generic gate would misfire
+        for s in ("Financial Services", "Real Estate", "Utilities"):
+            assert not weak_balance_sheet({"net_debt_to_ebitda": 9.0, "current_ratio": 0.2}, s)
+
+    def test_missing_data_degrades_clean(self):
+        assert not weak_balance_sheet({}, "Industrials")
+        assert not weak_balance_sheet({"net_debt_to_ebitda": None}, "Industrials")
+
+    def test_does_not_touch_the_verdict(self):
+        # a wrecked balance sheet leaves score/verdict untouched (it's not scored)
+        info = {"marketCap": 1e11, "totalDebt": 9e9, "totalCash": 0, "ebitda": 1e9}
+        assert score_info(info)["score"] == 0
+        assert verdict("bullish", True, score_info(info)["score"])[0] == "buy"
 
 
 class TestVerdict:

@@ -241,6 +241,33 @@ def fundamental_summary(metrics: dict, profile: dict) -> str:
     return " · ".join(parts)
 
 
+# --- CANDIDATE (Lane B): balance-sheet risk ---------------------------------
+# NOT part of the verdict. This is a candidate gate measured counterfactually in
+# verifier_lab.py against the live track record; it graduates into score_info
+# only after a favourable live exchange rate AND two-window backtest validation
+# (same bar the sector factor cleared). Scoped out of sectors where high
+# leverage is structural — a generic ratio gate would misfire on banks, REITs,
+# and utilities (leverage is their business model, EBITDA multiples don't apply).
+BALANCE_SHEET_EXEMPT_SECTORS = frozenset(
+    {"Financial Services", "Real Estate", "Utilities"}
+)
+WEAK_NET_DEBT_EBITDA = 3.0  # > this = elevated leverage
+MIN_CURRENT_RATIO = 1.0     # < this = liquidity strain
+
+
+def weak_balance_sheet(profile: dict, sector_name: str | None) -> bool:
+    """Candidate value-trap risk: elevated leverage or strained liquidity, in a
+    sector where that is a genuine red flag. Display/measurement only — never the
+    verdict. False when exempt or the data is missing (degrades, never guesses)."""
+    if sector_name in BALANCE_SHEET_EXEMPT_SECTORS:
+        return False
+    nde = profile.get("net_debt_to_ebitda")
+    cr = profile.get("current_ratio")
+    over_levered = nde is not None and nde > WEAK_NET_DEBT_EBITDA
+    illiquid = cr is not None and cr < MIN_CURRENT_RATIO
+    return over_levered or illiquid
+
+
 def analyst_block(info: dict) -> dict | None:
     """Fresh analyst view from .info: consensus, coverage, target range."""
     out: dict = {}
