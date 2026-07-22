@@ -1,6 +1,6 @@
 import { Fragment, useRef, useState } from 'react'
 import { useAlerts, useForex, useHealth, usePortfolio, usePrices, useTargets, useTrackRecord } from '../hooks/useAlerts'
-import { usePortfolioSync, type SyncStatus } from '../hooks/usePortfolioSync'
+import { usePortfolioSyncCtx, type SyncStatus } from '../hooks/usePortfolioSync'
 import { assessHealth, HEALTH_DOT, type HealthLevel } from '../lib/health'
 import { CATEGORY_LABELS, type AlertHistory, type TargetsData, type TrackRecordData } from '../types'
 import DirectionBadge from './DirectionBadge'
@@ -331,7 +331,7 @@ const SYNC_TONE: Record<SyncStatus, string> = {
 
 function SyncPanel() {
   const { code, status, lastSyncedAt, error, enable, connect, disconnect, syncNow } =
-    usePortfolioSync()
+    usePortfolioSyncCtx()
   const [input, setInput] = useState('')
   const [reveal, setReveal] = useState(false)
   const [copied, setCopied] = useState(false)
