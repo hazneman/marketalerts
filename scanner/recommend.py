@@ -229,9 +229,12 @@ def fundamental_summary(metrics: dict, profile: dict) -> str:
                 else "flat" if g >= 0 else "shrinking")
 
     if rg is not None and eg is not None:
-        if (rg >= 0) == (eg >= 0):  # same direction — one word, both figures
-            parts.append(f"{growth_word(min(rg, eg))} (rev {rg:+.0f}%, EPS {eg:+.0f}%)")
-        else:  # diverging — name both, no single verdict word
+        # one verdict word only when both gauges tell the SAME story; otherwise
+        # show both figures and no word (avoids e.g. "flat" on rev +2% / EPS +132%,
+        # or "strong growth" on rev +40% / EPS +3%)
+        if growth_word(rg) == growth_word(eg):
+            parts.append(f"{growth_word(eg)} (rev {rg:+.0f}%, EPS {eg:+.0f}%)")
+        else:
             parts.append(f"rev {rg:+.0f}% / EPS {eg:+.0f}%")
     elif rg is not None:
         parts.append(f"{growth_word(rg)} (rev {rg:+.0f}%)")
