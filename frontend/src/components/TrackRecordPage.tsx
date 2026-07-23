@@ -1,7 +1,7 @@
 import { useMemo, useState } from 'react'
 import { useTrackRecord } from '../hooks/useAlerts'
 import { tradingViewUrl } from '../lib/tradingview'
-import { cellCls, rowCls, tableWrapCls, theadCls } from '../lib/ui'
+import { cellCls, inputCls, rowCls, tableWrapCls, theadCls } from '../lib/ui'
 import { BENCHMARK_LABELS, CATEGORY_LABELS, CATEGORY_SHORT, type TrackRecordEntry } from '../types'
 import { MarketBadge } from './AlertTable'
 import Badge from './ui/Badge'
@@ -86,6 +86,7 @@ export default function TrackRecordPage() {
   const { track, error } = useTrackRecord()
   const [category, setCategory] = useState('all')
   const [result, setResult] = useState<ResultFilter>('all')
+  const [search, setSearch] = useState('')
   const [sort, setSort] = useState<{ key: SortKey; dir: 1 | -1 }>({ key: 'excess_pct', dir: -1 })
 
   const entries = track?.entries ?? []
@@ -102,9 +103,11 @@ export default function TrackRecordPage() {
   const refires = useMemo(() => refireIds(entries), [entries])
 
   const rows = useMemo(() => {
+    const q = search.trim().toUpperCase()
     const filtered = entries.filter(
       (e) =>
         (category === 'all' || e.category === category) &&
+        (q === '' || e.ticker.includes(q)) &&
         (result === 'all' ||
           (result === 'beat' ? e.success === true && seasoned(e) : e.success === false && seasoned(e))),
     )
@@ -116,7 +119,7 @@ export default function TrackRecordPage() {
         return String(ka).localeCompare(String(kb)) * sort.dir
       return cmp(ka as number, kb as number, sort.dir)
     })
-  }, [entries, category, result, sort])
+  }, [entries, category, result, search, sort])
 
   if (error) {
     return (
@@ -213,6 +216,12 @@ export default function TrackRecordPage() {
       )}
 
       <div className="flex flex-wrap items-center gap-3">
+        <input
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          placeholder="Search ticker…"
+          className={`w-44 ${inputCls}`}
+        />
         <Tabs items={categoryItems} active={category} onChange={setCategory} size="sm" />
         <Tabs items={RESULT_ITEMS} active={result} onChange={setResult} size="sm" />
       </div>

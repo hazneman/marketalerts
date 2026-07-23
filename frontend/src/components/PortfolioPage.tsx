@@ -2,7 +2,7 @@ import { Fragment, useRef, useState } from 'react'
 import { useAlerts, useForex, useHealth, usePortfolio, usePrices, useTargets, useTrackRecord } from '../hooks/useAlerts'
 import { usePortfolioSyncCtx, type SyncStatus } from '../hooks/usePortfolioSync'
 import { assessHealth, HEALTH_DOT, type HealthLevel } from '../lib/health'
-import { CATEGORY_LABELS, type AlertHistory, type TargetsData, type TrackRecordData } from '../types'
+import { CATEGORY_LABELS, CATEGORY_SHORT, type AlertHistory, type TargetsData, type TrackRecordData } from '../types'
 import DirectionBadge from './DirectionBadge'
 import Tabs, { type TabItem } from './ui/Tabs'
 import {
@@ -585,7 +585,9 @@ export default function PortfolioPage() {
                     className="tnum flex items-center gap-2 bg-raised px-2.5 py-1 text-xs text-ink-2 ring-1 ring-hair">
                 <span className="font-semibold text-ink">{a.ticker}</span>
                 <DirectionBadge direction={a.direction} />
-                {CATEGORY_LABELS[a.category] ?? a.category}
+                <span title={CATEGORY_LABELS[a.category] ?? a.category}>
+                  {CATEGORY_SHORT[a.category] ?? a.category}
+                </span>
               </span>
             ))}
           </div>

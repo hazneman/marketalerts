@@ -11,7 +11,7 @@ import { useAlerts } from './hooks/useAlerts'
 import { PortfolioSyncContext, usePortfolioSync } from './hooks/usePortfolioSync'
 import Tabs from './components/ui/Tabs'
 import ThemeToggle from './components/ui/ThemeToggle'
-import { CATEGORY_LABELS, MARKET_ORDER, type AlertItem } from './types'
+import { CATEGORY_LABELS, CATEGORY_SHORT, MARKET_ORDER, type AlertItem } from './types'
 
 type Page = 'stocks' | 'buys' | 'sectors' | 'forex' | 'portfolio' | 'track'
 
@@ -198,7 +198,8 @@ export default function App() {
           {categories.map((cat) => (
             <CategorySection
               key={cat}
-              title={CATEGORY_LABELS[cat] ?? cat}
+              title={CATEGORY_SHORT[cat] ?? cat}
+              description={CATEGORY_LABELS[cat] ?? cat}
               alerts={alerts.filter((a) => a.category === cat)}
               barDate={activeDay}
             />
