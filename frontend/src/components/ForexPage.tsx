@@ -1,6 +1,6 @@
 import { useForex } from '../hooks/useAlerts'
 import { badgeFlat, cellCls, rowCls, tableWrapCls, theadCls, type Tone } from '../lib/ui'
-import { CATEGORY_LABELS, type ForexCurrency, type ForexOutlook, type ForexPair } from '../types'
+import { CATEGORY_LABELS, CATEGORY_SHORT, type ForexCurrency, type ForexOutlook, type ForexPair } from '../types'
 import CategorySection from './CategorySection'
 import SectionHeading from './ui/SectionHeading'
 
@@ -240,7 +240,8 @@ export default function ForexPage() {
             [...new Set(forex.pair_alerts!.map((a) => a.category))].map((cat) => (
               <CategorySection
                 key={cat}
-                title={CATEGORY_LABELS[cat] ?? cat}
+                title={CATEGORY_SHORT[cat] ?? cat}
+                description={CATEGORY_LABELS[cat] ?? cat}
                 alerts={forex.pair_alerts!.filter((a) => a.category === cat)}
                 barDate={forex.bar_date ?? ''}
               />

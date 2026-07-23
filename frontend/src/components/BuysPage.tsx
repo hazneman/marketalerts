@@ -4,7 +4,7 @@ import { addPosition } from '../lib/portfolio'
 import { tradingViewUrl } from '../lib/tradingview'
 import { badgeFlat, badgeRing, inputClsSm, type Tone } from '../lib/ui'
 import type { AlertItem, FibFrame, Fundamentals } from '../types'
-import { CATEGORY_LABELS, CONSENSUS_LABELS, SECTOR_STATE } from '../types'
+import { CATEGORY_LABELS, CATEGORY_SHORT, CONSENSUS_LABELS, SECTOR_STATE } from '../types'
 import { MarketBadge } from './AlertTable'
 import Badge from './ui/Badge'
 import SectionHeading from './ui/SectionHeading'
@@ -345,8 +345,9 @@ function BuyCard({ a, rank, defaultOpen, refDate, refire = false }: {
               ↩ re-entry
             </span>
           )}
-          <span className="hidden text-xs text-muted sm:inline">
-            {CATEGORY_LABELS[a.category] ?? a.category}
+          <span className="hidden text-xs text-muted sm:inline"
+                title={CATEGORY_LABELS[a.category] ?? a.category}>
+            {CATEGORY_SHORT[a.category] ?? a.category}
           </span>
         </div>
         <div className="flex flex-wrap items-center gap-3">
