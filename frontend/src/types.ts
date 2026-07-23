@@ -292,3 +292,12 @@ export const CATEGORY_LABELS: Record<string, string> = {
   price_sma200_weekly: '200-week SMA crosses (secular trend)',
   rsi_extended: 'RSI > 75 — extended, consider trimming',
 }
+
+// Compact versions of the same categories for dense UI (chips, filter tabs).
+// Keep the two maps in lockstep — one vocabulary, two lengths.
+export const CATEGORY_SHORT: Record<string, string> = {
+  price_sma200: 'Daily SMA200',
+  sma50_sma200: 'Golden cross',
+  price_sma200_weekly: '200-week',
+  rsi_extended: 'RSI trim',
+}

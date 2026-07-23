@@ -2,7 +2,7 @@ import { useMemo, useState } from 'react'
 import { useTrackRecord } from '../hooks/useAlerts'
 import { tradingViewUrl } from '../lib/tradingview'
 import { cellCls, rowCls, tableWrapCls, theadCls } from '../lib/ui'
-import { BENCHMARK_LABELS, CATEGORY_LABELS, type TrackRecordEntry } from '../types'
+import { BENCHMARK_LABELS, CATEGORY_LABELS, CATEGORY_SHORT, type TrackRecordEntry } from '../types'
 import { MarketBadge } from './AlertTable'
 import Badge from './ui/Badge'
 import Chip from './ui/Chip'
@@ -26,13 +26,6 @@ const num = (v: number | null | undefined) => (v === null || v === undefined ? N
 // and excluded from the hit-rate/average chips.
 const SEASONED_DAYS = 2
 const seasoned = (e: TrackRecordEntry) => e.days_held >= SEASONED_DAYS && e.excess_pct !== null
-
-// Compact rule names for the per-rule breakdown chips (full names in tooltip)
-const RULE_SHORT: Record<string, string> = {
-  price_sma200: 'Daily SMA200',
-  sma50_sma200: 'Golden cross',
-  price_sma200_weekly: '200-week',
-}
 
 // Same ticker+rule fired again within this window → tag the later one "re-entry"
 const REFIRE_DAYS = 14
@@ -101,8 +94,9 @@ export default function TrackRecordPage() {
     const present = [...new Set(entries.map((e) => e.category))]
     const known = Object.keys(CATEGORY_LABELS).filter((c) => present.includes(c))
     const rest = present.filter((c) => !known.includes(c))
-    return [{ value: 'all', label: 'All categories', tone: 'info' as const },
-            ...[...known, ...rest].map((c) => ({ value: c, label: CATEGORY_LABELS[c] ?? c }))]
+    // short names here — same vocabulary as the "By rule" chips above the tabs
+    return [{ value: 'all', label: 'All rules', tone: 'info' as const },
+            ...[...known, ...rest].map((c) => ({ value: c, label: CATEGORY_SHORT[c] ?? c }))]
   }, [entries])
 
   const refires = useMemo(() => refireIds(entries), [entries])
@@ -161,7 +155,12 @@ export default function TrackRecordPage() {
       beatPct: (100 * rows.filter((e) => e.success === true).length) / rows.length,
       avgExcess: mean(rows.map((e) => e.excess_pct as number)),
     }))
-    .sort((a, b) => b.n - a.n)
+    // same canonical order as the category tabs below — one vocabulary, one order
+    .sort((a, b) => {
+      const order = Object.keys(CATEGORY_LABELS)
+      const rank = (c: string) => (order.includes(c) ? order.indexOf(c) : order.length)
+      return rank(a.cat) - rank(b.cat)
+    })
 
   return (
     <section className="space-y-4">
@@ -204,7 +203,7 @@ export default function TrackRecordPage() {
           {byRule.map(({ cat, n, beatPct, avgExcess }) => (
             <Chip
               key={cat}
-              label={RULE_SHORT[cat] ?? cat}
+              label={CATEGORY_SHORT[cat] ?? cat}
               value={`${beatPct.toFixed(0)}% · ${avgExcess >= 0 ? '+' : ''}${avgExcess.toFixed(1)}pp (${n})`}
               tone={avgExcess >= 0 ? 'up' : 'down'}
               title={`${CATEGORY_LABELS[cat] ?? cat} — ${n} seasoned entries: beat benchmark ${beatPct.toFixed(0)}%, avg excess ${avgExcess >= 0 ? '+' : ''}${avgExcess.toFixed(2)}pp`}
@@ -250,7 +249,10 @@ export default function TrackRecordPage() {
                       </span>
                     )}
                   </td>
-                  <td className={`${cellCls} text-xs text-muted`}>{CATEGORY_LABELS[e.category] ?? e.category}</td>
+                  <td className={`${cellCls} text-xs text-muted`}
+                      title={CATEGORY_LABELS[e.category] ?? e.category}>
+                    {CATEGORY_SHORT[e.category] ?? e.category}
+                  </td>
                   <td className={`${cellCls} text-xs text-muted`}>
                     {e.benchmark ? `vs ${BENCHMARK_LABELS[e.benchmark] ?? e.benchmark}` : '—'}
                   </td>
