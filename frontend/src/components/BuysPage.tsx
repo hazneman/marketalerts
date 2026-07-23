@@ -1,9 +1,10 @@
 import { useState } from 'react'
-import { useAlerts, usePortfolio } from '../hooks/useAlerts'
+import { useAlerts, useBaselines, usePortfolio } from '../hooks/useAlerts'
+import { judgeMetric } from '../lib/baselines'
 import { addPosition } from '../lib/portfolio'
 import { tradingViewUrl } from '../lib/tradingview'
 import { badgeFlat, badgeRing, inputClsSm, type Tone } from '../lib/ui'
-import type { AlertItem, FibFrame, Fundamentals } from '../types'
+import type { AlertItem, BaselinesData, FibFrame, Fundamentals } from '../types'
 import { CATEGORY_LABELS, CATEGORY_SHORT, CONSENSUS_LABELS, SECTOR_STATE } from '../types'
 import { MarketBadge } from './AlertTable'
 import Badge from './ui/Badge'
@@ -185,20 +186,44 @@ const signed1 = (v: number) => `${v >= 0 ? '+' : ''}${v.toFixed(1)}%`
 const mult1 = (v: number) => `${v.toFixed(1)}×`
 const mult2 = (v: number) => `${v.toFixed(2)}×`
 
-const PROFILE_ROWS: { key: string; label: string; fmt: (v: number) => string }[] = [
-  { key: 'roe', label: 'Return on equity', fmt: pct1 },
-  { key: 'gross_margin', label: 'Gross margin', fmt: pct1 },
-  { key: 'op_margin', label: 'Operating margin', fmt: pct1 },
-  { key: 'net_margin', label: 'Net margin', fmt: pct1 },
-  { key: 'rev_growth', label: 'Revenue growth', fmt: signed1 },
-  { key: 'net_debt_to_ebitda', label: 'Net debt / EBITDA', fmt: mult1 },
-  { key: 'debt_to_equity', label: 'Debt / equity', fmt: mult1 },
-  { key: 'current_ratio', label: 'Current ratio', fmt: mult2 },
-  { key: 'ev_ebitda', label: 'EV / EBITDA', fmt: mult1 },
-  { key: 'peg', label: 'PEG', fmt: mult2 },
-  { key: 'p_fcf', label: 'Price / FCF', fmt: mult1 },
-  { key: 'div_yield', label: 'Dividend yield', fmt: pct1 },
-  { key: 'payout', label: 'Payout ratio', fmt: pct1 },
+type ProfileRow = { key: string; label: string; fmt: (v: number) => string }
+
+// Grouped by theme so related numbers read together (margins as a funnel,
+// leverage as one story) and eye travel stays inside a narrow column.
+const PROFILE_GROUPS: { title: string; rows: ProfileRow[] }[] = [
+  {
+    title: 'Profitability',
+    rows: [
+      { key: 'roe', label: 'Return on equity', fmt: pct1 },
+      { key: 'gross_margin', label: 'Gross margin', fmt: pct1 },
+      { key: 'op_margin', label: 'Operating margin', fmt: pct1 },
+      { key: 'net_margin', label: 'Net margin', fmt: pct1 },
+      { key: 'rev_growth', label: 'Revenue growth', fmt: signed1 },
+    ],
+  },
+  {
+    title: 'Balance sheet',
+    rows: [
+      { key: 'net_debt_to_ebitda', label: 'Net debt / EBITDA', fmt: mult1 },
+      { key: 'debt_to_equity', label: 'Debt / equity', fmt: mult1 },
+      { key: 'current_ratio', label: 'Current ratio', fmt: mult2 },
+    ],
+  },
+  {
+    title: 'Valuation',
+    rows: [
+      { key: 'ev_ebitda', label: 'EV / EBITDA', fmt: mult1 },
+      { key: 'peg', label: 'PEG', fmt: mult2 },
+      { key: 'p_fcf', label: 'Price / FCF', fmt: mult1 },
+    ],
+  },
+  {
+    title: 'Income',
+    rows: [
+      { key: 'div_yield', label: 'Dividend yield', fmt: pct1 },
+      { key: 'payout', label: 'Payout ratio', fmt: pct1 },
+    ],
+  },
 ]
 
 const FLAG_LABELS: Record<string, string> = {
@@ -207,24 +232,49 @@ const FLAG_LABELS: Record<string, string> = {
   earnings_not_cash_backed: '⚠ Earnings not cash-backed',
 }
 
-function ProfileTable({ profile }: { profile: Record<string, number> }) {
-  const rows = PROFILE_ROWS.filter((r) => profile[r.key] !== undefined)
-  if (rows.length === 0) return null
+const TONE_TEXT: Record<string, string> = { up: 'text-up', down: 'text-down', neutral: 'text-ink' }
+
+function ProfileTable({ profile, sector, baselines }: {
+  profile: Record<string, number>
+  sector: string | null | undefined
+  baselines: BaselinesData | null
+}) {
+  const groups = PROFILE_GROUPS
+    .map((g) => ({ ...g, rows: g.rows.filter((r) => profile[r.key] !== undefined) }))
+    .filter((g) => g.rows.length > 0)
+  if (groups.length === 0) return null
+  const hasBaseline = Boolean(sector && baselines?.sectors[sector])
   return (
     <div className="mt-2 border-t border-hair pt-2">
-      <div className="mb-1 text-xs text-muted">
+      <div className="mb-2 text-xs text-muted">
         Company profile <span className="text-faint">· context, not part of the score</span>
+        {hasBaseline && (
+          <span className="text-faint">
+            {' '}· <span className="text-up">green</span>/<span className="text-down">red</span> vs {sector} sector quartiles
+          </span>
+        )}
       </div>
-      <table className="w-full text-sm">
-        <tbody>
-          {rows.map((r) => (
-            <tr key={r.key}>
-              <td className="py-1 text-muted">{r.label}</td>
-              <td className="tnum py-1 text-right text-ink">{r.fmt(profile[r.key])}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+      <div className="grid grid-cols-1 gap-x-8 gap-y-3 sm:grid-cols-2 lg:grid-cols-4">
+        {groups.map((g) => (
+          <div key={g.title}>
+            <div className="mb-1 border-b border-hair pb-1 text-[10px] uppercase tracking-wider text-faint">
+              {g.title}
+            </div>
+            {g.rows.map((r) => {
+              const j = judgeMetric(r.key, profile[r.key], sector, baselines)
+              return (
+                <div key={r.key} title={j.title}
+                     className="flex cursor-help items-baseline justify-between gap-3 py-0.5 text-sm">
+                  <span className="text-muted">{r.label}</span>
+                  <span className={`tnum ${TONE_TEXT[j.tone] ?? 'text-ink'}`}>
+                    {r.fmt(profile[r.key])}
+                  </span>
+                </div>
+              )
+            })}
+          </div>
+        ))}
+      </div>
     </div>
   )
 }
@@ -309,8 +359,9 @@ function FreshnessChip({ date, refDate }: { date: string; refDate: string }) {
   )
 }
 
-function BuyCard({ a, rank, defaultOpen, refDate, refire = false }: {
-  a: AlertItem; rank: number; defaultOpen: boolean; refDate: string; refire?: boolean
+function BuyCard({ a, rank, defaultOpen, refDate, baselines = null, refire = false }: {
+  a: AlertItem; rank: number; defaultOpen: boolean; refDate: string
+  baselines?: BaselinesData | null; refire?: boolean
 }) {
   const f = a.fundamentals
   const [open, setOpen] = useState(defaultOpen)
@@ -404,7 +455,8 @@ function BuyCard({ a, rank, defaultOpen, refDate, refire = false }: {
             ))}
           </div>
           {f.summary && <p className="mb-2 text-sm text-ink-2">{f.summary}</p>}
-          <table className="w-full text-sm">
+          {/* capped width: keeps value + chip next to the label instead of a full-page reach */}
+          <table className="w-full max-w-md text-sm">
             <tbody>
               {Object.entries(FACTOR_LABELS).map(([key, def]) => (
                 <tr key={key}>
@@ -417,7 +469,7 @@ function BuyCard({ a, rank, defaultOpen, refDate, refire = false }: {
               ))}
             </tbody>
           </table>
-          {f.profile && <ProfileTable profile={f.profile} />}
+          {f.profile && <ProfileTable profile={f.profile} sector={f.sector} baselines={baselines} />}
           {a.sector && (
             <div className="mt-2 flex items-center justify-between border-t border-hair pt-2 text-sm">
               <span className="text-muted">
@@ -525,6 +577,7 @@ type SortMode = 'quality' | 'newest'
 export default function BuysPage() {
   const { latest, history, error } = useAlerts()
   const { positions } = usePortfolio()
+  const baselines = useBaselines()
   const [showHeld, setShowHeld] = useState(false)
   const [sort, setSort] = useState<SortMode>('quality')
   const [showRecent, setShowRecent] = useState(false)
@@ -621,7 +674,7 @@ export default function BuysPage() {
         <div className="space-y-2.5">
           {buys.map(({ a }, i) => (
             <BuyCard key={`${a.rule}-${a.ticker}`} a={a} rank={i + 1} defaultOpen={false}
-                     refDate={refDateFor(a)} refire={isRefire(a)} />
+                     refDate={refDateFor(a)} baselines={baselines} refire={isRefire(a)} />
           ))}
         </div>
       ) : (
@@ -644,7 +697,7 @@ export default function BuysPage() {
           {showHeld &&
             heldBuys.map(({ a }, i) => (
               <BuyCard key={`held-${a.rule}-${a.ticker}`} a={a} rank={buys.length + i + 1}
-                       defaultOpen={false} refDate={refDateFor(a)} refire={isRefire(a)} />
+                       defaultOpen={false} refDate={refDateFor(a)} baselines={baselines} refire={isRefire(a)} />
             ))}
         </div>
       )}
@@ -678,7 +731,7 @@ export default function BuysPage() {
                     {dayOpen &&
                       dayBuys.map(({ a }, i) => (
                         <BuyCard key={`${date}-${a.rule}-${a.ticker}`} a={a} rank={i + 1}
-                                 defaultOpen={false} refDate={date} refire={isRefire(a)} />
+                                 defaultOpen={false} refDate={date} baselines={baselines} refire={isRefire(a)} />
                       ))}
                   </div>
                 )

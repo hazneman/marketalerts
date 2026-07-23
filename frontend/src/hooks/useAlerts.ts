@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { loadPortfolio, subscribe, type PortfolioStore } from '../lib/portfolio'
-import type { AlertHistory, ForexData, HealthData, PricesData, ScanResult, SectorData, TargetsData, TrackRecordData } from '../types'
+import type { AlertHistory, BaselinesData, ForexData, HealthData, PricesData, ScanResult, SectorData, TargetsData, TrackRecordData } from '../types'
 
 async function fetchJson<T>(path: string): Promise<T> {
   const res = await fetch(`${path}?t=${Date.now()}`)
@@ -63,6 +63,17 @@ export function useHealth() {
   }, [])
 
   return health
+}
+
+export function useBaselines() {
+  const [baselines, setBaselines] = useState<BaselinesData | null>(null)
+
+  useEffect(() => {
+    // optional — absent until the first scan with the baselines ride-along runs
+    fetchJson<BaselinesData>('/data/baselines.json').then(setBaselines).catch(() => setBaselines(null))
+  }, [])
+
+  return baselines
 }
 
 export function useTargets() {

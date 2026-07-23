@@ -71,6 +71,7 @@ export interface Fundamentals {
   flags?: string[]
   coverage?: { present: number; total: number }
   summary?: string
+  sector?: string | null // raw GICS name — keys into BaselinesData.sectors
   analyst?: {
     n_analysts?: number
     consensus?: string
@@ -254,6 +255,24 @@ export interface HealthData {
   bar_date: string
   warn_days: number
   tickers: Record<string, TickerHealth>
+}
+
+// Per-GICS-sector quartiles for the company-profile metrics (baselines.json,
+// rebuilt nightly by the scan). Powers the profile green/red coloring.
+export interface MetricBaseline {
+  p25: number
+  med: number
+  p75: number
+  n: number
+}
+
+export interface BaselinesData {
+  schema_version: number
+  generated_at: string
+  as_of: string
+  min_n: number
+  coverage: number
+  sectors: Record<string, Record<string, MetricBaseline>>
 }
 
 export interface TargetsData {
