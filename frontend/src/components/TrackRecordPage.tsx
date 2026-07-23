@@ -27,6 +27,13 @@ const num = (v: number | null | undefined) => (v === null || v === undefined ? N
 const SEASONED_DAYS = 2
 const seasoned = (e: TrackRecordEntry) => e.days_held >= SEASONED_DAYS && e.excess_pct !== null
 
+// Compact rule names for the per-rule breakdown chips (full names in tooltip)
+const RULE_SHORT: Record<string, string> = {
+  price_sma200: 'Daily SMA200',
+  sma50_sma200: 'Golden cross',
+  price_sma200_weekly: '200-week',
+}
+
 // Same ticker+rule fired again within this window → tag the later one "re-entry"
 const REFIRE_DAYS = 14
 function refireIds(entries: TrackRecordEntry[]): Set<string> {
@@ -139,6 +146,23 @@ export default function TrackRecordPage() {
   const best = ranked[0]
   const worst = ranked[ranked.length - 1]
 
+  // Per-rule breakdown of the seasoned set: the headline hit-rate blends a
+  // high-volume noisy rule (daily SMA200) with rarer, better ones — showing
+  // each rule's own record stops the blended number being misread.
+  const byRule = Object.entries(
+    scored.reduce<Record<string, TrackRecordEntry[]>>((acc, e) => {
+      ;(acc[e.category] ??= []).push(e)
+      return acc
+    }, {}),
+  )
+    .map(([cat, rows]) => ({
+      cat,
+      n: rows.length,
+      beatPct: (100 * rows.filter((e) => e.success === true).length) / rows.length,
+      avgExcess: mean(rows.map((e) => e.excess_pct as number)),
+    }))
+    .sort((a, b) => b.n - a.n)
+
   return (
     <section className="space-y-4">
       <SectionHeading
@@ -173,6 +197,21 @@ export default function TrackRecordPage() {
                 tone={worst.excess_pct! < 0 ? 'down' : 'up'} />
         )}
       </div>
+
+      {byRule.length > 1 && (
+        <div className="flex flex-wrap items-center gap-2.5">
+          <span className="text-xs text-muted">By rule</span>
+          {byRule.map(({ cat, n, beatPct, avgExcess }) => (
+            <Chip
+              key={cat}
+              label={RULE_SHORT[cat] ?? cat}
+              value={`${beatPct.toFixed(0)}% · ${avgExcess >= 0 ? '+' : ''}${avgExcess.toFixed(1)}pp (${n})`}
+              tone={avgExcess >= 0 ? 'up' : 'down'}
+              title={`${CATEGORY_LABELS[cat] ?? cat} — ${n} seasoned entries: beat benchmark ${beatPct.toFixed(0)}%, avg excess ${avgExcess >= 0 ? '+' : ''}${avgExcess.toFixed(2)}pp`}
+            />
+          ))}
+        </div>
+      )}
 
       <div className="flex flex-wrap items-center gap-3">
         <Tabs items={categoryItems} active={category} onChange={setCategory} size="sm" />
