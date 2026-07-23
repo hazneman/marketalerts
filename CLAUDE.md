@@ -201,7 +201,11 @@ NOTHING is blocked in production. A gate graduates only on a favorable live
 exchange rate over months PLUS two-window backtest validation. First finding
 (Jul 2026): the "extension" gate looked great over one live week and was then
 REFUTED by a 2y event study (710 crosses, no edge) — patterns flip; trust the
-process, not a week.
+process, not a week. Current lead candidate: the **re-fire gate** (same
+ticker+rule within 14d — whipsaw) showed the best live exchange rate; its
+two-window event study is built in (`verifier_lab.py --refire-study --write`,
+needs Yahoo — run locally/in CI, not in sandboxes) and must pass BOTH windows
+before the gate touches the verdict.
 
 ## Workflow / operations
 

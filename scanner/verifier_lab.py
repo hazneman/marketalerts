@@ -119,6 +119,87 @@ def build_report() -> dict:
             "losers_n": losers, "gates": gates_out}
 
 
+def cross_events(close, sma_n: int = 200, refire_days: int = REFIRE_DAYS,
+                 min_bars: int | None = None) -> list[tuple[int, bool]]:
+    """All bull crosses of `close` over its `sma_n` SMA, as (bar index, is_refire).
+    A cross is a re-fire when a prior bull cross happened within the previous
+    `refire_days` CALENDAR days — the same definition the live ↩ tag and the
+    lab's refire gate use. Pure/testable; `min_bars` defaults to sma_n+1."""
+    from indicators import sma
+
+    start = (min_bars if min_bars is not None else sma_n + 1)
+    s = sma(close, sma_n)
+    above = close > s
+    events: list[tuple[int, bool]] = []
+    last_cross_date = None
+    for i in range(start, len(close)):
+        if bool(above.iloc[i]) and not bool(above.iloc[i - 1]):
+            d = close.index[i].date()
+            refire = (last_cross_date is not None
+                      and 0 < (d - last_cross_date).days <= refire_days)
+            events.append((i, refire))
+            last_cross_date = d
+    return events
+
+
+def _cohort(v: list[float]) -> dict:
+    return {"n": len(v), "avg_excess": round(mean(v), 2) if v else None,
+            "median_excess": round(median(v), 2) if v else None,
+            "hit_rate": round(100 * sum(1 for x in v if x > 0) / len(v)) if v else None}
+
+
+def refire_study(sample: int = 150, forward: int = 20) -> dict:
+    """TWO-WINDOW event study of the re-fire gate: forward excess (vs SPY) of
+    SMA200 bull crosses that re-fired within REFIRE_DAYS vs first crosses.
+    Windows: recent (last ~2y) and earlier (2016-2021) — the out-of-sample bar
+    from SWEEP.md. One fetch (period=max), events split by date."""
+    import pandas as pd
+
+    from fetcher import fetch_us, iter_us_chunks
+
+    universe = json.loads((SCANNER_DIR / "universe.json").read_text())["markets"]["us"][:sample]
+    spy = fetch_us("SPY", period="max")
+    spyc = spy["close"]
+    spy_by_date = {ix.date(): i for i, ix in enumerate(spy.index)}
+
+    today = dt.date.today()
+    recent_lo = today - dt.timedelta(days=365 * 2)
+    early_lo, early_hi = dt.date(2016, 1, 1), dt.date(2021, 12, 31)
+
+    def fwd(series, i):
+        if i + forward >= len(series):
+            return None
+        return (float(series.iloc[i + forward]) / float(series.iloc[i]) - 1) * 100
+
+    win: dict[str, dict[str, list[float]]] = {
+        "recent": {"refire": [], "first": []},
+        "earlier": {"refire": [], "first": []},
+    }
+    for chunk in iter_us_chunks(universe, period="max"):
+        for sym, df in chunk.items():
+            if df.empty or len(df) < 210:
+                continue
+            c = df["close"]
+            for i, refire in cross_events(c):
+                d = df.index[i].date()
+                w = ("recent" if d >= recent_lo
+                     else "earlier" if early_lo <= d <= early_hi else None)
+                if w is None:
+                    continue
+                si = spy_by_date.get(d)
+                if si is None:
+                    continue
+                sf, ff = fwd(spyc, si), fwd(c, i)
+                if sf is None or ff is None:
+                    continue
+                win[w]["refire" if refire else "first"].append(ff - sf)
+
+    return {"sample_tickers": len(universe), "forward_days": forward,
+            "refire_days": REFIRE_DAYS,
+            "windows": {w: {k: _cohort(v) for k, v in cohorts.items()}
+                        for w, cohorts in win.items()}}
+
+
 def extension_study(sample: int = 150, forward: int = 20) -> dict:
     """Historical event study: every SMA200 bull cross in a universe sample over
     ~2y, split by extension at the cross close; forward return vs SPY. This is
@@ -163,7 +244,7 @@ def extension_study(sample: int = 150, forward: int = 20) -> dict:
             "extended": s(ext_ev), "normal": s(base_ev)}
 
 
-def render_markdown(rep: dict, study: dict | None) -> str:
+def render_markdown(rep: dict, study: dict | None, refire: dict | None = None) -> str:
     L = []
     L.append("# VERIFIERS — candidate gate lab\n")
     L.append("Counterfactual analysis of candidate BUY filters ('verifiers') against the live")
@@ -192,6 +273,20 @@ def render_markdown(rep: dict, study: dict | None) -> str:
         L.append(f"| Normal (≤ {EXT_THRESHOLD}%) | {n['n']} | {n['avg_excess']}pp | "
                  f"{n['median_excess']}pp | {n['hit_rate']}% |")
         L.append("\n_One window only — preliminary. Promotion requires the full two-window bar._\n")
+    if refire:
+        L.append(f"## Two-window event study — re-fire gate ({refire['sample_tickers']} US tickers, "
+                 f"forward {refire['forward_days']} trading days vs SPY)\n")
+        L.append(f"A cross is a *re-fire* when the same signal fired within the prior "
+                 f"{refire['refire_days']} calendar days (the live ↩ tag). This IS the "
+                 f"two-window bar: both windows must agree before the gate can touch the verdict.\n")
+        L.append("| Window | Cohort | Crosses | Avg excess | Median excess | Beat SPY |")
+        L.append("|---|---|---|---|---|---|")
+        for w in ("recent", "earlier"):
+            for k, label in (("refire", "Re-fire"), ("first", "First cross")):
+                c = refire["windows"][w][k]
+                L.append(f"| {w} | {label} | {c['n']} | {c['avg_excess']}pp | "
+                         f"{c['median_excess']}pp | {c['hit_rate']}% |")
+        L.append("")
     L.append("## Caveats\n")
     L.append("- Live sample is tiny and young; patterns have already flipped week-to-week.")
     L.append("- Returns are split- but not dividend-adjusted; entries assume alert-day close.")
@@ -202,6 +297,8 @@ def render_markdown(rep: dict, study: dict | None) -> str:
 def main(argv=None):
     p = argparse.ArgumentParser()
     p.add_argument("--study", action="store_true", help="run the 2y extension event study")
+    p.add_argument("--refire-study", action="store_true",
+                   help="run the TWO-WINDOW re-fire event study (needs Yahoo; ~2-4 min)")
     p.add_argument("--write", action="store_true", help="refresh docs/VERIFIERS.md")
     args = p.parse_args(argv)
 
@@ -220,8 +317,17 @@ def main(argv=None):
         print(f"extended: n={e['n']} avg {e['avg_excess']}pp beat {e['hit_rate']}% | "
               f"normal: n={n['n']} avg {n['avg_excess']}pp beat {n['hit_rate']}%")
 
+    refire = None
+    if args.refire_study:
+        print("\nrunning two-window re-fire event study (~2-4 min)…")
+        refire = refire_study()
+        for w in ("recent", "earlier"):
+            r, f = refire["windows"][w]["refire"], refire["windows"][w]["first"]
+            print(f"{w:>8}: refire n={r['n']} avg {r['avg_excess']}pp beat {r['hit_rate']}% | "
+                  f"first n={f['n']} avg {f['avg_excess']}pp beat {f['hit_rate']}%")
+
     if args.write:
-        DOC_PATH.write_text(render_markdown(rep, study))
+        DOC_PATH.write_text(render_markdown(rep, study, refire))
         print(f"\nwrote {DOC_PATH.relative_to(ROOT)}")
     return 0
 
