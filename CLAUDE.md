@@ -71,7 +71,12 @@ Pipeline per daily run (`scan.py`):
 7. Outputs (`output.py`, all byte-stable — generated_at preserved when content
    unchanged, so holiday runs are no-op commits): `latest.json`,
    `history.json` (30 days), `prices.json` (latest close + 1d% for ALL scanned
-   tickers — feeds Portfolio valuation), `forex.json`, `sectors.json`.
+   tickers — feeds Portfolio valuation), `forex.json`, `sectors.json`,
+   `baselines.json` (per-GICS-sector quartiles of the profile metrics — powers
+   the Buys profile green/red coloring; built by `baselines.py` from
+   `archive/fundamentals_cache.json`, which the nightly scan tops up with the
+   ~40 stalest tickers + that day's alerted names, cycling the universe ~3
+   weekly; sectors publish a metric only at ≥8 observations, display-only).
 8. Forex (`forex.py`): central-bank rates from **manually maintained**
    `rates.json` (no free API; bump `as_of` — displayed in UI; also holds
    Claude's discretionary 6-month outlook per currency) + 11 major pairs run

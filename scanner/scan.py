@@ -263,6 +263,20 @@ def main(argv: list[str] | None = None) -> int:
     except Exception as exc:
         logger.warning("targets build failed (%s) — keeping previous targets.json", exc)
 
+    # Sector baselines ride along: ingest the profiles already fetched for
+    # alerted tickers (free) + refresh the stalest ~40 universe tickers, then
+    # recompute per-sector quartiles powering the profile green/red coloring.
+    try:
+        from baselines import refresh as refresh_baselines
+        fresh = {t: {"sector": f.get("sector"), "metrics": f.get("profile")}
+                 for t, f in fundamentals_cache.items() if f}
+        bl = refresh_baselines(args.output_dir, bar_date=bar_date,
+                               universe=symbols, fresh=fresh)
+        logger.info("baselines: %d tickers cached, %d sectors published (+%d refreshed)",
+                    bl["coverage"], bl["sectors"], bl["refreshed"])
+    except Exception as exc:
+        logger.warning("baselines refresh failed (%s) — keeping previous baselines.json", exc)
+
     # Forex snapshot rides along (sectors already built above for the verdict);
     # its failure must never sink the stock scan — it keeps its previous JSON.
     try:
