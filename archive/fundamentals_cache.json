@@ -1,0 +1,1260 @@
+{
+ "schema_version": 1,
+ "tickers": {
+  "A": {
+   "as_of": "2026-07-23",
+   "metrics": {
+    "current_ratio": 2.1,
+    "debt_to_equity": 0.5,
+    "div_yield": 0.73,
+    "ev_ebitda": 19.6,
+    "fcf_to_net_income": 0.66,
+    "gross_margin": 52.6,
+    "net_debt_to_ebitda": 0.86,
+    "net_margin": 19.6,
+    "op_margin": 23.7,
+    "p_fcf": 42.4,
+    "payout": 20.2,
+    "peg": 1.18,
+    "rev_growth": 10.0,
+    "roe": 21.3
+   },
+   "sector": "Healthcare"
+  },
+  "AAPL": {
+   "as_of": "2026-07-23",
+   "metrics": {
+    "current_ratio": 1.07,
+    "debt_to_equity": 0.8,
+    "div_yield": 0.34,
+    "ev_ebitda": 29.6,
+    "fcf_to_net_income": 0.82,
+    "gross_margin": 47.9,
+    "net_debt_to_ebitda": 0.1,
+    "net_margin": 27.2,
+    "op_margin": 32.3,
+    "p_fcf": 46.7,
+    "payout": 12.6,
+    "peg": 2.62,
+    "rev_growth": 16.6,
+    "roe": 141.5
+   },
+   "sector": "Technology"
+  },
+  "ABBV": {
+   "as_of": "2026-07-23",
+   "metrics": {
+    "current_ratio": 0.8,
+    "div_yield": 2.69,
+    "ev_ebitda": 17.1,
+    "fcf_to_net_income": 5.79,
+    "gross_margin": 72.0,
+    "net_debt_to_ebitda": 2.12,
+    "net_margin": 5.8,
+    "op_margin": 32.2,
+    "p_fcf": 21.8,
+    "payout": 326.0,
+    "peg": 0.42,
+    "rev_growth": 12.4
+   },
+   "sector": "Healthcare"
+  },
+  "ABNB": {
+   "as_of": "2026-07-23",
+   "metrics": {
+    "current_ratio": 1.44,
+    "debt_to_equity": 0.33,
+    "ev_ebitda": 28.1,
+    "fcf_to_net_income": 1.27,
+    "gross_margin": 82.9,
+    "net_debt_to_ebitda": -3.62,
+    "net_margin": 19.9,
+    "op_margin": 3.2,
+    "p_fcf": 25.6,
+    "payout": 0.0,
+    "peg": 1.29,
+    "rev_growth": 17.9,
+    "roe": 32.3
+   },
+   "sector": "Consumer Cyclical"
+  },
+  "ABT": {
+   "as_of": "2026-07-23",
+   "metrics": {
+    "debt_to_equity": 0.65,
+    "div_yield": 2.5,
+    "ev_ebitda": 17.1,
+    "gross_margin": 56.8,
+    "net_debt_to_ebitda": 2.26,
+    "net_margin": 11.6,
+    "op_margin": 14.2,
+    "payout": 79.0,
+    "peg": 2.03,
+    "rev_growth": 13.0
+   },
+   "sector": "Healthcare"
+  },
+  "ACGL": {
+   "as_of": "2026-07-23",
+   "metrics": {
+    "current_ratio": 0.57,
+    "debt_to_equity": 0.11,
+    "ev_ebitda": 5.9,
+    "fcf_to_net_income": 1.09,
+    "gross_margin": 39.4,
+    "net_debt_to_ebitda": -0.15,
+    "net_margin": 24.6,
+    "op_margin": 25.3,
+    "p_fcf": 6.6,
+    "payout": 0.0,
+    "peg": 1.05,
+    "rev_growth": -3.3,
+    "roe": 21.3
+   },
+   "sector": "Financial Services"
+  },
+  "ACN": {
+   "as_of": "2026-07-23",
+   "metrics": {
+    "current_ratio": 1.34,
+    "debt_to_equity": 0.25,
+    "div_yield": 4.7,
+    "ev_ebitda": 6.5,
+    "fcf_to_net_income": 1.55,
+    "gross_margin": 32.0,
+    "net_debt_to_ebitda": -0.14,
+    "net_margin": 10.7,
+    "op_margin": 17.0,
+    "p_fcf": 7.0,
+    "payout": 50.9,
+    "peg": 1.02,
+    "rev_growth": 5.6,
+    "roe": 24.4
+   },
+   "sector": "Technology"
+  },
+  "ADBE": {
+   "as_of": "2026-07-23",
+   "metrics": {
+    "current_ratio": 0.75,
+    "debt_to_equity": 0.61,
+    "ev_ebitda": 8.8,
+    "fcf_to_net_income": 1.28,
+    "gross_margin": 89.4,
+    "net_debt_to_ebitda": 0.15,
+    "net_margin": 28.7,
+    "op_margin": 35.3,
+    "p_fcf": 9.1,
+    "payout": 0.0,
+    "peg": 0.6,
+    "rev_growth": 12.7,
+    "roe": 63.0
+   },
+   "sector": "Technology"
+  },
+  "ADI": {
+   "as_of": "2026-07-23",
+   "metrics": {
+    "current_ratio": 1.75,
+    "debt_to_equity": 0.26,
+    "div_yield": 1.16,
+    "ev_ebitda": 31.5,
+    "fcf_to_net_income": 1.17,
+    "gross_margin": 64.5,
+    "net_debt_to_ebitda": 0.86,
+    "net_margin": 26.0,
+    "op_margin": 38.1,
+    "p_fcf": 47.9,
+    "payout": 60.6,
+    "peg": 0.71,
+    "rev_growth": 37.2,
+    "roe": 9.6
+   },
+   "sector": "Technology"
+  },
+  "ADM": {
+   "as_of": "2026-07-23",
+   "metrics": {
+    "current_ratio": 1.31,
+    "debt_to_equity": 0.46,
+    "div_yield": 2.41,
+    "ev_ebitda": 20.6,
+    "fcf_to_net_income": 1.46,
+    "gross_margin": 6.3,
+    "net_debt_to_ebitda": 3.95,
+    "net_margin": 1.3,
+    "op_margin": 1.3,
+    "p_fcf": 26.4,
+    "payout": 91.5,
+    "peg": 2.65,
+    "rev_growth": 1.6,
+    "roe": 4.8
+   },
+   "sector": "Consumer Defensive"
+  },
+  "ADP": {
+   "as_of": "2026-07-23",
+   "metrics": {
+    "current_ratio": 1.04,
+    "debt_to_equity": 0.69,
+    "div_yield": 2.8,
+    "ev_ebitda": 15.5,
+    "fcf_to_net_income": 1.09,
+    "gross_margin": 48.5,
+    "net_debt_to_ebitda": 0.18,
+    "net_margin": 20.1,
+    "op_margin": 30.2,
+    "p_fcf": 20.4,
+    "payout": 60.5,
+    "peg": 2.27,
+    "rev_growth": 7.0,
+    "roe": 71.2
+   },
+   "sector": "Technology"
+  },
+  "ADSK": {
+   "as_of": "2026-07-23",
+   "metrics": {
+    "current_ratio": 0.83,
+    "debt_to_equity": 0.85,
+    "ev_ebitda": 20.0,
+    "fcf_to_net_income": 2.09,
+    "gross_margin": 92.4,
+    "net_debt_to_ebitda": -0.09,
+    "net_margin": 19.5,
+    "op_margin": 29.5,
+    "p_fcf": 14.2,
+    "payout": 0.0,
+    "peg": 0.78,
+    "rev_growth": 18.4,
+    "roe": 50.4
+   },
+   "sector": "Technology"
+  },
+  "AEFES.IS": {
+   "as_of": "2026-07-23",
+   "metrics": {
+    "current_ratio": 1.03,
+    "debt_to_equity": 0.41,
+    "div_yield": 1.58,
+    "ev_ebitda": 7.5,
+    "fcf_to_net_income": 1.25,
+    "gross_margin": 38.1,
+    "net_debt_to_ebitda": 1.57,
+    "net_margin": 3.5,
+    "op_margin": 6.8,
+    "p_fcf": 11.7,
+    "payout": 8.7,
+    "peg": 1.32,
+    "rev_growth": 7.6,
+    "roe": 8.1
+   },
+   "sector": "Consumer Defensive"
+  },
+  "AEP": {
+   "as_of": "2026-07-23",
+   "metrics": {
+    "current_ratio": 0.53,
+    "debt_to_equity": 1.57,
+    "div_yield": 2.82,
+    "ev_ebitda": 13.7,
+    "fcf_to_net_income": -1.9,
+    "gross_margin": 47.2,
+    "net_debt_to_ebitda": 5.61,
+    "net_margin": 16.3,
+    "op_margin": 23.7,
+    "payout": 55.6,
+    "peg": 2.27,
+    "rev_growth": 10.2,
+    "roe": 12.6
+   },
+   "sector": "Utilities"
+  },
+  "AES": {
+   "as_of": "2026-07-23",
+   "metrics": {
+    "current_ratio": 0.73,
+    "debt_to_equity": 2.6,
+    "div_yield": 4.72,
+    "ev_ebitda": 12.9,
+    "fcf_to_net_income": -2.15,
+    "gross_margin": 19.3,
+    "net_debt_to_ebitda": 8.03,
+    "net_margin": 10.8,
+    "op_margin": 18.7,
+    "payout": 36.7,
+    "peg": 0.81,
+    "rev_growth": 8.7,
+    "roe": 5.3
+   },
+   "sector": "Utilities"
+  },
+  "AGHOL.IS": {
+   "as_of": "2026-07-23",
+   "metrics": {
+    "current_ratio": 0.94,
+    "debt_to_equity": 0.47,
+    "div_yield": 2.03,
+    "ev_ebitda": 6.6,
+    "fcf_to_net_income": 1.85,
+    "gross_margin": 27.9,
+    "net_debt_to_ebitda": 1.54,
+    "net_margin": 0.5,
+    "op_margin": 2.4,
+    "p_fcf": 12.2,
+    "payout": 47.7,
+    "rev_growth": 6.2,
+    "roe": 6.7
+   },
+   "sector": "Industrials"
+  },
+  "AIG": {
+   "as_of": "2026-07-23",
+   "metrics": {
+    "current_ratio": 0.61,
+    "debt_to_equity": 0.23,
+    "div_yield": 2.56,
+    "ev_ebitda": 4.9,
+    "fcf_to_net_income": 3.01,
+    "gross_margin": 35.5,
+    "net_debt_to_ebitda": -0.05,
+    "net_margin": 11.8,
+    "op_margin": 18.6,
+    "p_fcf": 4.4,
+    "payout": 31.7,
+    "peg": 0.64,
+    "rev_growth": 1.4,
+    "roe": 7.7
+   },
+   "sector": "Financial Services"
+  },
+  "AIR.DE": {
+   "as_of": "2026-07-23",
+   "metrics": {
+    "current_ratio": 1.14,
+    "debt_to_equity": 0.56,
+    "div_yield": 1.57,
+    "ev_ebitda": 20.9,
+    "fcf_to_net_income": -0.02,
+    "gross_margin": 15.4,
+    "net_debt_to_ebitda": -0.16,
+    "net_margin": 6.9,
+    "op_margin": 1.5,
+    "payout": 31.6,
+    "peg": 1.8,
+    "rev_growth": -6.6,
+    "roe": 19.7
+   },
+   "sector": "Industrials"
+  },
+  "AKAM": {
+   "as_of": "2026-07-23",
+   "metrics": {
+    "current_ratio": 2.06,
+    "debt_to_equity": 1.2,
+    "ev_ebitda": 19.2,
+    "fcf_to_net_income": 1.61,
+    "gross_margin": 58.3,
+    "net_debt_to_ebitda": 4.3,
+    "net_margin": 10.2,
+    "op_margin": 10.6,
+    "p_fcf": 24.4,
+    "payout": 0.0,
+    "peg": 1.47,
+    "rev_growth": 5.8,
+    "roe": 9.2
+   },
+   "sector": "Technology"
+  },
+  "AKBNK.IS": {
+   "as_of": "2026-07-23",
+   "metrics": {
+    "div_yield": 3.28,
+    "gross_margin": 0.0,
+    "net_margin": 29.9,
+    "op_margin": 42.1,
+    "payout": 18.3,
+    "peg": 1.79,
+    "rev_growth": 43.7,
+    "roe": 23.0
+   },
+   "sector": "Financial Services"
+  },
+  "AKSA.IS": {
+   "as_of": "2026-07-23",
+   "metrics": {
+    "current_ratio": 0.89,
+    "debt_to_equity": 0.84,
+    "div_yield": 4.83,
+    "ev_ebitda": 9.9,
+    "fcf_to_net_income": 0.09,
+    "gross_margin": 15.6,
+    "net_debt_to_ebitda": 2.83,
+    "net_margin": 12.9,
+    "op_margin": 6.9,
+    "p_fcf": 113.4,
+    "payout": 94.6,
+    "peg": 0.32,
+    "rev_growth": 18.6,
+    "roe": 13.5
+   },
+   "sector": "Consumer Cyclical"
+  },
+  "AKSEN.IS": {
+   "as_of": "2026-07-23",
+   "metrics": {
+    "current_ratio": 0.63,
+    "debt_to_equity": 0.82,
+    "ev_ebitda": 15.3,
+    "fcf_to_net_income": -3.48,
+    "gross_margin": 25.9,
+    "net_debt_to_ebitda": 4.33,
+    "net_margin": 9.3,
+    "op_margin": 23.6,
+    "payout": 0.0,
+    "peg": 0.48,
+    "rev_growth": -21.0,
+    "roe": 7.4
+   },
+   "sector": "Utilities"
+  },
+  "ALAB": {
+   "as_of": "2026-07-23",
+   "metrics": {
+    "current_ratio": 11.3,
+    "debt_to_equity": 0.03,
+    "ev_ebitda": 238.1,
+    "fcf_to_net_income": 0.9,
+    "gross_margin": 76.0,
+    "net_debt_to_ebitda": -4.9,
+    "net_margin": 26.7,
+    "op_margin": 20.1,
+    "p_fcf": 233.5,
+    "payout": 0.0,
+    "rev_growth": 93.4,
+    "roe": 21.1
+   },
+   "sector": "Technology"
+  },
+  "ALARK.IS": {
+   "as_of": "2026-07-23",
+   "metrics": {
+    "current_ratio": 0.89,
+    "debt_to_equity": 0.32,
+    "div_yield": 2.98,
+    "fcf_to_net_income": -10.72,
+    "gross_margin": 1.8,
+    "net_margin": 19.8,
+    "op_margin": -25.4,
+    "payout": 62.0,
+    "rev_growth": 26.3,
+    "roe": 1.8
+   },
+   "sector": "Industrials"
+  },
+  "ALB": {
+   "as_of": "2026-07-23",
+   "metrics": {
+    "current_ratio": 2.07,
+    "debt_to_equity": 0.2,
+    "div_yield": 1.4,
+    "ev_ebitda": 16.1,
+    "gross_margin": 18.5,
+    "net_debt_to_ebitda": 0.86,
+    "net_margin": -4.2,
+    "op_margin": 24.8,
+    "p_fcf": 19.2,
+    "payout": 58.0,
+    "peg": 0.79,
+    "rev_growth": 32.7,
+    "roe": -1.8
+   },
+   "sector": "Basic Materials"
+  },
+  "ALGN": {
+   "as_of": "2026-07-23",
+   "metrics": {
+    "current_ratio": 1.39,
+    "debt_to_equity": 0.03,
+    "ev_ebitda": 12.6,
+    "fcf_to_net_income": 1.24,
+    "gross_margin": 69.9,
+    "net_debt_to_ebitda": -1.07,
+    "net_margin": 10.5,
+    "op_margin": 15.5,
+    "p_fcf": 22.6,
+    "payout": 0.0,
+    "peg": 0.91,
+    "rev_growth": 6.2,
+    "roe": 10.8
+   },
+   "sector": "Healthcare"
+  },
+  "ALL": {
+   "as_of": "2026-07-23",
+   "metrics": {
+    "current_ratio": 0.36,
+    "debt_to_equity": 0.24,
+    "div_yield": 1.7,
+    "ev_ebitda": 4.7,
+    "fcf_to_net_income": 1.03,
+    "gross_margin": 34.4,
+    "net_debt_to_ebitda": 0.14,
+    "net_margin": 17.8,
+    "op_margin": 19.0,
+    "p_fcf": 5.3,
+    "payout": 9.0,
+    "peg": 3.02,
+    "rev_growth": 3.0,
+    "roe": 45.2
+   },
+   "sector": "Financial Services"
+  },
+  "ALLE": {
+   "as_of": "2026-07-23",
+   "metrics": {
+    "current_ratio": 1.91,
+    "debt_to_equity": 1.06,
+    "div_yield": 1.37,
+    "ev_ebitda": 13.8,
+    "fcf_to_net_income": 0.78,
+    "gross_margin": 45.0,
+    "net_debt_to_ebitda": 1.9,
+    "net_margin": 15.2,
+    "op_margin": 18.9,
+    "p_fcf": 26.9,
+    "payout": 28.4,
+    "peg": 2.15,
+    "rev_growth": 9.7,
+    "roe": 34.2
+   },
+   "sector": "Industrials"
+  },
+  "ALNY": {
+   "as_of": "2026-07-23",
+   "metrics": {
+    "current_ratio": 3.13,
+    "debt_to_equity": 2.76,
+    "ev_ebitda": 44.1,
+    "fcf_to_net_income": 0.38,
+    "gross_margin": 80.8,
+    "net_debt_to_ebitda": -0.05,
+    "net_margin": 12.6,
+    "op_margin": 23.0,
+    "p_fcf": 175.3,
+    "payout": 0.0,
+    "peg": 0.48,
+    "rev_growth": 96.4,
+    "roe": 90.4
+   },
+   "sector": "Healthcare"
+  },
+  "ALV.DE": {
+   "as_of": "2026-07-23",
+   "metrics": {
+    "current_ratio": 174.87,
+    "div_yield": 4.03,
+    "ev_ebitda": 7.0,
+    "gross_margin": 24.3,
+    "net_debt_to_ebitda": -1.4,
+    "net_margin": 10.4,
+    "op_margin": 19.3,
+    "payout": 49.7,
+    "peg": 3.18,
+    "rev_growth": 8.8,
+    "roe": 18.7
+   },
+   "sector": "Financial Services"
+  },
+  "AMAT": {
+   "as_of": "2026-07-23",
+   "metrics": {
+    "current_ratio": 2.51,
+    "debt_to_equity": 0.3,
+    "div_yield": 0.38,
+    "ev_ebitda": 47.3,
+    "fcf_to_net_income": 0.36,
+    "gross_margin": 49.0,
+    "net_debt_to_ebitda": -0.1,
+    "net_margin": 29.3,
+    "op_margin": 31.9,
+    "p_fcf": 147.0,
+    "payout": 17.3,
+    "peg": 1.4,
+    "rev_growth": 11.4,
+    "roe": 39.7
+   },
+   "sector": "Technology"
+  },
+  "AMCR": {
+   "as_of": "2026-07-23",
+   "metrics": {
+    "current_ratio": 1.44,
+    "debt_to_equity": 1.44,
+    "div_yield": 6.1,
+    "ev_ebitda": 11.0,
+    "fcf_to_net_income": 0.22,
+    "gross_margin": 19.1,
+    "net_debt_to_ebitda": 4.74,
+    "net_margin": 3.1,
+    "op_margin": 8.6,
+    "p_fcf": 131.8,
+    "payout": 206.8,
+    "peg": 0.59,
+    "rev_growth": 77.4,
+    "roe": 8.7
+   },
+   "sector": "Consumer Cyclical"
+  },
+  "AMD": {
+   "as_of": "2026-07-23",
+   "metrics": {
+    "current_ratio": 2.73,
+    "debt_to_equity": 0.06,
+    "ev_ebitda": 120.1,
+    "fcf_to_net_income": 1.45,
+    "gross_margin": 53.1,
+    "net_debt_to_ebitda": -1.14,
+    "net_margin": 13.4,
+    "op_margin": 14.4,
+    "p_fcf": 122.7,
+    "payout": 0.0,
+    "peg": 1.29,
+    "rev_growth": 37.8,
+    "roe": 8.1
+   },
+   "sector": "Technology"
+  },
+  "AME": {
+   "as_of": "2026-07-23",
+   "metrics": {
+    "current_ratio": 1.14,
+    "debt_to_equity": 0.22,
+    "div_yield": 0.56,
+    "ev_ebitda": 23.3,
+    "fcf_to_net_income": 0.91,
+    "gross_margin": 36.7,
+    "net_debt_to_ebitda": 0.82,
+    "net_margin": 20.1,
+    "op_margin": 26.3,
+    "p_fcf": 39.9,
+    "payout": 19.2,
+    "peg": 3.07,
+    "rev_growth": 11.3,
+    "roe": 14.6
+   },
+   "sector": "Industrials"
+  },
+  "AMGN": {
+   "as_of": "2026-07-23",
+   "metrics": {
+    "current_ratio": 1.26,
+    "debt_to_equity": 6.24,
+    "div_yield": 2.71,
+    "ev_ebitda": 14.5,
+    "fcf_to_net_income": 0.95,
+    "gross_margin": 71.4,
+    "net_debt_to_ebitda": 2.68,
+    "net_margin": 21.0,
+    "op_margin": 33.8,
+    "p_fcf": 27.0,
+    "payout": 67.2,
+    "peg": 2.01,
+    "rev_growth": 5.8,
+    "roe": 101.3
+   },
+   "sector": "Healthcare"
+  },
+  "AMP": {
+   "as_of": "2026-07-23",
+   "metrics": {
+    "current_ratio": 2.48,
+    "debt_to_equity": 0.56,
+    "div_yield": 1.31,
+    "fcf_to_net_income": 0.86,
+    "gross_margin": 56.6,
+    "net_margin": 20.2,
+    "op_margin": 37.2,
+    "p_fcf": 13.9,
+    "payout": 16.0,
+    "peg": 1.74,
+    "rev_growth": 9.0,
+    "roe": 66.9
+   },
+   "sector": "Financial Services"
+  },
+  "AMT": {
+   "as_of": "2026-07-23",
+   "metrics": {
+    "current_ratio": 0.3,
+    "debt_to_equity": 4.45,
+    "div_yield": 4.24,
+    "ev_ebitda": 18.1,
+    "fcf_to_net_income": 1.59,
+    "gross_margin": 74.0,
+    "net_debt_to_ebitda": 6.23,
+    "net_margin": 26.8,
+    "op_margin": 45.9,
+    "p_fcf": 16.6,
+    "payout": 82.3,
+    "peg": 1.74,
+    "rev_growth": 6.8,
+    "roe": 30.0
+   },
+   "sector": "Real Estate"
+  },
+  "AMZN": {
+   "as_of": "2026-07-23",
+   "metrics": {
+    "current_ratio": 1.18,
+    "debt_to_equity": 0.53,
+    "ev_ebitda": 16.7,
+    "fcf_to_net_income": 0.11,
+    "gross_margin": 50.6,
+    "net_debt_to_ebitda": 0.59,
+    "net_margin": 12.2,
+    "op_margin": 13.1,
+    "p_fcf": 256.3,
+    "payout": 0.0,
+    "peg": 1.31,
+    "rev_growth": 16.6,
+    "roe": 24.3
+   },
+   "sector": "Consumer Cyclical"
+  },
+  "ANET": {
+   "as_of": "2026-07-23",
+   "metrics": {
+    "current_ratio": 2.83,
+    "ev_ebitda": 49.1,
+    "fcf_to_net_income": 1.17,
+    "gross_margin": 63.5,
+    "net_debt_to_ebitda": -2.92,
+    "net_margin": 38.3,
+    "op_margin": 42.7,
+    "p_fcf": 51.0,
+    "payout": 0.0,
+    "peg": 2.23,
+    "rev_growth": 35.1,
+    "roe": 31.5
+   },
+   "sector": "Technology"
+  },
+  "BKR": {
+   "as_of": "2026-07-23",
+   "metrics": {
+    "current_ratio": 2.13,
+    "debt_to_equity": 0.83,
+    "div_yield": 1.64,
+    "ev_ebitda": 11.7,
+    "fcf_to_net_income": 1.01,
+    "gross_margin": 23.6,
+    "net_debt_to_ebitda": 0.05,
+    "net_margin": 11.2,
+    "op_margin": 12.3,
+    "p_fcf": 17.7,
+    "payout": 29.4,
+    "peg": 2.27,
+    "rev_growth": 2.5,
+    "roe": 17.2
+   },
+   "sector": "Energy"
+  },
+  "BRK-B": {
+   "as_of": "2026-07-23",
+   "metrics": {
+    "current_ratio": 2.88,
+    "debt_to_equity": 0.18,
+    "fcf_to_net_income": 0.84,
+    "gross_margin": 27.8,
+    "net_debt_to_ebitda": -2.28,
+    "net_margin": 19.3,
+    "op_margin": 14.4,
+    "p_fcf": 17.3,
+    "payout": 0.0,
+    "peg": 10.06,
+    "rev_growth": 4.4,
+    "roe": 10.5
+   },
+   "sector": "Financial Services"
+  },
+  "BX": {
+   "as_of": "2026-07-23",
+   "metrics": {
+    "current_ratio": 0.9,
+    "debt_to_equity": 0.72,
+    "div_yield": 3.99,
+    "gross_margin": 100.0,
+    "net_margin": 21.2,
+    "op_margin": 38.0,
+    "payout": 121.5,
+    "peg": 1.45,
+    "rev_growth": 5.7,
+    "roe": 29.5
+   },
+   "sector": "Financial Services"
+  },
+  "CMS": {
+   "as_of": "2026-07-23",
+   "metrics": {
+    "current_ratio": 0.84,
+    "debt_to_equity": 1.9,
+    "div_yield": 3.07,
+    "ev_ebitda": 14.0,
+    "fcf_to_net_income": -1.97,
+    "gross_margin": 40.5,
+    "net_debt_to_ebitda": 6.2,
+    "net_margin": 12.5,
+    "op_margin": 19.8,
+    "payout": 60.8,
+    "peg": 2.86,
+    "rev_growth": 11.6,
+    "roe": 10.4
+   },
+   "sector": "Utilities"
+  },
+  "DECK": {
+   "as_of": "2026-07-23",
+   "metrics": {
+    "current_ratio": 3.54,
+    "debt_to_equity": 0.15,
+    "ev_ebitda": 9.5,
+    "fcf_to_net_income": 0.84,
+    "gross_margin": 57.7,
+    "net_debt_to_ebitda": -1.14,
+    "net_margin": 18.7,
+    "op_margin": 14.0,
+    "p_fcf": 15.6,
+    "payout": 0.0,
+    "peg": 1.27,
+    "rev_growth": 9.6,
+    "roe": 40.9
+   },
+   "sector": "Consumer Cyclical"
+  },
+  "DOV": {
+   "as_of": "2026-07-23",
+   "metrics": {
+    "current_ratio": 1.86,
+    "debt_to_equity": 0.44,
+    "div_yield": 1.05,
+    "ev_ebitda": 16.4,
+    "fcf_to_net_income": 0.77,
+    "gross_margin": 40.0,
+    "net_debt_to_ebitda": 0.88,
+    "net_margin": 13.3,
+    "op_margin": 16.4,
+    "p_fcf": 31.7,
+    "payout": 25.9,
+    "peg": 1.79,
+    "rev_growth": 10.1,
+    "roe": 15.0
+   },
+   "sector": "Industrials"
+  },
+  "EXR": {
+   "as_of": "2026-07-23",
+   "metrics": {
+    "current_ratio": 0.69,
+    "debt_to_equity": 0.98,
+    "div_yield": 4.46,
+    "ev_ebitda": 19.9,
+    "fcf_to_net_income": 1.42,
+    "gross_margin": 74.8,
+    "net_debt_to_ebitda": 6.04,
+    "net_margin": 27.1,
+    "op_margin": 44.0,
+    "p_fcf": 23.9,
+    "payout": 145.6,
+    "peg": 6.26,
+    "rev_growth": 3.8,
+    "roe": 6.8
+   },
+   "sector": "Real Estate"
+  },
+  "G1A.DE": {
+   "as_of": "2026-07-23",
+   "metrics": {
+    "current_ratio": 1.11,
+    "debt_to_equity": 0.1,
+    "div_yield": 2.05,
+    "ev_ebitda": 14.2,
+    "fcf_to_net_income": 0.66,
+    "gross_margin": 37.6,
+    "net_debt_to_ebitda": -0.23,
+    "net_margin": 7.6,
+    "op_margin": 10.7,
+    "payout": 44.9,
+    "peg": 1.24,
+    "rev_growth": 1.2,
+    "roe": 16.6
+   },
+   "sector": "Industrials"
+  },
+  "GOOG": {
+   "as_of": "2026-07-23",
+   "metrics": {
+    "current_ratio": 2.72,
+    "debt_to_equity": 0.18,
+    "div_yield": 0.28,
+    "ev_ebitda": 21.9,
+    "fcf_to_net_income": 0.1,
+    "gross_margin": 60.9,
+    "net_debt_to_ebitda": -0.75,
+    "net_margin": 54.8,
+    "op_margin": 34.0,
+    "p_fcf": 152.2,
+    "payout": 4.3,
+    "peg": 1.35,
+    "rev_growth": 24.2,
+    "roe": 48.7
+   },
+   "sector": "Communication Services"
+  },
+  "GOOGL": {
+   "as_of": "2026-07-23",
+   "metrics": {
+    "current_ratio": 2.72,
+    "debt_to_equity": 0.18,
+    "div_yield": 0.28,
+    "ev_ebitda": 21.8,
+    "fcf_to_net_income": 0.1,
+    "gross_margin": 60.9,
+    "net_debt_to_ebitda": -0.75,
+    "net_margin": 54.8,
+    "op_margin": 34.0,
+    "p_fcf": 151.9,
+    "payout": 4.3,
+    "peg": 1.35,
+    "rev_growth": 24.2,
+    "roe": 48.7
+   },
+   "sector": "Communication Services"
+  },
+  "HUBB": {
+   "as_of": "2026-07-23",
+   "metrics": {
+    "current_ratio": 1.58,
+    "debt_to_equity": 0.72,
+    "div_yield": 1.16,
+    "ev_ebitda": 18.7,
+    "fcf_to_net_income": 0.6,
+    "gross_margin": 35.7,
+    "net_debt_to_ebitda": 1.51,
+    "net_margin": 15.1,
+    "op_margin": 17.7,
+    "p_fcf": 47.7,
+    "payout": 32.4,
+    "peg": 2.28,
+    "rev_growth": 11.1,
+    "roe": 25.8
+   },
+   "sector": "Industrials"
+  },
+  "KKR": {
+   "as_of": "2026-07-23",
+   "metrics": {
+    "current_ratio": 0.86,
+    "debt_to_equity": 0.69,
+    "div_yield": 0.78,
+    "gross_margin": 55.5,
+    "net_margin": 11.7,
+    "op_margin": 11.0,
+    "payout": 25.2,
+    "peg": 0.52,
+    "rev_growth": -6.6,
+    "roe": 7.7
+   },
+   "sector": "Financial Services"
+  },
+  "LH": {
+   "as_of": "2026-07-23",
+   "metrics": {
+    "current_ratio": 1.73,
+    "debt_to_equity": 0.83,
+    "div_yield": 0.99,
+    "ev_ebitda": 13.1,
+    "fcf_to_net_income": 1.21,
+    "gross_margin": 28.8,
+    "net_debt_to_ebitda": 2.8,
+    "net_margin": 6.7,
+    "op_margin": 10.9,
+    "payout": 25.5,
+    "peg": 1.19,
+    "rev_growth": 5.8,
+    "roe": 11.0
+   },
+   "sector": "Healthcare"
+  },
+  "LMT": {
+   "as_of": "2026-07-23",
+   "metrics": {
+    "current_ratio": 1.14,
+    "debt_to_equity": 2.76,
+    "div_yield": 2.43,
+    "ev_ebitda": 17.2,
+    "fcf_to_net_income": 0.83,
+    "gross_margin": 9.9,
+    "net_debt_to_ebitda": 2.35,
+    "net_margin": 6.4,
+    "op_margin": 11.0,
+    "p_fcf": 32.9,
+    "payout": 65.4,
+    "peg": 1.09,
+    "rev_growth": 0.3,
+    "roe": 67.6
+   },
+   "sector": "Industrials"
+  },
+  "MAA": {
+   "as_of": "2026-07-23",
+   "metrics": {
+    "current_ratio": 0.08,
+    "debt_to_equity": 1.0,
+    "div_yield": 4.61,
+    "ev_ebitda": 17.1,
+    "fcf_to_net_income": 2.36,
+    "gross_margin": 58.5,
+    "net_debt_to_ebitda": 4.52,
+    "net_margin": 17.6,
+    "op_margin": 26.6,
+    "p_fcf": 17.4,
+    "payout": 184.1,
+    "peg": 7.03,
+    "rev_growth": 0.8,
+    "roe": 6.7
+   },
+   "sector": "Real Estate"
+  },
+  "MSFT": {
+   "as_of": "2026-07-23",
+   "metrics": {
+    "current_ratio": 1.28,
+    "debt_to_equity": 0.3,
+    "div_yield": 0.95,
+    "ev_ebitda": 16.0,
+    "fcf_to_net_income": 0.3,
+    "gross_margin": 68.3,
+    "net_debt_to_ebitda": 0.26,
+    "net_margin": 39.3,
+    "op_margin": 46.3,
+    "p_fcf": 76.6,
+    "payout": 20.7,
+    "peg": 1.2,
+    "rev_growth": 18.3,
+    "roe": 34.0
+   },
+   "sector": "Technology"
+  },
+  "MTD": {
+   "as_of": "2026-07-23",
+   "metrics": {
+    "current_ratio": 1.2,
+    "ev_ebitda": 23.1,
+    "fcf_to_net_income": 0.7,
+    "gross_margin": 59.2,
+    "net_debt_to_ebitda": 1.78,
+    "net_margin": 21.4,
+    "op_margin": 23.3,
+    "p_fcf": 43.8,
+    "payout": 0.0,
+    "peg": 2.7,
+    "rev_growth": 7.2
+   },
+   "sector": "Healthcare"
+  },
+  "NFLX": {
+   "as_of": "2026-07-23",
+   "metrics": {
+    "current_ratio": 1.14,
+    "debt_to_equity": 0.55,
+    "ev_ebitda": 19.9,
+    "fcf_to_net_income": 1.86,
+    "gross_margin": 49.1,
+    "net_debt_to_ebitda": 0.51,
+    "net_margin": 28.2,
+    "op_margin": 33.4,
+    "p_fcf": 11.3,
+    "payout": 0.0,
+    "peg": 1.53,
+    "rev_growth": 13.4,
+    "roe": 49.5
+   },
+   "sector": "Communication Services"
+  },
+  "PG": {
+   "as_of": "2026-07-23",
+   "metrics": {
+    "current_ratio": 0.73,
+    "debt_to_equity": 0.68,
+    "div_yield": 2.96,
+    "ev_ebitda": 14.9,
+    "fcf_to_net_income": 0.78,
+    "gross_margin": 51.0,
+    "net_debt_to_ebitda": 0.99,
+    "net_margin": 19.2,
+    "op_margin": 23.0,
+    "payout": 61.8,
+    "peg": 4.19,
+    "rev_growth": 7.4,
+    "roe": 31.1
+   },
+   "sector": "Consumer Defensive"
+  },
+  "PYPL": {
+   "as_of": "2026-07-23",
+   "metrics": {
+    "current_ratio": 1.26,
+    "debt_to_equity": 0.58,
+    "div_yield": 1.0,
+    "ev_ebitda": 7.8,
+    "fcf_to_net_income": 0.81,
+    "gross_margin": 40.9,
+    "net_debt_to_ebitda": 0.35,
+    "net_margin": 15.0,
+    "op_margin": 18.0,
+    "p_fcf": 12.1,
+    "payout": 5.2,
+    "peg": 1.0,
+    "rev_growth": 7.2,
+    "roe": 25.1
+   },
+   "sector": "Financial Services"
+  },
+  "SYK": {
+   "as_of": "2026-07-23",
+   "metrics": {
+    "current_ratio": 2.11,
+    "debt_to_equity": 0.66,
+    "div_yield": 1.1,
+    "ev_ebitda": 18.9,
+    "fcf_to_net_income": 1.31,
+    "gross_margin": 64.7,
+    "net_debt_to_ebitda": 1.77,
+    "net_margin": 13.2,
+    "op_margin": 17.8,
+    "p_fcf": 28.0,
+    "payout": 39.8,
+    "peg": 1.47,
+    "rev_growth": 2.6,
+    "roe": 15.2
+   },
+   "sector": "Healthcare"
+  },
+  "T": {
+   "as_of": "2026-07-23",
+   "metrics": {
+    "current_ratio": 0.97,
+    "debt_to_equity": 1.27,
+    "div_yield": 4.83,
+    "ev_ebitda": 7.2,
+    "fcf_to_net_income": 0.56,
+    "gross_margin": 59.7,
+    "net_debt_to_ebitda": 3.23,
+    "net_margin": 16.9,
+    "op_margin": 23.2,
+    "p_fcf": 13.3,
+    "payout": 36.6,
+    "peg": 1.61,
+    "rev_growth": 2.3,
+    "roe": 18.3
+   },
+   "sector": "Communication Services"
+  },
+  "TJX": {
+   "as_of": "2026-07-23",
+   "metrics": {
+    "current_ratio": 1.14,
+    "debt_to_equity": 1.36,
+    "div_yield": 1.25,
+    "ev_ebitda": 20.2,
+    "fcf_to_net_income": 0.75,
+    "gross_margin": 31.4,
+    "net_debt_to_ebitda": 0.97,
+    "net_margin": 9.4,
+    "op_margin": 11.8,
+    "p_fcf": 39.3,
+    "payout": 33.1,
+    "peg": 3.32,
+    "rev_growth": 9.2,
+    "roe": 61.3
+   },
+   "sector": "Consumer Cyclical"
+  },
+  "TMO": {
+   "as_of": "2026-07-23",
+   "metrics": {
+    "current_ratio": 1.53,
+    "debt_to_equity": 0.83,
+    "div_yield": 0.33,
+    "ev_ebitda": 20.9,
+    "fcf_to_net_income": 0.81,
+    "gross_margin": 40.9,
+    "net_debt_to_ebitda": 3.53,
+    "net_margin": 15.2,
+    "op_margin": 17.9,
+    "p_fcf": 38.5,
+    "payout": 9.7,
+    "peg": 1.74,
+    "rev_growth": 6.2,
+    "roe": 13.5
+   },
+   "sector": "Healthcare"
+  },
+  "TSN": {
+   "as_of": "2026-07-23",
+   "metrics": {
+    "current_ratio": 1.83,
+    "debt_to_equity": 0.44,
+    "div_yield": 3.59,
+    "ev_ebitda": 10.2,
+    "fcf_to_net_income": 2.27,
+    "gross_margin": 6.4,
+    "net_debt_to_ebitda": 2.8,
+    "net_margin": 0.8,
+    "op_margin": 3.6,
+    "payout": 159.1,
+    "peg": 1.04,
+    "rev_growth": 4.4,
+    "roe": 2.6
+   },
+   "sector": "Consumer Defensive"
+  },
+  "WYNN": {
+   "as_of": "2026-07-23",
+   "metrics": {
+    "current_ratio": 1.24,
+    "div_yield": 1.03,
+    "ev_ebitda": 11.0,
+    "fcf_to_net_income": 0.95,
+    "gross_margin": 68.1,
+    "net_debt_to_ebitda": 5.89,
+    "net_margin": 5.1,
+    "op_margin": 15.3,
+    "p_fcf": 28.1,
+    "payout": 28.6,
+    "peg": 1.59,
+    "rev_growth": 9.2
+   },
+   "sector": "Consumer Cyclical"
+  },
+  "ZAL.DE": {
+   "as_of": "2026-07-23",
+   "metrics": {
+    "current_ratio": 1.09,
+    "debt_to_equity": 0.52,
+    "ev_ebitda": 13.4,
+    "fcf_to_net_income": 10.02,
+    "gross_margin": 39.8,
+    "net_debt_to_ebitda": 0.28,
+    "net_margin": 0.9,
+    "op_margin": -2.7,
+    "payout": 0.0,
+    "peg": 0.81,
+    "rev_growth": 23.8,
+    "roe": 4.3
+   },
+   "sector": "Consumer Cyclical"
+  }
+ }
+}
