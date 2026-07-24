@@ -213,7 +213,15 @@ good) and was then REFUTED by its two-window event study
 sandboxes): re-fires performed the same or slightly BETTER than first crosses
 in both windows (recent: −0.35pp vs −0.53pp; 2016-21: +0.27pp vs +0.08pp).
 ↩ stays a display tag. Two gates in, the lab's track record is 2 refutations —
-do not promote a gate on live data alone.
+do not promote a gate on live data alone. Third finding (Jul 2026, the
+multi-model cross-filter study `--models-study`, 6 entry models, both
+windows): **volume confirmation FLIPPED** (helped recent ~2y, hurt 2016-21)
+— refuted; SMA200-rising was a small consistent positive (~+0.2pp both
+windows) but far below the promotion bar; RSI/regime did nothing;
+volume+slope shone recently (52% vs 45% baseline) but didn't hold earlier.
+NOTHING graduated. Context worth keeping: the recent-window BASELINE for
+daily crosses beats SPY only 45% — the live track record's ~45% matches the
+era, not a broken scanner; no tested filter reached 53% in either window.
 
 ## Workflow / operations
 
@@ -260,8 +268,10 @@ do not promote a gate on live data alone.
 
 ## Candidate next steps (not started)
 
-- Backtest Fib-support proximity and volume-confirmation edges → fold winners
-  into the verdict as ±1 factors (two-window validation, like sector).
+- Backtest Fib-support proximity → fold a winner into the verdict as a ±1
+  factor (two-window validation, like sector). Volume confirmation is DONE
+  and REFUTED (window flip — see the verifier-lab findings); it stays a
+  display-only quality-score input, never a verdict factor.
 - Consider paid data (EODHD ~$25/mo covers BIST+global fundamentals) ONLY if
   Yahoo gaps demonstrably hurt; Polygon is US-only — irrelevant for BIST.
 - European sector rotation (STOXX 600 sectors) if wanted; SPDR set is US-only.
