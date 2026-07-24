@@ -222,6 +222,14 @@ volume+slope shone recently (52% vs 45% baseline) but didn't hold earlier.
 NOTHING graduated. Context worth keeping: the recent-window BASELINE for
 daily crosses beats SPY only 45% — the live track record's ~45% matches the
 era, not a broken scanner; no tested filter reached 53% in either window.
+Fourth finding (Jul 2026, Fib models added to `--models-study`): **Fib-support
+proximity REFUTED** — crosses landing 0-3% above a daily Fib level did WORSE
+than baseline recently (−0.74pp vs −0.47pp) and no better earlier (+0.01pp vs
++0.16pp); the "no resistance <2% overhead" cohort matched baseline in both
+windows (zero signal), so the live resistance gate's decent-looking exchange
+rate is noise — do not promote it. With this, the docs' entire candidate
+backlog is resolved with evidence; the Fib ladder stays display-only context
+and the quality score's Fib +0.5 credit now has evidence AGAINST it.
 
 ## Workflow / operations
 
@@ -268,10 +276,11 @@ era, not a broken scanner; no tested filter reached 53% in either window.
 
 ## Candidate next steps (not started)
 
-- Backtest Fib-support proximity → fold a winner into the verdict as a ±1
-  factor (two-window validation, like sector). Volume confirmation is DONE
-  and REFUTED (window flip — see the verifier-lab findings); it stays a
-  display-only quality-score input, never a verdict factor.
+- ~~Backtest Fib-support proximity~~ DONE and REFUTED (worse than baseline
+  recent, flat earlier — see verifier-lab finding #4). Volume confirmation
+  likewise DONE and REFUTED (window flip). The original candidate backlog is
+  fully resolved; new verdict factors need a NEW hypothesis plus the same
+  two-window bar.
 - Consider paid data (EODHD ~$25/mo covers BIST+global fundamentals) ONLY if
   Yahoo gaps demonstrably hurt; Polygon is US-only — irrelevant for BIST.
 - European sector rotation (STOXX 600 sectors) if wanted; SPDR set is US-only.
