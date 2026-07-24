@@ -201,7 +201,8 @@ def refire_study(sample: int = 150, forward: int = 20) -> dict:
 
 
 def cross_model_flags(df, sma_n: int = 200, vol_n: int = 20,
-                      min_bars: int | None = None) -> list[tuple[int, dict]]:
+                      min_bars: int | None = None,
+                      fib_window: int = 252) -> list[tuple[int, dict]]:
     """For every SMA bull cross: entry-time model flags, each computable from
     bars available AT the cross (no lookahead). Pure/testable.
 
@@ -210,12 +211,20 @@ def cross_model_flags(df, sma_n: int = 200, vol_n: int = 20,
       slope_up     the SMA itself is rising vs ~1 month ago (trend quality:
                    crossing a rising line vs bottom-fishing a falling one)
       rsi_calm     RSI14 < 70 at entry (not already overbought)
+      fib_support  nearest daily Fib level sits 0-3% BELOW price — the exact
+                   production math (levels.py 252d swing + fib_retracement)
+                   and the exact credit window the Buys quality score uses
+      fib_clear    nearest level is NOT >2% overhead (the live "resistance"
+                   gate, here historically testable)
       not_refire   first cross, not a <=14d re-fire (refuted alone; kept for
                    completeness inside combos)
+
+    When high/low data is missing, fib_support defaults False (no credit) and
+    fib_clear True (no penalty) — unknowable never counts either way.
     """
     import math
 
-    from indicators import rsi as rsi_fn, sma
+    from indicators import fib_retracement, rsi as rsi_fn, sma
 
     c, v = df["close"], df["volume"]
     s = sma(c, sma_n)
@@ -230,10 +239,25 @@ def cross_model_flags(df, sma_n: int = 200, vol_n: int = 20,
         s_now = float(s.iloc[i - 1]) if i >= 1 else float("nan")
         s_then = float(s.iloc[i - 1 - slope_lag]) if i >= 1 + slope_lag else float("nan")
         slope_known = not (math.isnan(s_now) or math.isnan(s_then))
+
+        # daily Fib from the trailing window ENDING at the cross bar — same
+        # anchors as production levels.py, shifted to the historical bar
+        fib_support, fib_clear = False, True
+        if {"high", "low"} <= set(df.columns) and i + 1 >= fib_window:
+            w = df.iloc[i + 1 - fib_window: i + 1]
+            fib = fib_retracement(float(w["high"].max()), float(w["low"].min()),
+                                  float(c.iloc[i]))
+            if fib is not None:
+                d = fib["nearest"]["dist_pct"]
+                fib_support = bool(0 <= d <= 3)   # the quality score's credit band
+                fib_clear = bool(d >= -2)         # live resistance gate threshold
+
         flags = {
             "vol_confirm": bool(va > 0 and float(v.iloc[i]) >= 1.25 * va),
             "slope_up": bool(slope_known and s_now > s_then),
             "rsi_calm": bool(rv is None or rv < 70),
+            "fib_support": fib_support,
+            "fib_clear": fib_clear,
             "not_refire": not refire,
         }
         out.append((i, flags))
@@ -244,6 +268,8 @@ MODEL_LABELS = {
     "vol_confirm": "Volume confirms (>=1.25x 20d avg)",
     "slope_up": "SMA200 rising (trend quality)",
     "rsi_calm": "RSI < 70 at entry",
+    "fib_support": "Fib support 0-3% below (quality-score band)",
+    "fib_clear": "No Fib resistance <2% overhead (live gate)",
     "regime_up": "Market regime (SPY > its SMA200)",
     "slope_and_regime": "Rising SMA200 AND SPY regime up",
     "vol_and_slope": "Volume confirms AND SMA200 rising",
@@ -254,7 +280,7 @@ def models_study(sample: int = 150, forward: int = 20) -> dict:
     """TWO-WINDOW multi-model event study: does filtering SMA200 bull crosses
     by each model raise forward excess vs taking every cross? Windows: recent
     (~2y) and 2016-21. Only a model that helps in BOTH windows may graduate
-    (and with 6 models under test, demand a clear margin, not a squeak —
+    (and with 8 models under test, demand a clear margin, not a squeak —
     multiple comparisons make one lucky pass likely)."""
     from fetcher import fetch_us, iter_us_chunks
     from indicators import sma
@@ -409,7 +435,7 @@ def render_markdown(rep: dict, study: dict | None, refire: dict | None = None,
         L.append(f"## Two-window multi-model study — cross filters ({models['sample_tickers']} US "
                  f"tickers, forward {models['forward_days']} trading days vs SPY)\n")
         L.append("Does filtering SMA200 bull crosses by each model beat taking every cross?")
-        L.append("With 6 models under test, one lucky pass is expected — promotion needs BOTH")
+        L.append("With 8 models under test, one lucky pass is expected — promotion needs BOTH")
         L.append("windows agreeing with a clear margin.\n")
         L.append("| Window | Model | Kept n | Kept avg | Kept beat | Dropped n | Dropped avg | Baseline avg |")
         L.append("|---|---|---|---|---|---|---|---|")
