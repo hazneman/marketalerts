@@ -122,10 +122,11 @@ Pipeline per daily run (`scan.py`):
   **collapsed ranked list** sorted by
   `qualityScore()` (BuysPage.tsx): display-only confluence score — base 3;
   fundamentals strong +2/neutral +1; sector leading +1.5/improving +0.5/
-  weakening −0.25/lagging −0.5 (US-only → non-US max 8.5/10); volume ≥2× +1.5/
+  weakening −0.25/lagging −0.5 (US-only → non-US max 8/9.5); volume ≥2× +1.5/
   ≥1.25× +1/≥1× +0.5; analyst kicker strong_buy +0.5/buy +0.25 (rating already
-  counts analyst factors — don't double-count); 200wk rule +1/golden +0.5; Fib
-  support +0.5. Grades: Strong+ ≥7.5 / Strong ≥6 / Good ≥5 / Fair. Expand a row
+  counts analyst factors — don't double-count); 200wk rule +1/golden +0.5. Fib
+  proximity earns NO points (refuted — verifier-lab finding #4; ladders stay
+  visual context). Grades: Strong+ ≥7.5 / Strong ≥6 / Good ≥5 / Fair. Expand a row
   for fundamentals table, analyst view (consensus, target-range bar, recent
   rating changes), sector row, Fib ladders, volume. "+ portfolio" quick-add.
 - **Sectors** — rotation leaderboard + returns heatmap (SectorsPage); each row

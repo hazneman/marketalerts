@@ -303,12 +303,13 @@ export function qualityScore(a: AlertItem): number {
   else if (consensus === 'buy') s += 0.25
   if (a.rule === 'PRICE_SMA200W_BULL') s += 1 // secular cross: rarest, highest-quality signal
   else if (a.rule === 'GOLDEN_CROSS') s += 0.5
-  const fibDist = a.fib?.daily?.nearest.dist_pct
-  if (fibDist !== undefined && fibDist >= 0 && fibDist <= 3) s += 0.5 // sitting on support
+  // NO Fib-support credit: the two-window study REFUTED it (fib-support
+  // crosses did worse than baseline recently — verifier-lab finding #4);
+  // the Fib ladder stays visual context only
   return Math.max(0, s)
 }
 
-// thresholds scaled to the achievable max of 10 (non-US names top out at 8.5
+// thresholds scaled to the achievable max of 9.5 (non-US names top out at 8
 // since sector rotation is US-only — evidence-based, noted in the footer)
 const GRADES: { min: number; label: string; tone: Tone }[] = [
   { min: 7.5, label: 'Strong+', tone: 'up' },
@@ -325,7 +326,7 @@ function QualityBadge({ score }: { score: number }) {
   const g = gradeOf(score)
   return (
     <span
-      title={`Quality score ${score.toFixed(1)} — confluence across fundamentals, sector, volume, analysts, signal rarity, Fib support`}
+      title={`Quality score ${score.toFixed(1)} — confluence across fundamentals, sector, volume, analysts, signal rarity`}
       className={`inline-flex items-center gap-1.5 rounded px-2.5 py-0.5 text-xs font-semibold ${badgeRing[g.tone]}`}
     >
       {g.label}
@@ -750,8 +751,9 @@ export default function BuysPage() {
         weakening −0.25 / lagging −0.5; US-only, so non-US names top out lower),
         volume (≥2× avg +1.5 / ≥1.25× +1 / ≥1× +0.5), a small analyst kicker
         (strong buy +0.5 / buy +0.25 — the fundamentals rating already counts analyst
-        factors), signal rarity (200-week cross +1 / golden cross +0.5), and price
-        sitting on Fib support (+0.5). Strong+ ≥7.5 · Strong ≥6 · Good ≥5 · Fair
+        factors), and signal rarity (200-week cross +1 / golden cross +0.5). Fib
+        proximity earns no points — a two-window backtest found no edge in it, so the
+        Fib ladders below are context only. Strong+ ≥7.5 · Strong ≥6 · Good ≥5 · Fair
         below. The <span className="text-up">NEW</span> / <span className="text-ink-2">Nd
         old</span> chip shows when each signal actually crossed relative to its market's
         latest bar — daily crosses read NEW, while a 200-week cross carries the prior
