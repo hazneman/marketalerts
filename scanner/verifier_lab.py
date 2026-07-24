@@ -200,6 +200,123 @@ def refire_study(sample: int = 150, forward: int = 20) -> dict:
                         for w, cohorts in win.items()}}
 
 
+def cross_model_flags(df, sma_n: int = 200, vol_n: int = 20,
+                      min_bars: int | None = None) -> list[tuple[int, dict]]:
+    """For every SMA bull cross: entry-time model flags, each computable from
+    bars available AT the cross (no lookahead). Pure/testable.
+
+    Models (technical, cheap, principled — not mined):
+      vol_confirm  cross-day volume >= 1.25x its 20d average (participation)
+      slope_up     the SMA itself is rising vs ~1 month ago (trend quality:
+                   crossing a rising line vs bottom-fishing a falling one)
+      rsi_calm     RSI14 < 70 at entry (not already overbought)
+      not_refire   first cross, not a <=14d re-fire (refuted alone; kept for
+                   completeness inside combos)
+    """
+    import math
+
+    from indicators import rsi as rsi_fn, sma
+
+    c, v = df["close"], df["volume"]
+    s = sma(c, sma_n)
+    r = rsi_fn(c)
+    slope_lag = 21
+    out = []
+    for i, refire in cross_events(c, sma_n=sma_n, min_bars=min_bars):
+        va = float(v.iloc[max(0, i - vol_n):i].mean()) if i > 0 else 0.0
+        rv = float(r.iloc[i]) if not math.isnan(float(r.iloc[i])) else None
+        # slope of the line BEING crossed — anchored at i-1 so today's jump
+        # (which is what triggers the cross) can't lift its own reference line
+        s_now = float(s.iloc[i - 1]) if i >= 1 else float("nan")
+        s_then = float(s.iloc[i - 1 - slope_lag]) if i >= 1 + slope_lag else float("nan")
+        slope_known = not (math.isnan(s_now) or math.isnan(s_then))
+        flags = {
+            "vol_confirm": bool(va > 0 and float(v.iloc[i]) >= 1.25 * va),
+            "slope_up": bool(slope_known and s_now > s_then),
+            "rsi_calm": bool(rv is None or rv < 70),
+            "not_refire": not refire,
+        }
+        out.append((i, flags))
+    return out
+
+
+MODEL_LABELS = {
+    "vol_confirm": "Volume confirms (>=1.25x 20d avg)",
+    "slope_up": "SMA200 rising (trend quality)",
+    "rsi_calm": "RSI < 70 at entry",
+    "regime_up": "Market regime (SPY > its SMA200)",
+    "slope_and_regime": "Rising SMA200 AND SPY regime up",
+    "vol_and_slope": "Volume confirms AND SMA200 rising",
+}
+
+
+def models_study(sample: int = 150, forward: int = 20) -> dict:
+    """TWO-WINDOW multi-model event study: does filtering SMA200 bull crosses
+    by each model raise forward excess vs taking every cross? Windows: recent
+    (~2y) and 2016-21. Only a model that helps in BOTH windows may graduate
+    (and with 6 models under test, demand a clear margin, not a squeak —
+    multiple comparisons make one lucky pass likely)."""
+    from fetcher import fetch_us, iter_us_chunks
+    from indicators import sma
+
+    universe = json.loads((SCANNER_DIR / "universe.json").read_text())["markets"]["us"][:sample]
+    spy = fetch_us("SPY", period="max")
+    spyc = spy["close"]
+    spy_sma = sma(spyc, 200)
+    spy_by_date = {ix.date(): i for i, ix in enumerate(spy.index)}
+
+    today = dt.date.today()
+    recent_lo = today - dt.timedelta(days=365 * 2)
+    early_lo, early_hi = dt.date(2016, 1, 1), dt.date(2021, 12, 31)
+
+    def fwd(series, i):
+        if i + forward >= len(series):
+            return None
+        return (float(series.iloc[i + forward]) / float(series.iloc[i]) - 1) * 100
+
+    # per window: baseline list + per-model {kept: [], dropped: []}
+    win: dict[str, dict] = {
+        w: {"baseline": [], "models": {m: {"kept": [], "dropped": []} for m in MODEL_LABELS}}
+        for w in ("recent", "earlier")
+    }
+    for chunk in iter_us_chunks(universe, period="max"):
+        for sym, df in chunk.items():
+            if df.empty or len(df) < 260 or "volume" not in df:
+                continue
+            c = df["close"]
+            for i, flags in cross_model_flags(df):
+                d = df.index[i].date()
+                w = ("recent" if d >= recent_lo
+                     else "earlier" if early_lo <= d <= early_hi else None)
+                if w is None:
+                    continue
+                si = spy_by_date.get(d)
+                if si is None:
+                    continue
+                sf, ff = fwd(spyc, si), fwd(c, i)
+                if sf is None or ff is None:
+                    continue
+                excess = ff - sf
+                regime = (not (spy_sma.iloc[si] != spy_sma.iloc[si])  # not NaN
+                          and float(spyc.iloc[si]) > float(spy_sma.iloc[si]))
+                verdicts = {
+                    **flags,
+                    "regime_up": bool(regime),
+                    "slope_and_regime": bool(flags["slope_up"] and regime),
+                    "vol_and_slope": bool(flags["vol_confirm"] and flags["slope_up"]),
+                }
+                win[w]["baseline"].append(excess)
+                for m in MODEL_LABELS:
+                    win[w]["models"][m]["kept" if verdicts[m] else "dropped"].append(excess)
+
+    return {"sample_tickers": len(universe), "forward_days": forward,
+            "windows": {w: {"baseline": _cohort(d["baseline"]),
+                            "models": {m: {"kept": _cohort(v["kept"]),
+                                           "dropped": _cohort(v["dropped"])}
+                                       for m, v in d["models"].items()}}
+                        for w, d in win.items()}}
+
+
 def extension_study(sample: int = 150, forward: int = 20) -> dict:
     """Historical event study: every SMA200 bull cross in a universe sample over
     ~2y, split by extension at the cross close; forward return vs SPY. This is
@@ -244,7 +361,8 @@ def extension_study(sample: int = 150, forward: int = 20) -> dict:
             "extended": s(ext_ev), "normal": s(base_ev)}
 
 
-def render_markdown(rep: dict, study: dict | None, refire: dict | None = None) -> str:
+def render_markdown(rep: dict, study: dict | None, refire: dict | None = None,
+                    models: dict | None = None) -> str:
     L = []
     L.append("# VERIFIERS — candidate gate lab\n")
     L.append("Counterfactual analysis of candidate BUY filters ('verifiers') against the live")
@@ -287,6 +405,22 @@ def render_markdown(rep: dict, study: dict | None, refire: dict | None = None) -
                 L.append(f"| {w} | {label} | {c['n']} | {c['avg_excess']}pp | "
                          f"{c['median_excess']}pp | {c['hit_rate']}% |")
         L.append("")
+    if models:
+        L.append(f"## Two-window multi-model study — cross filters ({models['sample_tickers']} US "
+                 f"tickers, forward {models['forward_days']} trading days vs SPY)\n")
+        L.append("Does filtering SMA200 bull crosses by each model beat taking every cross?")
+        L.append("With 6 models under test, one lucky pass is expected — promotion needs BOTH")
+        L.append("windows agreeing with a clear margin.\n")
+        L.append("| Window | Model | Kept n | Kept avg | Kept beat | Dropped n | Dropped avg | Baseline avg |")
+        L.append("|---|---|---|---|---|---|---|---|")
+        for w in ("recent", "earlier"):
+            base = models["windows"][w]["baseline"]
+            for m, label in MODEL_LABELS.items():
+                k = models["windows"][w]["models"][m]["kept"]
+                x = models["windows"][w]["models"][m]["dropped"]
+                L.append(f"| {w} | {label} | {k['n']} | {k['avg_excess']}pp | {k['hit_rate']}% | "
+                         f"{x['n']} | {x['avg_excess']}pp | {base['avg_excess']}pp |")
+        L.append("")
     L.append("## Caveats\n")
     L.append("- Live sample is tiny and young; patterns have already flipped week-to-week.")
     L.append("- Returns are split- but not dividend-adjusted; entries assume alert-day close.")
@@ -299,6 +433,8 @@ def main(argv=None):
     p.add_argument("--study", action="store_true", help="run the 2y extension event study")
     p.add_argument("--refire-study", action="store_true",
                    help="run the TWO-WINDOW re-fire event study (needs Yahoo; ~2-4 min)")
+    p.add_argument("--models-study", action="store_true",
+                   help="run the TWO-WINDOW multi-model cross-filter study (needs Yahoo; ~2-4 min)")
     p.add_argument("--write", action="store_true", help="refresh docs/VERIFIERS.md")
     args = p.parse_args(argv)
 
@@ -326,8 +462,20 @@ def main(argv=None):
             print(f"{w:>8}: refire n={r['n']} avg {r['avg_excess']}pp beat {r['hit_rate']}% | "
                   f"first n={f['n']} avg {f['avg_excess']}pp beat {f['hit_rate']}%")
 
+    models = None
+    if args.models_study:
+        print("\nrunning two-window multi-model study (~2-4 min)…")
+        models = models_study()
+        for w in ("recent", "earlier"):
+            base = models["windows"][w]["baseline"]
+            print(f"{w}: baseline n={base['n']} avg {base['avg_excess']}pp beat {base['hit_rate']}%")
+            for m, label in MODEL_LABELS.items():
+                k = models["windows"][w]["models"][m]["kept"]
+                print(f"  {label:<38} kept n={k['n']:>5} avg {str(k['avg_excess']):>6}pp "
+                      f"beat {str(k['hit_rate']):>3}%")
+
     if args.write:
-        DOC_PATH.write_text(render_markdown(rep, study, refire))
+        DOC_PATH.write_text(render_markdown(rep, study, refire, models))
         print(f"\nwrote {DOC_PATH.relative_to(ROOT)}")
     return 0
 
