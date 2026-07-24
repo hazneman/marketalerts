@@ -11,10 +11,12 @@ def series(values, start="2024-01-01"):
     return pd.Series([float(v) for v in values], index=idx)
 
 
-def frame(closes, volumes=None, start="2024-01-01"):
+def frame(closes, volumes=None, highs=None, lows=None, start="2024-01-01"):
     c = series(closes, start)
     v = series(volumes if volumes is not None else [100] * len(closes), start)
-    return pd.DataFrame({"close": c, "volume": v})
+    h = series(highs if highs is not None else closes, start)
+    l = series(lows if lows is not None else closes, start)
+    return pd.DataFrame({"close": c, "volume": v, "high": h, "low": l})
 
 
 class TestCrossEvents:
@@ -77,6 +79,42 @@ class TestCrossModelFlags:
         events = cross_model_flags(df, sma_n=3, vol_n=5, min_bars=25)
         assert len(events) == 2
         for _, flags in events:
-            assert set(flags) == {"vol_confirm", "slope_up", "rsi_calm", "not_refire"}
+            assert set(flags) == {"vol_confirm", "slope_up", "rsi_calm",
+                                  "fib_support", "fib_clear", "not_refire"}
         assert events[0][1]["not_refire"] is True
         assert events[1][1]["not_refire"] is False  # quick re-cross
+
+    def _fib_cross(self, cross_close):
+        # swing high 200 / low 100 inside the fib window -> retracement levels
+        # at 176.4 / 161.8 / 150 / 138.2 / 121.4 (production math)
+        closes = [120] * 28 + [110, cross_close]
+        highs = list(closes)
+        lows = list(closes)
+        highs[-5], lows[-5] = 200, 100
+        df = frame(closes, highs=highs, lows=lows)
+        events = cross_model_flags(df, sma_n=3, vol_n=5, min_bars=25, fib_window=10)
+        assert len(events) == 1
+        return events[0][1]
+
+    def test_fib_support_just_above_level(self):
+        # close 151 sits +0.67% above the 50% level (150) -> support credit
+        flags = self._fib_cross(151)
+        assert flags["fib_support"] is True and flags["fib_clear"] is True
+
+    def test_fib_resistance_overhead(self):
+        # close 130 is -5.9% under the 61.8% level (138.2) -> resistance, no support
+        flags = self._fib_cross(130)
+        assert flags["fib_support"] is False and flags["fib_clear"] is False
+
+    def test_fib_unknowable_defaults(self):
+        # no high/low columns -> no credit, no penalty
+        df = pd.DataFrame({"close": series([50] * 30 + [200, 200]),
+                           "volume": series([100] * 32)})
+        events = cross_model_flags(df, sma_n=3, vol_n=5, min_bars=25, fib_window=10)
+        assert events[0][1]["fib_support"] is False
+        assert events[0][1]["fib_clear"] is True
+        # window longer than history -> same defaults
+        df2 = frame([50] * 30 + [200, 200])
+        events2 = cross_model_flags(df2, sma_n=3, vol_n=5, min_bars=25, fib_window=999)
+        assert events2[0][1]["fib_support"] is False
+        assert events2[0][1]["fib_clear"] is True
