@@ -80,7 +80,8 @@ class TestCrossModelFlags:
         assert len(events) == 2
         for _, flags in events:
             assert set(flags) == {"vol_confirm", "slope_up", "rsi_calm",
-                                  "fib_support", "fib_clear", "not_refire"}
+                                  "fib_support", "fib_clear", "kama_above",
+                                  "kama_rising", "not_refire"}
         assert events[0][1]["not_refire"] is True
         assert events[1][1]["not_refire"] is False  # quick re-cross
 
@@ -118,3 +119,38 @@ class TestCrossModelFlags:
         events2 = cross_model_flags(df2, sma_n=3, vol_n=5, min_bars=25, fib_window=999)
         assert events2[0][1]["fib_support"] is False
         assert events2[0][1]["fib_clear"] is True
+
+
+class TestKamaFlags:
+    def test_uptrend_cross_is_above_and_rising(self):
+        # rising base, MILD dip (a crash-dip would yank KAMA down at the i-1
+        # anchor), jump above the SMA — KAMA keeps tracking the uptrend, so at
+        # the cross it is rising (87.1 vs 83.8) and the jump close is above it
+        closes = list(range(50, 90)) + [80, 200, 200]
+        df = frame(closes)
+        events = cross_model_flags(df, sma_n=3, vol_n=5, min_bars=30,
+                                   fib_window=999, kama_er=5, kama_lag=5)
+        assert len(events) >= 1
+        flags = events[0][1]
+        assert flags["kama_above"] is True
+        assert flags["kama_rising"] is True
+
+    def test_downtrend_cross_kama_not_rising(self):
+        # falling base into the cross — KAMA has been tracking DOWN, so it is
+        # not rising at the cross even though price jumped above it
+        closes = list(range(160, 100, -2)) + [400, 400]
+        df = frame(closes)
+        events = cross_model_flags(df, sma_n=3, vol_n=5, min_bars=25,
+                                   fib_window=999, kama_er=5, kama_lag=5)
+        assert len(events) >= 1
+        assert events[0][1]["kama_rising"] is False
+
+    def test_warmup_defaults_false(self):
+        # cross before the KAMA window fills -> unknowable -> no credit
+        closes = [50] * 10 + [200, 200]
+        df = frame(closes)
+        events = cross_model_flags(df, sma_n=3, vol_n=5, min_bars=8,
+                                   fib_window=999, kama_er=50, kama_lag=5)
+        assert len(events) >= 1
+        assert events[0][1]["kama_above"] is False
+        assert events[0][1]["kama_rising"] is False

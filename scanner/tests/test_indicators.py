@@ -1,7 +1,7 @@
 import numpy as np
 import pandas as pd
 
-from indicators import macd, rsi, sma
+from indicators import kama, macd, rsi, sma
 
 
 def test_sma_equals_hand_computed_mean():
@@ -65,3 +65,35 @@ def test_macd_line_crosses_signal_on_turn():
     line, sig = macd(closes)
     assert float(line.iloc[-1]) < float(sig.iloc[-1])
     assert float(line.iloc[59]) > float(sig.iloc[59])
+
+
+def test_kama_warmup_is_nan_then_seeds_at_price():
+    close = pd.Series(np.linspace(100, 130, 40))
+    k = kama(close, er_n=10)
+    assert k.iloc[:10].isna().all()
+    assert k.iloc[10] == close.iloc[10]  # seeded at price, no zero warm-up
+
+
+def test_kama_tracks_a_clean_trend_fast():
+    # strictly directional: ER = 1 -> smoothing at the fast bound (0.444),
+    # so the line stays within a few percent of price
+    close = pd.Series(np.linspace(100, 200, 120))
+    k = kama(close, er_n=10)
+    gap_pct = abs(k.iloc[-1] / close.iloc[-1] - 1) * 100
+    assert gap_pct < 3
+
+
+def test_kama_stays_flat_in_chop():
+    # alternating noise around 100: ER ~ 0 -> smoothing at the slow bound,
+    # so KAMA barely moves while an SMA of the same span wiggles with price
+    rng = np.random.RandomState(7)
+    close = pd.Series(100 + rng.choice([-2.0, 2.0], size=200).cumsum() * 0 + rng.uniform(-2, 2, 200))
+    k = kama(close, er_n=10).dropna()
+    assert k.max() - k.min() < (close.max() - close.min()) / 2
+
+
+def test_kama_moves_less_than_price_day_to_day_in_noise():
+    rng = np.random.RandomState(3)
+    close = pd.Series(100 + rng.uniform(-3, 3, 150))
+    k = kama(close, er_n=10)
+    assert k.diff().abs().mean() < close.diff().abs().mean() / 3
