@@ -1,12 +1,14 @@
-// Cross-device portfolio sync client. Talks to the `sync` Netlify function,
-// which stores one JSON blob per private "sync code" in Netlify Blobs. The code
+// Cross-device portfolio sync client. Talks to the `sync` serverless function
+// (Netlify Blobs or Cloudflare KV, host-detected via fnUrl), which stores one
+// JSON value per private "sync code". The code
 // is a bearer secret kept in this browser's localStorage; enter it on another
 // device to pull the same portfolio. Reconciliation is last-write-wins by the
 // `updated_at` timestamp — fine for a single owner across a few devices.
+import { fnUrl } from './endpoints'
 import type { PortfolioStore } from './portfolio'
 
 const CODE_KEY = 'market-alerts-sync-code-v1'
-const ENDPOINT = '/.netlify/functions/sync'
+const ENDPOINT = fnUrl('sync')
 
 export const CODE_RE = /^[a-z0-9]{8,64}$/i
 

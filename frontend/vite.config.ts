@@ -14,8 +14,14 @@ function gitShort(): string {
   }
 }
 
-const sha = (process.env.COMMIT_REF || gitShort()).slice(0, 7)
-const context = process.env.CONTEXT || 'local'
+// Netlify exposes COMMIT_REF/CONTEXT; Cloudflare Pages exposes
+// CF_PAGES_COMMIT_SHA/CF_PAGES_BRANCH — support both so the footer stamp
+// works on either host (and locally via git).
+const sha = (process.env.COMMIT_REF || process.env.CF_PAGES_COMMIT_SHA || gitShort()).slice(0, 7)
+const context = process.env.CONTEXT
+  || (process.env.CF_PAGES_BRANCH
+      ? (process.env.CF_PAGES_BRANCH === 'main' ? 'production' : 'preview')
+      : 'local')
 const buildTime = new Date().toISOString()
 
 export default defineConfig({
