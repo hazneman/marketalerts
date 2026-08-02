@@ -1,5 +1,4 @@
-# Scan JSON must never be cached stale — mirrors the netlify.toml headers rule
-# in the format BOTH Netlify and Cloudflare Pages understand, so the policy
-# survives the hosting migration.
+# Scan JSON must never be cached stale — the dashboard cache-busts too, but
+# this keeps Cloudflare's CDN honest after each daily deploy.
 /data/*
   Cache-Control: no-cache

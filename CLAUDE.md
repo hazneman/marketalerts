@@ -8,8 +8,9 @@ reasoning behind decisions.
 
 A $0/month market-alerts platform: a Python scanner runs in a **GitHub Action**
 each weekday (22:30 UTC, after all market closes), commits JSON results into
-`frontend/public/data/`, and **Netlify** auto-builds a static React dashboard
-from the push. No backend, no database. Live: https://market-alerts.netlify.app
+`frontend/public/data/`, and **Cloudflare Pages** auto-builds a static React
+dashboard from the push (Git-connected; root `frontend`, `npm run build` →
+`dist`). No backend, no database. Live: https://marketalerts.pages.dev
 (repo: hazneman/marketalerts).
 
 - **Universe:** ~624 tickers in `scanner/universe.json` — `markets: {us, de, bist}`
@@ -24,7 +25,7 @@ from the push. No backend, no database. Live: https://market-alerts.netlify.app
 
 ```bash
 ./dev.sh                  # menu: quick scan / full scan / dashboard (:3100) / tests
-scanner/.venv/bin/python -m pytest scanner/tests -q     # 70 tests
+scanner/.venv/bin/python -m pytest scanner/tests -q     # 180 tests
 cd frontend && npx tsc --noEmit && npm run build         # type-check + build
 scanner/.venv/bin/python scanner/scan.py --tickers META,SAP.DE --dry-run
 ```
@@ -112,7 +113,7 @@ Pipeline per daily run (`scan.py`):
    occurrence of a re-scanned event wins (context closest to entry day);
    byte-stable. Feeds the verifier lab.
 
-## Frontend (frontend/src/) — 6 tabs
+## Frontend (frontend/src/) — 7 tabs
 
 - **Stocks** — alert categories with market filter (US/DE/BIST badges),
   per-market bar-date chips, nearest-daily-Fib + volume columns, verdict badges.
@@ -140,11 +141,13 @@ Pipeline per daily run (`scan.py`):
   headline chips; ↩ re-entry = same ticker+rule re-fired within 14d; 🎯 =
   analyst mean target (frozen at entry) reached.
 - **Forex** — rates/outlook table, pairs board, pair signals.
+- **Tools** — client-only calculators: percentage levels (any price × any %,
+  quick ladder) and change-between-two-prices (signed %, delta, breakeven %).
 - **Portfolio** — trade backlog in **browser localStorage only** (key
   `market-alerts-portfolio-v1`; export/import JSON backup). Open positions
   valued from `prices.json`; **"↻ Update prices"** fetches live quotes via the
-  Netlify function `frontend/netlify/functions/quotes.js` (Yahoo v8 chart
-  proxy — the stack's only serverless piece; graceful fallback in local dev).
+  Pages Function `frontend/functions/api/quotes.js` (Yahoo v8 chart proxy;
+  graceful fallback in local dev).
   Sell flow → closed-trades log with historic P&L (win rate, avg win/loss,
   best/worst, cumulative realized-P&L sparkline). Buy-card adds capture the
   analyst mean target (`Position.target_mean`/`target_as_of`) → Target column
@@ -286,12 +289,12 @@ action.
 - Fib anchors are fixed windows (252d/104w) — reproducible but one specific
   choice; document any change in README + BuysPage footer + this file.
 - GOOG/GOOGL and NWS/NWSA fire near-duplicate alerts — expected, documented.
-- **Serverless functions exist in TWO ports during the Netlify→Cloudflare Pages
-  migration**: `frontend/netlify/functions/*` (Blobs) and
-  `frontend/functions/api/*` (Workers KV, binding `PORTFOLIOS`). The frontend
-  picks endpoints by hostname (`lib/endpoints.ts`). Change both in lockstep, or
-  retire the Netlify pair once the cutover is done. Cache headers live in BOTH
-  netlify.toml and `public/_headers` (the latter works on both hosts).
+- **Serverless functions are Cloudflare Pages Functions**:
+  `frontend/functions/api/{quotes,sync}.js`, served under `/api/*`
+  (`lib/endpoints.ts`). Sync needs the Workers KV namespace bound to the Pages
+  project as `PORTFOLIOS` — without the binding it returns "storage not
+  configured". Cache headers live in `public/_headers`. (Netlify was retired
+  Aug 2026 when it started charging.)
 
 ## Candidate next steps (not started)
 

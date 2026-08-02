@@ -1,9 +1,9 @@
-// Cloudflare Pages Function port of netlify/functions/sync.js — cross-device
-// portfolio sync, one JSON value per private sync code, stored in Workers KV
-// instead of Netlify Blobs. Requires a KV namespace bound to the Pages project
-// as `PORTFOLIOS` (dashboard: Settings -> Functions -> KV namespace bindings).
-// Same bearer-secret model and payload shapes; keep in lockstep with the
-// Netlify port until that stack is retired.
+// Cross-device portfolio sync: one JSON value per private sync code, stored
+// in Workers KV. Requires a KV namespace bound to the Pages project as
+// `PORTFOLIOS` (dashboard: Settings -> Bindings). The unguessable code is the
+// only credential (bearer-secret model) — a deliberate, documented trade-off
+// for low-sensitivity personal data on a no-account platform.
+// GET /api/sync?code=X -> {store, updated_at} · PUT/POST writes
 const CODE_RE = /^[a-z0-9]{8,64}$/i
 const MAX_BYTES = 256 * 1024
 const NOSTORE = { 'cache-control': 'no-store' }

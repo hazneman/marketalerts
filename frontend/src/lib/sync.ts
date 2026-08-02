@@ -1,6 +1,6 @@
-// Cross-device portfolio sync client. Talks to the `sync` serverless function
-// (Netlify Blobs or Cloudflare KV, host-detected via fnUrl), which stores one
-// JSON value per private "sync code". The code
+// Cross-device portfolio sync client. Talks to the `sync` Pages Function
+// (Cloudflare Workers KV), which stores one JSON value per private
+// "sync code". The code
 // is a bearer secret kept in this browser's localStorage; enter it on another
 // device to pull the same portfolio. Reconciliation is last-write-wins by the
 // `updated_at` timestamp — fine for a single owner across a few devices.
