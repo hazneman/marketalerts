@@ -3,7 +3,7 @@ re-fire classification, and the multi-model entry flags."""
 
 import pandas as pd
 
-from verifier_lab import REFIRE_DAYS, cross_events, cross_model_flags
+from verifier_lab import REFIRE_DAYS, cross_events, cross_model_flags, held_above
 
 
 def series(values, start="2024-01-01"):
@@ -154,3 +154,30 @@ class TestKamaFlags:
         assert len(events) >= 1
         assert events[0][1]["kama_above"] is False
         assert events[0][1]["kama_rising"] is False
+
+
+class TestHeldAbove:
+    def _cross(self, closes):
+        from indicators import sma
+        c = series(closes)
+        s = sma(c, 3)
+        events = cross_events(c, sma_n=3, min_bars=4)
+        assert len(events) >= 1
+        return c, s, events[0][0]
+
+    def test_survives_two_days(self):
+        c, s, i = self._cross([50, 50, 50, 50, 200, 210, 220, 230])
+        assert held_above(c, s, i, 2) is True
+
+    def test_fails_next_day(self):
+        c, s, i = self._cross([50, 50, 50, 50, 200, 40, 40, 40])
+        assert held_above(c, s, i, 2) is False
+
+    def test_fails_on_second_day(self):
+        # holds day 1, dips back below on day 2
+        c, s, i = self._cross([50, 50, 50, 50, 200, 210, 30, 30])
+        assert held_above(c, s, i, 2) is False
+
+    def test_unknowable_at_series_end(self):
+        c, s, i = self._cross([50, 50, 50, 50, 200, 210])
+        assert held_above(c, s, i, 2) is None

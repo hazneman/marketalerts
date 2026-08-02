@@ -142,6 +142,20 @@ def cross_events(close, sma_n: int = 200, refire_days: int = REFIRE_DAYS,
     return events
 
 
+def held_above(close, s, i: int, days: int) -> bool | None:
+    """Did the close stay above its SMA for `days` consecutive bars AFTER the
+    cross at i? None when not enough bars exist to know. Used by the confirm
+    model — the caller must then treat entry as bar i+days (the close where the
+    confirmation is complete), never bar i."""
+    if i + days >= len(close):
+        return None
+    for k in range(1, days + 1):
+        sv = float(s.iloc[i + k])
+        if sv != sv or float(close.iloc[i + k]) <= sv:  # NaN or dipped back
+            return False
+    return True
+
+
 def _cohort(v: list[float]) -> dict:
     return {"n": len(v), "avg_excess": round(mean(v), 2) if v else None,
             "median_excess": round(median(v), 2) if v else None,
@@ -287,6 +301,7 @@ MODEL_LABELS = {
     "kama_above": "Close above KAMA(21) at entry",
     "kama_rising": "KAMA(21) rising (adaptive trend)",
     "kama_trend": "Above KAMA AND KAMA rising",
+    "confirm2": "Held 2 closes above (enter day-2 close)",
     "regime_up": "Market regime (SPY > its SMA200)",
     "slope_and_regime": "Rising SMA200 AND SPY regime up",
     "vol_and_slope": "Volume confirms AND SMA200 rising",
@@ -297,7 +312,7 @@ def models_study(sample: int = 150, forward: int = 20) -> dict:
     """TWO-WINDOW multi-model event study: does filtering SMA200 bull crosses
     by each model raise forward excess vs taking every cross? Windows: recent
     (~2y) and 2016-21. Only a model that helps in BOTH windows may graduate
-    (and with 11 models under test, demand a clear margin, not a squeak —
+    (and with 12 models under test, demand a clear margin, not a squeak —
     multiple comparisons make one lucky pass likely)."""
     from fetcher import fetch_us, iter_us_chunks
     from indicators import sma
@@ -327,6 +342,7 @@ def models_study(sample: int = 150, forward: int = 20) -> dict:
             if df.empty or len(df) < 260 or "volume" not in df:
                 continue
             c = df["close"]
+            s200 = sma(c, 200)
             for i, flags in cross_model_flags(df):
                 d = df.index[i].date()
                 w = ("recent" if d >= recent_lo
@@ -351,7 +367,23 @@ def models_study(sample: int = 150, forward: int = 20) -> dict:
                 }
                 win[w]["baseline"].append(excess)
                 for m in MODEL_LABELS:
+                    if m == "confirm2":
+                        continue  # special entry timing, handled below
                     win[w]["models"][m]["kept" if verdicts[m] else "dropped"].append(excess)
+
+                # Confirmation model: only crosses whose close held above the
+                # SMA for the next 2 bars are "kept" — and their excess is
+                # measured from the DAY-2 close (the real, delayed entry).
+                # Failures are "dropped" at their cross-day excess (what the
+                # filter would have saved you from).
+                held = held_above(c, s200, i, 2)
+                if held is False:
+                    win[w]["models"]["confirm2"]["dropped"].append(excess)
+                elif held is True:
+                    si2 = spy_by_date.get(df.index[i + 2].date())
+                    sf2, ff2 = (fwd(spyc, si2), fwd(c, i + 2)) if si2 is not None else (None, None)
+                    if sf2 is not None and ff2 is not None:
+                        win[w]["models"]["confirm2"]["kept"].append(ff2 - sf2)
 
     return {"sample_tickers": len(universe), "forward_days": forward,
             "windows": {w: {"baseline": _cohort(d["baseline"]),
@@ -453,7 +485,7 @@ def render_markdown(rep: dict, study: dict | None, refire: dict | None = None,
         L.append(f"## Two-window multi-model study — cross filters ({models['sample_tickers']} US "
                  f"tickers, forward {models['forward_days']} trading days vs SPY)\n")
         L.append("Does filtering SMA200 bull crosses by each model beat taking every cross?")
-        L.append("With 11 models under test, one lucky pass is expected — promotion needs BOTH")
+        L.append("With 12 models under test, one lucky pass is expected — promotion needs BOTH")
         L.append("windows agreeing with a clear margin.\n")
         L.append("| Window | Model | Kept n | Kept avg | Kept beat | Dropped n | Dropped avg | Baseline avg |")
         L.append("|---|---|---|---|---|---|---|---|")
