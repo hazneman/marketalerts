@@ -202,7 +202,8 @@ def refire_study(sample: int = 150, forward: int = 20) -> dict:
 
 def cross_model_flags(df, sma_n: int = 200, vol_n: int = 20,
                       min_bars: int | None = None,
-                      fib_window: int = 252) -> list[tuple[int, dict]]:
+                      fib_window: int = 252,
+                      kama_er: int = 21, kama_lag: int = 10) -> list[tuple[int, dict]]:
     """For every SMA bull cross: entry-time model flags, each computable from
     bars available AT the cross (no lookahead). Pure/testable.
 
@@ -216,6 +217,10 @@ def cross_model_flags(df, sma_n: int = 200, vol_n: int = 20,
                    and the exact credit window the Buys quality score uses
       fib_clear    nearest level is NOT >2% overhead (the live "resistance"
                    gate, here historically testable)
+      kama_above   close above KAMA(21,2,30) at the cross (adaptive trend line)
+      kama_rising  KAMA rising vs ~10 bars ago, anchored at i-1 — Kaufman's
+                   whipsaw filter: the line flattens in chop, so "rising"
+                   carries more signal than the raw SMA slope
       not_refire   first cross, not a <=14d re-fire (refuted alone; kept for
                    completeness inside combos)
 
@@ -224,11 +229,12 @@ def cross_model_flags(df, sma_n: int = 200, vol_n: int = 20,
     """
     import math
 
-    from indicators import fib_retracement, rsi as rsi_fn, sma
+    from indicators import fib_retracement, kama as kama_fn, rsi as rsi_fn, sma
 
     c, v = df["close"], df["volume"]
     s = sma(c, sma_n)
     r = rsi_fn(c)
+    k = kama_fn(c, er_n=kama_er)
     slope_lag = 21
     out = []
     for i, refire in cross_events(c, sma_n=sma_n, min_bars=min_bars):
@@ -252,12 +258,20 @@ def cross_model_flags(df, sma_n: int = 200, vol_n: int = 20,
                 fib_support = bool(0 <= d <= 3)   # the quality score's credit band
                 fib_clear = bool(d >= -2)         # live resistance gate threshold
 
+        # KAMA anchored at i-1 like the SMA slope — the cross bar's jump must
+        # not lift its own reference line; unknowable (warm-up) -> False
+        k_now = float(k.iloc[i - 1]) if i >= 1 else float("nan")
+        k_then = float(k.iloc[i - 1 - kama_lag]) if i >= 1 + kama_lag else float("nan")
+        kama_known = not (math.isnan(k_now) or math.isnan(k_then))
+
         flags = {
             "vol_confirm": bool(va > 0 and float(v.iloc[i]) >= 1.25 * va),
             "slope_up": bool(slope_known and s_now > s_then),
             "rsi_calm": bool(rv is None or rv < 70),
             "fib_support": fib_support,
             "fib_clear": fib_clear,
+            "kama_above": bool(not math.isnan(k_now) and float(c.iloc[i]) > k_now),
+            "kama_rising": bool(kama_known and k_now > k_then),
             "not_refire": not refire,
         }
         out.append((i, flags))
@@ -270,6 +284,9 @@ MODEL_LABELS = {
     "rsi_calm": "RSI < 70 at entry",
     "fib_support": "Fib support 0-3% below (quality-score band)",
     "fib_clear": "No Fib resistance <2% overhead (live gate)",
+    "kama_above": "Close above KAMA(21) at entry",
+    "kama_rising": "KAMA(21) rising (adaptive trend)",
+    "kama_trend": "Above KAMA AND KAMA rising",
     "regime_up": "Market regime (SPY > its SMA200)",
     "slope_and_regime": "Rising SMA200 AND SPY regime up",
     "vol_and_slope": "Volume confirms AND SMA200 rising",
@@ -280,7 +297,7 @@ def models_study(sample: int = 150, forward: int = 20) -> dict:
     """TWO-WINDOW multi-model event study: does filtering SMA200 bull crosses
     by each model raise forward excess vs taking every cross? Windows: recent
     (~2y) and 2016-21. Only a model that helps in BOTH windows may graduate
-    (and with 8 models under test, demand a clear margin, not a squeak —
+    (and with 11 models under test, demand a clear margin, not a squeak —
     multiple comparisons make one lucky pass likely)."""
     from fetcher import fetch_us, iter_us_chunks
     from indicators import sma
@@ -330,6 +347,7 @@ def models_study(sample: int = 150, forward: int = 20) -> dict:
                     "regime_up": bool(regime),
                     "slope_and_regime": bool(flags["slope_up"] and regime),
                     "vol_and_slope": bool(flags["vol_confirm"] and flags["slope_up"]),
+                    "kama_trend": bool(flags["kama_above"] and flags["kama_rising"]),
                 }
                 win[w]["baseline"].append(excess)
                 for m in MODEL_LABELS:
@@ -435,7 +453,7 @@ def render_markdown(rep: dict, study: dict | None, refire: dict | None = None,
         L.append(f"## Two-window multi-model study — cross filters ({models['sample_tickers']} US "
                  f"tickers, forward {models['forward_days']} trading days vs SPY)\n")
         L.append("Does filtering SMA200 bull crosses by each model beat taking every cross?")
-        L.append("With 8 models under test, one lucky pass is expected — promotion needs BOTH")
+        L.append("With 11 models under test, one lucky pass is expected — promotion needs BOTH")
         L.append("windows agreeing with a clear margin.\n")
         L.append("| Window | Model | Kept n | Kept avg | Kept beat | Dropped n | Dropped avg | Baseline avg |")
         L.append("|---|---|---|---|---|---|---|---|")

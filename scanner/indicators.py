@@ -40,6 +40,41 @@ def rsi(close: pd.Series, period: int = RSI_PERIOD) -> pd.Series:
     return out
 
 
+def kama(close: pd.Series, er_n: int = 21, fast: int = 2, slow: int = 30) -> pd.Series:
+    """Kaufman Adaptive Moving Average — KAMA(21, 2, 30), matching the classic
+    formula (and the common TradingView Pine port, constants 0.666/0.0645):
+
+      ER  = |close − close[er_n]| / Σ|Δclose| over er_n   (1 = clean trend, 0 = chop)
+      sc  = (ER·(2/(fast+1) − 2/(slow+1)) + 2/(slow+1))²
+      AMA = AMA_prev + sc·(close − AMA_prev)
+
+    The line hugs price in trends and goes near-flat in sideways noise. First
+    er_n bars are NaN; the recursion seeds at the first bar with a full ER
+    window (the Pine version seeds at 0 and needs ~30 bars to converge — this
+    seed-at-price start avoids that warm-up garbage, converging identically).
+    """
+    price = close.astype(float)
+    direction = (price - price.shift(er_n)).abs()
+    volatility = price.diff().abs().rolling(er_n, min_periods=er_n).sum()
+    # mask() keeps warm-up NaNs as NaN; only a true zero-volatility window
+    # (flat prices) maps to ER 0 — .where(volatility > 0) would silently turn
+    # the NaN warm-up into ER 0 and start emitting from bar 0
+    er = (direction / volatility).mask(volatility == 0, 0.0)
+    fast_sc, slow_sc = 2.0 / (fast + 1), 2.0 / (slow + 1)
+    sc = (er * (fast_sc - slow_sc) + slow_sc) ** 2
+
+    values = price.to_numpy()
+    smooth = sc.to_numpy()
+    out = [float("nan")] * len(values)
+    prev: float | None = None
+    for i in range(len(values)):
+        if smooth[i] != smooth[i]:  # NaN — still inside the ER warm-up
+            continue
+        prev = values[i] if prev is None else prev + smooth[i] * (values[i] - prev)
+        out[i] = prev
+    return pd.Series(out, index=close.index)
+
+
 def macd(close: pd.Series, fast: int = 12, slow: int = 26,
          signal: int = 9) -> tuple[pd.Series, pd.Series]:
     """MACD line (EMA12 − EMA26) and its signal line (EMA9 of the MACD line).
