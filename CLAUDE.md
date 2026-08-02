@@ -230,7 +230,19 @@ than baseline recently (−0.74pp vs −0.47pp) and no better earlier (+0.01pp v
 windows (zero signal), so the live resistance gate's decent-looking exchange
 rate is noise — do not promote it. With this, the docs' entire candidate
 backlog is resolved with evidence; the Fib ladder stays display-only context
-and the quality score's Fib +0.5 credit now has evidence AGAINST it.
+and the quality score's Fib +0.5 credit now has evidence AGAINST it (credit
+since removed). Fifth finding (Aug 2026, owner-proposed KAMA 21/2/30 from a
+TradingView Pine script, ported to `indicators.kama` + 3 models in
+`--models-study`): **KAMA REFUTED as a cross filter** — close-above-KAMA was
+WORSE than baseline recently (−0.63pp vs −0.44pp); KAMA-rising managed
++0.20pp recent but only +0.04pp earlier, i.e. the adaptive slope does not
+even match the plain SMA200-slope (+0.31pp earlier) it was meant to improve
+on. Nothing promoted; the port stays available in indicators.py for future
+hypotheses. Meanwhile the live-only **weak-balance-sheet gate** (which cannot
+be historically backtested — no point-in-time fundamentals) is the one to
+watch: at 127 seasoned entries it blocks 15 bad / 4 good (blocked avg
+−2.36pp vs passed +1.33pp). Months of accumulation, not weeks, before any
+action.
 
 ## Workflow / operations
 
