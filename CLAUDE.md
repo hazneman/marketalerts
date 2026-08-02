@@ -296,6 +296,28 @@ action.
   configured". Cache headers live in `public/_headers`. (Netlify was retired
   Aug 2026 when it started charging.)
 
+## Session handoff — open items as of 2026-08-02
+
+- **Verify the first hands-free Cloudflare deploy**: Monday 2026-08-04 ~22:30
+  UTC the scan commits to main → Pages should auto-build. Check the site
+  footer shows the new scan commit SHA on Tuesday. If it didn't deploy, the
+  Pages Git integration needs a look (project `marketalerts`, build: root
+  `frontend`, `npm run build`, output `dist`).
+- **Ops backlog (advised, owner agreed in principle, NOT built yet)**:
+  (1) dead-man switch — scan.yml failure step that opens a GitHub issue +
+  a staleness check, so a silently dead cron can't serve stale data forever;
+  (2) security headers in `frontend/public/_headers` (CSP, X-Frame-Options,
+  nosniff — bounded risk, cheap); (3) nightly `verifier_lab.py --write` in the
+  Action so docs/VERIFIERS.md (incl. the balance-sheet gate table) refreshes
+  itself.
+- **Watch item**: the weak-balance-sheet gate (finding #5 note above) —
+  re-check its live exchange rate ~monthly; months of accumulation before any
+  promotion decision.
+- **Research stance**: entry-side is saturated (5/5 refuted — do NOT re-test
+  MA-length variants; SWEEP.md). The one open mechanism idea is EXIT-side
+  research (holding-period/trailing studies) once the track record deepens.
+  Otherwise: deliberate feature freeze; let data accumulate.
+
 ## Candidate next steps (not started)
 
 - ~~Backtest Fib-support proximity~~ DONE and REFUTED (worse than baseline
