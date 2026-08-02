@@ -4,7 +4,7 @@ History is keyed by bar_date and replace-on-rescan. Serialization is
 deterministic (sort_keys, fixed indent), and generated_at is preserved from
 the previous run when the scan content is unchanged — so a weekend/holiday
 re-run rewrites identical bytes and the Action's commit-if-changed step
-becomes a no-op (no pointless Netlify deploys).
+becomes a no-op (no pointless site deploys).
 """
 
 from __future__ import annotations

@@ -1,7 +1,7 @@
-// Cloudflare Pages Function port of netlify/functions/quotes.js — the
-// live-quote proxy for the Portfolio page's "Update prices" button. Same
-// logic, Pages routing (/api/quotes). Keep the two ports in lockstep until
-// the Netlify stack is retired.
+// Live-quote proxy for the Portfolio page's "Update prices" button.
+// Browsers can't call Yahoo directly (no CORS), so this Pages Function
+// fetches quotes server-side for the requested symbols only.
+// GET /api/quotes?symbols=AAPL,SAP.DE,THYAO.IS
 export async function onRequestGet({ request }) {
   const url = new URL(request.url)
   const raw = url.searchParams.get('symbols') || ''

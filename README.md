@@ -1,8 +1,8 @@
 # Market Alerts Dashboard
 
-Daily alerts for financial opportunities in US stocks (S&P 500 + Nasdaq 100), German DAX and BIST Istanbul (~624 tickers total) plus a forex overview, on a static dashboard. **$0/month**: GitHub stores the code and the scan results; Netlify hosts the dashboard.
+Daily alerts for financial opportunities in US stocks (S&P 500 + Nasdaq 100), German DAX and BIST Istanbul (~624 tickers total) plus a forex overview, on a static dashboard. **$0/month**: GitHub stores the code and the scan results; Cloudflare Pages hosts the dashboard.
 
-**Live:** https://market-alerts.netlify.app
+**Live:** https://marketalerts.pages.dev
 
 The dashboard uses a dense "terminal" look with monospace numerics and a
 **light / dark theme toggle** in the header (sun/moon) — dark by default,
@@ -37,9 +37,16 @@ on uptrends as take-profit signals.
 
 The **Buys** tab lists BUY verdicts as a collapsed list **ranked by a
 display-only quality score** (Strong+/Strong/Good/Fair — confluence across
-fundamentals, sector, volume, analysts, signal rarity, Fib support; formula in
-the page footer). Click a row to expand full detail; "+ portfolio" adds the
-position to the Portfolio tab.
+fundamentals, sector, volume, analysts and signal rarity; formula in the page
+footer — Fib proximity earns no points, a two-window backtest refuted it). A
+**NEW / Nd-old** chip on every row shows when the signal actually crossed
+relative to its market's latest bar, with a **Quality / Newest** sort toggle;
+a collapsed **"Earlier BUY verdicts"** section holds the previous 5 scan days.
+Expanding a row shows ±1/±2% **price levels** (from the freshest close), a
+**company profile** grouped by theme with values colored green/red **against
+the stock's own GICS-sector quartiles** (nightly-updating baselines), analyst
+view, Fib ladders and volume. "+ portfolio" adds the position to the Portfolio
+tab.
 
 ### Price structure (Fibonacci + volume)
 
@@ -58,8 +65,11 @@ Each alert also carries **display-only** context (no verdict effect yet):
 
 Both compute from OHLCV already in memory (all markets), in
 [`scanner/levels.py`](scanner/levels.py) and
-[`scanner/indicators.py`](scanner/indicators.py). Not yet backtested into the
-verdict — that's the next honest step before wiring them in.
+[`scanner/indicators.py`](scanner/indicators.py). Both WERE then backtested
+(two windows, `scanner/verifier_lab.py --models-study`): volume confirmation
+flipped across windows and Fib-support proximity showed no edge — so both stay
+display-only context, permanently, and the verdict remains untouched (see
+`docs/VERIFIERS.md`).
 
 ## Portfolio page
 
@@ -83,9 +93,12 @@ signal:* the backtests in `docs/EXITS.md` found stop-loss and moving-average
 exit rules did worse than simply holding — only the RSI>75 trim helped — so
 the page shows you what changed and leaves the decision to you.
 Stocks you hold no longer appear as fresh BUY suggestions — they collapse into
-an "Already held" group on the Buys tab. **Storage: this browser's localStorage only** — holdings never leave
-your machine; use Export/Import backup to move browsers or protect against
-cleared browser data.
+an "Already held" group on the Buys tab. **Storage:** this browser's
+localStorage, plus optional **cross-device sync** — "Enable sync" generates a
+private code (a bearer secret; keep it private), stored server-side in
+Cloudflare Workers KV via a Pages Function; enter the code on another device
+and the same portfolio loads and stays in sync (last-write-wins). Export/Import
+backup remains for offline safety.
 
 ## Track record page
 
@@ -97,7 +110,11 @@ currency as the stock, so the comparison has no FX distortion). A signal **beats
 its market** when that excess return is positive. The page shows an aggregate
 hit-rate (share that beat their benchmark), average excess/return, and a
 sortable, filterable table (entry date/price, current price, return, benchmark,
-excess, days held, ✓ beat / ✗ lag). Entries held under 2 days show **pending**
+excess, days held, ✓ beat / ✗ lag) with a ticker search box. A **"By rule"**
+chip row splits the headline hit-rate per rule — the daily SMA200 cross is
+high-volume and noisy while the rarer 200-week and golden crosses carry the
+quality, and the split keeps the blended number honest. Entries held under 2
+days show **pending**
 and stay out of the headline stats; ↩ marks a signal that re-fired within 14
 days (possible whipsaw); 🎯 marks a price that reached the analyst mean target
 from its alert day. Each entry evaluates over ~180 days, then freezes. Data: [`scanner/track_record.py`](scanner/track_record.py) →
@@ -147,6 +164,13 @@ latest close; refresh the cache occasionally with `dev.sh` option 5.
 central-bank meetings (bump `as_of`; it is displayed on the page so staleness
 is always visible). FX prices update automatically with the daily scan.
 
+## Tools page
+
+Client-only calculators (nothing fetched, stored, or sent): **percentage
+levels** — any price × any percent → up/down prices plus a quick ladder
+(0.5–10%, custom step highlighted); and **change between two prices** —
+signed % move, absolute delta, and the % needed to get back to breakeven.
+
 ## How it works
 
 No backend, no database. On weekends/holidays the scan produces identical JSON → no commit → no deploy.
@@ -178,14 +202,14 @@ flowchart TD
         FXJSON["forex.json"]
     end
 
-    subgraph NETLIFY["Netlify"]
+    subgraph PAGES["Cloudflare Pages"]
         HOOK["webhook fires on push to main"]
         BUILD["npm run build (tsc + vite)"]
-        CDN["🌐 market-alerts.netlify.app<br/>/data/* → Cache-Control: no-cache"]
+        CDN["🌐 marketalerts.pages.dev<br/>/data/* → Cache-Control: no-cache<br/>/api/* → Pages Functions (quotes · sync/KV)"]
     end
 
     subgraph DASH["Dashboard (React + TypeScript + Tailwind)"]
-        TABS["Stocks · Buys · Sectors<br/>Forex · Portfolio"]
+        TABS["Stocks · Buys · Sectors · Forex<br/>Portfolio · Track record · Tools"]
         STOCKS["alert categories · filters<br/>verdict badges (buy/hold/sell)<br/>↗ TradingView link per ticker"]
         FX["rates + 6m outlook table<br/>pairs board + combined reads<br/>pair signals"]
     end
@@ -226,7 +250,7 @@ Double-click **MarketAlerts.app**, or:
 ./dev.sh
 ```
 
-Menu: `1)` quick scan (10 tickers) + dashboard · `2)` full scan (~5 min) · `3)` dashboard only · `4)` tests (70).
+Menu: `1)` quick scan (10 tickers) + dashboard · `2)` full scan (~5 min) · `3)` dashboard only · `4)` tests (180).
 
 For AI-assistant working knowledge (architecture, conventions, gotchas), see [CLAUDE.md](CLAUDE.md).
 
@@ -245,11 +269,14 @@ out-of-sample on 2016–2021 where noted):
 | `WEEKLY.md` | 40-week & 200-week SMA on weekly bars | Whipsaw halves but returns don't improve; 200-week crosses = rare, high-quality events → became an alert |
 | `EXITS.md` | 6 exit rules incl. MACD, RSI, SMA50/90 | Exits into weakness always lose; **RSI>75 take-profit was the only exit beating baseline in both windows** → became an alert |
 | `PROFILE.md` | Which stocks does the model work on? | Detectable in hindsight (crashed/choppy names), not in advance — no tradeable screen |
+| `VERIFIERS.md` | Can any entry filter improve the BUYs? (live counterfactual lab + two-window studies) | **5 candidates tested, 5 refuted** (extension, re-fire, volume, Fib proximity, KAMA) — the verdict stays as-is; one live-only fundamentals gate (weak balance sheet) still accumulating evidence |
 
 Tools: `scanner/backtest.py` (event study), `scanner/strategy_backtest.py`
 (trading simulation; `--model trend|pullback|hybrid`, `--interval 1d|1wk`,
 `--sma/--confirm/--band/--rsi-max`, `--validate` for two-window comparison),
-`scanner/sweep.py` (parameter grid), `scanner/profile.py` (trait analysis).
+`scanner/sweep.py` (parameter grid), `scanner/profile.py` (trait analysis),
+`scanner/verifier_lab.py` (live counterfactual gate lab + `--refire-study` /
+`--models-study` two-window event studies).
 
 ## Validating against TradingView
 

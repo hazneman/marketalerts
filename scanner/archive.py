@@ -5,7 +5,7 @@ alert event (id = ticker|rule|date) FOREVER, including the heavy entry-time
 context (fundamentals, sector state, volume, Fib, MACD, verdict) that the
 verifier lab and future gate backtests need. It lives in archive/alerts.jsonl
 at the repo root — versioned with the data commits but never shipped to the
-site (Netlify publishes only frontend/dist).
+site (the host publishes only frontend/dist).
 
 Same unified-ingestion pattern as track_record.py: the source of truth is
 history.json, so the first run backfills the whole 30-day window, daily runs

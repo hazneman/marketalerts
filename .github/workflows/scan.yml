@@ -1,5 +1,5 @@
 # Daily SMA-cross scan. Commits fresh JSON only when the market produced a new
-# bar, which is what triggers the Netlify deploy. Never triggered by push, and
+# bar, which is what triggers the Cloudflare Pages deploy. Never triggered by push, and
 # GITHUB_TOKEN commits can't re-trigger workflows — no commit loop possible.
 name: daily-scan
 
