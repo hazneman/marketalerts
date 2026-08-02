@@ -241,7 +241,14 @@ WORSE than baseline recently (−0.63pp vs −0.44pp); KAMA-rising managed
 +0.20pp recent but only +0.04pp earlier, i.e. the adaptive slope does not
 even match the plain SMA200-slope (+0.31pp earlier) it was meant to improve
 on. Nothing promoted; the port stays available in indicators.py for future
-hypotheses. Meanwhile the live-only **weak-balance-sheet gate** (which cannot
+hypotheses. Sixth finding (Aug 2026, owner-proposed 2-day confirmation — cross AND hold
+2 closes, entry at the day-2 close): the ONLY candidate to raise hit-rate in
+BOTH windows (46% vs 45% recent; 52% vs 50% earlier) — but avg excess was
+flat (+0.16pp recent, −0.02pp earlier): the later entry costs what dodging
+instant failures saves. Below the promotion bar; NOT wired into the verdict.
+The most respectable near-miss so far — revisit only with materially more
+data, not by re-running the same study. Meanwhile the live-only
+**weak-balance-sheet gate** (which cannot
 be historically backtested — no point-in-time fundamentals) is the one to
 watch: at 127 seasoned entries it blocks 15 bad / 4 good (blocked avg
 −2.36pp vs passed +1.33pp). Months of accumulation, not weeks, before any
