@@ -10,6 +10,7 @@ import {
   exportPortfolio, importPortfolio, updatePosition,
   type ClosedTrade, type Position,
 } from '../lib/portfolio'
+import { fnUrl } from '../lib/endpoints'
 import { tradingViewUrl } from '../lib/tradingview'
 import { badgeRing, btnGhost, cellCls, inputCls, rowCls, tableWrapCls, theadCls } from '../lib/ui'
 import { MarketBadge } from './AlertTable'
@@ -445,7 +446,7 @@ export default function PortfolioPage() {
     setPriceNote(null)
     try {
       const r = await fetch(
-        `/.netlify/functions/quotes?symbols=${encodeURIComponent(tickers.join(','))}`,
+        `${fnUrl('quotes')}?symbols=${encodeURIComponent(tickers.join(','))}`,
       )
       if (!r.ok) throw new Error(`HTTP ${r.status}`)
       const j = await r.json()

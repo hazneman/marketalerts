@@ -286,6 +286,12 @@ action.
 - Fib anchors are fixed windows (252d/104w) — reproducible but one specific
   choice; document any change in README + BuysPage footer + this file.
 - GOOG/GOOGL and NWS/NWSA fire near-duplicate alerts — expected, documented.
+- **Serverless functions exist in TWO ports during the Netlify→Cloudflare Pages
+  migration**: `frontend/netlify/functions/*` (Blobs) and
+  `frontend/functions/api/*` (Workers KV, binding `PORTFOLIOS`). The frontend
+  picks endpoints by hostname (`lib/endpoints.ts`). Change both in lockstep, or
+  retire the Netlify pair once the cutover is done. Cache headers live in BOTH
+  netlify.toml and `public/_headers` (the latter works on both hosts).
 
 ## Candidate next steps (not started)
 
