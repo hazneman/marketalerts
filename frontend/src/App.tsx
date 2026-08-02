@@ -6,6 +6,7 @@ import ForexPage from './components/ForexPage'
 import PortfolioPage from './components/PortfolioPage'
 import ScanStatus from './components/ScanStatus'
 import SectorsPage from './components/SectorsPage'
+import ToolsPage from './components/ToolsPage'
 import TrackRecordPage from './components/TrackRecordPage'
 import { useAlerts } from './hooks/useAlerts'
 import { PortfolioSyncContext, usePortfolioSync } from './hooks/usePortfolioSync'
@@ -13,9 +14,9 @@ import Tabs from './components/ui/Tabs'
 import ThemeToggle from './components/ui/ThemeToggle'
 import { CATEGORY_LABELS, CATEGORY_SHORT, MARKET_ORDER, type AlertItem } from './types'
 
-type Page = 'stocks' | 'buys' | 'sectors' | 'forex' | 'portfolio' | 'track'
+type Page = 'stocks' | 'buys' | 'sectors' | 'forex' | 'portfolio' | 'track' | 'tools'
 
-const PAGES: Page[] = ['stocks', 'buys', 'sectors', 'forex', 'portfolio', 'track']
+const PAGES: Page[] = ['stocks', 'buys', 'sectors', 'forex', 'portfolio', 'track', 'tools']
 const PAGE_LABELS: Record<Page, string> = {
   stocks: 'Stocks',
   buys: 'Buys',
@@ -23,6 +24,7 @@ const PAGE_LABELS: Record<Page, string> = {
   forex: 'Forex',
   portfolio: 'Portfolio',
   track: 'Track record',
+  tools: 'Tools',
 }
 const TAGLINES: Record<Page, string> = {
   stocks: 'S&P 500 + Nasdaq 100 · DAX · BIST',
@@ -31,6 +33,7 @@ const TAGLINES: Record<Page, string> = {
   forex: 'Major currencies vs USD',
   portfolio: 'Your trades · stored in this browser',
   track: 'Did the BUY alerts beat their market?',
+  tools: 'Quick calculators · everything stays in your browser',
 }
 
 // Footer build stamp — compare this commit against the repo's latest to see
@@ -176,6 +179,8 @@ export default function App() {
         <SectorsPage />
       ) : page === 'track' ? (
         <TrackRecordPage />
+      ) : page === 'tools' ? (
+        <ToolsPage />
       ) : page === 'portfolio' ? (
         <PortfolioPage />
       ) : (
