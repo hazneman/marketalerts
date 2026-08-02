@@ -1,10 +1,10 @@
 import { useState } from 'react'
-import { useAlerts, useBaselines, usePortfolio, usePrices } from '../hooks/useAlerts'
+import { useAlerts, useBaselines, useHealth, usePortfolio, usePrices } from '../hooks/useAlerts'
 import { judgeMetric } from '../lib/baselines'
 import { addPosition } from '../lib/portfolio'
 import { tradingViewUrl } from '../lib/tradingview'
 import { badgeFlat, badgeRing, inputClsSm, type Tone } from '../lib/ui'
-import type { AlertItem, BaselinesData, FibFrame, Fundamentals, PricesData } from '../types'
+import type { AlertItem, BaselinesData, FibFrame, Fundamentals, HealthData, PricesData } from '../types'
 import { CATEGORY_LABELS, CATEGORY_SHORT, CONSENSUS_LABELS, SECTOR_STATE } from '../types'
 import { MarketBadge } from './AlertTable'
 import Badge from './ui/Badge'
@@ -388,9 +388,33 @@ function PriceLevels({ a, prices }: { a: AlertItem; prices: PricesData | null })
   )
 }
 
-function BuyCard({ a, rank, defaultOpen, refDate, baselines = null, prices = null, refire = false }: {
+// The owner's personal review rule made visible (display-only; verifier-lab
+// finding #6 showed it lifts hit-rate ~1-2pp but not avg profit, so it is NOT
+// a verdict gate): for a daily SMA200 cross that is at least a day old, is the
+// price STILL above the line right now (per last night's health snapshot)?
+function HeldAboveTag({ a, refDate, health }: {
+  a: AlertItem; refDate: string; health: HealthData | null
+}) {
+  if (a.category !== 'price_sma200') return null
+  const age = Math.round((Date.parse(refDate) - Date.parse(a.date)) / 86400000)
+  if (age < 1) return null // just crossed — nothing to confirm yet
+  const vs = health?.tickers[a.ticker]?.vs_sma200_pct
+  if (vs === undefined) return null
+  const ok = vs > 0
+  return (
+    <span
+      title={`2-day review rule: price is currently ${vs >= 0 ? '+' : ''}${vs.toFixed(1)}% vs its SMA200 (bar ${health?.bar_date}). ${ok ? 'The cross has held so far.' : 'The cross did not hold — price dipped back below the line.'}`}
+      className={`inline-flex items-center rounded px-2 py-0.5 text-[10px] font-semibold ${ok ? badgeRing.up : badgeRing.down}`}
+    >
+      {ok ? '✓ still above' : '✗ dipped back'}
+    </span>
+  )
+}
+
+function BuyCard({ a, rank, defaultOpen, refDate, baselines = null, prices = null, health = null, refire = false }: {
   a: AlertItem; rank: number; defaultOpen: boolean; refDate: string
-  baselines?: BaselinesData | null; prices?: PricesData | null; refire?: boolean
+  baselines?: BaselinesData | null; prices?: PricesData | null
+  health?: HealthData | null; refire?: boolean
 }) {
   const f = a.fundamentals
   const [open, setOpen] = useState(defaultOpen)
@@ -419,6 +443,7 @@ function BuyCard({ a, rank, defaultOpen, refDate, baselines = null, prices = nul
           <MarketBadge market={a.market} />
           <QualityBadge score={score} />
           <FreshnessChip date={a.date} refDate={refDate} />
+          <HeldAboveTag a={a} refDate={refDate} health={health} />
           {refire && (
             <span className="text-[10px] text-muted"
                   title="Same signal fired within the last 14 days — possible whipsaw around the SMA">
@@ -610,6 +635,7 @@ export default function BuysPage() {
   const { positions } = usePortfolio()
   const baselines = useBaselines()
   const prices = usePrices()
+  const health = useHealth()
   const [showHeld, setShowHeld] = useState(false)
   const [sort, setSort] = useState<SortMode>('quality')
   const [showRecent, setShowRecent] = useState(false)
@@ -706,7 +732,7 @@ export default function BuysPage() {
         <div className="space-y-2.5">
           {buys.map(({ a }, i) => (
             <BuyCard key={`${a.rule}-${a.ticker}`} a={a} rank={i + 1} defaultOpen={false}
-                     refDate={refDateFor(a)} baselines={baselines} prices={prices} refire={isRefire(a)} />
+                     refDate={refDateFor(a)} baselines={baselines} prices={prices} health={health} refire={isRefire(a)} />
           ))}
         </div>
       ) : (
@@ -729,7 +755,7 @@ export default function BuysPage() {
           {showHeld &&
             heldBuys.map(({ a }, i) => (
               <BuyCard key={`held-${a.rule}-${a.ticker}`} a={a} rank={buys.length + i + 1}
-                       defaultOpen={false} refDate={refDateFor(a)} baselines={baselines} prices={prices} refire={isRefire(a)} />
+                       defaultOpen={false} refDate={refDateFor(a)} baselines={baselines} prices={prices} health={health} refire={isRefire(a)} />
             ))}
         </div>
       )}
@@ -763,7 +789,7 @@ export default function BuysPage() {
                     {dayOpen &&
                       dayBuys.map(({ a }, i) => (
                         <BuyCard key={`${date}-${a.rule}-${a.ticker}`} a={a} rank={i + 1}
-                                 defaultOpen={false} refDate={date} baselines={baselines} prices={prices} refire={isRefire(a)} />
+                                 defaultOpen={false} refDate={date} baselines={baselines} prices={prices} health={health} refire={isRefire(a)} />
                       ))}
                   </div>
                 )
@@ -789,7 +815,7 @@ export default function BuysPage() {
         old</span> chip shows when each signal actually crossed relative to its market's
         latest bar — daily crosses read NEW, while a 200-week cross carries the prior
         completed Friday and so reads a few days old even when freshly listed.
-        Informational, not investment advice.
+        On daily SMA200 crosses at least a day old, the ✓ still above / ✗ dipped back tag shows whether the cross has held — a review aid for waiting out whipsaw (measured: slightly fewer losers, same average profit — finding #6). Informational, not investment advice.
       </p>
     </section>
   )
