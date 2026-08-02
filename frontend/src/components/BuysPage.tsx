@@ -392,11 +392,14 @@ function PriceLevels({ a, prices }: { a: AlertItem; prices: PricesData | null })
 // finding #6 showed it lifts hit-rate ~1-2pp but not avg profit, so it is NOT
 // a verdict gate): for a daily SMA200 cross that is at least a day old, is the
 // price STILL above the line right now (per last night's health snapshot)?
-function HeldAboveTag({ a, refDate, health }: {
-  a: AlertItem; refDate: string; health: HealthData | null
+function HeldAboveTag({ a, health }: {
+  a: AlertItem; health: HealthData | null
 }) {
-  if (a.category !== 'price_sma200') return null
-  const age = Math.round((Date.parse(refDate) - Date.parse(a.date)) / 86400000)
+  if (a.category !== 'price_sma200' || !health?.bar_date) return null
+  // age vs the HEALTH snapshot's bar — NOT the day-group's own bar, which
+  // would read 0 for every entry in the Earlier section and hide the tag
+  // exactly where a 2-day-old cross is being reviewed
+  const age = Math.round((Date.parse(health.bar_date) - Date.parse(a.date)) / 86400000)
   if (age < 1) return null // just crossed — nothing to confirm yet
   const vs = health?.tickers[a.ticker]?.vs_sma200_pct
   if (vs === undefined) return null
@@ -443,7 +446,7 @@ function BuyCard({ a, rank, defaultOpen, refDate, baselines = null, prices = nul
           <MarketBadge market={a.market} />
           <QualityBadge score={score} />
           <FreshnessChip date={a.date} refDate={refDate} />
-          <HeldAboveTag a={a} refDate={refDate} health={health} />
+          <HeldAboveTag a={a} health={health} />
           {refire && (
             <span className="text-[10px] text-muted"
                   title="Same signal fired within the last 14 days — possible whipsaw around the SMA">
