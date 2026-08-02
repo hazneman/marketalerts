@@ -1,10 +1,10 @@
 import { useState } from 'react'
-import { useAlerts, useBaselines, usePortfolio } from '../hooks/useAlerts'
+import { useAlerts, useBaselines, usePortfolio, usePrices } from '../hooks/useAlerts'
 import { judgeMetric } from '../lib/baselines'
 import { addPosition } from '../lib/portfolio'
 import { tradingViewUrl } from '../lib/tradingview'
 import { badgeFlat, badgeRing, inputClsSm, type Tone } from '../lib/ui'
-import type { AlertItem, BaselinesData, FibFrame, Fundamentals } from '../types'
+import type { AlertItem, BaselinesData, FibFrame, Fundamentals, PricesData } from '../types'
 import { CATEGORY_LABELS, CATEGORY_SHORT, CONSENSUS_LABELS, SECTOR_STATE } from '../types'
 import { MarketBadge } from './AlertTable'
 import Badge from './ui/Badge'
@@ -360,9 +360,37 @@ function FreshnessChip({ date, refDate }: { date: string; refDate: string }) {
   )
 }
 
-function BuyCard({ a, rank, defaultOpen, refDate, baselines = null, refire = false }: {
+// ±1% / ±2% brackets around the freshest close we have — order-placement
+// anchors (entry dips below, quick take-profit above). Latest scan close when
+// available (matters for multi-day-old 200-week signals), else the alert close.
+function PriceLevels({ a, prices }: { a: AlertItem; prices: PricesData | null }) {
+  const live = prices?.prices[a.ticker]?.close
+  const base = live ?? a.close
+  const bar = live !== undefined ? prices?.bar_dates?.[a.market ?? 'us'] : a.date
+  const fmt = (v: number) => (base >= 10 ? v.toFixed(2) : v.toFixed(4))
+  const steps = [-2, -1, 0, 1, 2]
+  return (
+    <div className="mt-3 flex flex-wrap items-baseline gap-x-4 gap-y-1 bg-raised px-3.5 py-2 ring-1 ring-hair"
+         title={`Brackets around the ${live !== undefined ? 'latest scan' : 'signal-day'} close — reference levels for orders, not advice`}>
+      <span className="text-xs font-medium text-ink">Price levels</span>
+      {steps.map((s) => (
+        <span key={s} className="tnum text-sm">
+          <span className={`mr-1 text-xs ${s < 0 ? 'text-down' : s > 0 ? 'text-up' : 'text-muted'}`}>
+            {s === 0 ? 'close' : `${s > 0 ? '+' : ''}${s}%`}
+          </span>
+          <span className={s === 0 ? 'font-medium text-accent' : 'text-ink'}>
+            {fmt(base * (1 + s / 100))}
+          </span>
+        </span>
+      ))}
+      <span className="text-xs text-faint">bar {bar ?? a.date}</span>
+    </div>
+  )
+}
+
+function BuyCard({ a, rank, defaultOpen, refDate, baselines = null, prices = null, refire = false }: {
   a: AlertItem; rank: number; defaultOpen: boolean; refDate: string
-  baselines?: BaselinesData | null; refire?: boolean
+  baselines?: BaselinesData | null; prices?: PricesData | null; refire?: boolean
 }) {
   const f = a.fundamentals
   const [open, setOpen] = useState(defaultOpen)
@@ -424,6 +452,8 @@ function BuyCard({ a, rank, defaultOpen, refDate, baselines = null, refire = fal
             {a.verdict_reason} · <span className="text-up">MACD confirms</span>
             <span className="ml-2 text-faint">{a.date}</span>
           </p>
+
+          <PriceLevels a={a} prices={prices} />
 
           {f ? (
         <div className="mt-3 bg-raised p-3.5 ring-1 ring-hair">
@@ -579,6 +609,7 @@ export default function BuysPage() {
   const { latest, history, error } = useAlerts()
   const { positions } = usePortfolio()
   const baselines = useBaselines()
+  const prices = usePrices()
   const [showHeld, setShowHeld] = useState(false)
   const [sort, setSort] = useState<SortMode>('quality')
   const [showRecent, setShowRecent] = useState(false)
@@ -675,7 +706,7 @@ export default function BuysPage() {
         <div className="space-y-2.5">
           {buys.map(({ a }, i) => (
             <BuyCard key={`${a.rule}-${a.ticker}`} a={a} rank={i + 1} defaultOpen={false}
-                     refDate={refDateFor(a)} baselines={baselines} refire={isRefire(a)} />
+                     refDate={refDateFor(a)} baselines={baselines} prices={prices} refire={isRefire(a)} />
           ))}
         </div>
       ) : (
@@ -698,7 +729,7 @@ export default function BuysPage() {
           {showHeld &&
             heldBuys.map(({ a }, i) => (
               <BuyCard key={`held-${a.rule}-${a.ticker}`} a={a} rank={buys.length + i + 1}
-                       defaultOpen={false} refDate={refDateFor(a)} baselines={baselines} refire={isRefire(a)} />
+                       defaultOpen={false} refDate={refDateFor(a)} baselines={baselines} prices={prices} refire={isRefire(a)} />
             ))}
         </div>
       )}
@@ -732,7 +763,7 @@ export default function BuysPage() {
                     {dayOpen &&
                       dayBuys.map(({ a }, i) => (
                         <BuyCard key={`${date}-${a.rule}-${a.ticker}`} a={a} rank={i + 1}
-                                 defaultOpen={false} refDate={date} baselines={baselines} refire={isRefire(a)} />
+                                 defaultOpen={false} refDate={date} baselines={baselines} prices={prices} refire={isRefire(a)} />
                       ))}
                   </div>
                 )
