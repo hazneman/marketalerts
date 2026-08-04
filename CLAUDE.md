@@ -25,7 +25,7 @@ dashboard from the push (Git-connected; root `frontend`, `npm run build` →
 
 ```bash
 ./dev.sh                  # menu: quick scan / full scan / dashboard (:3100) / tests
-scanner/.venv/bin/python -m pytest scanner/tests -q     # 180 tests
+scanner/.venv/bin/python -m pytest scanner/tests -q     # 191 tests
 cd frontend && npx tsc --noEmit && npm run build         # type-check + build
 scanner/.venv/bin/python scanner/scan.py --tickers META,SAP.DE --dry-run
 ```
@@ -36,7 +36,11 @@ Pipeline per daily run (`scan.py`):
 1. Fetch 6y daily OHLCV for all markets in one pass (`fetcher.iter_us_chunks`,
    yfinance batches of 80, `auto_adjust=False` — **raw Close matches TradingView**).
 2. Guards: >50% fetch failure → abort keeping old data; per-ticker skip for
-   <201 bars (`insufficient_history`) or per-market stale bar.
+   <201 bars (`insufficient_history`) or per-market stale bar; **final-bar
+   guard** (`drop_forming_bars`) trims any bar dated today whose market
+   session hasn't closed+settled yet (per-market UTC cutoffs in
+   `FINAL_AFTER_UTC`), so daytime runs — manual or the morning cron — never
+   evaluate a forming intraday close.
 3. `alerts/` **RULES registry** (pluggable — add a module + append to
    `alerts/__init__.py`; scan, verdict, forex pairs, and dashboard all pick it
    up automatically):
@@ -256,7 +260,10 @@ action.
 
 ## Workflow / operations
 
-- `.github/workflows/scan.yml`: cron `30 22 * * 1-5` + workflow_dispatch;
+- `.github/workflows/scan.yml`: two crons — `30 22 * * 1-5` (main run, after
+  US close) and `10 5 * * 2-6` (morning self-heal: picks up the DE/BIST bars
+  Yahoo withheld from the evening run ~18h sooner; all bars final at that
+  hour, byte-stable no-op when Yahoo has nothing new) — + workflow_dispatch;
   commit-if-changed with **rebase-retry push** (`git pull --rebase -X theirs`,
   5 attempts) — survives races with manual pushes. Triggered only on
   schedule/dispatch; GITHUB_TOKEN commits can't loop.
@@ -281,8 +288,15 @@ action.
   slow/flaky per ticker; everything degrades gracefully.
 - Yahoo's upgrades/downgrades feed is stale for some tickers (e.g. META);
   the 90-day filter hides stale entries automatically.
-- European (DE/BIST) daily bars sometimes lag on Yahoo right after US close —
-  the per-market bar logic keeps their last complete bar; self-heals next run.
+- European (DE/BIST) daily bars are NOT "sometimes" late on Yahoo — at the
+  22:30 UTC run they are missing **every night** (verified across all of Jul
+  2026: every scheduled scan had DE/BIST exactly one session behind US, while
+  daytime manual runs got same-day bars). Net effect: EU alerts fire a day
+  late from the evening run; the 05:10 UTC morning cron exists to claw that
+  back. Worse is possible: Aug 3 the evening run was TWO sessions behind
+  (Jul 31 + Aug 3 both missing) — a suspected Yahoo range-query quirk;
+  candidate fix is explicit start/end dates instead of `period=` in
+  `fetcher.py` (unverified — needs a live Yahoo probe, blocked in sandboxes).
 - `rates.json` (policy rates + 6m outlooks) is **manual**; verify/update after
   central-bank meetings and bump `as_of`/`outlook_as_of`.
 - `sector_membership.json` (ticker → GICS sector, name, shares outstanding) is

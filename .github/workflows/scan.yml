@@ -7,6 +7,13 @@ on:
   schedule:
     # 22:30 UTC = 5:30 pm ET (summer) / 6:30 pm ET (winter) — always after close
     - cron: "30 22 * * 1-5"
+    # Morning self-heal, Tue-Sat 05:10 UTC (all markets closed, every bar
+    # final): Yahoo often withholds the just-closed DE/BIST daily bar from the
+    # evening run and only serves it later — this run picks it up ~18h sooner.
+    # If it lands after an open (GitHub cron delay), scan.py's final-bar guard
+    # drops the forming bar; if Yahoo has nothing new, outputs are byte-stable
+    # and the commit step is a no-op. Sat covers Friday's EU session.
+    - cron: "10 5 * * 2-6"
   workflow_dispatch: {}
 
 concurrency:

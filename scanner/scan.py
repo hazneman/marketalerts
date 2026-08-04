@@ -13,6 +13,7 @@ Usage:
 from __future__ import annotations
 
 import argparse
+import datetime as dt
 import json
 import logging
 import sys
@@ -48,6 +49,34 @@ def market_of(symbol: str) -> str:
     return "us"
 
 
+# A market's daily bar is only FINAL once its session has closed. Yahoo serves
+# a live, still-forming bar during trading hours — fine for quotes, poison for
+# cross detection and the accumulating track record. Latest-case (winter-DST)
+# session close in UTC plus a 45-minute settle buffer, per market:
+#   us    16:00 ET     -> 21:00 UTC winter -> final after 21:45
+#   de    17:30 Berlin -> 16:30 UTC winter -> final after 17:15
+#   bist  18:00 TRT    -> 15:00 UTC always -> final after 15:45
+FINAL_AFTER_UTC = {"us": dt.time(21, 45), "de": dt.time(17, 15), "bist": dt.time(15, 45)}
+
+
+def drop_forming_bars(frames: dict, now: dt.datetime | None = None) -> list[str]:
+    """Trim each frame's last bar when that market's session may still be open
+    or settling — a bar dated today is not final until the market's close has
+    passed. Makes daytime runs (manual or scheduled) safe: they evaluate the
+    last COMPLETED bar instead of a moving intraday close. Returns the symbols
+    that were trimmed."""
+    now = now or dt.datetime.now(dt.timezone.utc)
+    trimmed = []
+    for sym, df in frames.items():
+        if df.empty:
+            continue
+        if (df.index[-1].date() == now.date()
+                and now.time() < FINAL_AFTER_UTC[market_of(sym)]):
+            frames[sym] = df.iloc[:-1]
+            trimmed.append(sym)
+    return trimmed
+
+
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description="SMA cross scanner")
     parser.add_argument("--tickers", help="comma-separated tickers (overrides universe)")
@@ -74,6 +103,14 @@ def main(argv: list[str] | None = None) -> int:
         frames.update(chunk)
         done += len(chunk)
         logger.info("fetched %d/%d", done, len(symbols))
+
+    trimmed = drop_forming_bars(frames)
+    if trimmed:
+        counts: dict[str, int] = {}
+        for s in trimmed:
+            counts[market_of(s)] = counts.get(market_of(s), 0) + 1
+        logger.info("final-bar guard: dropped today's forming bar for %d tickers (%s)",
+                    len(trimmed), ", ".join(f"{m}:{n}" for m, n in sorted(counts.items())))
 
     if args.dry_run:
         print(f"{'ticker':<8}{'bars':>6}{'date':>12}{'close':>10}{'sma50':>10}{'sma200':>10}")

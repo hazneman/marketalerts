@@ -177,7 +177,7 @@ No backend, no database. On weekends/holidays the scan produces identical JSON �
 
 ```mermaid
 flowchart TD
-    CRON["⏰ Cron schedule<br/>weekdays 22:30 UTC<br/>(always after US close)"]
+    CRON["⏰ Cron schedule<br/>weekdays 22:30 UTC (after US close)<br/>+ Tue–Sat 05:10 UTC (EU self-heal)"]
     MANUAL["🖱️ Manual trigger<br/>Actions tab → Run workflow"]
 
     subgraph GHA["GitHub Action · daily-scan (ubuntu)"]
@@ -296,7 +296,8 @@ SMAs are computed on Yahoo's **raw Close** (`auto_adjust=False`): split-adjusted
 - **Weekly (200-week) alerts** are dated to the completed week's Friday and stay in `latest.json` until the next week completes — by design, so a secular cross stays visible for a week.
 - Yahoo's fundamentals endpoint (`.info`) is slow/flaky — verdicts fall back to technicals-only when it fails (tooltip says "fundamentals unavailable").
 - GitHub disables scheduled workflows after **60 days of repo inactivity**. Daily data commits keep it alive, but if alerts ever stop, check the repo's **Actions tab** first.
-- The cron is fixed at 22:30 UTC → 5:30 pm ET in summer, 6:30 pm ET in winter. Always after the close.
+- Two crons: **22:30 UTC weekdays** (main run — 5:30 pm ET summer / 6:30 pm ET winter, always after the US close) and **05:10 UTC Tue–Sat** (morning self-heal — Yahoo often withholds the just-closed DE/BIST daily bar from the evening run; this run picks it up ~18 hours sooner, and is a no-op commit when there's nothing new).
+- A **final-bar guard** in `scan.py` trims any bar whose market session hasn't closed and settled yet, so a scan run during trading hours (manually or by a delayed cron) evaluates the last *completed* bar instead of a live, still-moving one.
 
 ## Adding a new alert type
 
