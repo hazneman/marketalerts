@@ -1,63 +1,63 @@
 {
- "bar_date": "2026-08-24",
+ "bar_date": "2026-08-25",
  "benchmark": {
   "chg": {
-   "1m": 3.32,
-   "1w": -1.19,
-   "1y": 20.13,
-   "3m": 2.39,
-   "6m": 11.88
+   "1m": 3.63,
+   "1w": -0.2,
+   "1y": 18.69,
+   "3m": 2.04,
+   "6m": 11.43
   },
   "symbol": "SPY"
  },
- "generated_at": "2026-08-24T22:53:26Z",
+ "generated_at": "2026-08-25T22:54:35Z",
  "schema_version": 1,
  "sectors": [
   {
    "above_sma200": true,
    "chg": {
-    "1m": 7.46,
-    "1w": 4.58,
-    "1y": 27.48,
-    "3m": 16.55,
-    "6m": 10.19
+    "1m": 7.28,
+    "1w": 3.28,
+    "1y": 26.87,
+    "3m": 18.03,
+    "6m": 11.03
    },
    "comment": "Outperforming the market short and medium term \u2014 money flowing in",
    "name": "Health Care",
-   "price": 174.7,
+   "price": 175.29,
    "rank": 1,
    "rs": {
-    "1m": 4.14,
-    "3m": 14.16,
-    "6m": -1.69
+    "1m": 3.65,
+    "3m": 15.99,
+    "6m": -0.4
    },
-   "rs_score": 6.77,
+   "rs_score": 7.36,
    "state": "leading",
    "symbol": "XLV",
    "top": [
     {
-     "cap": 1111939111383,
-     "chg_1d_pct": -0.67,
+     "cap": 1100105702925,
+     "chg_1d_pct": -1.06,
      "fundamentals": {
       "consensus": "buy",
       "div_yield_pct": 0.55,
-      "forward_pe": 26.4,
+      "forward_pe": 26.1,
       "margin_pct": 33.5,
       "rating": "strong",
       "rev_growth_pct": 47.7,
       "score": 2,
-      "target_upside_pct": 5.5
+      "target_upside_pct": 6.6
      },
      "name": "Eli Lilly and Company",
-     "price": 1246.93,
+     "price": 1233.66,
      "ticker": "LLY"
     },
     {
-     "cap": 657266521761,
-     "chg_1d_pct": 1.04,
+     "cap": 657507243458,
+     "chg_1d_pct": 0.04,
      "fundamentals": {
       "consensus": "buy",
-      "div_yield_pct": 1.98,
+      "div_yield_pct": 1.96,
       "forward_pe": 22.2,
       "margin_pct": 21.5,
       "rating": "neutral",
@@ -66,190 +66,190 @@
       "target_upside_pct": -0.2
      },
      "name": "Johnson & Johnson",
-     "price": 273.04,
+     "price": 273.14,
      "ticker": "JNJ"
     },
     {
-     "cap": 467352037010,
-     "chg_1d_pct": -0.17,
+     "cap": 469595863893,
+     "chg_1d_pct": 0.48,
      "fundamentals": {
       "consensus": "buy",
-      "div_yield_pct": 2.61,
-      "forward_pe": 16.2,
+      "div_yield_pct": 2.62,
+      "forward_pe": 16.3,
       "margin_pct": 9.8,
       "rating": "strong",
       "rev_growth_pct": 10.2,
       "score": 2,
-      "target_upside_pct": 4.6
+      "target_upside_pct": 4.1
      },
      "name": "AbbVie Inc.",
-     "price": 264.52,
+     "price": 265.79,
      "ticker": "ABBV"
     },
     {
-     "cap": 372103746363,
-     "chg_1d_pct": -1.24,
+     "cap": 386404029726,
+     "chg_1d_pct": 3.84,
      "fundamentals": {
       "consensus": "buy",
-      "div_yield_pct": 2.23,
-      "forward_pe": 15.8,
+      "div_yield_pct": 2.26,
+      "forward_pe": 16.4,
       "margin_pct": 4.8,
-      "rating": "strong",
+      "rating": "neutral",
       "rev_growth_pct": 5.1,
-      "score": 2,
-      "target_upside_pct": -1.9
+      "score": 0,
+      "target_upside_pct": -5.5
      },
      "name": "Merck & Company, Inc.",
-     "price": 150.66,
+     "price": 156.45,
      "ticker": "MRK"
     },
     {
-     "cap": 362131662539,
-     "chg_1d_pct": 2.22,
+     "cap": 360160989182,
+     "chg_1d_pct": -0.54,
      "fundamentals": {
       "consensus": "buy",
-      "div_yield_pct": 2.38,
-      "forward_pe": 17.8,
+      "div_yield_pct": 2.33,
+      "forward_pe": 17.7,
       "margin_pct": 3.1,
       "rating": "strong",
       "rev_growth_pct": 0.4,
       "score": 4,
-      "target_upside_pct": 19.2
+      "target_upside_pct": 19.8
      },
      "name": "UnitedHealth Group Incorporated",
-     "price": 398.76,
+     "price": 396.59,
      "ticker": "UNH"
     },
     {
-     "cap": 239544120332,
-     "chg_1d_pct": 1.03,
+     "cap": 238680587093,
+     "chg_1d_pct": -0.36,
      "fundamentals": {
       "consensus": "buy",
-      "div_yield_pct": 2.29,
-      "forward_pe": 18.2,
+      "div_yield_pct": 2.27,
+      "forward_pe": 18.1,
       "margin_pct": 23.0,
       "rating": "neutral",
       "rev_growth_pct": 9.5,
       "score": 0,
-      "target_upside_pct": -12.5
+      "target_upside_pct": -12.2
      },
      "name": "Amgen Inc.",
-     "price": 443.84,
+     "price": 442.24,
      "ticker": "AMGN"
     },
     {
-     "cap": 233653279904,
-     "chg_1d_pct": -0.08,
+     "cap": 233434023239,
+     "chg_1d_pct": -0.09,
      "fundamentals": {
       "consensus": "buy",
       "div_yield_pct": 0.3,
-      "forward_pe": 22.9,
+      "forward_pe": 22.8,
       "margin_pct": 15.0,
       "rating": "neutral",
       "rev_growth_pct": 10.5,
       "score": 1,
-      "target_upside_pct": 0.4
+      "target_upside_pct": 0.5
      },
      "name": "Thermo Fisher Scientific Inc",
-     "price": 628.74,
+     "price": 628.15,
      "ticker": "TMO"
     },
     {
-     "cap": 203217340677,
-     "chg_1d_pct": 0.03,
+     "cap": 202276761574,
+     "chg_1d_pct": -0.46,
      "fundamentals": {
       "consensus": "buy",
       "div_yield_pct": 2.16,
-      "forward_pe": 19.2,
+      "forward_pe": 19.1,
       "margin_pct": 11.6,
       "rating": "neutral",
       "rev_growth_pct": 13.0,
       "score": 0,
-      "target_upside_pct": 3.0
+      "target_upside_pct": 3.5
      },
      "name": "Abbott Laboratories",
-     "price": 116.67,
+     "price": 116.13,
      "ticker": "ABT"
     },
     {
-     "cap": 182187963310,
-     "chg_1d_pct": 0.42,
+     "cap": 184708350154,
+     "chg_1d_pct": 1.38,
      "fundamentals": {
       "consensus": "buy",
       "div_yield_pct": 2.24,
-      "forward_pe": 14.8,
+      "forward_pe": 15.0,
       "margin_pct": -10.6,
       "rating": "strong",
       "rev_growth_pct": 10.2,
-      "score": 3,
-      "target_upside_pct": 7.3
+      "score": 2,
+      "target_upside_pct": 5.8
      },
      "name": "Gilead Sciences, Inc.",
-     "price": 146.74,
+     "price": 148.77,
      "ticker": "GILD"
     },
     {
-     "cap": 159413453406,
-     "chg_1d_pct": -0.36,
+     "cap": 162833119908,
+     "chg_1d_pct": 2.15,
      "fundamentals": {
       "consensus": "buy",
-      "div_yield_pct": 6.13,
-      "forward_pe": 9.7,
+      "div_yield_pct": 6.15,
+      "forward_pe": 9.9,
       "margin_pct": 6.8,
       "rating": "strong",
       "rev_growth_pct": 2.6,
       "score": 2,
-      "target_upside_pct": 2.3
+      "target_upside_pct": 0.1
      },
      "name": "Pfizer, Inc.",
-     "price": 27.97,
+     "price": 28.57,
      "ticker": "PFE"
     }
    ],
-   "vs_sma200_pct": 13.19
+   "vs_sma200_pct": 13.46
   },
   {
    "above_sma200": true,
    "chg": {
-    "1m": 3.39,
-    "1w": 1.11,
-    "1y": 10.47,
-    "3m": 12.09,
-    "6m": 14.76
+    "1m": 2.51,
+    "1w": 0.81,
+    "1y": 8.85,
+    "3m": 12.46,
+    "6m": 14.38
    },
-   "comment": "Outperforming the market short and medium term \u2014 money flowing in",
+   "comment": "Was strong, now lagging vs the market \u2014 rotation out",
    "name": "Financials",
-   "price": 58.22,
+   "price": 58.31,
    "rank": 2,
    "rs": {
-    "1m": 0.07,
-    "3m": 9.7,
-    "6m": 2.88
+    "1m": -1.12,
+    "3m": 10.42,
+    "6m": 2.95
    },
-   "rs_score": 3.86,
-   "state": "leading",
+   "rs_score": 3.53,
+   "state": "weakening",
    "symbol": "XLF",
    "top": [
     {
-     "cap": 954951074261,
-     "chg_1d_pct": 1.37,
+     "cap": 955754927686,
+     "chg_1d_pct": 0.08,
      "fundamentals": {
       "consensus": "buy",
-      "div_yield_pct": 1.71,
+      "div_yield_pct": 1.68,
       "forward_pe": 14.3,
       "margin_pct": 34.9,
       "rating": "strong",
       "rev_growth_pct": 30.4,
       "score": 3,
-      "target_upside_pct": 5.1
+      "target_upside_pct": 5.0
      },
      "name": "JP Morgan Chase & Co.",
-     "price": 356.39,
+     "price": 356.69,
      "ticker": "JPM"
     },
     {
      "cap": 705195031984,
-     "chg_1d_pct": 1.71,
+     "chg_1d_pct": 0.0,
      "fundamentals": {
       "consensus": "buy",
       "forward_pe": 22.7,
@@ -264,381 +264,381 @@
      "ticker": "BRK-B"
     },
     {
-     "cap": 634689675096,
-     "chg_1d_pct": 3.06,
+     "cap": 637560973278,
+     "chg_1d_pct": 0.45,
      "fundamentals": {
       "consensus": "strong_buy",
-      "div_yield_pct": 0.72,
-      "forward_pe": 25.5,
+      "div_yield_pct": 0.7,
+      "forward_pe": 25.6,
       "margin_pct": 50.8,
       "rating": "strong",
       "rev_growth_pct": 14.4,
       "score": 2,
-      "target_upside_pct": 9.4
+      "target_upside_pct": 8.9
      },
      "name": "Visa Inc.",
-     "price": 382.41,
+     "price": 384.14,
      "ticker": "V"
     },
     {
-     "cap": 526098952927,
-     "chg_1d_pct": 3.31,
+     "cap": 525669205175,
+     "chg_1d_pct": -0.08,
      "fundamentals": {
       "consensus": "strong_buy",
-      "div_yield_pct": 0.6,
-      "forward_pe": 26.1,
+      "div_yield_pct": 0.58,
+      "forward_pe": 26.0,
       "margin_pct": 46.3,
       "rating": "strong",
       "rev_growth_pct": 14.1,
       "score": 2,
-      "target_upside_pct": 11.2
+      "target_upside_pct": 11.3
      },
      "name": "Mastercard Incorporated",
-     "price": 599.86,
+     "price": 599.37,
      "ticker": "MA"
     },
     {
-     "cap": 442330495276,
-     "chg_1d_pct": 1.04,
+     "cap": 443040154341,
+     "chg_1d_pct": 0.16,
      "fundamentals": {
       "consensus": "buy",
-      "div_yield_pct": 2.07,
+      "div_yield_pct": 2.05,
       "forward_pe": 11.8,
       "margin_pct": 29.5,
       "rating": "strong",
       "rev_growth_pct": 16.8,
       "score": 3,
-      "target_upside_pct": 10.3
+      "target_upside_pct": 10.2
      },
      "name": "Bank of America Corporation",
-     "price": 62.33,
+     "price": 62.43,
      "ticker": "BAC"
     },
     {
-     "cap": 337665133623,
-     "chg_1d_pct": -0.06,
+     "cap": 341908029781,
+     "chg_1d_pct": 1.26,
      "fundamentals": {
       "consensus": "buy",
       "div_yield_pct": 2.15,
-      "forward_pe": 15.7,
+      "forward_pe": 15.9,
       "margin_pct": 25.9,
       "rating": "neutral",
       "rev_growth_pct": 28.0,
       "score": 1,
-      "target_upside_pct": 10.5
+      "target_upside_pct": 9.2
      },
      "name": "Morgan Stanley",
-     "price": 214.08,
+     "price": 216.77,
      "ticker": "MS"
     },
     {
-     "cap": 305710290233,
-     "chg_1d_pct": -0.29,
+     "cap": 312377457948,
+     "chg_1d_pct": 2.18,
      "fundamentals": {
       "consensus": "hold",
-      "div_yield_pct": 1.92,
-      "forward_pe": 14.0,
+      "div_yield_pct": 1.93,
+      "forward_pe": 14.3,
       "margin_pct": 31.0,
       "rating": "strong",
       "rev_growth_pct": 42.5,
       "score": 2,
-      "target_upside_pct": 10.2
+      "target_upside_pct": 7.8
      },
      "name": "Goldman Sachs Group, Inc. (The)",
-     "price": 1036.28,
+     "price": 1058.88,
      "ticker": "GS"
     },
     {
-     "cap": 259259253931,
-     "chg_1d_pct": 1.05,
+     "cap": 259473467196,
+     "chg_1d_pct": 0.08,
      "fundamentals": {
       "consensus": "buy",
-      "div_yield_pct": 2.39,
+      "div_yield_pct": 2.36,
       "forward_pe": 10.7,
       "margin_pct": 27.2,
       "rating": "strong",
       "rev_growth_pct": 9.5,
       "score": 4,
-      "target_upside_pct": 18.3
+      "target_upside_pct": 18.2
      },
      "name": "Wells Fargo & Company",
-     "price": 84.72,
+     "price": 84.79,
      "ticker": "WFC"
     },
     {
-     "cap": 230169179017,
-     "chg_1d_pct": 0.4,
+     "cap": 229227568525,
+     "chg_1d_pct": -0.41,
      "fundamentals": {
       "consensus": "buy",
       "div_yield_pct": 1.13,
-      "forward_pe": 16.8,
+      "forward_pe": 16.7,
       "margin_pct": 16.1,
       "rating": "neutral",
       "rev_growth_pct": 12.8,
       "score": 1,
-      "target_upside_pct": 11.5
+      "target_upside_pct": 11.9
      },
      "name": "American Express Company",
-     "price": 337.33,
+     "price": 335.95,
      "ticker": "AXP"
     },
     {
-     "cap": 224658596512,
-     "chg_1d_pct": 0.05,
+     "cap": 227268129253,
+     "chg_1d_pct": 1.16,
      "fundamentals": {
       "consensus": "buy",
-      "div_yield_pct": 2.04,
-      "forward_pe": 10.2,
+      "div_yield_pct": 2.03,
+      "forward_pe": 10.3,
       "margin_pct": 21.8,
       "rating": "strong",
       "rev_growth_pct": 15.5,
       "score": 4,
-      "target_upside_pct": 17.3
+      "target_upside_pct": 15.9
      },
      "name": "Citigroup, Inc.",
-     "price": 131.72,
+     "price": 133.25,
      "ticker": "C"
     }
    ],
-   "vs_sma200_pct": 9.33
+   "vs_sma200_pct": 9.44
   },
   {
    "above_sma200": true,
    "chg": {
-    "1m": 5.85,
-    "1w": 0.85,
-    "1y": 46.12,
-    "3m": 6.09,
-    "6m": 14.43
+    "1m": 6.34,
+    "1w": -2.54,
+    "1y": 40.82,
+    "3m": 7.28,
+    "6m": 12.63
    },
    "comment": "Outperforming the market short and medium term \u2014 money flowing in",
    "name": "Energy",
-   "price": 63.11,
+   "price": 62.06,
    "rank": 3,
    "rs": {
-    "1m": 2.53,
-    "3m": 3.7,
-    "6m": 2.55
+    "1m": 2.71,
+    "3m": 5.24,
+    "6m": 1.2
    },
-   "rs_score": 2.94,
+   "rs_score": 3.37,
    "state": "leading",
    "symbol": "XLE",
    "top": [
     {
-     "cap": 679978581926,
-     "chg_1d_pct": -0.64,
+     "cap": 665844312103,
+     "chg_1d_pct": -2.08,
      "fundamentals": {
       "consensus": "buy",
-      "div_yield_pct": 2.5,
-      "forward_pe": 15.4,
+      "div_yield_pct": 2.51,
+      "forward_pe": 15.1,
       "margin_pct": 9.1,
       "rating": "neutral",
       "rev_growth_pct": 44.1,
       "score": 1,
-      "target_upside_pct": 3.4
+      "target_upside_pct": 5.6
      },
      "name": "ExxonMobil Holdings Corporation",
-     "price": 164.05,
+     "price": 160.64,
      "ticker": "XOM"
     },
     {
-     "cap": 404473583391,
-     "chg_1d_pct": -1.06,
+     "cap": 398100470649,
+     "chg_1d_pct": -1.58,
      "fundamentals": {
       "consensus": "buy",
-      "div_yield_pct": 3.47,
-      "forward_pe": 15.3,
+      "div_yield_pct": 3.51,
+      "forward_pe": 15.1,
       "margin_pct": 9.8,
       "rating": "strong",
       "rev_growth_pct": 53.5,
       "score": 3,
-      "target_upside_pct": 7.4
+      "target_upside_pct": 9.1
      },
      "name": "Chevron Corporation",
-     "price": 203.09,
+     "price": 199.89,
      "ticker": "CVX"
     },
     {
-     "cap": 162459505833,
+     "cap": 160619881882,
      "chg_1d_pct": -1.13,
      "fundamentals": {
       "consensus": "buy",
-      "div_yield_pct": 2.49,
-      "forward_pe": 14.0,
+      "div_yield_pct": 2.52,
+      "forward_pe": 13.8,
       "margin_pct": 14.4,
       "rating": "strong",
       "rev_growth_pct": 35.5,
       "score": 4,
-      "target_upside_pct": 9.0
+      "target_upside_pct": 10.2
      },
      "name": "ConocoPhillips",
-     "price": 133.35,
+     "price": 131.84,
      "ticker": "COP"
     },
     {
-     "cap": 105832868920,
-     "chg_1d_pct": 0.5,
+     "cap": 103602473028,
+     "chg_1d_pct": -2.11,
      "fundamentals": {
       "consensus": "buy",
-      "div_yield_pct": 1.11,
-      "forward_pe": 11.3,
+      "div_yield_pct": 1.1,
+      "forward_pe": 11.0,
       "margin_pct": 5.5,
       "rating": "strong",
       "rev_growth_pct": 53.7,
       "score": 2,
-      "target_upside_pct": -10.5
+      "target_upside_pct": -8.5
      },
      "name": "Marathon Petroleum Corporation",
-     "price": 362.52,
+     "price": 354.88,
      "ticker": "MPC"
     },
     {
-     "cap": 102738742572,
-     "chg_1d_pct": -0.82,
+     "cap": 101078888320,
+     "chg_1d_pct": -1.62,
      "fundamentals": {
       "consensus": "buy",
-      "div_yield_pct": 1.38,
-      "forward_pe": 11.3,
+      "div_yield_pct": 1.39,
+      "forward_pe": 11.1,
       "margin_pct": 5.4,
       "rating": "strong",
       "rev_growth_pct": 51.7,
       "score": 2,
-      "target_upside_pct": -9.5
+      "target_upside_pct": -8.0
      },
      "name": "Valero Energy Corporation",
-     "price": 346.0,
+     "price": 340.41,
      "ticker": "VLO"
     },
     {
-     "cap": 97010237439,
-     "chg_1d_pct": -0.37,
+     "cap": 94981506238,
+     "chg_1d_pct": -2.09,
      "fundamentals": {
       "consensus": "buy",
-      "div_yield_pct": 2.09,
-      "forward_pe": 11.4,
+      "div_yield_pct": 2.1,
+      "forward_pe": 11.5,
       "margin_pct": 4.7,
       "rating": "strong",
       "rev_growth_pct": 53.1,
       "score": 3,
-      "target_upside_pct": -8.2
+      "target_upside_pct": -6.3
      },
      "name": "Phillips 66",
-     "price": 241.96,
+     "price": 236.9,
      "ticker": "PSX"
     },
     {
-     "cap": 86796186867,
-     "chg_1d_pct": 0.68,
+     "cap": 86930716676,
+     "chg_1d_pct": 0.15,
      "fundamentals": {
       "consensus": "strong_buy",
-      "div_yield_pct": 2.98,
+      "div_yield_pct": 2.96,
       "forward_pe": 27.1,
       "margin_pct": 24.9,
       "rating": "strong",
       "rev_growth_pct": 7.8,
       "score": 2,
-      "target_upside_pct": 20.1
+      "target_upside_pct": 19.9
      },
      "name": "Williams Companies, Inc. (The)",
-     "price": 70.97,
+     "price": 71.08,
      "ticker": "WMB"
     },
     {
-     "cap": 80733113694,
-     "chg_1d_pct": 0.24,
+     "cap": 79671622754,
+     "chg_1d_pct": -1.31,
      "fundamentals": {
       "consensus": "buy",
       "div_yield_pct": 2.19,
-      "forward_pe": 16.7,
+      "forward_pe": 16.5,
       "margin_pct": 8.5,
       "rating": "neutral",
       "rev_growth_pct": 5.0,
-      "score": 0,
-      "target_upside_pct": 14.7
+      "score": 1,
+      "target_upside_pct": 16.2
      },
      "name": "SLB Limited",
-     "price": 54.0,
+     "price": 53.29,
      "ticker": "SLB"
     },
     {
-     "cap": 80006131491,
-     "chg_1d_pct": -1.86,
+     "cap": 78205847059,
+     "chg_1d_pct": -2.25,
      "fundamentals": {
       "consensus": "buy",
-      "div_yield_pct": 2.67,
-      "forward_pe": 10.3,
+      "div_yield_pct": 2.72,
+      "forward_pe": 10.1,
       "margin_pct": 25.7,
       "rating": "strong",
       "rev_growth_pct": 58.7,
       "score": 3,
-      "target_upside_pct": 6.4
+      "target_upside_pct": 8.8
      },
      "name": "EOG Resources, Inc.",
-     "price": 150.21,
+     "price": 146.83,
      "ticker": "EOG"
     },
     {
-     "cap": 68969598467,
-     "chg_1d_pct": 0.06,
+     "cap": 68836108921,
+     "chg_1d_pct": -0.19,
      "fundamentals": {
       "consensus": "buy",
       "div_yield_pct": 3.81,
-      "forward_pe": 20.2,
+      "forward_pe": 20.1,
       "margin_pct": 19.3,
       "rating": "strong",
       "rev_growth_pct": 10.8,
       "score": 3,
-      "target_upside_pct": 15.5
+      "target_upside_pct": 15.7
      },
      "name": "Kinder Morgan, Inc.",
-     "price": 31.0,
+     "price": 30.94,
      "ticker": "KMI"
     }
    ],
-   "vs_sma200_pct": 16.88
+   "vs_sma200_pct": 14.74
   },
   {
    "above_sma200": true,
    "chg": {
-    "1m": 2.37,
-    "1w": -5.4,
-    "1y": 39.08,
-    "3m": -0.19,
-    "6m": 29.98
+    "1m": 4.27,
+    "1w": -2.09,
+    "1y": 38.51,
+    "3m": -1.84,
+    "6m": 29.52
    },
-   "comment": "Underperforming short and medium term \u2014 money flowing out",
+   "comment": "Turning up vs the market \u2014 early rotation in",
    "name": "Technology",
-   "price": 180.05,
+   "price": 181.74,
    "rank": 4,
    "rs": {
-    "1m": -0.95,
-    "3m": -2.58,
-    "6m": 18.1
+    "1m": 0.64,
+    "3m": -3.88,
+    "6m": 18.09
    },
-   "rs_score": 1.34,
-   "state": "lagging",
+   "rs_score": 1.68,
+   "state": "improving",
    "symbol": "XLK",
    "top": [
     {
-     "cap": 5049594080000,
-     "chg_1d_pct": -2.91,
+     "cap": 5160284050000,
+     "chg_1d_pct": 2.19,
      "fundamentals": {
       "consensus": "strong_buy",
-      "div_yield_pct": 0.47,
-      "forward_pe": 16.0,
+      "div_yield_pct": 0.48,
+      "forward_pe": 16.3,
       "margin_pct": 63.0,
       "rating": "strong",
       "rev_growth_pct": 85.2,
       "score": 3,
-      "target_upside_pct": 46.2
+      "target_upside_pct": 43.0
      },
      "name": "NVIDIA Corporation",
-     "price": 208.48,
+     "price": 213.05,
      "ticker": "NVDA"
     },
     {
-     "cap": 4558074061040,
-     "chg_1d_pct": 0.32,
+     "cap": 4551611624400,
+     "chg_1d_pct": -0.14,
      "fundamentals": {
       "consensus": "buy",
       "div_yield_pct": 0.35,
@@ -647,756 +647,580 @@
       "rating": "strong",
       "rev_growth_pct": 16.4,
       "score": 2,
-      "target_upside_pct": 4.5
+      "target_upside_pct": 4.7
      },
      "name": "Apple Inc.",
-     "price": 310.34,
+     "price": 309.9,
      "ticker": "AAPL"
     },
     {
-     "cap": 3619950515606,
-     "chg_1d_pct": 0.84,
+     "cap": 3652635628303,
+     "chg_1d_pct": 0.9,
      "fundamentals": {
       "consensus": "strong_buy",
       "div_yield_pct": 0.75,
-      "forward_pe": 20.7,
+      "forward_pe": 20.9,
       "margin_pct": 40.3,
       "rating": "strong",
       "rev_growth_pct": 17.7,
       "score": 3,
-      "target_upside_pct": 16.9
+      "target_upside_pct": 15.8
      },
      "name": "Microsoft Corporation",
-     "price": 487.31,
+     "price": 491.71,
      "ticker": "MSFT"
     },
     {
-     "cap": 1706829471834,
-     "chg_1d_pct": -2.63,
+     "cap": 1697219159834,
+     "chg_1d_pct": -0.56,
      "fundamentals": {
       "consensus": "strong_buy",
-      "div_yield_pct": 0.71,
-      "forward_pe": 18.4,
+      "div_yield_pct": 0.72,
+      "forward_pe": 18.3,
       "margin_pct": 38.8,
       "rating": "strong",
       "rev_growth_pct": 47.9,
       "score": 3,
-      "target_upside_pct": 46.7
+      "target_upside_pct": 47.5
      },
      "name": "Broadcom Inc.",
-     "price": 358.76,
+     "price": 356.74,
      "ticker": "AVGO"
     },
     {
-     "cap": 1028233406464,
-     "chg_1d_pct": -5.83,
+     "cap": 1053689928088,
+     "chg_1d_pct": 2.48,
      "fundamentals": {
       "consensus": "strong_buy",
-      "div_yield_pct": 0.05,
-      "forward_pe": 5.9,
+      "div_yield_pct": 0.06,
+      "forward_pe": 6.0,
       "margin_pct": 55.9,
       "rating": "strong",
       "rev_growth_pct": 345.7,
       "score": 4,
-      "target_upside_pct": 66.4
+      "target_upside_pct": 62.4
      },
      "name": "Micron Technology, Inc.",
-     "price": 910.43,
+     "price": 932.97,
      "ticker": "MU"
     },
     {
-     "cap": 744760535856,
-     "chg_1d_pct": -3.49,
+     "cap": 781351214196,
+     "chg_1d_pct": 4.91,
      "fundamentals": {
       "consensus": "strong_buy",
-      "forward_pe": 29.5,
+      "forward_pe": 30.9,
       "margin_pct": 15.6,
       "rating": "strong",
       "rev_growth_pct": 50.1,
       "score": 3,
-      "target_upside_pct": 34.2
+      "target_upside_pct": 27.9
      },
      "name": "Advanced Micro Devices, Inc.",
-     "price": 456.74,
+     "price": 479.18,
      "ticker": "AMD"
     },
     {
-     "cap": 670676841396,
-     "chg_1d_pct": -1.34,
+     "cap": 672230074586,
+     "chg_1d_pct": 0.23,
      "fundamentals": {
       "consensus": "strong_buy",
-      "div_yield_pct": 0.51,
-      "forward_pe": 28.8,
+      "div_yield_pct": 0.52,
+      "forward_pe": 28.9,
       "margin_pct": 30.1,
       "rating": "strong",
       "rev_growth_pct": 21.3,
       "score": 3,
-      "target_upside_pct": 26.1
+      "target_upside_pct": 25.9
      },
      "name": "ASML Holding N.V. - New York Re",
-     "price": 1740.13,
+     "price": 1744.16,
      "ticker": "ASML"
     },
     {
-     "cap": 438568760000,
-     "chg_1d_pct": -3.12,
+     "cap": 439674480000,
+     "chg_1d_pct": 0.25,
      "fundamentals": {
       "consensus": "hold",
-      "forward_pe": 42.8,
+      "forward_pe": 42.9,
       "margin_pct": -19.8,
       "rating": "neutral",
       "rev_growth_pct": 25.4,
       "score": 0,
-      "target_upside_pct": 31.7
+      "target_upside_pct": 31.3
      },
      "name": "Intel Corporation",
-     "price": 87.26,
+     "price": 87.48,
      "ticker": "INTC"
     },
     {
-     "cap": 434464343122,
-     "chg_1d_pct": -0.73,
+     "cap": 437932805628,
+     "chg_1d_pct": 0.8,
      "fundamentals": {
       "consensus": "buy",
-      "div_yield_pct": 1.51,
-      "forward_pe": 19.9,
+      "div_yield_pct": 1.52,
+      "forward_pe": 20.0,
       "margin_pct": 21.0,
       "rating": "strong",
       "rev_growth_pct": 17.6,
       "score": 3,
-      "target_upside_pct": 23.6
+      "target_upside_pct": 22.6
      },
      "name": "Cisco Systems, Inc.",
-     "price": 110.23,
+     "price": 111.11,
      "ticker": "CSCO"
     },
     {
-     "cap": 410323093949,
-     "chg_1d_pct": -2.74,
+     "cap": 416976981960,
+     "chg_1d_pct": 1.62,
      "fundamentals": {
       "consensus": "buy",
-      "div_yield_pct": 1.37,
-      "forward_pe": 13.1,
+      "div_yield_pct": 1.4,
+      "forward_pe": 13.3,
       "margin_pct": 25.4,
       "rating": "strong",
       "rev_growth_pct": 20.6,
       "score": 3,
-      "target_upside_pct": 73.0
+      "target_upside_pct": 70.2
      },
      "name": "Oracle Corporation",
-     "price": 142.45,
+     "price": 144.76,
      "ticker": "ORCL"
     }
    ],
-   "vs_sma200_pct": 13.55
+   "vs_sma200_pct": 14.5
   },
   {
    "above_sma200": true,
    "chg": {
-    "1m": 4.53,
-    "1w": 2.57,
-    "1y": 18.55,
-    "3m": 6.54,
-    "6m": 1.17
+    "1m": 4.26,
+    "1w": 3.48,
+    "1y": 16.25,
+    "3m": 5.08,
+    "6m": 0.41
    },
    "comment": "Outperforming the market short and medium term \u2014 money flowing in",
    "name": "Materials",
    "price": 53.58,
    "rank": 5,
    "rs": {
-    "1m": 1.21,
-    "3m": 4.15,
-    "6m": -10.71
+    "1m": 0.63,
+    "3m": 3.04,
+    "6m": -11.02
    },
-   "rs_score": 0.45,
+   "rs_score": -0.27,
    "state": "leading",
    "symbol": "XLB",
    "top": [
     {
-     "cap": 226564052319,
-     "chg_1d_pct": 0.5,
+     "cap": 225255609432,
+     "chg_1d_pct": -0.58,
      "fundamentals": {
       "consensus": "buy",
       "div_yield_pct": 1.31,
-      "forward_pe": 25.0,
+      "forward_pe": 24.9,
       "margin_pct": 20.4,
       "rating": "strong",
       "rev_growth_pct": 9.3,
       "score": 2,
-      "target_upside_pct": 11.7
+      "target_upside_pct": 12.3
      },
      "name": "Linde plc",
-     "price": 490.03,
+     "price": 487.2,
      "ticker": "LIN"
     },
     {
-     "cap": 140746156405,
-     "chg_1d_pct": 0.2,
+     "cap": 144269080526,
+     "chg_1d_pct": 2.5,
      "fundamentals": {
       "consensus": "buy",
       "div_yield_pct": 0.79,
-      "forward_pe": 12.5,
+      "forward_pe": 12.8,
       "margin_pct": 33.4,
       "rating": "strong",
       "rev_growth_pct": 15.1,
       "score": 4,
-      "target_upside_pct": 0.8
+      "target_upside_pct": -1.7
      },
      "name": "Newmont Corporation",
-     "price": 131.84,
+     "price": 135.14,
      "ticker": "NEM"
     },
     {
-     "cap": 111842157497,
-     "chg_1d_pct": 1.49,
+     "cap": 114875408812,
+     "chg_1d_pct": 2.71,
      "fundamentals": {
       "consensus": "buy",
-      "div_yield_pct": 0.78,
-      "forward_pe": 18.9,
+      "div_yield_pct": 0.77,
+      "forward_pe": 19.4,
       "margin_pct": 11.4,
       "rating": "neutral",
       "rev_growth_pct": -7.3,
       "score": 1,
-      "target_upside_pct": -7.8
+      "target_upside_pct": -10.2
      },
      "name": "Freeport-McMoRan, Inc.",
-     "price": 77.8,
+     "price": 79.91,
      "ticker": "FCX"
     },
     {
-     "cap": 85515968869,
-     "chg_1d_pct": 0.04,
+     "cap": 86433453379,
+     "chg_1d_pct": 1.07,
      "fundamentals": {
       "consensus": "buy",
       "div_yield_pct": 0.92,
-      "forward_pe": 25.5,
+      "forward_pe": 25.7,
       "margin_pct": 11.0,
       "rating": "strong",
       "rev_growth_pct": 7.5,
       "score": 2,
-      "target_upside_pct": 12.6
+      "target_upside_pct": 11.4
      },
      "name": "Sherwin-Williams Company (The)",
-     "price": 346.73,
+     "price": 350.45,
      "ticker": "SHW"
     },
     {
-     "cap": 80766934323,
-     "chg_1d_pct": 1.9,
+     "cap": 81487414329,
+     "chg_1d_pct": 0.89,
      "fundamentals": {
       "consensus": "buy",
-      "div_yield_pct": 1.04,
-      "forward_pe": 30.5,
+      "div_yield_pct": 1.02,
+      "forward_pe": 30.7,
       "margin_pct": 12.6,
       "rating": "neutral",
       "rev_growth_pct": 9.7,
       "score": 1,
-      "target_upside_pct": 13.2
+      "target_upside_pct": 12.2
      },
      "name": "Ecolab Inc.",
-     "price": 286.98,
+     "price": 289.54,
      "ticker": "ECL"
     },
     {
-     "cap": 68193733280,
-     "chg_1d_pct": 0.37,
+     "cap": 67661526441,
+     "chg_1d_pct": -0.78,
      "fundamentals": {
       "consensus": "buy",
-      "div_yield_pct": 2.37,
-      "forward_pe": 21.2,
+      "div_yield_pct": 2.36,
+      "forward_pe": 21.0,
       "margin_pct": -0.4,
       "rating": "neutral",
       "rev_growth_pct": 4.6,
       "score": 0,
-      "target_upside_pct": 12.2
+      "target_upside_pct": 13.1
      },
      "name": "Air Products and Chemicals, Inc",
-     "price": 306.24,
+     "price": 303.85,
      "ticker": "APD"
     },
     {
-     "cap": 64006898690,
-     "chg_1d_pct": 0.76,
+     "cap": 64280860779,
+     "chg_1d_pct": 0.43,
      "fundamentals": {
       "consensus": "strong_buy",
-      "div_yield_pct": 1.64,
-      "forward_pe": 14.5,
+      "div_yield_pct": 1.63,
+      "forward_pe": 14.6,
       "margin_pct": 9.9,
       "rating": "strong",
       "rev_growth_pct": 5.6,
       "score": 4,
-      "target_upside_pct": 44.5
+      "target_upside_pct": 43.8
      },
      "name": "CRH PLC",
-     "price": 95.79,
+     "price": 96.2,
      "ticker": "CRH"
     },
     {
-     "cap": 55714546008,
-     "chg_1d_pct": 0.41,
+     "cap": 56377272172,
+     "chg_1d_pct": 1.19,
      "fundamentals": {
       "consensus": "buy",
       "div_yield_pct": 0.92,
-      "forward_pe": 12.8,
+      "forward_pe": 12.9,
       "margin_pct": 8.0,
       "rating": "strong",
       "rev_growth_pct": 23.0,
-      "score": 4,
-      "target_upside_pct": 15.6
+      "score": 3,
+      "target_upside_pct": 14.2
      },
      "name": "Nucor Corporation",
-     "price": 244.64,
+     "price": 247.55,
      "ticker": "NUE"
     },
     {
-     "cap": 55384984200,
-     "chg_1d_pct": 1.25,
+     "cap": 55545501000,
+     "chg_1d_pct": 0.29,
      "fundamentals": {
       "consensus": "buy",
-      "div_yield_pct": 0.88,
-      "forward_pe": 20.1,
+      "div_yield_pct": 0.87,
+      "forward_pe": 20.2,
       "margin_pct": 5.7,
       "rating": "neutral",
       "rev_growth_pct": -1.2,
       "score": 1,
-      "target_upside_pct": 11.2
+      "target_upside_pct": 10.9
      },
      "name": "Corteva, Inc.",
-     "price": 82.81,
+     "price": 83.05,
      "ticker": "CTVA"
     },
     {
-     "cap": 35804562966,
-     "chg_1d_pct": -0.04,
+     "cap": 35564516429,
+     "chg_1d_pct": -0.67,
      "fundamentals": {
       "div_yield_pct": 0.75,
-      "forward_pe": 25.6,
+      "forward_pe": 25.4,
       "margin_pct": 13.7,
       "rating": "neutral",
       "rev_growth_pct": 2.5,
       "score": 1,
-      "target_upside_pct": 18.0
+      "target_upside_pct": 18.8
      },
      "name": "Vulcan Materials Company (Holdi",
-     "price": 275.94,
+     "price": 274.09,
      "ticker": "VMC"
     }
    ],
-   "vs_sma200_pct": 7.95
+   "vs_sma200_pct": 7.83
   },
   {
    "above_sma200": true,
    "chg": {
-    "1m": 8.13,
-    "1w": 1.33,
-    "1y": 4.58,
-    "3m": -0.74,
-    "6m": 2.88
+    "1m": 6.41,
+    "1w": 1.37,
+    "1y": 1.2,
+    "3m": -1.26,
+    "6m": 1.04
    },
    "comment": "Turning up vs the market \u2014 early rotation in",
    "name": "Consumer Discretionary",
-   "price": 118.3,
+   "price": 117.95,
    "rank": 6,
    "rs": {
-    "1m": 4.81,
-    "3m": -3.13,
-    "6m": -9.0
+    "1m": 2.78,
+    "3m": -3.3,
+    "6m": -10.39
    },
-   "rs_score": -0.04,
+   "rs_score": -1.32,
    "state": "improving",
    "symbol": "XLY",
    "top": [
     {
-     "cap": 2819115669892,
-     "chg_1d_pct": 1.33,
+     "cap": 2808250989362,
+     "chg_1d_pct": -0.39,
      "fundamentals": {
       "consensus": "strong_buy",
-      "forward_pe": 25.2,
+      "forward_pe": 25.1,
       "margin_pct": 17.4,
       "rating": "strong",
       "rev_growth_pct": 19.6,
       "score": 3,
-      "target_upside_pct": 24.8
+      "target_upside_pct": 25.3
      },
      "name": "Amazon.com, Inc.",
-     "price": 262.07,
+     "price": 261.06,
      "ticker": "AMZN"
     },
     {
-     "cap": 1310559844785,
-     "chg_1d_pct": -3.83,
+     "cap": 1315442285817,
+     "chg_1d_pct": 0.37,
      "fundamentals": {
       "consensus": "buy",
-      "forward_pe": 161.7,
+      "forward_pe": 162.3,
       "margin_pct": 3.7,
       "rating": "weak",
       "rev_growth_pct": 25.5,
       "score": -2,
-      "target_upside_pct": 11.8
+      "target_upside_pct": 11.4
      },
      "name": "Tesla, Inc.",
-     "price": 348.95,
+     "price": 350.25,
      "ticker": "TSLA"
     },
     {
-     "cap": 336457082007,
-     "chg_1d_pct": 0.54,
+     "cap": 336905784514,
+     "chg_1d_pct": 0.13,
      "fundamentals": {
       "consensus": "buy",
-      "div_yield_pct": 2.78,
-      "forward_pe": 21.0,
+      "div_yield_pct": 2.76,
+      "forward_pe": 21.1,
       "margin_pct": 8.4,
       "rating": "neutral",
       "rev_growth_pct": 5.7,
       "score": 1,
-      "target_upside_pct": 11.9
+      "target_upside_pct": 11.7
      },
      "name": "Home Depot, Inc. (The)",
-     "price": 337.43,
+     "price": 337.88,
      "ticker": "HD"
     },
     {
-     "cap": 193641266811,
-     "chg_1d_pct": 0.59,
+     "cap": 190486620797,
+     "chg_1d_pct": -1.63,
      "fundamentals": {
       "consensus": "buy",
-      "div_yield_pct": 2.75,
-      "forward_pe": 19.5,
+      "div_yield_pct": 2.73,
+      "forward_pe": 19.2,
       "margin_pct": 31.7,
       "rating": "strong",
       "rev_growth_pct": 3.7,
       "score": 2,
-      "target_upside_pct": 16.0
+      "target_upside_pct": 17.9
      },
      "name": "McDonald's Corporation",
-     "price": 272.54,
+     "price": 268.1,
      "ticker": "MCD"
     },
     {
-     "cap": 165328063104,
-     "chg_1d_pct": 1.78,
+     "cap": 165653512048,
+     "chg_1d_pct": 0.2,
      "fundamentals": {
       "consensus": "buy",
-      "div_yield_pct": 0.8,
-      "forward_pe": 17.2,
+      "div_yield_pct": 0.79,
+      "forward_pe": 17.3,
       "margin_pct": 25.5,
       "rating": "strong",
       "rev_growth_pct": 8.1,
       "score": 3,
-      "target_upside_pct": 11.5
+      "target_upside_pct": 11.2
      },
      "name": "Booking Holdings Inc. Common St",
-     "price": 213.36,
+     "price": 213.78,
      "ticker": "BKNG"
     },
     {
-     "cap": 155442962596,
-     "chg_1d_pct": 0.13,
+     "cap": 154084176128,
+     "chg_1d_pct": -0.87,
      "fundamentals": {
       "consensus": "buy",
-      "div_yield_pct": 1.37,
-      "forward_pe": 24.4,
+      "div_yield_pct": 1.36,
+      "forward_pe": 24.2,
       "margin_pct": 9.7,
       "rating": "strong",
       "rev_growth_pct": 5.4,
       "score": 3,
-      "target_upside_pct": 22.8
+      "target_upside_pct": 23.9
      },
      "name": "TJX Companies, Inc. (The)",
-     "price": 140.71,
+     "price": 139.48,
      "ticker": "TJX"
     },
     {
-     "cap": 123935129946,
-     "chg_1d_pct": -1.48,
+     "cap": 124903039540,
+     "chg_1d_pct": 0.78,
      "fundamentals": {
       "consensus": "buy",
       "forward_pe": 7.1,
-      "margin_pct": 21.6,
+      "margin_pct": 20.4,
       "rating": "strong",
-      "rev_growth_pct": 11.0,
+      "rev_growth_pct": 8.1,
       "score": 3,
-      "target_upside_pct": 34.2
+      "target_upside_pct": 33.2
      },
      "name": "PDD Holdings Inc.",
-     "price": 87.07,
+     "price": 87.75,
      "ticker": "PDD"
     },
     {
-     "cap": 122506353000,
-     "chg_1d_pct": 0.38,
+     "cap": 120534672000,
+     "chg_1d_pct": -1.61,
      "fundamentals": {
       "consensus": "buy",
-      "div_yield_pct": 2.32,
-      "forward_pe": 34.5,
+      "div_yield_pct": 2.31,
+      "forward_pe": 33.9,
       "margin_pct": 5.2,
       "rating": "neutral",
       "rev_growth_pct": -1.4,
       "score": 1,
-      "target_upside_pct": 4.4
+      "target_upside_pct": 6.1
      },
      "name": "Starbucks Corporation",
-     "price": 107.49,
+     "price": 105.76,
      "ticker": "SBUX"
     },
     {
-     "cap": 121725780000,
-     "chg_1d_pct": 0.41,
+     "cap": 120390600000,
+     "chg_1d_pct": -1.1,
      "fundamentals": {
       "consensus": "buy",
-      "div_yield_pct": 2.31,
-      "forward_pe": 16.6,
+      "div_yield_pct": 2.3,
+      "forward_pe": 16.4,
       "margin_pct": 7.3,
       "rating": "strong",
       "rev_growth_pct": 8.3,
       "score": 2,
-      "target_upside_pct": 17.2
+      "target_upside_pct": 18.5
      },
      "name": "Lowe's Companies, Inc.",
-     "price": 216.98,
+     "price": 214.6,
      "ticker": "LOW"
     },
     {
-     "cap": 98753040817,
-     "chg_1d_pct": 1.31,
+     "cap": 101242272454,
+     "chg_1d_pct": 2.52,
      "fundamentals": {
       "consensus": "buy",
-      "forward_pe": 34.3,
+      "forward_pe": 35.2,
       "margin_pct": 5.3,
       "rating": "neutral",
       "rev_growth_pct": 49.8,
-      "score": 1,
-      "target_upside_pct": 15.8
+      "score": 0,
+      "target_upside_pct": 13.0
      },
      "name": "MercadoLibre, Inc.",
-     "price": 1947.9,
+     "price": 1997.0,
      "ticker": "MELI"
     }
    ],
-   "vs_sma200_pct": 1.08
-  },
-  {
-   "above_sma200": true,
-   "chg": {
-    "1m": 3.95,
-    "1w": 3.27,
-    "1y": 6.04,
-    "3m": 3.12,
-    "6m": -1.71
-   },
-   "comment": "Outperforming the market short and medium term \u2014 money flowing in",
-   "name": "Consumer Staples",
-   "price": 87.45,
-   "rank": 7,
-   "rs": {
-    "1m": 0.63,
-    "3m": 0.73,
-    "6m": -13.59
-   },
-   "rs_score": -1.47,
-   "state": "leading",
-   "symbol": "XLP",
-   "top": [
-    {
-     "cap": 847455849215,
-     "chg_1d_pct": 2.69,
-     "fundamentals": {
-      "consensus": "buy",
-      "div_yield_pct": 0.95,
-      "forward_pe": 33.0,
-      "margin_pct": 3.0,
-      "rating": "neutral",
-      "rev_growth_pct": 5.9,
-      "score": 1,
-      "target_upside_pct": 20.6
-     },
-     "name": "Walmart Inc.",
-     "price": 106.49,
-     "ticker": "WMT"
-    },
-    {
-     "cap": 430795310205,
-     "chg_1d_pct": 2.5,
-     "fundamentals": {
-      "div_yield_pct": 0.62,
-      "forward_pe": 42.9,
-      "margin_pct": 3.0,
-      "rating": "neutral",
-      "rev_growth_pct": 21.5,
-      "score": 0,
-      "target_upside_pct": 10.9
-     },
-     "name": "Costco Wholesale Corporation",
-     "price": 971.4,
-     "ticker": "COST"
-    },
-    {
-     "cap": 395785357631,
-     "chg_1d_pct": 0.98,
-     "fundamentals": {
-      "consensus": "buy",
-      "div_yield_pct": 2.33,
-      "forward_pe": 26.1,
-      "margin_pct": 28.6,
-      "rating": "strong",
-      "rev_growth_pct": 6.7,
-      "score": 2,
-      "target_upside_pct": 2.9
-     },
-     "name": "Coca-Cola Company (The)",
-     "price": 91.99,
-     "ticker": "KO"
-    },
-    {
-     "cap": 341372610174,
-     "chg_1d_pct": 1.33,
-     "fundamentals": {
-      "consensus": "buy",
-      "div_yield_pct": 3.01,
-      "forward_pe": 19.8,
-      "margin_pct": 18.4,
-      "rating": "neutral",
-      "rev_growth_pct": 1.5,
-      "score": 0,
-      "target_upside_pct": 9.6
-     },
-     "name": "Procter & Gamble Company (The)",
-     "price": 146.6,
-     "ticker": "PG"
-    },
-    {
-     "cap": 298401676655,
-     "chg_1d_pct": 1.72,
-     "fundamentals": {
-      "div_yield_pct": 3.12,
-      "forward_pe": 20.9,
-      "margin_pct": 25.6,
-      "rating": "neutral",
-      "rev_growth_pct": 10.4,
-      "score": -1,
-      "target_upside_pct": 6.4
-     },
-     "name": "Philip Morris International Inc",
-     "price": 191.46,
-     "ticker": "PM"
-    },
-    {
-     "cap": 197619219999,
-     "chg_1d_pct": 0.83,
-     "fundamentals": {
-      "consensus": "hold",
-      "div_yield_pct": 4.13,
-      "forward_pe": 16.1,
-      "margin_pct": 10.8,
-      "rating": "neutral",
-      "rev_growth_pct": 6.4,
-      "score": 1,
-      "target_upside_pct": 7.1
-     },
-     "name": "Pepsico, Inc.",
-     "price": 144.67,
-     "ticker": "PEP"
-    },
-    {
-     "cap": 114337452860,
-     "chg_1d_pct": 3.6,
-     "fundamentals": {
-      "consensus": "hold",
-      "div_yield_pct": 6.42,
-      "forward_pe": 11.7,
-      "margin_pct": 39.0,
-      "rating": "neutral",
-      "rev_growth_pct": 1.2,
-      "score": 1,
-      "target_upside_pct": 2.2
-     },
-     "name": "Altria Group, Inc.",
-     "price": 68.47,
-     "ticker": "MO"
-    },
-    {
-     "cap": 83052139860,
-     "chg_1d_pct": 0.39,
-     "fundamentals": {
-      "consensus": "buy",
-      "div_yield_pct": 3.23,
-      "forward_pe": 19.2,
-      "margin_pct": 8.9,
-      "rating": "strong",
-      "rev_growth_pct": 4.1,
-      "score": 2,
-      "target_upside_pct": 6.8
-     },
-     "name": "Mondelez International, Inc.",
-     "price": 64.7,
-     "ticker": "MDLZ"
-    },
-    {
-     "cap": 77162528017,
-     "chg_1d_pct": 2.69,
-     "fundamentals": {
-      "consensus": "hold",
-      "div_yield_pct": 2.8,
-      "forward_pe": 17.9,
-      "margin_pct": 4.1,
-      "rating": "neutral",
-      "rev_growth_pct": 5.3,
-      "score": 1,
-      "target_upside_pct": -4.9
-     },
-     "name": "Target Corporation",
-     "price": 169.89,
-     "ticker": "TGT"
-    },
-    {
-     "cap": 74057520640,
-     "chg_1d_pct": 1.61,
-     "fundamentals": {
-      "consensus": "buy",
-      "div_yield_pct": 2.33,
-      "forward_pe": 22.5,
-      "margin_pct": 9.7,
-      "rating": "neutral",
-      "rev_growth_pct": 4.9,
-      "score": 1,
-      "target_upside_pct": 6.9
-     },
-     "name": "Colgate-Palmolive Company",
-     "price": 92.55,
-     "ticker": "CL"
-    }
-   ],
-   "vs_sma200_pct": 5.44
+   "vs_sma200_pct": 0.79
   },
   {
    "above_sma200": false,
    "chg": {
-    "1m": 5.66,
-    "1w": 1.35,
-    "1y": 2.36,
-    "3m": -2.72,
-    "6m": -2.64
+    "1m": 5.13,
+    "1w": 2.44,
+    "1y": 1.68,
+    "3m": -2.05,
+    "6m": -2.57
    },
    "comment": "Turning up vs the market \u2014 early rotation in",
    "name": "Communication Services",
-   "price": 112.32,
-   "rank": 8,
+   "price": 113.18,
+   "rank": 7,
    "rs": {
-    "1m": 2.34,
-    "3m": -5.11,
-    "6m": -14.52
+    "1m": 1.5,
+    "3m": -4.09,
+    "6m": -14.0
    },
-   "rs_score": -2.8,
+   "rs_score": -2.78,
    "state": "improving",
    "symbol": "XLC",
    "top": [
     {
-     "cap": 2042122244267,
-     "chg_1d_pct": 0.94,
+     "cap": 2035668372898,
+     "chg_1d_pct": -0.32,
+     "fundamentals": {
+      "consensus": "strong_buy",
+      "div_yield_pct": 0.25,
+      "forward_pe": 23.4,
+      "margin_pct": 54.8,
+      "rating": "strong",
+      "rev_growth_pct": 24.2,
+      "score": 3,
+      "target_upside_pct": 23.4
+     },
+     "name": "Alphabet Inc.",
+     "price": 346.96,
+     "ticker": "GOOGL"
+    },
+    {
+     "cap": 1888245813235,
+     "chg_1d_pct": -0.36,
      "fundamentals": {
       "consensus": "strong_buy",
       "div_yield_pct": 0.26,
-      "forward_pe": 23.5,
+      "forward_pe": 23.2,
       "margin_pct": 54.8,
       "rating": "strong",
       "rev_growth_pct": 24.2,
@@ -1404,79 +1228,62 @@
       "target_upside_pct": 23.0
      },
      "name": "Alphabet Inc.",
-     "price": 348.06,
-     "ticker": "GOOGL"
-    },
-    {
-     "cap": 1895120361107,
-     "chg_1d_pct": 0.83,
-     "fundamentals": {
-      "consensus": "strong_buy",
-      "div_yield_pct": 0.26,
-      "forward_pe": 23.3,
-      "margin_pct": 54.8,
-      "rating": "strong",
-      "rev_growth_pct": 24.2,
-      "score": 3,
-      "target_upside_pct": 22.6
-     },
-     "name": "Alphabet Inc.",
-     "price": 344.59,
+     "price": 343.34,
      "ticker": "GOOG"
     },
     {
-     "cap": 1227633404603,
-     "chg_1d_pct": 1.66,
+     "cap": 1251855787439,
+     "chg_1d_pct": 1.97,
      "fundamentals": {
       "consensus": "strong_buy",
       "div_yield_pct": 0.38,
-      "forward_pe": 16.1,
+      "forward_pe": 16.4,
       "margin_pct": 29.8,
       "rating": "neutral",
       "rev_growth_pct": 28.0,
       "score": 1,
-      "target_upside_pct": 34.9
+      "target_upside_pct": 32.3
      },
      "name": "Meta Platforms, Inc.",
-     "price": 559.02,
+     "price": 570.05,
      "ticker": "META"
     },
     {
-     "cap": 336905990225,
-     "chg_1d_pct": 0.53,
+     "cap": 346253962957,
+     "chg_1d_pct": 2.77,
      "fundamentals": {
       "consensus": "buy",
-      "forward_pe": 20.9,
+      "forward_pe": 21.5,
       "margin_pct": 28.2,
       "rating": "strong",
       "rev_growth_pct": 13.4,
-      "score": 4,
-      "target_upside_pct": 16.8
+      "score": 3,
+      "target_upside_pct": 13.6
      },
      "name": "Netflix, Inc.",
-     "price": 80.01,
+     "price": 82.23,
      "ticker": "NFLX"
     },
     {
-     "cap": 209404279336,
-     "chg_1d_pct": 1.42,
+     "cap": 209821835227,
+     "chg_1d_pct": 0.2,
      "fundamentals": {
       "consensus": "buy",
-      "div_yield_pct": 5.72,
+      "div_yield_pct": 5.64,
       "forward_pe": 9.5,
       "margin_pct": 11.6,
       "rating": "neutral",
       "rev_growth_pct": -0.7,
       "score": 1,
-      "target_upside_pct": 2.8
+      "target_upside_pct": 2.6
      },
      "name": "Verizon Communications Inc.",
-     "price": 50.15,
+     "price": 50.25,
      "ticker": "VZ"
     },
     {
-     "cap": 197632225418,
-     "chg_1d_pct": -0.23,
+     "cap": 196539198654,
+     "chg_1d_pct": -0.55,
      "fundamentals": {
       "consensus": "buy",
       "div_yield_pct": 2.23,
@@ -1485,321 +1292,320 @@
       "rating": "strong",
       "rev_growth_pct": 7.9,
       "score": 4,
-      "target_upside_pct": 33.3
+      "target_upside_pct": 34.0
      },
      "name": "T-Mobile US, Inc.",
-     "price": 182.62,
+     "price": 181.61,
      "ticker": "TMUS"
     },
     {
-     "cap": 192075528608,
-     "chg_1d_pct": 2.63,
+     "cap": 193186895920,
+     "chg_1d_pct": 0.58,
      "fundamentals": {
       "consensus": "strong_buy",
-      "div_yield_pct": 1.39,
+      "div_yield_pct": 1.36,
       "forward_pe": 14.9,
       "margin_pct": 8.7,
-      "rating": "strong",
+      "rating": "neutral",
       "rev_growth_pct": 6.8,
-      "score": 2,
-      "target_upside_pct": 15.5
+      "score": 1,
+      "target_upside_pct": 14.8
      },
      "name": "Walt Disney Company (The)",
-     "price": 110.61,
+     "price": 111.25,
      "ticker": "DIS"
     },
     {
-     "cap": 178502824671,
-     "chg_1d_pct": 1.58,
+     "cap": 179058691777,
+     "chg_1d_pct": 0.31,
      "fundamentals": {
       "consensus": "buy",
-      "div_yield_pct": 4.39,
-      "forward_pe": 10.0,
+      "div_yield_pct": 4.32,
+      "forward_pe": 10.1,
       "margin_pct": 16.9,
       "rating": "strong",
       "rev_growth_pct": 2.3,
       "score": 3,
-      "target_upside_pct": 11.7
+      "target_upside_pct": 11.4
      },
      "name": "AT&T Inc.",
-     "price": 25.69,
+     "price": 25.77,
      "ticker": "T"
     },
     {
-     "cap": 96266428597,
-     "chg_1d_pct": 0.63,
+     "cap": 96551451332,
+     "chg_1d_pct": 0.3,
      "fundamentals": {
       "consensus": "hold",
-      "div_yield_pct": 4.92,
+      "div_yield_pct": 4.89,
       "forward_pe": 7.5,
       "margin_pct": 9.0,
       "rating": "neutral",
       "rev_growth_pct": -1.2,
       "score": 1,
-      "target_upside_pct": 11.3
+      "target_upside_pct": 11.0
      },
      "name": "Comcast Corporation",
-     "price": 27.02,
+     "price": 27.1,
      "ticker": "CMCSA"
     },
     {
-     "cap": 91288517879,
-     "chg_1d_pct": -2.35,
+     "cap": 94942015280,
+     "chg_1d_pct": 4.0,
      "fundamentals": {
       "consensus": "buy",
-      "forward_pe": 14.2,
+      "forward_pe": 14.8,
       "margin_pct": 64.6,
       "rating": "strong",
       "rev_growth_pct": 52.8,
       "score": 4,
-      "target_upside_pct": 76.3
+      "target_upside_pct": 69.5
      },
      "name": "Applovin Corporation",
-     "price": 298.59,
+     "price": 310.54,
      "ticker": "APP"
     }
    ],
-   "vs_sma200_pct": -1.51
+   "vs_sma200_pct": -0.75
   },
   {
    "above_sma200": true,
    "chg": {
-    "1m": -2.0,
-    "1w": -3.93,
-    "1y": 18.79,
-    "3m": 4.21,
-    "6m": 2.39
+    "1m": 1.36,
+    "1w": 1.1,
+    "1y": 4.91,
+    "3m": 3.46,
+    "6m": -3.59
    },
    "comment": "Was strong, now lagging vs the market \u2014 rotation out",
-   "name": "Industrials",
-   "price": 179.0,
-   "rank": 9,
+   "name": "Consumer Staples",
+   "price": 86.52,
+   "rank": 8,
    "rs": {
-    "1m": -5.32,
-    "3m": 1.82,
-    "6m": -9.49
+    "1m": -2.27,
+    "3m": 1.42,
+    "6m": -15.02
    },
-   "rs_score": -3.45,
+   "rs_score": -2.89,
    "state": "weakening",
-   "symbol": "XLI",
+   "symbol": "XLP",
    "top": [
     {
-     "cap": 373549310052,
-     "chg_1d_pct": -2.04,
+     "cap": 838622381353,
+     "chg_1d_pct": -1.04,
      "fundamentals": {
       "consensus": "buy",
-      "div_yield_pct": 0.79,
-      "forward_pe": 25.1,
-      "margin_pct": 14.5,
-      "rating": "strong",
-      "rev_growth_pct": 24.0,
-      "score": 3,
-      "target_upside_pct": 20.7
+      "div_yield_pct": 0.93,
+      "forward_pe": 32.7,
+      "margin_pct": 3.0,
+      "rating": "neutral",
+      "rev_growth_pct": 5.9,
+      "score": 1,
+      "target_upside_pct": 21.9
      },
-     "name": "Caterpillar, Inc.",
-     "price": 811.02,
-     "ticker": "CAT"
+     "name": "Walmart Inc.",
+     "price": 105.38,
+     "ticker": "WMT"
     },
     {
-     "cap": 356654400412,
-     "chg_1d_pct": -1.87,
+     "cap": 425744086628,
+     "chg_1d_pct": -1.17,
      "fundamentals": {
-      "consensus": "strong_buy",
-      "div_yield_pct": 0.54,
-      "forward_pe": 37.7,
-      "margin_pct": 17.7,
-      "rating": "strong",
-      "rev_growth_pct": 21.1,
-      "score": 3,
-      "target_upside_pct": 18.4
-     },
-     "name": "GE Aerospace",
-     "price": 341.84,
-     "ticker": "GE"
-    },
-    {
-     "cap": 281753106806,
-     "chg_1d_pct": -0.33,
-     "fundamentals": {
-      "consensus": "buy",
-      "div_yield_pct": 1.39,
-      "forward_pe": 26.6,
-      "margin_pct": 8.3,
-      "rating": "strong",
-      "rev_growth_pct": 14.5,
-      "score": 2,
+      "div_yield_pct": 0.61,
+      "forward_pe": 42.4,
+      "margin_pct": 3.0,
+      "rating": "neutral",
+      "rev_growth_pct": 21.5,
+      "score": 0,
       "target_upside_pct": 12.2
      },
-     "name": "RTX Corporation",
-     "price": 209.22,
-     "ticker": "RTX"
+     "name": "Costco Wholesale Corporation",
+     "price": 960.01,
+     "ticker": "COST"
     },
     {
-     "cap": 253161107289,
-     "chg_1d_pct": -1.54,
+     "cap": 394279488785,
+     "chg_1d_pct": -0.38,
      "fundamentals": {
       "consensus": "buy",
-      "div_yield_pct": 0.21,
-      "forward_pe": 37.5,
-      "margin_pct": 23.0,
+      "div_yield_pct": 2.3,
+      "forward_pe": 26.0,
+      "margin_pct": 28.6,
       "rating": "strong",
-      "rev_growth_pct": 21.9,
-      "score": 4,
-      "target_upside_pct": 31.2
+      "rev_growth_pct": 6.7,
+      "score": 2,
+      "target_upside_pct": 3.3
      },
-     "name": "GE Vernova Inc.",
-     "price": 942.1,
-     "ticker": "GEV"
+     "name": "Coca-Cola Company (The)",
+     "price": 91.64,
+     "ticker": "KO"
     },
     {
-     "cap": 183967976180,
-     "chg_1d_pct": 0.59,
+     "cap": 338578291401,
+     "chg_1d_pct": -0.82,
      "fundamentals": {
       "consensus": "buy",
-      "div_yield_pct": 1.84,
-      "forward_pe": 21.9,
-      "margin_pct": 28.8,
+      "div_yield_pct": 2.97,
+      "forward_pe": 19.7,
+      "margin_pct": 18.4,
       "rating": "neutral",
-      "rev_growth_pct": 11.5,
-      "score": 1,
-      "target_upside_pct": 6.3
-     },
-     "name": "Union Pacific Corporation",
-     "price": 309.86,
-     "ticker": "UNP"
-    },
-    {
-     "cap": 175202387396,
-     "chg_1d_pct": 0.18,
-     "fundamentals": {
-      "consensus": "buy",
-      "div_yield_pct": 1.0,
-      "forward_pe": 28.9,
-      "margin_pct": 10.2,
-      "rating": "neutral",
-      "rev_growth_pct": -11.1,
+      "rev_growth_pct": 1.5,
       "score": 0,
-      "target_upside_pct": 2.6
+      "target_upside_pct": 10.5
      },
-     "name": "Deere & Company",
-     "price": 648.64,
-     "ticker": "DE"
+     "name": "Procter & Gamble Company (The)",
+     "price": 145.4,
+     "ticker": "PG"
     },
     {
-     "cap": 165906108582,
-     "chg_1d_pct": -1.75,
+     "cap": 302235731416,
+     "chg_1d_pct": 1.28,
      "fundamentals": {
-      "consensus": "buy",
-      "forward_pe": 51.1,
-      "margin_pct": 2.6,
+      "div_yield_pct": 3.07,
+      "forward_pe": 21.2,
+      "margin_pct": 25.6,
       "rating": "neutral",
-      "rev_growth_pct": 8.0,
-      "score": 1,
-      "target_upside_pct": 30.2
+      "rev_growth_pct": 10.4,
+      "score": -1,
+      "target_upside_pct": 5.1
      },
-     "name": "Boeing Company (The)",
-     "price": 210.46,
-     "ticker": "BA"
+     "name": "Philip Morris International Inc",
+     "price": 193.92,
+     "ticker": "PM"
     },
     {
-     "cap": 158686561000,
-     "chg_1d_pct": -2.51,
-     "fundamentals": {
-      "consensus": "buy",
-      "div_yield_pct": 1.05,
-      "forward_pe": 25.5,
-      "margin_pct": 12.8,
-      "rating": "neutral",
-      "rev_growth_pct": 21.4,
-      "score": 1,
-      "target_upside_pct": 16.8
-     },
-     "name": "Eaton Corporation, PLC",
-     "price": 408.67,
-     "ticker": "ETN"
-    },
-    {
-     "cap": 130070153817,
-     "chg_1d_pct": 0.1,
+     "cap": 194340820000,
+     "chg_1d_pct": -1.66,
      "fundamentals": {
       "consensus": "hold",
-      "div_yield_pct": 2.45,
-      "forward_pe": 17.2,
-      "margin_pct": 8.2,
+      "div_yield_pct": 4.09,
+      "forward_pe": 15.8,
+      "margin_pct": 10.8,
       "rating": "strong",
-      "rev_growth_pct": 10.5,
+      "rev_growth_pct": 6.4,
       "score": 2,
-      "target_upside_pct": 12.2
+      "target_upside_pct": 8.9
      },
-     "name": "Lockheed Martin Corporation",
-     "price": 564.14,
-     "ticker": "LMT"
+     "name": "Pepsico, Inc.",
+     "price": 142.27,
+     "ticker": "PEP"
     },
     {
-     "cap": 127881859179,
-     "chg_1d_pct": 1.25,
+     "cap": 113669496366,
+     "chg_1d_pct": -0.58,
+     "fundamentals": {
+      "consensus": "hold",
+      "div_yield_pct": 6.19,
+      "forward_pe": 11.6,
+      "margin_pct": 39.0,
+      "rating": "neutral",
+      "rev_growth_pct": 1.2,
+      "score": 1,
+      "target_upside_pct": 2.8
+     },
+     "name": "Altria Group, Inc.",
+     "price": 68.07,
+     "ticker": "MO"
+    },
+    {
+     "cap": 80857098760,
+     "chg_1d_pct": -2.64,
      "fundamentals": {
       "consensus": "buy",
-      "div_yield_pct": 0.8,
-      "forward_pe": 25.7,
-      "margin_pct": 17.0,
+      "div_yield_pct": 3.21,
+      "forward_pe": 18.7,
+      "margin_pct": 8.9,
       "rating": "strong",
-      "rev_growth_pct": 9.8,
+      "rev_growth_pct": 4.1,
       "score": 2,
-      "target_upside_pct": 14.5
+      "target_upside_pct": 9.7
      },
-     "name": "Parker-Hannifin Corporation",
-     "price": 1014.24,
-     "ticker": "PH"
+     "name": "Mondelez International, Inc.",
+     "price": 62.99,
+     "ticker": "MDLZ"
+    },
+    {
+     "cap": 74246621078,
+     "chg_1d_pct": -3.78,
+     "fundamentals": {
+      "consensus": "hold",
+      "div_yield_pct": 2.73,
+      "forward_pe": 17.2,
+      "margin_pct": 4.1,
+      "rating": "neutral",
+      "rev_growth_pct": 5.3,
+      "score": 1,
+      "target_upside_pct": -1.1
+     },
+     "name": "Target Corporation",
+     "price": 163.47,
+     "ticker": "TGT"
+    },
+    {
+     "cap": 73081289682,
+     "chg_1d_pct": -1.32,
+     "fundamentals": {
+      "consensus": "buy",
+      "div_yield_pct": 2.29,
+      "forward_pe": 22.2,
+      "margin_pct": 9.7,
+      "rating": "neutral",
+      "rev_growth_pct": 4.9,
+      "score": 1,
+      "target_upside_pct": 8.3
+     },
+     "name": "Colgate-Palmolive Company",
+     "price": 91.33,
+     "ticker": "CL"
     }
    ],
-   "vs_sma200_pct": 5.48
+   "vs_sma200_pct": 4.26
   },
   {
    "above_sma200": true,
    "chg": {
-    "1m": -1.35,
-    "1w": 1.12,
-    "1y": 8.76,
-    "3m": 1.73,
-    "6m": 3.94
+    "1m": -0.87,
+    "1w": 1.64,
+    "1y": 7.13,
+    "3m": 1.45,
+    "6m": 3.73
    },
    "comment": "Underperforming short and medium term \u2014 money flowing out",
    "name": "Real Estate",
-   "price": 45.33,
-   "rank": 10,
+   "price": 45.36,
+   "rank": 9,
    "rs": {
-    "1m": -4.67,
-    "3m": -0.66,
-    "6m": -7.94
+    "1m": -4.5,
+    "3m": -0.59,
+    "6m": -7.7
    },
-   "rs_score": -3.76,
+   "rs_score": -3.61,
    "state": "lagging",
    "symbol": "XLRE",
    "top": [
     {
-     "cap": 169426527144,
-     "chg_1d_pct": 0.33,
+     "cap": 170231269617,
+     "chg_1d_pct": 0.47,
      "fundamentals": {
       "consensus": "buy",
       "div_yield_pct": 1.42,
-      "forward_pe": 75.7,
+      "forward_pe": 75.8,
       "margin_pct": 12.1,
       "rating": "neutral",
       "rev_growth_pct": 39.1,
       "score": 1,
-      "target_upside_pct": 7.0
+      "target_upside_pct": 6.5
      },
      "name": "Welltower Inc.",
-     "price": 240.01,
+     "price": 241.15,
      "ticker": "WELL"
     },
     {
-     "cap": 133659975680,
-     "chg_1d_pct": 1.1,
+     "cap": 133632005540,
+     "chg_1d_pct": -0.02,
      "fundamentals": {
       "consensus": "buy",
-      "div_yield_pct": 3.02,
+      "div_yield_pct": 2.99,
       "forward_pe": 42.1,
       "margin_pct": 43.6,
       "rating": "neutral",
@@ -1808,131 +1614,131 @@
       "target_upside_pct": 10.4
      },
      "name": "Prologis, Inc.",
-     "price": 143.36,
+     "price": 143.33,
      "ticker": "PLD"
     },
     {
-     "cap": 104068306489,
-     "chg_1d_pct": -0.96,
+     "cap": 105867212773,
+     "chg_1d_pct": 1.73,
      "fundamentals": {
       "consensus": "buy",
-      "div_yield_pct": 1.94,
-      "forward_pe": 56.4,
+      "div_yield_pct": 1.96,
+      "forward_pe": 57.4,
       "margin_pct": 15.5,
       "rating": "strong",
       "rev_growth_pct": 16.7,
       "score": 2,
-      "target_upside_pct": 17.0
+      "target_upside_pct": 15.0
      },
      "name": "Equinix, Inc.",
-     "price": 1055.2,
+     "price": 1073.44,
      "ticker": "EQIX"
     },
     {
-     "cap": 83110664578,
-     "chg_1d_pct": 1.47,
+     "cap": 83194525331,
+     "chg_1d_pct": 0.1,
      "fundamentals": {
       "consensus": "buy",
-      "div_yield_pct": 3.97,
-      "forward_pe": 25.4,
+      "div_yield_pct": 3.91,
+      "forward_pe": 25.5,
       "margin_pct": 31.1,
       "rating": "strong",
       "rev_growth_pct": 4.7,
       "score": 3,
-      "target_upside_pct": 20.9
+      "target_upside_pct": 20.8
      },
      "name": "American Tower Corporation (REI",
-     "price": 178.39,
+     "price": 178.57,
      "ticker": "AMT"
     },
     {
-     "cap": 71578746435,
-     "chg_1d_pct": 1.12,
-     "fundamentals": {
-      "consensus": "buy",
-      "div_yield_pct": 4.08,
-      "forward_pe": 33.0,
-      "margin_pct": 66.6,
-      "rating": "neutral",
-      "rev_growth_pct": 19.5,
-      "score": -1,
-      "target_upside_pct": 6.9
-     },
-     "name": "Simon Property Group, Inc.",
-     "price": 220.73,
-     "ticker": "SPG"
-    },
-    {
-     "cap": 69758975177,
-     "chg_1d_pct": -1.09,
+     "cap": 71153784704,
+     "chg_1d_pct": 2.0,
      "fundamentals": {
       "consensus": "strong_buy",
-      "div_yield_pct": 2.56,
-      "forward_pe": 65.2,
+      "div_yield_pct": 2.59,
+      "forward_pe": 66.5,
       "margin_pct": 11.8,
       "rating": "neutral",
       "rev_growth_pct": 29.9,
       "score": 1,
-      "target_upside_pct": 18.4
+      "target_upside_pct": 16.1
      },
      "name": "Digital Realty Trust, Inc.",
-     "price": 188.55,
+     "price": 192.32,
      "ticker": "DLR"
     },
     {
-     "cap": 58905553120,
-     "chg_1d_pct": 0.91,
+     "cap": 71014495908,
+     "chg_1d_pct": -0.79,
      "fundamentals": {
       "consensus": "buy",
-      "div_yield_pct": 5.19,
-      "forward_pe": 39.8,
+      "div_yield_pct": 4.03,
+      "forward_pe": 32.7,
+      "margin_pct": 66.6,
+      "rating": "neutral",
+      "rev_growth_pct": 19.5,
+      "score": -1,
+      "target_upside_pct": 7.8
+     },
+     "name": "Simon Property Group, Inc.",
+     "price": 218.99,
+     "ticker": "SPG"
+    },
+    {
+     "cap": 58588505659,
+     "chg_1d_pct": -0.54,
+     "fundamentals": {
+      "consensus": "buy",
+      "div_yield_pct": 5.15,
+      "forward_pe": 39.6,
       "margin_pct": 20.9,
       "rating": "neutral",
       "rev_growth_pct": 9.6,
       "score": 1,
-      "target_upside_pct": 8.0
+      "target_upside_pct": 8.6
      },
      "name": "Realty Income Corporation",
-     "price": 63.17,
+     "price": 62.83,
      "ticker": "O"
     },
     {
-     "cap": 57058120810,
-     "chg_1d_pct": 0.77,
+     "cap": 56654287601,
+     "chg_1d_pct": -0.71,
      "fundamentals": {
       "consensus": "hold",
-      "div_yield_pct": 3.72,
-      "forward_pe": 31.9,
+      "div_yield_pct": 3.69,
+      "forward_pe": 31.7,
       "margin_pct": 41.6,
       "rating": "neutral",
       "rev_growth_pct": 3.3,
       "score": 1,
-      "target_upside_pct": 3.8
+      "target_upside_pct": 4.5
      },
      "name": "Public Storage",
-     "price": 324.97,
+     "price": 322.67,
      "ticker": "PSA"
     },
     {
-     "cap": 45442284008,
-     "chg_1d_pct": 0.44,
+     "cap": 45617305109,
+     "chg_1d_pct": 0.39,
      "fundamentals": {
       "consensus": "buy",
-      "div_yield_pct": 2.15,
-      "forward_pe": 102.2,
+      "div_yield_pct": 2.23,
+      "forward_pe": 102.5,
       "margin_pct": 4.1,
       "rating": "neutral",
       "rev_growth_pct": 21.7,
       "score": -1,
-      "target_upside_pct": 7.5
+      "target_upside_pct": 7.1
      },
      "name": "Ventas, Inc.",
-     "price": 93.47,
+     "price": 93.83,
      "ticker": "VTR"
     },
     {
-     "cap": 44487622847,
-     "chg_1d_pct": -0.11,
+     "cap": 44431987697,
+     "chg_1d_pct": -0.13,
      "fundamentals": {
       "consensus": "buy",
       "forward_pe": 16.7,
@@ -1940,125 +1746,319 @@
       "rating": "neutral",
       "rev_growth_pct": 15.5,
       "score": 1,
-      "target_upside_pct": 20.1
+      "target_upside_pct": 20.3
      },
      "name": "CBRE Group Inc",
-     "price": 151.93,
+     "price": 151.74,
      "ticker": "CBRE"
     }
    ],
-   "vs_sma200_pct": 5.62
+   "vs_sma200_pct": 5.63
+  },
+  {
+   "above_sma200": true,
+   "chg": {
+    "1m": -2.62,
+    "1w": -2.82,
+    "1y": 16.49,
+    "3m": 2.35,
+    "6m": 0.8
+   },
+   "comment": "Was strong, now lagging vs the market \u2014 rotation out",
+   "name": "Industrials",
+   "price": 178.4,
+   "rank": 10,
+   "rs": {
+    "1m": -6.25,
+    "3m": 0.31,
+    "6m": -10.63
+   },
+   "rs_score": -4.61,
+   "state": "weakening",
+   "symbol": "XLI",
+   "top": [
+    {
+     "cap": 373673669888,
+     "chg_1d_pct": 0.03,
+     "fundamentals": {
+      "consensus": "buy",
+      "div_yield_pct": 0.8,
+      "forward_pe": 25.1,
+      "margin_pct": 14.5,
+      "rating": "strong",
+      "rev_growth_pct": 24.0,
+      "score": 3,
+      "target_upside_pct": 20.7
+     },
+     "name": "Caterpillar, Inc.",
+     "price": 811.29,
+     "ticker": "CAT"
+    },
+    {
+     "cap": 364688097121,
+     "chg_1d_pct": 2.25,
+     "fundamentals": {
+      "consensus": "strong_buy",
+      "div_yield_pct": 0.55,
+      "forward_pe": 38.5,
+      "margin_pct": 17.7,
+      "rating": "strong",
+      "rev_growth_pct": 21.1,
+      "score": 3,
+      "target_upside_pct": 15.8
+     },
+     "name": "GE Aerospace",
+     "price": 349.54,
+     "ticker": "GE"
+    },
+    {
+     "cap": 283180591239,
+     "chg_1d_pct": 0.51,
+     "fundamentals": {
+      "consensus": "buy",
+      "div_yield_pct": 1.4,
+      "forward_pe": 26.8,
+      "margin_pct": 8.3,
+      "rating": "strong",
+      "rev_growth_pct": 14.5,
+      "score": 2,
+      "target_upside_pct": 11.7
+     },
+     "name": "RTX Corporation",
+     "price": 210.28,
+     "ticker": "RTX"
+    },
+    {
+     "cap": 249030880966,
+     "chg_1d_pct": -1.63,
+     "fundamentals": {
+      "consensus": "buy",
+      "div_yield_pct": 0.21,
+      "forward_pe": 36.9,
+      "margin_pct": 23.0,
+      "rating": "strong",
+      "rev_growth_pct": 21.9,
+      "score": 4,
+      "target_upside_pct": 33.4
+     },
+     "name": "GE Vernova Inc.",
+     "price": 926.73,
+     "ticker": "GEV"
+    },
+    {
+     "cap": 183807673612,
+     "chg_1d_pct": -0.09,
+     "fundamentals": {
+      "consensus": "buy",
+      "div_yield_pct": 1.83,
+      "forward_pe": 21.9,
+      "margin_pct": 28.8,
+      "rating": "neutral",
+      "rev_growth_pct": 11.5,
+      "score": 1,
+      "target_upside_pct": 6.4
+     },
+     "name": "Union Pacific Corporation",
+     "price": 309.59,
+     "ticker": "UNP"
+    },
+    {
+     "cap": 170345858466,
+     "chg_1d_pct": -2.77,
+     "fundamentals": {
+      "consensus": "buy",
+      "div_yield_pct": 1.0,
+      "forward_pe": 28.1,
+      "margin_pct": 10.2,
+      "rating": "neutral",
+      "rev_growth_pct": -11.1,
+      "score": 0,
+      "target_upside_pct": 5.5
+     },
+     "name": "Deere & Company",
+     "price": 630.66,
+     "ticker": "DE"
+    },
+    {
+     "cap": 166394856027,
+     "chg_1d_pct": 0.29,
+     "fundamentals": {
+      "consensus": "buy",
+      "forward_pe": 51.2,
+      "margin_pct": 2.6,
+      "rating": "neutral",
+      "rev_growth_pct": 8.0,
+      "score": 1,
+      "target_upside_pct": 29.8
+     },
+     "name": "Boeing Company (The)",
+     "price": 211.08,
+     "ticker": "BA"
+    },
+    {
+     "cap": 158892360000,
+     "chg_1d_pct": 0.13,
+     "fundamentals": {
+      "consensus": "buy",
+      "div_yield_pct": 1.08,
+      "forward_pe": 25.5,
+      "margin_pct": 12.8,
+      "rating": "neutral",
+      "rev_growth_pct": 21.4,
+      "score": 1,
+      "target_upside_pct": 16.7
+     },
+     "name": "Eaton Corporation, PLC",
+     "price": 409.2,
+     "ticker": "ETN"
+    },
+    {
+     "cap": 128313259124,
+     "chg_1d_pct": -1.35,
+     "fundamentals": {
+      "consensus": "hold",
+      "div_yield_pct": 2.45,
+      "forward_pe": 17.0,
+      "margin_pct": 8.2,
+      "rating": "strong",
+      "rev_growth_pct": 10.5,
+      "score": 2,
+      "target_upside_pct": 13.7
+     },
+     "name": "Lockheed Martin Corporation",
+     "price": 556.52,
+     "ticker": "LMT"
+    },
+    {
+     "cap": 128142858004,
+     "chg_1d_pct": 0.2,
+     "fundamentals": {
+      "consensus": "buy",
+      "div_yield_pct": 0.79,
+      "forward_pe": 25.8,
+      "margin_pct": 17.0,
+      "rating": "strong",
+      "rev_growth_pct": 9.8,
+      "score": 2,
+      "target_upside_pct": 14.2
+     },
+     "name": "Parker-Hannifin Corporation",
+     "price": 1016.31,
+     "ticker": "PH"
+    }
+   ],
+   "vs_sma200_pct": 5.05
   },
   {
    "above_sma200": false,
    "chg": {
-    "1m": -6.63,
-    "1w": -2.17,
-    "1y": 1.0,
-    "3m": -4.7,
-    "6m": -7.41
+    "1m": -5.19,
+    "1w": -1.61,
+    "1y": 0.67,
+    "3m": -4.46,
+    "6m": -8.24
    },
    "comment": "Underperforming short and medium term \u2014 money flowing out",
    "name": "Utilities",
-   "price": 43.22,
+   "price": 43.31,
    "rank": 11,
    "rs": {
-    "1m": -9.95,
-    "3m": -7.09,
-    "6m": -19.29
+    "1m": -8.82,
+    "3m": -6.5,
+    "6m": -19.67
    },
-   "rs_score": -10.35,
+   "rs_score": -9.64,
    "state": "lagging",
    "symbol": "XLU",
    "top": [
     {
-     "cap": 175399410607,
-     "chg_1d_pct": 0.54,
+     "cap": 175649683250,
+     "chg_1d_pct": 0.14,
      "fundamentals": {
       "consensus": "buy",
-      "div_yield_pct": 2.98,
-      "forward_pe": 19.1,
+      "div_yield_pct": 2.96,
+      "forward_pe": 19.2,
       "margin_pct": 32.4,
       "rating": "strong",
       "rev_growth_pct": 12.4,
       "score": 2,
-      "target_upside_pct": 17.0
+      "target_upside_pct": 16.8
      },
      "name": "NextEra Energy, Inc.",
-     "price": 84.1,
+     "price": 84.22,
      "ticker": "NEE"
     },
     {
-     "cap": 101569828929,
-     "chg_1d_pct": 1.3,
+     "cap": 101423279787,
+     "chg_1d_pct": -0.14,
      "fundamentals": {
       "consensus": "hold",
-      "div_yield_pct": 3.42,
+      "div_yield_pct": 3.37,
       "forward_pe": 18.3,
       "margin_pct": 15.4,
       "rating": "neutral",
       "rev_growth_pct": 0.1,
       "score": 0,
-      "target_upside_pct": 11.3
+      "target_upside_pct": 11.5
      },
      "name": "Southern Company (The)",
-     "price": 90.1,
+     "price": 89.97,
      "ticker": "SO"
     },
     {
-     "cap": 97642404508,
-     "chg_1d_pct": 0.2,
+     "cap": 99424343573,
+     "chg_1d_pct": 1.82,
      "fundamentals": {
       "consensus": "buy",
-      "div_yield_pct": 0.63,
-      "forward_pe": 20.5,
+      "div_yield_pct": 0.62,
+      "forward_pe": 20.9,
       "margin_pct": 11.1,
       "rating": "neutral",
       "rev_growth_pct": 23.0,
       "score": 0,
-      "target_upside_pct": 27.1
+      "target_upside_pct": 25.1
      },
      "name": "Constellation Energy Corporatio",
-     "price": 273.43,
+     "price": 278.42,
      "ticker": "CEG"
     },
     {
-     "cap": 95087350587,
-     "chg_1d_pct": 1.77,
+     "cap": 94791104025,
+     "chg_1d_pct": -0.31,
      "fundamentals": {
       "consensus": "buy",
-      "div_yield_pct": 3.62,
+      "div_yield_pct": 3.56,
       "forward_pe": 17.0,
       "margin_pct": 16.0,
       "rating": "neutral",
       "rev_growth_pct": 1.1,
       "score": 1,
-      "target_upside_pct": 12.6
+      "target_upside_pct": 12.9
      },
      "name": "Duke Energy Corporation (Holdin",
-     "price": 121.97,
+     "price": 121.59,
      "ticker": "DUK"
     },
     {
-     "cap": 66369931803,
-     "chg_1d_pct": 0.86,
+     "cap": 66799774778,
+     "chg_1d_pct": 0.65,
      "fundamentals": {
       "consensus": "buy",
-      "div_yield_pct": 3.14,
-      "forward_pe": 17.8,
+      "div_yield_pct": 3.12,
+      "forward_pe": 17.9,
       "margin_pct": 13.8,
       "rating": "neutral",
       "rev_growth_pct": 7.0,
       "score": 0,
-      "target_upside_pct": 18.1
+      "target_upside_pct": 17.3
      },
      "name": "American Electric Power Company",
-     "price": 121.98,
+     "price": 122.77,
      "ticker": "AEP"
     },
     {
-     "cap": 58584326559,
-     "chg_1d_pct": 0.02,
+     "cap": 58865770554,
+     "chg_1d_pct": 0.48,
      "fundamentals": {
       "consensus": "hold",
       "div_yield_pct": 4.01,
@@ -2067,82 +2067,82 @@
       "rating": "weak",
       "rev_growth_pct": 17.6,
       "score": -2,
-      "target_upside_pct": 7.8
+      "target_upside_pct": 7.3
      },
      "name": "Dominion Energy, Inc.",
-     "price": 66.61,
+     "price": 66.93,
      "ticker": "D"
     },
     {
-     "cap": 55284034902,
-     "chg_1d_pct": 2.03,
+     "cap": 54931032906,
+     "chg_1d_pct": -0.64,
      "fundamentals": {
       "consensus": "buy",
-      "div_yield_pct": 3.17,
-      "forward_pe": 15.3,
+      "div_yield_pct": 3.11,
+      "forward_pe": 15.2,
       "margin_pct": 16.8,
       "rating": "strong",
       "rev_growth_pct": -0.1,
       "score": 2,
-      "target_upside_pct": 23.4
+      "target_upside_pct": 24.2
      },
      "name": "DBA Sempra",
-     "price": 84.57,
+     "price": 84.03,
      "ticker": "SRE"
     },
     {
-     "cap": 49361094571,
-     "chg_1d_pct": 1.12,
+     "cap": 49571062361,
+     "chg_1d_pct": 0.43,
      "fundamentals": {
       "consensus": "buy",
-      "div_yield_pct": 2.45,
+      "div_yield_pct": 2.42,
       "forward_pe": 20.8,
       "margin_pct": 13.3,
       "rating": "neutral",
       "rev_growth_pct": 5.9,
       "score": 0,
-      "target_upside_pct": 16.6
+      "target_upside_pct": 16.1
      },
      "name": "Entergy Corporation",
-     "price": 105.79,
+     "price": 106.24,
      "ticker": "ETR"
     },
     {
-     "cap": 48274765074,
-     "chg_1d_pct": 1.35,
+     "cap": 48187367336,
+     "chg_1d_pct": -0.18,
      "fundamentals": {
       "consensus": "strong_buy",
-      "div_yield_pct": 3.11,
+      "div_yield_pct": 3.06,
       "forward_pe": 17.0,
       "margin_pct": 15.3,
       "rating": "strong",
       "rev_growth_pct": -5.1,
       "score": 2,
-      "target_upside_pct": 18.7
+      "target_upside_pct": 18.9
      },
      "name": "Xcel Energy Inc.",
-     "price": 77.33,
+     "price": 77.19,
      "ticker": "XEL"
     },
     {
-     "cap": 45742173608,
-     "chg_1d_pct": -0.4,
+     "cap": 46878478526,
+     "chg_1d_pct": 2.48,
      "fundamentals": {
       "consensus": "strong_buy",
       "div_yield_pct": 0.68,
-      "forward_pe": 13.1,
+      "forward_pe": 13.4,
       "margin_pct": 11.6,
       "rating": "strong",
       "rev_growth_pct": -5.5,
       "score": 2,
-      "target_upside_pct": 60.6
+      "target_upside_pct": 56.7
      },
      "name": "Vistra Corp.",
-     "price": 135.66,
+     "price": 139.03,
      "ticker": "VST"
     }
    ],
-   "vs_sma200_pct": -3.4
+   "vs_sma200_pct": -3.18
   }
  ]
 }
