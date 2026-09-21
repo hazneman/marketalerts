@@ -7,6 +7,14 @@ that entry with the latest close and its return SINCE the alert, compared to the
 stock's own-market index (US→SPY, DE→DAX, BIST→XU100 — same currency as the
 stock, so the excess return has no FX distortion). success = beat the benchmark.
 
+US entries carry a SECOND, equal-weight comparison (vs RSP) alongside the
+cap-weighted one. The two answer different questions: cap-weighted asks "did the
+signal beat the index you could have bought", equal-weight asks "did it beat the
+average stock". In a narrow tape a handful of megacaps can carry SPY while the
+median stock falls, which makes a breadth-driven scanner look broken when it is
+merely long the average name — measuring both separates signal quality from
+regime. Both are reported; neither gates anything.
+
 Entries are ingested from history.json (not the live alert list) so first-run
 backfill, steady-state daily adds, and self-healing of benchmark-outage days are
 one code path. An entry matures after EVAL_WINDOW_DAYS and freezes forever.
@@ -33,10 +41,16 @@ logger = logging.getLogger(__name__)
 
 SCANNER_DIR = Path(__file__).resolve().parent
 DEFAULT_OUTPUT_DIR = SCANNER_DIR.parent / "frontend" / "public" / "data"
-SCHEMA_VERSION = 1
+SCHEMA_VERSION = 2
 
 # Each market benchmarked against its own index (same currency as the stock).
 MARKET_BENCHMARK = {"us": "SPY", "de": "^GDAXI", "bist": "XU100.IS"}
+# Equal-weight counterpart — the "average stock" control, same 500 names as SPY
+# at equal weight. US-only: the free feed has no comparable equal-weight index
+# for the DAX or BIST 100, so those markets report the cap-weighted number
+# alone (same US-only shape as the sector factor in recommend.py). Secondary by
+# design — an outage here degrades to null fields, it never fails the output.
+MARKET_BENCHMARK_EW = {"us": "RSP"}
 EVAL_WINDOW_DAYS = 180  # entry "matures" (freezes) once held this long — a settled window
 MAX_ENTRIES = 1000      # safety cap; drops oldest matured first (won't trigger for years)
 MIN_BENCH_BARS = 200    # a 2y daily index series has ~500 bars; guard against garbage
@@ -111,26 +125,36 @@ def _target_of(a: dict) -> float | None:
     return ((a.get("fundamentals") or {}).get("analyst") or {}).get("target_mean")
 
 
+def anchor_close(series: dict | None, date_iso: str) -> float | None:
+    """An index's close on date_iso, falling back to the nearest prior trading
+    day (entry dates land on holidays / other markets' closed days)."""
+    if not series:
+        return None
+    c = series["by_date"].get(date_iso)
+    if c is None:
+        nd = nearest_prior(date_iso, series["sorted_dates"])
+        c = series["by_date"].get(nd) if nd else None
+    return c
+
+
 def finalize_seed(seed: dict, benches: dict) -> dict:
-    """Turn an identity seed into a full 'open' entry, freezing the benchmark's
+    """Turn an identity seed into a full 'open' entry, freezing each benchmark's
     close on the entry date (nearest-prior trading day)."""
-    b = benches.get(seed["market"])
-    anchor = None
-    if b:
-        d = seed["entry_date"]
-        anchor = b["by_date"].get(d)
-        if anchor is None:
-            nd = nearest_prior(d, b["sorted_dates"])
-            anchor = b["by_date"].get(nd) if nd else None
+    b = benches.get(seed["market"]) or {}
     return {
         **seed,
-        "entry_bench_close": anchor,
+        "entry_bench_close": anchor_close(b or None, seed["entry_date"]),
+        "benchmark_ew": MARKET_BENCHMARK_EW.get(seed["market"]),
+        "entry_bench_ew_close": anchor_close(b.get("ew"), seed["entry_date"]),
         "last_date": None,
         "last_price": None,
         "stock_return_pct": None,
         "bench_return_pct": None,
         "excess_pct": None,
         "success": None,
+        "bench_ew_return_pct": None,
+        "excess_ew_pct": None,
+        "success_ew": None,
         "days_held": 0,
         "status": "open",
     }
@@ -148,6 +172,19 @@ def merge(existing: list[dict], seeds: list[dict], benches: dict) -> list[dict]:
     return out
 
 
+def _vs_benchmark(stock_return_pct: float | None, last_close: float | None,
+                  entry_close: float | None) -> tuple[float | None, float | None, bool | None]:
+    """(bench_return_pct, excess_pct, success) for one benchmark. Any missing
+    leg yields nulls rather than a false 0% — the column reads '—' instead of
+    claiming the signal matched its index."""
+    bench_ret = (round((last_close / entry_close - 1) * 100, 2)
+                 if last_close and entry_close else None)
+    if stock_return_pct is None or bench_ret is None:
+        return bench_ret, None, None
+    excess = round(stock_return_pct - bench_ret, 2)
+    return bench_ret, excess, excess > 0
+
+
 def update_entry(entry: dict, prices: dict, benches: dict, bar_date: str) -> dict:
     """Recompute an open entry's daily fields. Matured entries are frozen."""
     if entry.get("status") == "matured":
@@ -163,17 +200,14 @@ def update_entry(entry: dict, prices: dict, benches: dict, bar_date: str) -> dic
     ep = e["entry_price"]
     e["stock_return_pct"] = round((last_price / ep - 1) * 100, 2) if last_price and ep else None
 
-    b = benches.get(e["market"])
-    bench_last = b["last_close"] if b else None
-    ebc = e.get("entry_bench_close")
-    e["bench_return_pct"] = round((bench_last / ebc - 1) * 100, 2) if bench_last and ebc else None
-
-    if e["stock_return_pct"] is not None and e["bench_return_pct"] is not None:
-        e["excess_pct"] = round(e["stock_return_pct"] - e["bench_return_pct"], 2)
-        e["success"] = e["excess_pct"] > 0
-    else:
-        e["excess_pct"] = None
-        e["success"] = None
+    b = benches.get(e["market"]) or {}
+    e["bench_return_pct"], e["excess_pct"], e["success"] = _vs_benchmark(
+        e["stock_return_pct"], b.get("last_close"), e.get("entry_bench_close"))
+    # equal-weight leg: present for US only, null everywhere else (and on an
+    # RSP outage) — a separate read of the same entry, never a gate.
+    ew = b.get("ew") or {}
+    e["bench_ew_return_pct"], e["excess_ew_pct"], e["success_ew"] = _vs_benchmark(
+        e["stock_return_pct"], ew.get("last_close"), e.get("entry_bench_ew_close"))
 
     tgt = e.get("target_mean")
     e["target_reached"] = bool(last_price and tgt and last_price >= tgt) if tgt else None
@@ -198,31 +232,56 @@ def _cap(entries: list[dict]) -> list[dict]:
     return kept
 
 
-def _fetch_benches(markets: set[str], bar_dates: dict | None = None) -> dict:
-    """{market: {symbol, by_date, sorted_dates, last_date, last_close}} for the
-    given markets. Raises if any needed index is unavailable (failure-isolated
-    upstream) — keeps the output deterministic rather than flapping columns.
+def _index_series(symbol: str, as_of: str | None) -> dict:
+    """{symbol, by_date, sorted_dates, last_date, last_close} for one index.
+    Raises if the series is missing or too short to trust.
 
-    `last_close` is the benchmark's close AS OF that market's scan bar date
-    (nearest-prior), not merely Yahoo's latest bar — so each stock's return is
-    measured over the same window as its benchmark, and the output is immune to
-    an intraday-forming latest bar (e.g. backfilling while a market is open)."""
+    `last_close` is the index's close AS OF the scan's bar date (nearest-prior),
+    not merely Yahoo's latest bar — so each stock's return is measured over the
+    same window as its benchmark, and the output is immune to an intraday-forming
+    latest bar (e.g. backfilling while a market is open)."""
+    df = fetch_us(symbol, period="2y")
+    if df.empty or len(df) < MIN_BENCH_BARS:
+        raise RuntimeError(f"benchmark {symbol} unavailable")
+    by_date = {ix.date().isoformat(): round(float(c), 2)
+               for ix, c in zip(df.index, df["close"])}
+    sorted_dates = sorted(by_date)
+    anchor = nearest_prior(as_of or sorted_dates[-1], sorted_dates) or sorted_dates[-1]
+    return {
+        "symbol": symbol, "by_date": by_date, "sorted_dates": sorted_dates,
+        "last_date": anchor, "last_close": by_date[anchor],
+    }
+
+
+def _fetch_benches(markets: set[str], bar_dates: dict | None = None) -> dict:
+    """{market: <index series>, optionally + "ew": <equal-weight series>} for
+    the given markets. Raises if a market's PRIMARY index is unavailable
+    (failure-isolated upstream) — keeps the output deterministic rather than
+    flapping columns. The equal-weight leg is secondary: an outage there logs
+    and drops to null fields instead of taking the whole scoreboard down."""
     bar_dates = bar_dates or {}
     out: dict[str, dict] = {}
     for m in sorted(markets):
-        sym = MARKET_BENCHMARK[m]
-        df = fetch_us(sym, period="2y")
-        if df.empty or len(df) < MIN_BENCH_BARS:
-            raise RuntimeError(f"benchmark {sym} ({m}) unavailable")
-        by_date = {ix.date().isoformat(): round(float(c), 2)
-                   for ix, c in zip(df.index, df["close"])}
-        sorted_dates = sorted(by_date)
-        as_of = nearest_prior(bar_dates.get(m, sorted_dates[-1]), sorted_dates) or sorted_dates[-1]
-        out[m] = {
-            "symbol": sym, "by_date": by_date, "sorted_dates": sorted_dates,
-            "last_date": as_of, "last_close": by_date[as_of],
-        }
+        try:
+            series = _index_series(MARKET_BENCHMARK[m], bar_dates.get(m))
+        except RuntimeError as exc:
+            raise RuntimeError(f"{exc} ({m})") from exc
+        ew_symbol = MARKET_BENCHMARK_EW.get(m)
+        if ew_symbol:
+            try:
+                series["ew"] = _index_series(ew_symbol, bar_dates.get(m))
+            except Exception as exc:  # secondary metric — degrade, never abort
+                logger.warning("equal-weight benchmark %s (%s) unavailable: %s",
+                               ew_symbol, m, exc)
+        out[m] = series
     return out
+
+
+def _bench_meta(series: dict) -> dict:
+    meta = {k: series[k] for k in ("symbol", "last_date", "last_close")}
+    if series.get("ew"):
+        meta["ew"] = _bench_meta(series["ew"])
+    return meta
 
 
 def build(output_dir: Path = DEFAULT_OUTPUT_DIR, prices: dict | None = None,
@@ -251,6 +310,15 @@ def build(output_dir: Path = DEFAULT_OUTPUT_DIR, prices: dict | None = None,
     for e in entries:
         if "target_mean" not in e:
             e["target_mean"] = seed_targets.get(e["id"])
+        # migration: the equal-weight anchor is recoverable from the index
+        # series for ANY past entry date, so entries tracked before this field
+        # existed backfill exactly — no rescan, no gap in the new column.
+        # Matured entries are skipped: update_entry won't recompute their
+        # derived fields, so anchoring them would leave a half-filled row.
+        if e.get("status") != "matured" and e.get("entry_bench_ew_close") is None:
+            e["benchmark_ew"] = MARKET_BENCHMARK_EW.get(e["market"])
+            e["entry_bench_ew_close"] = anchor_close(
+                (benches.get(e["market"]) or {}).get("ew"), e["entry_date"])
 
     entries = [update_entry(e, prices, benches, bar_date) for e in entries]
     entries.sort(key=lambda e: e["id"])
@@ -260,9 +328,7 @@ def build(output_dir: Path = DEFAULT_OUTPUT_DIR, prices: dict | None = None,
         "schema_version": SCHEMA_VERSION,
         "generated_at": (now or dt.datetime.now(dt.timezone.utc)).strftime("%Y-%m-%dT%H:%M:%SZ"),
         "bar_date": bar_date,
-        "benchmarks": {m: {"symbol": b["symbol"], "last_date": b["last_date"],
-                           "last_close": b["last_close"]}
-                       for m, b in sorted(benches.items())},
+        "benchmarks": {m: _bench_meta(b) for m, b in sorted(benches.items())},
         "entries": entries,
     }
 
@@ -285,6 +351,16 @@ if __name__ == "__main__":
     ok = [e for e in d["entries"] if e["success"]]
     print(f"track_record.json: {len(d['entries'])} entries, "
           f"{len(ok)} beating benchmark, bar_date={d['bar_date']}")
+    # both reads on the SAME subset — the equal-weight entries — so the two
+    # hit-rates are comparable rather than two different denominators
+    # .get(): matured entries predate the field and are never recomputed
+    ew = [e for e in d["entries"] if e.get("excess_ew_pct") is not None]
+    if ew:
+        cap_hits = sum(1 for e in ew if e["success"])
+        ew_hits = sum(1 for e in ew if e["success_ew"])
+        print(f"  equal-weight check ({len(ew)} US entries): "
+              f"beat cap-weighted {100 * cap_hits / len(ew):.0f}% · "
+              f"beat equal-weighted {100 * ew_hits / len(ew):.0f}%")
     for e in sorted(d["entries"], key=lambda e: (e["excess_pct"] is None, -(e["excess_pct"] or 0)))[:12]:
         print(f"  {e['ticker']:<8} {e['market']:<4} entry {e['entry_date']} "
               f"ret={e['stock_return_pct']} vs {e['benchmark']} "

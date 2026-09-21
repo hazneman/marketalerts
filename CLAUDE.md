@@ -25,7 +25,7 @@ dashboard from the push (Git-connected; root `frontend`, `npm run build` →
 
 ```bash
 ./dev.sh                  # menu: quick scan / full scan / dashboard (:3100) / tests
-scanner/.venv/bin/python -m pytest scanner/tests -q     # 180 tests
+scanner/.venv/bin/python -m pytest scanner/tests -q     # 194 tests
 cd frontend && npx tsc --noEmit && npm run build         # type-check + build
 scanner/.venv/bin/python scanner/scan.py --tickers META,SAP.DE --dry-run
 ```
@@ -89,7 +89,17 @@ Pipeline per daily run (`scan.py`):
    benchmark-outage self-heal are one path), captures entry_date + entry-day
    close, and updates each entry's return vs its **own-market index** (US→SPY,
    DE→`^GDAXI`, BIST→`XU100.IS` — same currency as the stock, so excess has no
-   FX distortion). success = beat the benchmark. id = `ticker|rule|entry_date`
+   FX distortion). success = beat the benchmark. US entries carry a **second,
+   equal-weight leg** (`benchmark_ew`→RSP, `entry_bench_ew_close`,
+   `bench_ew_return_pct`, `excess_ew_pct`, `success_ew`): cap-weighted answers
+   "beat the index you could buy", equal-weight answers "beat the average
+   stock", and a narrow tape decouples the two — the gap separates signal
+   quality from regime. US-only (no free equal-weight DAX/BIST index), and
+   **secondary by design**: an RSP outage nulls those fields and logs a
+   warning, it never fails the output the way a primary benchmark outage does.
+   Display-only — nothing in the verdict reads it. Its anchor is recoverable
+   from the index series for ANY past entry date, so it backfills into
+   already-tracked entries with no rescan. id = `ticker|rule|entry_date`
    (re-fires stay distinct). Entries mature at 180 days then freeze. Rides the
    scan like sectors/forex (failure-isolated; raises on benchmark outage →
    previous file kept). Byte-stability hinges on `days_held`/benchmark closes

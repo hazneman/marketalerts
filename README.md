@@ -110,7 +110,21 @@ currency as the stock, so the comparison has no FX distortion). A signal **beats
 its market** when that excess return is positive. The page shows an aggregate
 hit-rate (share that beat their benchmark), average excess/return, and a
 sortable, filterable table (entry date/price, current price, return, benchmark,
-excess, days held, ✓ beat / ✗ lag) with a ticker search box. A **"By rule"**
+excess, excess EW, days held, ✓ beat / ✗ lag) with a ticker search box.
+
+US entries carry a **second, equal-weight comparison** (vs `RSP`, the same 500
+names weighted equally) next to the cap-weighted one. The two answer different
+questions: cap-weighted is *"did the signal beat the index you could have
+bought"*, equal-weight is *"did it beat the average stock"*. They come apart in
+a narrow market — a handful of megacaps can carry the S&P while the median
+stock falls, which makes a breadth-driven scanner look broken when it is merely
+long the average name. Both are shown (**Beat avg stock** / **Avg excess (EW)**
+chips and the *Excess EW* column), always over the same subset of entries so
+the two hit-rates are comparable. It is a measurement, not a filter: nothing in
+the verdict or the alert pipeline reads it. US-only — the free feed has no
+comparable equal-weight index for the DAX or BIST 100, so those rows read "—".
+
+A **"By rule"**
 chip row splits the headline hit-rate per rule — the daily SMA200 cross is
 high-volume and noisy while the rarer 200-week and golden crosses carry the
 quality, and the split keeps the blended number honest. Entries held under 2

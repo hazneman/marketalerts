@@ -220,17 +220,31 @@ export interface TrackRecordEntry {
   bench_return_pct: number | null
   excess_pct: number | null
   success: boolean | null
+  // Equal-weight leg — the "average stock" read, US-only (null elsewhere and on
+  // an RSP outage). Cap-weighted asks "did it beat the index you could buy";
+  // this asks "did it beat the average stock", which a narrow tape decouples.
+  benchmark_ew?: string | null
+  entry_bench_ew_close?: number | null
+  bench_ew_return_pct?: number | null
+  excess_ew_pct?: number | null
+  success_ew?: boolean | null
   days_held: number
   status: 'open' | 'matured'
   target_mean?: number | null
   target_reached?: boolean | null
 }
 
+interface BenchmarkMeta {
+  symbol: string
+  last_date: string
+  last_close: number
+}
+
 export interface TrackRecordData {
   schema_version: number
   generated_at: string
   bar_date: string
-  benchmarks: Record<string, { symbol: string; last_date: string; last_close: number }>
+  benchmarks: Record<string, BenchmarkMeta & { ew?: BenchmarkMeta }>
   entries: TrackRecordEntry[]
 }
 
@@ -286,6 +300,7 @@ export const BENCHMARK_LABELS: Record<string, string> = {
   SPY: 'S&P 500',
   '^GDAXI': 'DAX',
   'XU100.IS': 'BIST 100',
+  RSP: 'S&P 500 equal-weight',
 }
 
 export const SECTOR_HORIZONS = ['1w', '1m', '3m', '6m', '1y'] as const

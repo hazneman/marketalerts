@@ -41,7 +41,16 @@ function refireIds(entries: TrackRecordEntry[]): Set<string> {
   return out
 }
 
-type SortKey = 'excess_pct' | 'stock_return_pct' | 'entry_date' | 'days_held' | 'ticker'
+// The equal-weight comparison exists for US entries only, so its hit-rate must
+// be read against the SAME subset as the cap-weighted one — two different
+// denominators would make the pair meaningless.
+const hasEw = (e: TrackRecordEntry) =>
+  e.excess_ew_pct !== null && e.excess_ew_pct !== undefined
+const hitRateOf = (rows: TrackRecordEntry[], win: (e: TrackRecordEntry) => boolean) =>
+  rows.length ? (100 * rows.filter(win).length) / rows.length : 0
+
+type SortKey =
+  | 'excess_pct' | 'excess_ew_pct' | 'stock_return_pct' | 'entry_date' | 'days_held' | 'ticker'
 type ResultFilter = 'all' | 'beat' | 'lag'
 
 const RESULT_ITEMS: TabItem<ResultFilter>[] = [
@@ -134,6 +143,13 @@ export default function TrackRecordPage() {
   const pending = entries.length - scored.length
   const beat = scored.filter((e) => e.success === true).length
   const hitRate = scored.length ? (beat / scored.length) * 100 : 0
+  // Same entries, two yardsticks. A big gap between these means the market was
+  // narrow (a few megacaps carried the index), not that the signals broke.
+  const ewScored = scored.filter(hasEw)
+  const ewHitRate = hitRateOf(ewScored, (e) => e.success_ew === true)
+  const capHitRateOnEw = hitRateOf(ewScored, (e) => e.success === true)
+  const avgExcessEw = mean(ewScored.map((e) => e.excess_ew_pct as number))
+  const ewSymbol = track.benchmarks?.us?.ew?.symbol ?? 'RSP'
   const avgExcess = mean(scored.map((e) => e.excess_pct as number))
   const avgReturn = mean(scored.map((e) => e.stock_return_pct as number))
   const avgDays = mean(scored.map((e) => e.days_held))
@@ -152,12 +168,17 @@ export default function TrackRecordPage() {
       return acc
     }, {}),
   )
-    .map(([cat, rows]) => ({
-      cat,
-      n: rows.length,
-      beatPct: (100 * rows.filter((e) => e.success === true).length) / rows.length,
-      avgExcess: mean(rows.map((e) => e.excess_pct as number)),
-    }))
+    .map(([cat, rows]) => {
+      const ew = rows.filter(hasEw)
+      return {
+        cat,
+        n: rows.length,
+        beatPct: hitRateOf(rows, (e) => e.success === true),
+        avgExcess: mean(rows.map((e) => e.excess_pct as number)),
+        ewN: ew.length,
+        ewBeatPct: hitRateOf(ew, (e) => e.success_ew === true),
+      }
+    })
     // same canonical order as the category tabs below — one vocabulary, one order
     .sort((a, b) => {
       const order = Object.keys(CATEGORY_LABELS)
@@ -183,6 +204,16 @@ export default function TrackRecordPage() {
               title={`${beat} of ${scored.length} seasoned entries (held ≥${SEASONED_DAYS}d)`} />
         <Chip label="Avg excess" value={`${avgExcess >= 0 ? '+' : ''}${avgExcess.toFixed(2)}pp`}
               tone={avgExcess >= 0 ? 'up' : 'down'} />
+        {ewScored.length > 0 && (
+          <>
+            <Chip label="Beat avg stock" value={`${ewHitRate.toFixed(0)}%`}
+                  tone={ewHitRate >= 50 ? 'up' : 'down'}
+                  title={`Equal-weight check on the same ${ewScored.length} US entries: beat ${ewSymbol} (equal-weight S&P 500) ${ewHitRate.toFixed(0)}%, beat cap-weighted SPY ${capHitRateOnEw.toFixed(0)}%. A wide gap means the index was carried by a few megacaps, not that the signals failed.`} />
+            <Chip label="Avg excess (EW)" value={`${avgExcessEw >= 0 ? '+' : ''}${avgExcessEw.toFixed(2)}pp`}
+                  tone={avgExcessEw >= 0 ? 'up' : 'down'}
+                  title={`Average excess vs ${ewSymbol} across ${ewScored.length} US entries — "did the buys beat the average stock"`} />
+          </>
+        )}
         <Chip label="Avg return" value={`${avgReturn >= 0 ? '+' : ''}${avgReturn.toFixed(1)}%`}
               tone={avgReturn >= 0 ? 'up' : 'down'} />
         <Chip label="Avg held" value={`${avgDays.toFixed(0)}d`} />
@@ -203,13 +234,15 @@ export default function TrackRecordPage() {
       {byRule.length > 1 && (
         <div className="flex flex-wrap items-center gap-2.5">
           <span className="text-xs text-muted">By rule</span>
-          {byRule.map(({ cat, n, beatPct, avgExcess }) => (
+          {byRule.map(({ cat, n, beatPct, avgExcess, ewN, ewBeatPct }) => (
             <Chip
               key={cat}
               label={CATEGORY_SHORT[cat] ?? cat}
               value={`${beatPct.toFixed(0)}% · ${avgExcess >= 0 ? '+' : ''}${avgExcess.toFixed(1)}pp (${n})`}
               tone={avgExcess >= 0 ? 'up' : 'down'}
-              title={`${CATEGORY_LABELS[cat] ?? cat} — ${n} seasoned entries: beat benchmark ${beatPct.toFixed(0)}%, avg excess ${avgExcess >= 0 ? '+' : ''}${avgExcess.toFixed(2)}pp`}
+              title={`${CATEGORY_LABELS[cat] ?? cat} — ${n} seasoned entries: beat benchmark ${beatPct.toFixed(0)}%, avg excess ${avgExcess >= 0 ? '+' : ''}${avgExcess.toFixed(2)}pp${
+                ewN > 0 ? `; beat the average stock ${ewBeatPct.toFixed(0)}% (${ewN} US entries vs ${ewSymbol})` : ''
+              }`}
             />
           ))}
         </div>
@@ -240,6 +273,7 @@ export default function TrackRecordPage() {
                 <SortHeader label="Return" col="stock_return_pct" sort={sort} setSort={setSort} className="text-right" />
                 <th className={`${cellCls} text-right`}>Bench</th>
                 <SortHeader label="Excess" col="excess_pct" sort={sort} setSort={setSort} className="text-right" />
+                <SortHeader label="Excess EW" col="excess_ew_pct" sort={sort} setSort={setSort} className="text-right" />
                 <SortHeader label="Held" col="days_held" sort={sort} setSort={setSort} className="text-right" />
                 <th className={cellCls}>Result</th>
               </tr>
@@ -281,6 +315,12 @@ export default function TrackRecordPage() {
                   <td className={`${cellCls} text-right`}><Pct v={e.stock_return_pct} /></td>
                   <td className={`${cellCls} text-right`}><Pct v={e.bench_return_pct} /></td>
                   <td className={`${cellCls} text-right font-medium`}><Pct v={e.excess_pct} /></td>
+                  <td className={`${cellCls} text-right`}
+                      title={e.benchmark_ew
+                        ? `vs ${BENCHMARK_LABELS[e.benchmark_ew] ?? e.benchmark_ew} (${e.bench_ew_return_pct}% over the same window)`
+                        : 'No equal-weight index for this market'}>
+                    <Pct v={e.excess_ew_pct} />
+                  </td>
                   <td className={`${cellCls} text-right text-muted`}>
                     {e.days_held}d{e.status === 'matured' ? <span className="ml-1 text-faint" title="Evaluation window complete">·done</span> : ''}
                   </td>
@@ -313,7 +353,12 @@ export default function TrackRecordPage() {
         tracked forward. <span className="text-ink-2">Excess</span> = the stock's return since the
         alert minus its own market index over the same window (US → S&P 500, DE → DAX, BIST → BIST 100
         — same currency as the stock, so no FX distortion); a signal <span className="text-ink-2">beats</span>
-        its market when excess is positive. Entries held under {SEASONED_DAYS} days show{' '}
+        its market when excess is positive. <span className="text-ink-2">Excess EW</span> repeats the
+        comparison against the equal-weight S&amp;P 500 ({ewSymbol}) — the same 500 names weighted
+        equally, i.e. the average stock rather than the index you could buy. US entries only (no
+        comparable equal-weight index exists for the DAX or BIST 100). When the two disagree the
+        market was narrow: a handful of megacaps carrying the cap-weighted index makes a
+        breadth-driven scanner look worse than it is. Entries held under {SEASONED_DAYS} days show{' '}
         <span className="text-ink-2">pending</span> and are excluded from the headline stats;
         🎯 marks a price that reached the analyst mean target from its alert day; ↩ marks a
         signal that re-fired within {REFIRE_DAYS} days (possible whipsaw). Entries evaluate over

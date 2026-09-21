@@ -13,12 +13,19 @@ from track_record import (
 
 # ── fixtures (injected — every test is offline) ──────────────────────────────
 
-def benches():
+def benches(ew=True):
     us_by = {"2026-06-01": 500.0, "2026-06-15": 527.10, "2026-07-17": 543.21}
     de_by = {"2026-06-15": 18000.0, "2026-07-17": 18500.0}
+    # RSP flat over the window while SPY is +3.06% — the "narrow tape" shape the
+    # equal-weight leg exists to expose.
+    ew_by = {"2026-06-01": 180.0, "2026-06-15": 190.0, "2026-07-17": 190.0}
+    us = {"symbol": "SPY", "by_date": us_by, "sorted_dates": sorted(us_by),
+          "last_date": "2026-07-17", "last_close": 543.21}
+    if ew:
+        us["ew"] = {"symbol": "RSP", "by_date": ew_by, "sorted_dates": sorted(ew_by),
+                    "last_date": "2026-07-17", "last_close": 190.0}
     return {
-        "us": {"symbol": "SPY", "by_date": us_by, "sorted_dates": sorted(us_by),
-               "last_date": "2026-07-17", "last_close": 543.21},
+        "us": us,
         "de": {"symbol": "^GDAXI", "by_date": de_by, "sorted_dates": sorted(de_by),
                "last_date": "2026-07-17", "last_close": 18500.0},
     }
@@ -268,6 +275,114 @@ def test_build_migrates_target_into_existing_entries(tmp_path):
     aapl = next(e for e in d["entries"] if e["ticker"] == "AAPL")
     assert aapl["target_mean"] == 205.0
     assert aapl["target_reached"] is True  # 210.50 >= 205
+
+
+# ── equal-weight benchmark (the "average stock" control) ────────────────────
+
+class TestEqualWeight:
+    def _open(self, market="us", ticker="AAPL"):
+        return {"id": f"{ticker}|R|2026-06-15", "ticker": ticker, "market": market,
+                "rule": "R", "entry_date": "2026-06-15", "entry_price": 195.20,
+                "benchmark": "SPY", "entry_bench_close": 527.10,
+                "benchmark_ew": "RSP", "entry_bench_ew_close": 190.0,
+                "status": "open", "last_price": None, "days_held": 0}
+
+    def test_seed_freezes_both_anchors_nearest_prior(self):
+        seed = {"id": "X|R|2026-06-20", "ticker": "X", "market": "us", "rule": "R",
+                "entry_date": "2026-06-20", "entry_price": 100.0, "benchmark": "SPY"}
+        e = finalize_seed(seed, benches())
+        assert e["entry_bench_close"] == 527.10   # nearest-prior 06-15
+        assert e["entry_bench_ew_close"] == 190.0  # same day, EW series
+        assert e["benchmark_ew"] == "RSP"
+
+    def test_both_legs_computed_independently(self):
+        e = update_entry(self._open(), PRICES, benches(), "2026-07-17")
+        assert e["stock_return_pct"] == pytest.approx(7.84, abs=0.01)
+        # SPY +3.06% → excess +4.78; RSP flat → excess +7.84
+        assert e["bench_return_pct"] == pytest.approx(3.06, abs=0.01)
+        assert e["bench_ew_return_pct"] == 0.0
+        assert e["excess_ew_pct"] == pytest.approx(7.84, abs=0.01)
+        assert e["success"] is True and e["success_ew"] is True
+
+    def test_equal_weight_can_disagree_with_cap_weight(self):
+        # stock +1.5%: loses to SPY (+3.06%) but beats a flat RSP — exactly the
+        # regime distinction the second benchmark exists to surface.
+        px = {"AAPL": {"close": round(195.20 * 1.015, 2)}}
+        e = update_entry(self._open(), px, benches(), "2026-07-17")
+        assert e["success"] is False
+        assert e["success_ew"] is True
+
+    def test_non_us_market_has_no_equal_weight_leg(self):
+        seed = {"id": "SAP.DE|R|2026-06-15", "ticker": "SAP.DE", "market": "de",
+                "rule": "R", "entry_date": "2026-06-15", "entry_price": 180.0,
+                "benchmark": "^GDAXI"}
+        e = update_entry(finalize_seed(seed, benches()), PRICES, benches(), "2026-07-17")
+        assert e["benchmark_ew"] is None and e["entry_bench_ew_close"] is None
+        assert e["excess_ew_pct"] is None and e["success_ew"] is None
+        assert e["excess_pct"] is not None  # primary leg unaffected
+
+    def test_outage_nulls_ew_but_keeps_primary(self):
+        e = update_entry(self._open(), PRICES, benches(ew=False), "2026-07-17")
+        assert e["success"] is True                     # SPY leg intact
+        assert e["bench_ew_return_pct"] is None
+        assert e["excess_ew_pct"] is None and e["success_ew"] is None
+
+    def test_build_backfills_ew_into_pre_existing_entries(self, tmp_path):
+        # entry tracked before the field existed (schema v1 shape)…
+        build(tmp_path, prices=PRICES, bar_date="2026-07-16",
+              benches=benches(), history=history(), now=ts(22))
+        data = json.loads((tmp_path / "track_record.json").read_text())
+        for e in data["entries"]:
+            for k in ("benchmark_ew", "entry_bench_ew_close", "bench_ew_return_pct",
+                      "excess_ew_pct", "success_ew"):
+                e.pop(k, None)
+        (tmp_path / "track_record.json").write_text(json.dumps(data))
+        # …backfills exactly from the index series, no rescan needed
+        d = build(tmp_path, prices=PRICES, bar_date="2026-07-17",
+                  benches=benches(), history=history(), now=ts(23))
+        aapl = next(e for e in d["entries"] if e["ticker"] == "AAPL")
+        assert aapl["entry_bench_ew_close"] == 190.0
+        assert aapl["excess_ew_pct"] == pytest.approx(7.84, abs=0.01)
+        sap = next(e for e in d["entries"] if e["ticker"] == "SAP.DE")
+        assert sap["entry_bench_ew_close"] is None  # DE has no EW index
+
+    def test_matured_entries_stay_frozen_not_half_filled(self, tmp_path):
+        # a schema-v1 entry that already matured must not gain a lone anchor
+        # with no derived fields — frozen means frozen.
+        build(tmp_path, prices=PRICES, bar_date="2026-07-16",
+              benches=benches(), history=history(), now=ts(22))
+        data = json.loads((tmp_path / "track_record.json").read_text())
+        for e in data["entries"]:
+            e["status"] = "matured"
+            for k in ("benchmark_ew", "entry_bench_ew_close", "bench_ew_return_pct",
+                      "excess_ew_pct", "success_ew"):
+                e.pop(k, None)
+        (tmp_path / "track_record.json").write_text(json.dumps(data))
+        d = build(tmp_path, prices=PRICES, bar_date="2026-07-17",
+                  benches=benches(), history=history(), now=ts(23))
+        assert all("entry_bench_ew_close" not in e for e in d["entries"])
+
+    def test_build_publishes_ew_benchmark_metadata(self, tmp_path):
+        d = build(tmp_path, prices=PRICES, bar_date="2026-07-17",
+                  benches=benches(), history=history(), now=ts(22))
+        assert d["benchmarks"]["us"]["ew"] == {
+            "symbol": "RSP", "last_date": "2026-07-17", "last_close": 190.0}
+        assert "ew" not in d["benchmarks"]["de"]
+
+    def test_fetch_benches_degrades_when_ew_index_is_down(self, monkeypatch):
+        idx = pd.to_datetime(["2026-07-15", "2026-07-16"])
+        good = pd.DataFrame({"close": [520.0, 527.10]}, index=idx)
+        monkeypatch.setattr(tr, "MIN_BENCH_BARS", 1)
+        monkeypatch.setattr(tr, "fetch_us",
+                            lambda sym, **k: pd.DataFrame() if sym == "RSP" else good)
+        out = tr._fetch_benches({"us"}, bar_dates={"us": "2026-07-16"})
+        assert out["us"]["last_close"] == 527.10  # SPY fine
+        assert "ew" not in out["us"]              # RSP dropped, no raise
+
+    def test_fetch_benches_still_raises_on_primary_outage(self, monkeypatch):
+        monkeypatch.setattr(tr, "fetch_us", lambda *a, **k: pd.DataFrame())
+        with pytest.raises(RuntimeError, match="us"):
+            tr._fetch_benches({"us"})
 
 
 def test_fetch_benches_aligns_last_close_to_bar_date(monkeypatch):
