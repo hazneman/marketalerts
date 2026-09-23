@@ -1,5 +1,5 @@
 {
- "bar_date": "2026-09-22",
+ "bar_date": "2026-09-23",
  "currencies": [
   {
    "bank": "Federal Reserve",
@@ -33,9 +33,9 @@
    "suggestion": "Low yield and weakening \u2014 funding currency",
    "vs_usd": {
     "above_sma200": false,
-    "chg_1m_pct": -1.98,
-    "price": 1.14508,
-    "sma200": 1.16279
+    "chg_1m_pct": -2.41,
+    "price": 1.13869,
+    "sma200": 1.16262
    }
   },
   {
@@ -54,9 +54,9 @@
    "suggestion": "Neutral carry, negative trend",
    "vs_usd": {
     "above_sma200": false,
-    "chg_1m_pct": -2.26,
-    "price": 1.33451,
-    "sma200": 1.3453
+    "chg_1m_pct": -2.91,
+    "price": 1.32419,
+    "sma200": 1.34525
    }
   },
   {
@@ -75,8 +75,8 @@
    "suggestion": "Low yield but strengthening",
    "vs_usd": {
     "above_sma200": true,
-    "chg_1m_pct": 0.94,
-    "price": 0.00635,
+    "chg_1m_pct": 0.54,
+    "price": 0.00632,
     "sma200": 0.00631
    }
   },
@@ -96,9 +96,9 @@
    "suggestion": "Low yield and weakening \u2014 funding currency",
    "vs_usd": {
     "above_sma200": false,
-    "chg_1m_pct": -2.42,
-    "price": 1.21877,
-    "sma200": 1.25948
+    "chg_1m_pct": -2.76,
+    "price": 1.21244,
+    "sma200": 1.25926
    }
   },
   {
@@ -117,9 +117,9 @@
    "suggestion": "Low yield and weakening \u2014 funding currency",
    "vs_usd": {
     "above_sma200": false,
-    "chg_1m_pct": -1.93,
-    "price": 0.711,
-    "sma200": 0.72281
+    "chg_1m_pct": -1.85,
+    "price": 0.70914,
+    "sma200": 0.72273
    }
   },
   {
@@ -138,9 +138,9 @@
    "suggestion": "Neutral carry, positive trend",
    "vs_usd": {
     "above_sma200": true,
-    "chg_1m_pct": -0.75,
-    "price": 0.71174,
-    "sma200": 0.70142
+    "chg_1m_pct": -1.59,
+    "price": 0.70413,
+    "sma200": 0.70162
    }
   },
   {
@@ -159,9 +159,9 @@
    "suggestion": "Low yield and weakening \u2014 funding currency",
    "vs_usd": {
     "above_sma200": false,
-    "chg_1m_pct": -4.13,
-    "price": 0.57307,
-    "sma200": 0.58535
+    "chg_1m_pct": -4.81,
+    "price": 0.56789,
+    "sma200": 0.58528
    }
   },
   {
@@ -180,136 +180,149 @@
    "suggestion": "Positive carry but weakening \u2014 carry at risk",
    "vs_usd": {
     "above_sma200": false,
-    "chg_1m_pct": -1.59,
-    "price": 0.02048,
-    "sma200": 0.02204
+    "chg_1m_pct": -1.56,
+    "price": 0.02047,
+    "sma200": 0.02202
    }
   }
  ],
- "generated_at": "2026-09-22T22:35:20Z",
+ "generated_at": "2026-09-23T22:35:54Z",
  "outlook_as_of": "2026-07-06",
- "pair_alerts": [],
+ "pair_alerts": [
+  {
+   "category": "sma50_sma200",
+   "close": 0.5679,
+   "date": "2026-09-23",
+   "direction": "bearish",
+   "rule": "DEATH_CROSS",
+   "ticker": "NZDUSD",
+   "values": {
+    "sma200": 0.5853,
+    "sma50": 0.5853
+   }
+  }
+ ],
  "pairs": [
   {
    "above_sma200": false,
    "alignment": "aligned_bear",
    "carry_pct": -2.0,
-   "chg_1m_pct": -1.98,
+   "chg_1m_pct": -2.41,
    "comment": "Negative carry and downtrend agree \u2014 cleanest bearish setup",
-   "price": 1.14508,
-   "sma200": 1.16279,
+   "price": 1.13869,
+   "sma200": 1.16262,
    "symbol": "EURUSD",
-   "vs_sma200_pct": -1.52
+   "vs_sma200_pct": -2.06
   },
   {
    "above_sma200": false,
    "alignment": "trend_only",
    "carry_pct": -0.25,
-   "chg_1m_pct": -2.26,
+   "chg_1m_pct": -2.91,
    "comment": "Flat rate balance \u2014 trend is the whole story (down)",
-   "price": 1.33451,
-   "sma200": 1.3453,
+   "price": 1.32419,
+   "sma200": 1.34525,
    "symbol": "GBPUSD",
-   "vs_sma200_pct": -0.8
+   "vs_sma200_pct": -1.57
   },
   {
    "above_sma200": false,
    "alignment": "conflict",
    "carry_pct": 3.25,
-   "chg_1m_pct": -0.93,
+   "chg_1m_pct": -0.54,
    "comment": "Positive carry but below SMA200 \u2014 carry is fighting the trend",
-   "price": 157.43201,
-   "sma200": 158.41406,
+   "price": 158.278,
+   "sma200": 158.42569,
    "symbol": "USDJPY",
-   "vs_sma200_pct": -0.62
+   "vs_sma200_pct": -0.09
   },
   {
    "above_sma200": true,
    "alignment": "aligned_bull",
    "carry_pct": 4.0,
-   "chg_1m_pct": 2.48,
+   "chg_1m_pct": 2.84,
    "comment": "Carry and trend agree \u2014 cleanest bullish setup",
-   "price": 0.82051,
-   "sma200": 0.79423,
+   "price": 0.82478,
+   "sma200": 0.79438,
    "symbol": "USDCHF",
-   "vs_sma200_pct": 3.31
+   "vs_sma200_pct": 3.83
   },
   {
    "above_sma200": true,
    "alignment": "aligned_bull",
    "carry_pct": 1.75,
-   "chg_1m_pct": 1.97,
+   "chg_1m_pct": 1.88,
    "comment": "Carry and trend agree \u2014 cleanest bullish setup",
-   "price": 1.40646,
-   "sma200": 1.38371,
+   "price": 1.41016,
+   "sma200": 1.38386,
    "symbol": "USDCAD",
-   "vs_sma200_pct": 1.64
+   "vs_sma200_pct": 1.9
   },
   {
    "above_sma200": true,
    "alignment": "trend_only",
    "carry_pct": -0.4,
-   "chg_1m_pct": -0.75,
+   "chg_1m_pct": -1.59,
    "comment": "Flat rate balance \u2014 trend is the whole story (up)",
-   "price": 0.71174,
-   "sma200": 0.70142,
+   "price": 0.70413,
+   "sma200": 0.70162,
    "symbol": "AUDUSD",
-   "vs_sma200_pct": 1.47
+   "vs_sma200_pct": 0.36
   },
   {
    "above_sma200": false,
    "alignment": "aligned_bear",
    "carry_pct": -1.75,
-   "chg_1m_pct": -4.13,
+   "chg_1m_pct": -4.81,
    "comment": "Negative carry and downtrend agree \u2014 cleanest bearish setup",
-   "price": 0.57307,
-   "sma200": 0.58535,
+   "price": 0.56789,
+   "sma200": 0.58528,
    "symbol": "NZDUSD",
-   "vs_sma200_pct": -2.1
+   "vs_sma200_pct": -2.97
   },
   {
    "above_sma200": false,
    "alignment": "aligned_bear",
    "carry_pct": -1.75,
-   "chg_1m_pct": 0.26,
+   "chg_1m_pct": 0.49,
    "comment": "Negative carry and downtrend agree \u2014 cleanest bearish setup",
-   "price": 0.85779,
-   "sma200": 0.86427,
+   "price": 0.85967,
+   "sma200": 0.86418,
    "symbol": "EURGBP",
-   "vs_sma200_pct": -0.75
+   "vs_sma200_pct": -0.52
   },
   {
    "above_sma200": false,
    "alignment": "conflict",
    "carry_pct": 1.25,
-   "chg_1m_pct": -2.92,
+   "chg_1m_pct": -2.95,
    "comment": "Positive carry but below SMA200 \u2014 carry is fighting the trend",
-   "price": 180.214,
-   "sma200": 184.16367,
+   "price": 180.192,
+   "sma200": 184.15074,
    "symbol": "EURJPY",
-   "vs_sma200_pct": -2.14
+   "vs_sma200_pct": -2.15
   },
   {
    "above_sma200": false,
    "alignment": "conflict",
    "carry_pct": 3.0,
-   "chg_1m_pct": -3.03,
+   "chg_1m_pct": -3.19,
    "comment": "Positive carry but below SMA200 \u2014 carry is fighting the trend",
-   "price": 210.388,
-   "sma200": 213.07903,
+   "price": 210.104,
+   "sma200": 213.0877,
    "symbol": "GBPJPY",
-   "vs_sma200_pct": -1.26
+   "vs_sma200_pct": -1.4
   },
   {
    "above_sma200": true,
    "alignment": "conflict",
    "carry_pct": -34.0,
-   "chg_1m_pct": 1.62,
+   "chg_1m_pct": 1.58,
    "comment": "Uptrend despite negative carry \u2014 momentum outrunning rates",
-   "price": 48.8245,
-   "sma200": 45.4492,
+   "price": 48.836,
+   "sma200": 45.47988,
    "symbol": "USDTRY",
-   "vs_sma200_pct": 7.43
+   "vs_sma200_pct": 7.38
   }
  ],
  "rates_as_of": "2026-01-28",
