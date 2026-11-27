@@ -186,9 +186,9 @@
      "verdict_reason": "Bearish signal confirmed by MACD, sector leading",
      "volume": {
       "above_avg": true,
-      "avg20": 55346490,
+      "avg20": 55356645,
       "ratio": 1.13,
-      "today": 62276400
+      "today": 62479500
      }
     },
     {
@@ -486,7 +486,7 @@
       ],
       "metrics": {
        "earnings_growth_pct": 85.7,
-       "fcf_yield_pct": 0.4,
+       "fcf_yield_pct": 0.9,
        "forward_pe": 31.7,
        "rec_mean": 1.9,
        "target_upside_pct": 21.4
@@ -500,7 +500,7 @@
        "net_debt_to_ebitda": 0.78,
        "net_margin": 6.2,
        "op_margin": 8.7,
-       "p_fcf": 261.1,
+       "p_fcf": 114.7,
        "payout": 0.0,
        "peg": 0.24,
        "rev_growth": 42.4,
@@ -654,11 +654,11 @@
      "fundamentals": {
       "analyst": {
        "consensus": "buy",
-       "n_analysts": 22,
+       "n_analysts": 23,
        "price": 641.02,
-       "target_high": 813.18,
-       "target_low": 500.0,
-       "target_mean": 689.19
+       "target_high": 830.0,
+       "target_low": 590.0,
+       "target_mean": 699.18
       },
       "coverage": {
        "present": 5,
@@ -666,36 +666,36 @@
       },
       "factors": {
        "analyst": 1,
-       "earnings_growth": 0,
-       "fcf_yield": 0,
+       "earnings_growth": -1,
+       "fcf_yield": -1,
        "target_upside": 0,
        "valuation": 0
       },
       "flags": [
-       "high_leverage"
+       "high_leverage",
+       "earnings_not_cash_backed"
       ],
       "metrics": {
-       "earnings_growth_pct": 7.4,
-       "fcf_yield_pct": 2.6,
+       "earnings_growth_pct": -1.0,
+       "fcf_yield_pct": -7.6,
        "forward_pe": 28.0,
        "rec_mean": 1.9,
-       "target_upside_pct": 7.5
+       "target_upside_pct": 9.1
       },
       "profile": {
-       "current_ratio": 2.13,
-       "debt_to_equity": 2.3,
+       "current_ratio": 2.16,
+       "debt_to_equity": 2.17,
        "div_yield": 1.01,
-       "ev_ebitda": 25.9,
-       "fcf_to_net_income": 0.93,
-       "gross_margin": 25.2,
-       "net_debt_to_ebitda": 6.7,
+       "ev_ebitda": 19.7,
+       "fcf_to_net_income": -2.7,
+       "gross_margin": 36.4,
+       "net_debt_to_ebitda": 4.81,
        "net_margin": 10.2,
-       "op_margin": 13.5,
-       "p_fcf": 38.3,
+       "op_margin": 19.4,
        "payout": 36.0,
        "peg": 1.41,
-       "rev_growth": 4.9,
-       "roe": 18.2
+       "rev_growth": -1.8,
+       "roe": 17.9
       },
       "rating": "neutral",
       "rating_changes": [
@@ -728,9 +728,9 @@
         "to_grade": "Outperform"
        }
       ],
-      "score": 1,
+      "score": -1,
       "sector": "Industrials",
-      "summary": "profitable (op margin 14%, ROE 18%) \u00b7 high leverage (6.7\u00d7 net debt/EBITDA) \u00b7 premium valuation (fwd P/E 28) \u00b7 rev +5% / EPS +7%"
+      "summary": "profitable (op margin 19%, ROE 18%) \u00b7 high leverage (4.8\u00d7 net debt/EBITDA) \u00b7 premium valuation (fwd P/E 28) \u00b7 shrinking (rev -2%, EPS -1%)"
      },
      "macd_confirms": false,
      "market": "us",
@@ -861,7 +861,7 @@
       ],
       "metrics": {
        "earnings_growth_pct": 26.3,
-       "fcf_yield_pct": -9.2,
+       "fcf_yield_pct": -9.1,
        "forward_pe": 16.1,
        "rec_mean": 2.1,
        "target_upside_pct": 8.2
@@ -1981,20 +1981,20 @@
       "metrics": {
        "earnings_growth_pct": -43.6,
        "fcf_yield_pct": 0.3,
-       "forward_pe": 176.1,
+       "forward_pe": 175.7,
        "rec_mean": 2.2,
        "target_upside_pct": 10.2
       },
       "profile": {
        "current_ratio": 1.74,
        "debt_to_equity": 0.18,
-       "ev_ebitda": 149.8,
-       "fcf_to_net_income": 1.54,
+       "ev_ebitda": 144.1,
+       "fcf_to_net_income": 1.62,
        "gross_margin": 19.3,
-       "net_debt_to_ebitda": -2.95,
+       "net_debt_to_ebitda": -2.84,
        "net_margin": 3.1,
-       "op_margin": 3.0,
-       "p_fcf": 302.5,
+       "op_margin": 3.4,
+       "p_fcf": 288.4,
        "payout": 0.0,
        "peg": 4.5,
        "rev_growth": -0.2,
@@ -2059,9 +2059,9 @@
      "verdict_reason": "Bearish signal confirmed by MACD, sector leading",
      "volume": {
       "above_avg": false,
-      "avg20": 35563855,
+      "avg20": 35570150,
       "ratio": 0.98,
-      "today": 34789900
+      "today": 34915800
      }
     },
     {
@@ -2436,100 +2436,99 @@
     },
     {
      "category": "price_sma200",
-     "close": 68.78,
-     "date": "2026-11-24",
+     "close": 280.5,
+     "date": "2026-11-25",
      "direction": "bearish",
      "fib": {
       "daily": {
-       "high": 77.5,
+       "high": 369.0,
        "levels": [
         {
-         "dist_pct": -4.96,
+         "dist_pct": -17.16,
          "label": "23.6%",
-         "price": 72.3694
+         "price": 338.6032
         },
         {
-         "dist_pct": -0.6,
+         "dist_pct": -12.29,
          "label": "38.2%",
-         "price": 69.1953
+         "price": 319.7984
         },
         {
-         "dist_pct": 3.23,
+         "dist_pct": -7.91,
          "label": "50.0%",
-         "price": 66.63
+         "price": 304.6
         },
         {
-         "dist_pct": 7.36,
+         "dist_pct": -3.08,
          "label": "61.8%",
-         "price": 64.0647
+         "price": 289.4016
         },
         {
-         "dist_pct": 13.85,
+         "dist_pct": 4.76,
          "label": "78.6%",
-         "price": 60.4124
+         "price": 267.7632
         }
        ],
-       "low": 55.76,
+       "low": 240.2,
        "nearest": {
-        "dist_pct": -0.6,
-        "label": "38.2%",
-        "price": 69.1953
+        "dist_pct": -3.08,
+        "label": "61.8%",
+        "price": 289.4016
        },
-       "position_pct": 59.9
+       "position_pct": 31.3
       },
       "weekly": {
-       "high": 77.5,
+       "high": 369.0,
        "levels": [
         {
-         "dist_pct": -0.62,
+         "dist_pct": -15.55,
          "label": "23.6%",
-         "price": 69.2103
+         "price": 332.1368
         },
         {
-         "dist_pct": 7.33,
+         "dist_pct": -9.32,
          "label": "38.2%",
-         "price": 64.0819
+         "price": 309.3316
         },
         {
-         "dist_pct": 14.75,
+         "dist_pct": -3.58,
          "label": "50.0%",
-         "price": 59.937
+         "price": 290.9
         },
         {
-         "dist_pct": 23.28,
+         "dist_pct": 2.95,
          "label": "61.8%",
-         "price": 55.7921
+         "price": 272.4684
         },
         {
-         "dist_pct": 37.86,
+         "dist_pct": 13.92,
          "label": "78.6%",
-         "price": 49.891
+         "price": 246.2268
         }
        ],
-       "low": 42.374,
+       "low": 212.8,
        "nearest": {
-        "dist_pct": -0.62,
-        "label": "23.6%",
-        "price": 69.2103
+        "dist_pct": 2.95,
+        "label": "61.8%",
+        "price": 272.4684
        },
-       "position_pct": 75.2
+       "position_pct": 43.3
       }
      },
      "fundamentals": {
       "analyst": {
-       "consensus": "buy",
-       "n_analysts": 12,
-       "price": 68.22,
-       "target_high": 90.0,
-       "target_low": 74.0,
-       "target_mean": 80.58
+       "n_analysts": 11,
+       "price": 281.0,
+       "target_high": 506.29,
+       "target_low": 372.83,
+       "target_mean": 429.64
       },
       "coverage": {
        "present": 4,
        "total": 5
       },
       "factors": {
-       "analyst": 1,
+       "earnings_growth": 1,
        "fcf_yield": -1,
        "target_upside": 1,
        "valuation": 1
@@ -2539,773 +2538,47 @@
        "earnings_not_cash_backed"
       ],
       "metrics": {
-       "fcf_yield_pct": -1.6,
-       "forward_pe": 10.1,
-       "rec_mean": 1.7,
-       "target_upside_pct": 18.1
+       "earnings_growth_pct": 52.6,
+       "fcf_yield_pct": -7.9,
+       "forward_pe": 14.0,
+       "target_upside_pct": 52.9
       },
       "profile": {
-       "current_ratio": 1.58,
-       "debt_to_equity": 1.42,
-       "div_yield": 3.96,
-       "ev_ebitda": 5.7,
-       "fcf_to_net_income": -0.27,
-       "gross_margin": 28.3,
-       "net_debt_to_ebitda": 1.72,
-       "net_margin": 4.6,
-       "op_margin": 14.0,
-       "payout": 64.9,
-       "peg": 6.36,
-       "rev_growth": -11.4,
-       "roe": 18.7
+       "current_ratio": 1.26,
+       "debt_to_equity": 1.31,
+       "div_yield": 1.28,
+       "ev_ebitda": 7.1,
+       "fcf_to_net_income": -0.95,
+       "gross_margin": 36.6,
+       "net_debt_to_ebitda": 3.33,
+       "net_margin": 8.5,
+       "op_margin": 17.9,
+       "payout": 8.7,
+       "peg": 0.12,
+       "rev_growth": 21.2,
+       "roe": 10.5
       },
       "rating": "strong",
       "rating_changes": [],
       "score": 2,
-      "sector": "Consumer Cyclical",
-      "summary": "profitable (op margin 14%, ROE 19%) \u00b7 moderate leverage (1.7\u00d7 net debt/EBITDA) \u00b7 cheap valuation (fwd P/E 10) \u00b7 shrinking (rev -11%)"
-     },
-     "macd_confirms": true,
-     "market": "de",
-     "rule": "PRICE_SMA200_BEAR",
-     "sector": null,
-     "ticker": "CON.DE",
-     "values": {
-      "sma200": 68.85
-     },
-     "verdict": "hold",
-     "verdict_reason": "Bearish signal but fundamentals/sector strong \u2014 trim rather than exit",
-     "volume": {
-      "above_avg": true,
-      "avg20": 523954,
-      "ratio": 1.35,
-      "today": 705267
-     }
-    },
-    {
-     "category": "price_sma200",
-     "close": 29.9,
-     "date": "2026-11-24",
-     "direction": "bearish",
-     "fib": {
-      "daily": {
-       "high": 35.845,
-       "levels": [
-        {
-         "dist_pct": -9.41,
-         "label": "23.6%",
-         "price": 33.0059
-        },
-        {
-         "dist_pct": -4.32,
-         "label": "38.2%",
-         "price": 31.2495
-        },
-        {
-         "dist_pct": 0.23,
-         "label": "50.0%",
-         "price": 29.83
-        },
-        {
-         "dist_pct": 5.24,
-         "label": "61.8%",
-         "price": 28.4105
-        },
-        {
-         "dist_pct": 13.3,
-         "label": "78.6%",
-         "price": 26.3894
-        }
-       ],
-       "low": 23.815,
-       "nearest": {
-        "dist_pct": 0.23,
-        "label": "50.0%",
-        "price": 29.83
-       },
-       "position_pct": 50.6
-      },
-      "weekly": {
-       "high": 35.845,
-       "levels": [
-        {
-         "dist_pct": -3.54,
-         "label": "23.6%",
-         "price": 30.9959
-        },
-        {
-         "dist_pct": 6.8,
-         "label": "38.2%",
-         "price": 27.996
-        },
-        {
-         "dist_pct": 16.93,
-         "label": "50.0%",
-         "price": 25.5715
-        },
-        {
-         "dist_pct": 29.17,
-         "label": "61.8%",
-         "price": 23.147
-        },
-        {
-         "dist_pct": 51.81,
-         "label": "78.6%",
-         "price": 19.6951
-        }
-       ],
-       "low": 15.298,
-       "nearest": {
-        "dist_pct": -3.54,
-        "label": "23.6%",
-        "price": 30.9959
-       },
-       "position_pct": 71.1
-      }
-     },
-     "fundamentals": {
-      "analyst": {
-       "consensus": "buy",
-       "n_analysts": 18,
-       "price": 29.07,
-       "target_high": 47.75,
-       "target_low": 10.9,
-       "target_mean": 35.58
-      },
-      "coverage": {
-       "present": 4,
-       "total": 5
-      },
-      "factors": {
-       "analyst": 0,
-       "earnings_growth": 0,
-       "target_upside": 1,
-       "valuation": 1
-      },
-      "flags": [],
-      "metrics": {
-       "earnings_growth_pct": 5.6,
-       "forward_pe": 7.3,
-       "rec_mean": 2.2,
-       "target_upside_pct": 22.4
-      },
-      "profile": {
-       "div_yield": 3.44,
-       "gross_margin": 0.0,
-       "net_margin": 22.7,
-       "op_margin": 32.3,
-       "payout": 30.0,
-       "peg": 1.56,
-       "rev_growth": 2.8,
-       "roe": 9.0
-      },
-      "rating": "strong",
-      "rating_changes": [],
-      "score": 2,
-      "sector": "Financial Services",
-      "summary": "highly profitable (op margin 32%, ROE 9%) \u00b7 cheap valuation (fwd P/E 7) \u00b7 rev +3% / EPS +6%"
-     },
-     "macd_confirms": true,
-     "market": "de",
-     "rule": "PRICE_SMA200_BEAR",
-     "sector": null,
-     "ticker": "DBK.DE",
-     "values": {
-      "sma200": 29.97
-     },
-     "verdict": "hold",
-     "verdict_reason": "Bearish signal but fundamentals/sector strong \u2014 trim rather than exit",
-     "volume": {
-      "above_avg": false,
-      "avg20": 6213558,
-      "ratio": 0.85,
-      "today": 5294442
-     }
-    },
-    {
-     "category": "price_sma200",
-     "close": 340.2,
-     "date": "2026-11-24",
-     "direction": "bearish",
-     "fib": {
-      "daily": {
-       "high": 404.8,
-       "levels": [
-        {
-         "dist_pct": -8.51,
-         "label": "23.6%",
-         "price": 371.8544
-        },
-        {
-         "dist_pct": -3.21,
-         "label": "38.2%",
-         "price": 351.4728
-        },
-        {
-         "dist_pct": 1.55,
-         "label": "50.0%",
-         "price": 335.0
-        },
-        {
-         "dist_pct": 6.8,
-         "label": "61.8%",
-         "price": 318.5272
-        },
-        {
-         "dist_pct": 15.29,
-         "label": "78.6%",
-         "price": 295.0744
-        }
-       ],
-       "low": 265.2,
-       "nearest": {
-        "dist_pct": 1.55,
-        "label": "50.0%",
-        "price": 335.0
-       },
-       "position_pct": 53.7
-      },
-      "weekly": {
-       "high": 404.8,
-       "levels": [
-        {
-         "dist_pct": -7.6,
-         "label": "23.6%",
-         "price": 368.1728
-        },
-        {
-         "dist_pct": -1.54,
-         "label": "38.2%",
-         "price": 345.5136
-        },
-        {
-         "dist_pct": 3.97,
-         "label": "50.0%",
-         "price": 327.2
-        },
-        {
-         "dist_pct": 10.14,
-         "label": "61.8%",
-         "price": 308.8864
-        },
-        {
-         "dist_pct": 20.29,
-         "label": "78.6%",
-         "price": 282.8128
-        }
-       ],
-       "low": 249.6,
-       "nearest": {
-        "dist_pct": -1.54,
-        "label": "38.2%",
-        "price": 345.5136
-       },
-       "position_pct": 58.4
-      }
-     },
-     "fundamentals": {
-      "analyst": {
-       "consensus": "buy",
-       "n_analysts": 20,
-       "price": 337.7,
-       "target_high": 530.0,
-       "target_low": 325.0,
-       "target_mean": 408.35
-      },
-      "coverage": {
-       "present": 5,
-       "total": 5
-      },
-      "factors": {
-       "analyst": 0,
-       "earnings_growth": -1,
-       "fcf_yield": 0,
-       "target_upside": 1,
-       "valuation": 0
-      },
-      "flags": [
-       "earnings_not_cash_backed"
-      ],
-      "metrics": {
-       "earnings_growth_pct": -9.7,
-       "fcf_yield_pct": 1.6,
-       "forward_pe": 16.3,
-       "rec_mean": 2.5,
-       "target_upside_pct": 20.9
-      },
-      "profile": {
-       "current_ratio": 1.42,
-       "debt_to_equity": 0.56,
-       "div_yield": 1.07,
-       "ev_ebitda": 13.6,
-       "fcf_to_net_income": 0.32,
-       "gross_margin": 18.0,
-       "net_debt_to_ebitda": 0.78,
-       "net_margin": 9.7,
-       "op_margin": 12.1,
-       "p_fcf": 61.7,
-       "payout": 20.9,
-       "peg": 1.49,
-       "rev_growth": 13.6,
-       "roe": 21.1
-      },
-      "rating": "neutral",
-      "rating_changes": [],
-      "score": 0,
       "sector": "Industrials",
-      "summary": "profitable (op margin 12%, ROE 21%) \u00b7 low leverage (0.8\u00d7 net debt/EBITDA) \u00b7 fair valuation (fwd P/E 16) \u00b7 rev +14% / EPS -10%"
-     },
-     "macd_confirms": true,
-     "market": "de",
-     "rule": "PRICE_SMA200_BEAR",
-     "sector": null,
-     "ticker": "MTX.DE",
-     "values": {
-      "sma200": 340.29
-     },
-     "verdict": "sell",
-     "verdict_reason": "Bearish signal confirmed by MACD",
-     "volume": {
-      "above_avg": false,
-      "avg20": 139071,
-      "ratio": 0.86,
-      "today": 119210
-     }
-    },
-    {
-     "category": "price_sma200",
-     "close": 254.65,
-     "date": "2026-11-24",
-     "direction": "bearish",
-     "fib": {
-      "daily": {
-       "high": 291.7,
-       "levels": [
-        {
-         "dist_pct": -5.54,
-         "label": "23.6%",
-         "price": 269.5868
-        },
-        {
-         "dist_pct": -0.49,
-         "label": "38.2%",
-         "price": 255.9066
-        },
-        {
-         "dist_pct": 4.0,
-         "label": "50.0%",
-         "price": 244.85
-        },
-        {
-         "dist_pct": 8.92,
-         "label": "61.8%",
-         "price": 233.7934
-        },
-        {
-         "dist_pct": 16.78,
-         "label": "78.6%",
-         "price": 218.0518
-        }
-       ],
-       "low": 198.0,
-       "nearest": {
-        "dist_pct": -0.49,
-        "label": "38.2%",
-        "price": 255.9066
-       },
-       "position_pct": 60.5
-      },
-      "weekly": {
-       "high": 291.7,
-       "levels": [
-        {
-         "dist_pct": -2.5,
-         "label": "23.6%",
-         "price": 261.1805
-        },
-        {
-         "dist_pct": 5.1,
-         "label": "38.2%",
-         "price": 242.2998
-        },
-        {
-         "dist_pct": 12.16,
-         "label": "50.0%",
-         "price": 227.04
-        },
-        {
-         "dist_pct": 20.24,
-         "label": "61.8%",
-         "price": 211.7802
-        },
-        {
-         "dist_pct": 33.99,
-         "label": "78.6%",
-         "price": 190.0545
-        }
-       ],
-       "low": 162.38,
-       "nearest": {
-        "dist_pct": -2.5,
-        "label": "23.6%",
-        "price": 261.1805
-       },
-       "position_pct": 71.4
-      }
-     },
-     "fundamentals": {
-      "analyst": {
-       "consensus": "buy",
-       "n_analysts": 23,
-       "price": 245.5,
-       "target_high": 345.0,
-       "target_low": 240.0,
-       "target_mean": 310.65
-      },
-      "coverage": {
-       "present": 5,
-       "total": 5
-      },
-      "factors": {
-       "analyst": 1,
-       "earnings_growth": 1,
-       "fcf_yield": 0,
-       "target_upside": 1,
-       "valuation": 0
-      },
-      "flags": [
-       "earnings_not_cash_backed"
-      ],
-      "metrics": {
-       "earnings_growth_pct": 35.7,
-       "fcf_yield_pct": 2.1,
-       "forward_pe": 16.2,
-       "rec_mean": 2.0,
-       "target_upside_pct": 26.5
-      },
-      "profile": {
-       "current_ratio": 1.45,
-       "debt_to_equity": 0.62,
-       "div_yield": 2.18,
-       "ev_ebitda": 15.6,
-       "fcf_to_net_income": 0.46,
-       "gross_margin": 39.6,
-       "net_debt_to_ebitda": 2.33,
-       "net_margin": 10.2,
-       "op_margin": 13.5,
-       "p_fcf": 48.5,
-       "payout": 49.9,
-       "peg": 2.71,
-       "rev_growth": 10.5,
-       "roe": 13.0
-      },
-      "rating": "strong",
-      "rating_changes": [],
-      "score": 3,
-      "sector": "Industrials",
-      "summary": "profitable (op margin 14%, ROE 13%) \u00b7 moderate leverage (2.3\u00d7 net debt/EBITDA) \u00b7 fair valuation (fwd P/E 16) \u00b7 rev +10% / EPS +36%"
-     },
-     "macd_confirms": true,
-     "market": "de",
-     "rule": "PRICE_SMA200_BEAR",
-     "sector": null,
-     "ticker": "SIE.DE",
-     "values": {
-      "sma200": 260.71
-     },
-     "verdict": "hold",
-     "verdict_reason": "Bearish signal but fundamentals/sector strong \u2014 trim rather than exit",
-     "volume": {
-      "above_avg": false,
-      "avg20": 1148869,
-      "ratio": 0.94,
-      "today": 1079838
-     }
-    },
-    {
-     "category": "price_sma200",
-     "close": 11.1,
-     "date": "2026-11-24",
-     "direction": "bullish",
-     "fib": {
-      "daily": {
-       "high": 13.28,
-       "levels": [
-        {
-         "dist_pct": -9.99,
-         "label": "23.6%",
-         "price": 12.3313
-        },
-        {
-         "dist_pct": -5.49,
-         "label": "38.2%",
-         "price": 11.7444
-        },
-        {
-         "dist_pct": -1.51,
-         "label": "50.0%",
-         "price": 11.27
-        },
-        {
-         "dist_pct": 2.82,
-         "label": "61.8%",
-         "price": 10.7956
-        },
-        {
-         "dist_pct": 9.68,
-         "label": "78.6%",
-         "price": 10.1203
-        }
-       ],
-       "low": 9.26,
-       "nearest": {
-        "dist_pct": -1.51,
-        "label": "50.0%",
-        "price": 11.27
-       },
-       "position_pct": 45.8
-      },
-      "weekly": {
-       "high": 13.65,
-       "levels": [
-        {
-         "dist_pct": -10.85,
-         "label": "23.6%",
-         "price": 12.4511
-        },
-        {
-         "dist_pct": -5.2,
-         "label": "38.2%",
-         "price": 11.7094
-        },
-        {
-         "dist_pct": -0.09,
-         "label": "50.0%",
-         "price": 11.11
-        },
-        {
-         "dist_pct": 5.61,
-         "label": "61.8%",
-         "price": 10.5106
-        },
-        {
-         "dist_pct": 14.94,
-         "label": "78.6%",
-         "price": 9.6571
-        }
-       ],
-       "low": 8.57,
-       "nearest": {
-        "dist_pct": -0.09,
-        "label": "50.0%",
-        "price": 11.11
-       },
-       "position_pct": 49.8
-      }
-     },
-     "fundamentals": {
-      "analyst": {
-       "n_analysts": 3,
-       "price": 11.12,
-       "target_high": 18.5,
-       "target_low": 12.66,
-       "target_mean": 15.55
-      },
-      "coverage": {
-       "present": 4,
-       "total": 5
-      },
-      "factors": {
-       "earnings_growth": 0,
-       "fcf_yield": 1,
-       "target_upside": 1,
-       "valuation": 0
-      },
-      "flags": [
-       "earnings_not_cash_backed"
-      ],
-      "metrics": {
-       "earnings_growth_pct": 7.3,
-       "fcf_yield_pct": 6.2,
-       "forward_pe": 17.9,
-       "target_upside_pct": 39.9
-      },
-      "profile": {
-       "current_ratio": 0.95,
-       "debt_to_equity": 0.75,
-       "div_yield": 5.22,
-       "ev_ebitda": 8.3,
-       "fcf_to_net_income": 0.56,
-       "gross_margin": 14.8,
-       "net_debt_to_ebitda": 2.82,
-       "net_margin": 13.2,
-       "op_margin": 8.0,
-       "p_fcf": 16.2,
-       "payout": 70.7,
-       "peg": 0.34,
-       "rev_growth": 339.3,
-       "roe": 13.0
-      },
-      "rating": "strong",
-      "rating_changes": [],
-      "score": 2,
-      "sector": "Consumer Cyclical",
-      "summary": "profitable (op margin 8%, ROE 13%) \u00b7 moderate leverage (2.8\u00d7 net debt/EBITDA) \u00b7 fair valuation (fwd P/E 18) \u00b7 rev +339% / EPS +7%"
-     },
-     "macd_confirms": true,
-     "market": "bist",
-     "rule": "PRICE_SMA200_BULL",
-     "sector": null,
-     "ticker": "AKSA.IS",
-     "values": {
-      "sma200": 10.99
-     },
-     "verdict": "buy",
-     "verdict_reason": "Bullish signal, MACD confirms, strong fundamentals",
-     "volume": {
-      "above_avg": true,
-      "avg20": 14192107,
-      "ratio": 1.41,
-      "today": 20026784
-     }
-    },
-    {
-     "category": "price_sma200",
-     "close": 35.72,
-     "date": "2026-11-24",
-     "direction": "bearish",
-     "fib": {
-      "daily": {
-       "high": 44.5,
-       "levels": [
-        {
-         "dist_pct": -13.25,
-         "label": "23.6%",
-         "price": 41.1771
-        },
-        {
-         "dist_pct": -8.69,
-         "label": "38.2%",
-         "price": 39.1214
-        },
-        {
-         "dist_pct": -4.64,
-         "label": "50.0%",
-         "price": 37.46
-        },
-        {
-         "dist_pct": -0.22,
-         "label": "61.8%",
-         "price": 35.7986
-        },
-        {
-         "dist_pct": 6.84,
-         "label": "78.6%",
-         "price": 33.4331
-        }
-       ],
-       "low": 30.42,
-       "nearest": {
-        "dist_pct": -0.22,
-        "label": "61.8%",
-        "price": 35.7986
-       },
-       "position_pct": 37.6
-      },
-      "weekly": {
-       "high": 44.5,
-       "levels": [
-        {
-         "dist_pct": -8.81,
-         "label": "23.6%",
-         "price": 39.1711
-        },
-        {
-         "dist_pct": -0.43,
-         "label": "38.2%",
-         "price": 35.8744
-        },
-        {
-         "dist_pct": 7.56,
-         "label": "50.0%",
-         "price": 33.21
-        },
-        {
-         "dist_pct": 16.94,
-         "label": "61.8%",
-         "price": 30.5456
-        },
-        {
-         "dist_pct": 33.52,
-         "label": "78.6%",
-         "price": 26.7521
-        }
-       ],
-       "low": 21.92,
-       "nearest": {
-        "dist_pct": -0.43,
-        "label": "38.2%",
-        "price": 35.8744
-       },
-       "position_pct": 61.1
-      }
-     },
-     "fundamentals": {
-      "analyst": {
-       "consensus": "buy",
-       "n_analysts": 14,
-       "price": 34.04,
-       "target_high": 55.6,
-       "target_low": 27.1,
-       "target_mean": 46.34
-      },
-      "coverage": {
-       "present": 4,
-       "total": 5
-      },
-      "factors": {
-       "analyst": 1,
-       "earnings_growth": -1,
-       "target_upside": 1,
-       "valuation": 1
-      },
-      "flags": [],
-      "metrics": {
-       "earnings_growth_pct": -29.2,
-       "forward_pe": 3.6,
-       "rec_mean": 2.1,
-       "target_upside_pct": 36.1
-      },
-      "profile": {
-       "gross_margin": 0.0,
-       "net_margin": 22.5,
-       "op_margin": 31.8,
-       "payout": 0.0,
-       "peg": 47.69,
-       "rev_growth": 10.7,
-       "roe": 18.7
-      },
-      "rating": "strong",
-      "rating_changes": [],
-      "score": 2,
-      "sector": "Financial Services",
-      "summary": "highly profitable (op margin 32%, ROE 19%) \u00b7 cheap valuation (fwd P/E 4) \u00b7 rev +11% / EPS -29%"
+      "summary": "profitable (op margin 18%, ROE 10%) \u00b7 moderate leverage (3.3\u00d7 net debt/EBITDA) \u00b7 cheap valuation (fwd P/E 14) \u00b7 strong growth (rev +21%, EPS +53%)"
      },
      "macd_confirms": true,
      "market": "bist",
      "rule": "PRICE_SMA200_BEAR",
      "sector": null,
-     "ticker": "YKBNK.IS",
+     "ticker": "TAVHL.IS",
      "values": {
-      "sma200": 36.64
+      "sma200": 286.47
      },
      "verdict": "hold",
      "verdict_reason": "Bearish signal but fundamentals/sector strong \u2014 trim rather than exit",
      "volume": {
-      "above_avg": false,
-      "avg20": 195691151,
-      "ratio": 0.8,
-      "today": 156326787
+      "above_avg": true,
+      "avg20": 3462780,
+      "ratio": 1.1,
+      "today": 3808683
      }
     },
     {
@@ -3396,7 +2669,7 @@
        "price": 246.78,
        "target_high": 370.0,
        "target_low": 215.0,
-       "target_mean": 307.54
+       "target_mean": 307.69
       },
       "coverage": {
        "present": 5,
@@ -3411,26 +2684,26 @@
       },
       "flags": [],
       "metrics": {
-       "earnings_growth_pct": 59.6,
-       "fcf_yield_pct": 6.1,
-       "forward_pe": 17.4,
+       "earnings_growth_pct": 67.5,
+       "fcf_yield_pct": 6.2,
+       "forward_pe": 17.3,
        "rec_mean": 1.5,
-       "target_upside_pct": 24.6
+       "target_upside_pct": 24.7
       },
       "profile": {
-       "current_ratio": 0.85,
-       "debt_to_equity": 1.1,
-       "ev_ebitda": 23.2,
-       "fcf_to_net_income": 1.92,
+       "current_ratio": 0.53,
+       "debt_to_equity": 1.23,
+       "ev_ebitda": 22.8,
+       "fcf_to_net_income": 1.71,
        "gross_margin": 92.5,
-       "net_debt_to_ebitda": -0.2,
-       "net_margin": 21.1,
-       "op_margin": 28.1,
-       "p_fcf": 16.3,
+       "net_debt_to_ebitda": 1.25,
+       "net_margin": 23.0,
+       "op_margin": 28.0,
+       "p_fcf": 16.2,
        "payout": 0.0,
        "peg": 0.86,
-       "rev_growth": 16.1,
-       "roe": 53.9
+       "rev_growth": 16.6,
+       "roe": 55.5
       },
       "rating": "strong",
       "rating_changes": [
@@ -3472,7 +2745,7 @@
       ],
       "score": 4,
       "sector": "Technology",
-      "summary": "highly profitable (op margin 28%, ROE 54%) \u00b7 net cash \u00b7 fair valuation (fwd P/E 17) \u00b7 strong growth (rev +16%, EPS +60%)"
+      "summary": "highly profitable (op margin 28%, ROE 56%) \u00b7 moderate leverage (1.2\u00d7 net debt/EBITDA) \u00b7 fair valuation (fwd P/E 17) \u00b7 strong growth (rev +17%, EPS +68%)"
      },
      "macd_confirms": true,
      "market": "us",
@@ -6007,32 +5280,37 @@
       },
       "factors": {
        "analyst": 0,
-       "earnings_growth": -1,
+       "earnings_growth": 0,
        "fcf_yield": 1,
        "target_upside": -1,
        "valuation": 1
       },
-      "flags": [],
+      "flags": [
+       "high_leverage",
+       "value_trap"
+      ],
       "metrics": {
-       "earnings_growth_pct": -11.3,
+       "earnings_growth_pct": 1.1,
        "fcf_yield_pct": 12.1,
        "forward_pe": 9.2,
        "rec_mean": 3.3,
        "target_upside_pct": -11.5
       },
       "profile": {
-       "current_ratio": 0.79,
-       "div_yield": 3.85,
-       "ev_ebitda": 6.8,
-       "fcf_to_net_income": 1.38,
-       "gross_margin": 19.7,
-       "net_debt_to_ebitda": 1.33,
-       "net_margin": 4.1,
-       "op_margin": 6.5,
+       "current_ratio": 0.81,
+       "debt_to_equity": 17.6,
+       "div_yield": 3.98,
+       "ev_ebitda": 7.1,
+       "fcf_to_net_income": 1.4,
+       "gross_margin": 19.2,
+       "net_debt_to_ebitda": 1.04,
+       "net_margin": 4.0,
+       "op_margin": 6.2,
        "p_fcf": 8.3,
        "payout": 45.4,
        "peg": 2.98,
-       "rev_growth": 12.5
+       "rev_growth": 9.3,
+       "roe": 2679.6
       },
       "rating": "neutral",
       "rating_changes": [
@@ -6042,18 +5320,11 @@
         "firm": "RBC Capital",
         "from_grade": null,
         "to_grade": "Sector Perform"
-       },
-       {
-        "action": "main",
-        "date": "2026-08-28",
-        "firm": "Barclays",
-        "from_grade": "Underweight",
-        "to_grade": "Underweight"
        }
       ],
-      "score": 0,
+      "score": 1,
       "sector": "Technology",
-      "summary": "thin margins (op margin 6%) \u00b7 moderate leverage (1.3\u00d7 net debt/EBITDA) \u00b7 cheap valuation (fwd P/E 9) \u00b7 rev +12% / EPS -11%"
+      "summary": "thin margins (op margin 6%, ROE 2680%) \u00b7 high leverage (D/E 17.6\u00d7) \u00b7 cheap valuation (fwd P/E 9) \u00b7 rev +9% / EPS +1%"
      },
      "macd_confirms": false,
      "market": "us",
@@ -6072,9 +5343,9 @@
      "verdict_reason": "MACD momentum does not confirm \u2014 possible false breakdown",
      "volume": {
       "above_avg": true,
-      "avg20": 15800680,
+      "avg20": 15802495,
       "ratio": 2.47,
-      "today": 39069000
+      "today": 39105300
      }
     },
     {
@@ -8107,9 +7378,9 @@
      "verdict_reason": "Bearish signal confirmed by MACD, sector lagging",
      "volume": {
       "above_avg": false,
-      "avg20": 15627815,
+      "avg20": 15629065,
       "ratio": 0.9,
-      "today": 14029400
+      "today": 14054400
      }
     },
     {
@@ -9238,9 +8509,9 @@
      "verdict_reason": "Bearish signal confirmed by MACD, sector lagging",
      "volume": {
       "above_avg": true,
-      "avg20": 19732495,
+      "avg20": 19733015,
       "ratio": 1.01,
-      "today": 19832100
+      "today": 19842500
      }
     },
     {
@@ -9253,81 +8524,81 @@
        "high": 37.78,
        "levels": [
         {
-         "dist_pct": -29.17,
+         "dist_pct": -31.61,
          "label": "23.6%",
-         "price": 34.6459
+         "price": 34.4194
         },
         {
-         "dist_pct": -24.97,
+         "dist_pct": -27.21,
          "label": "38.2%",
-         "price": 32.707
+         "price": 32.3403
         },
         {
-         "dist_pct": -21.19,
+         "dist_pct": -23.22,
          "label": "50.0%",
-         "price": 31.14
+         "price": 30.66
         },
         {
-         "dist_pct": -17.02,
+         "dist_pct": -18.77,
          "label": "61.8%",
-         "price": 29.573
+         "price": 28.9797
         },
         {
-         "dist_pct": -10.25,
+         "dist_pct": -11.46,
          "label": "78.6%",
-         "price": 27.3419
+         "price": 26.5874
         }
        ],
-       "low": 24.5,
+       "low": 23.54,
        "nearest": {
-        "dist_pct": -10.25,
+        "dist_pct": -11.46,
         "label": "78.6%",
-        "price": 27.3419
+        "price": 26.5874
        },
-       "position_pct": 0.3
+       "position_pct": 0.0
       },
       "weekly": {
        "high": 38.675,
        "levels": [
         {
-         "dist_pct": -30.25,
+         "dist_pct": -33.09,
          "label": "23.6%",
          "price": 35.1834
         },
         {
-         "dist_pct": -25.69,
+         "dist_pct": -28.72,
          "label": "38.2%",
          "price": 33.0233
         },
         {
-         "dist_pct": -21.54,
+         "dist_pct": -24.74,
          "label": "50.0%",
          "price": 31.2775
         },
         {
-         "dist_pct": -16.9,
+         "dist_pct": -20.29,
          "label": "61.8%",
          "price": 29.5317
         },
         {
-         "dist_pct": -9.27,
+         "dist_pct": -12.96,
          "label": "78.6%",
          "price": 27.0461
         }
        ],
        "low": 23.88,
        "nearest": {
-        "dist_pct": -9.27,
+        "dist_pct": -12.96,
         "label": "78.6%",
         "price": 27.0461
        },
-       "position_pct": 4.5
+       "position_pct": -2.3
       }
      },
      "fundamentals": {
       "analyst": {
        "n_analysts": 5,
-       "price": 23.54,
+       "price": 23.88,
        "target_high": 53.0,
        "target_low": 44.0,
        "target_mean": 49.35
@@ -9345,21 +8616,21 @@
       "flags": [],
       "metrics": {
        "earnings_growth_pct": -46.3,
-       "fcf_yield_pct": 11.0,
+       "fcf_yield_pct": 10.8,
        "forward_pe": 0.2,
-       "target_upside_pct": 109.6
+       "target_upside_pct": 106.6
       },
       "profile": {
        "current_ratio": 0.97,
        "debt_to_equity": 0.45,
-       "div_yield": 2.97,
+       "div_yield": 2.93,
        "ev_ebitda": 7.5,
        "fcf_to_net_income": 2.61,
        "gross_margin": 27.1,
        "net_debt_to_ebitda": 1.6,
        "net_margin": 0.3,
        "op_margin": 4.4,
-       "p_fcf": 9.1,
+       "p_fcf": 9.3,
        "payout": 70.6,
        "peg": 0.54,
        "rev_growth": 2.3,
@@ -9383,9 +8654,9 @@
      "verdict_reason": "Bearish signal but fundamentals/sector strong \u2014 trim rather than exit",
      "volume": {
       "above_avg": false,
-      "avg20": 5092132,
-      "ratio": 0.26,
-      "today": 1313038
+      "avg20": 4586381,
+      "ratio": 0.63,
+      "today": 2896041
      }
     },
     {
@@ -9398,81 +8669,81 @@
        "high": 50.75,
        "levels": [
         {
-         "dist_pct": -30.35,
+         "dist_pct": -31.44,
          "label": "23.6%",
-         "price": 46.3722
+         "price": 46.2353
         },
         {
-         "dist_pct": -26.03,
+         "dist_pct": -27.03,
          "label": "38.2%",
-         "price": 43.6639
+         "price": 43.4423
         },
         {
-         "dist_pct": -22.12,
+         "dist_pct": -23.03,
          "label": "50.0%",
-         "price": 41.475
+         "price": 41.185
         },
         {
-         "dist_pct": -17.78,
+         "dist_pct": -18.57,
          "label": "61.8%",
-         "price": 39.2861
+         "price": 38.9277
         },
         {
-         "dist_pct": -10.7,
+         "dist_pct": -11.24,
          "label": "78.6%",
-         "price": 36.1697
+         "price": 35.7138
         }
        ],
-       "low": 32.2,
+       "low": 31.62,
        "nearest": {
-        "dist_pct": -10.7,
+        "dist_pct": -11.24,
         "label": "78.6%",
-        "price": 36.1697
+        "price": 35.7138
        },
-       "position_pct": 0.5
+       "position_pct": 0.4
       },
       "weekly": {
        "high": 50.75,
        "levels": [
         {
-         "dist_pct": -29.53,
+         "dist_pct": -30.84,
          "label": "23.6%",
          "price": 45.8341
         },
         {
-         "dist_pct": -24.52,
+         "dist_pct": -25.92,
          "label": "38.2%",
          "price": 42.7929
         },
         {
-         "dist_pct": -19.92,
+         "dist_pct": -21.41,
          "label": "50.0%",
          "price": 40.335
         },
         {
-         "dist_pct": -14.72,
+         "dist_pct": -16.31,
          "label": "61.8%",
          "price": 37.8771
         },
         {
-         "dist_pct": -6.04,
+         "dist_pct": -7.79,
          "label": "78.6%",
          "price": 34.3776
         }
        ],
        "low": 29.92,
        "nearest": {
-        "dist_pct": -6.04,
+        "dist_pct": -7.79,
         "label": "78.6%",
         "price": 34.3776
        },
-       "position_pct": 11.4
+       "position_pct": 8.5
       }
      },
      "fundamentals": {
       "analyst": {
        "n_analysts": 8,
-       "price": 31.7,
+       "price": 31.6,
        "target_high": 67.09,
        "target_low": 60.0,
        "target_mean": 63.13
@@ -9492,12 +8763,12 @@
        "earnings_growth_pct": -13.6,
        "fcf_yield_pct": 16.1,
        "forward_pe": 1.9,
-       "target_upside_pct": 99.1
+       "target_upside_pct": 99.8
       },
       "profile": {
        "current_ratio": 1.45,
        "debt_to_equity": 0.42,
-       "div_yield": 5.27,
+       "div_yield": 5.28,
        "ev_ebitda": 3.3,
        "fcf_to_net_income": 2.21,
        "gross_margin": 51.9,
@@ -9527,10 +8798,10 @@
      "verdict": "hold",
      "verdict_reason": "Bearish signal but fundamentals/sector strong \u2014 trim rather than exit",
      "volume": {
-      "above_avg": false,
-      "avg20": 5508330,
-      "ratio": 0.61,
-      "today": 3375681
+      "above_avg": true,
+      "avg20": 5508320,
+      "ratio": 1.2,
+      "today": 6634804
      }
     },
     {
@@ -9543,82 +8814,82 @@
        "high": 727.0,
        "levels": [
         {
-         "dist_pct": -36.42,
+         "dist_pct": -38.33,
          "label": "23.6%",
-         "price": 651.539
+         "price": 649.828
         },
         {
-         "dist_pct": -31.51,
+         "dist_pct": -33.44,
          "label": "38.2%",
-         "price": 604.8555
+         "price": 602.086
         },
         {
-         "dist_pct": -26.96,
+         "dist_pct": -28.88,
          "label": "50.0%",
-         "price": 567.125
+         "price": 563.5
         },
         {
-         "dist_pct": -21.75,
+         "dist_pct": -23.65,
          "label": "61.8%",
-         "price": 529.3945
+         "price": 524.914
         },
         {
-         "dist_pct": -12.91,
+         "dist_pct": -14.73,
          "label": "78.6%",
-         "price": 475.6765
+         "price": 469.978
         }
        ],
-       "low": 407.25,
+       "low": 400.0,
        "nearest": {
-        "dist_pct": -12.91,
+        "dist_pct": -14.73,
         "label": "78.6%",
-        "price": 475.6765
+        "price": 469.978
        },
-       "position_pct": 2.2
+       "position_pct": 0.2
       },
       "weekly": {
        "high": 727.0,
        "levels": [
         {
-         "dist_pct": -36.42,
+         "dist_pct": -38.49,
          "label": "23.6%",
          "price": 651.539
         },
         {
-         "dist_pct": -31.51,
+         "dist_pct": -33.74,
          "label": "38.2%",
          "price": 604.8555
         },
         {
-         "dist_pct": -26.96,
+         "dist_pct": -29.34,
          "label": "50.0%",
          "price": 567.125
         },
         {
-         "dist_pct": -21.75,
+         "dist_pct": -24.3,
          "label": "61.8%",
          "price": 529.3945
         },
         {
-         "dist_pct": -12.91,
+         "dist_pct": -15.75,
          "label": "78.6%",
          "price": 475.6765
         }
        ],
        "low": 407.25,
        "nearest": {
-        "dist_pct": -12.91,
+        "dist_pct": -15.75,
         "label": "78.6%",
         "price": 475.6765
        },
-       "position_pct": 2.2
+       "position_pct": -2.0
       }
      },
      "fundamentals": {
       "analyst": {
        "consensus": "strong_buy",
        "n_analysts": 13,
-       "price": 400.75,
+       "price": 399.75,
        "target_high": 1061.74,
        "target_low": 700.0,
        "target_mean": 906.17
@@ -9640,7 +8911,7 @@
        "fcf_yield_pct": 5.9,
        "forward_pe": 4.9,
        "rec_mean": 1.2,
-       "target_upside_pct": 126.1
+       "target_upside_pct": 126.7
       },
       "profile": {
        "current_ratio": 0.82,
@@ -9652,7 +8923,7 @@
        "net_debt_to_ebitda": 0.29,
        "net_margin": 1.5,
        "op_margin": 1.4,
-       "p_fcf": 16.9,
+       "p_fcf": 16.8,
        "payout": 36.0,
        "peg": 0.15,
        "rev_growth": 3.3,
@@ -9676,9 +8947,9 @@
      "verdict_reason": "Bearish signal but fundamentals/sector strong \u2014 trim rather than exit",
      "volume": {
       "above_avg": true,
-      "avg20": 2209117,
-      "ratio": 1.12,
-      "today": 2465971
+      "avg20": 2252128,
+      "ratio": 1.26,
+      "today": 2827085
      }
     },
     {
@@ -9691,81 +8962,81 @@
        "high": 28.56,
        "levels": [
         {
-         "dist_pct": -29.5,
+         "dist_pct": -31.85,
          "label": "23.6%",
          "price": 25.9711
         },
         {
-         "dist_pct": -24.86,
+         "dist_pct": -27.37,
          "label": "38.2%",
          "price": 24.3695
         },
         {
-         "dist_pct": -20.65,
+         "dist_pct": -23.29,
          "label": "50.0%",
          "price": 23.075
         },
         {
-         "dist_pct": -15.93,
+         "dist_pct": -18.73,
          "label": "61.8%",
          "price": 21.7805
         },
         {
-         "dist_pct": -8.16,
+         "dist_pct": -11.22,
          "label": "78.6%",
          "price": 19.9376
         }
        ],
        "low": 17.59,
        "nearest": {
-        "dist_pct": -8.16,
+        "dist_pct": -11.22,
         "label": "78.6%",
         "price": 19.9376
        },
-       "position_pct": 6.6
+       "position_pct": 1.0
       },
       "weekly": {
        "high": 33.04,
        "levels": [
         {
-         "dist_pct": -37.57,
+         "dist_pct": -39.65,
          "label": "23.6%",
          "price": 29.3302
         },
         {
-         "dist_pct": -32.27,
+         "dist_pct": -34.53,
          "label": "38.2%",
          "price": 27.0352
         },
         {
-         "dist_pct": -27.28,
+         "dist_pct": -29.71,
          "label": "50.0%",
          "price": 25.1803
         },
         {
-         "dist_pct": -21.5,
+         "dist_pct": -24.12,
          "label": "61.8%",
          "price": 23.3254
         },
         {
-         "dist_pct": -11.48,
+         "dist_pct": -14.43,
          "label": "78.6%",
          "price": 20.6845
         }
        ],
        "low": 17.3205,
        "nearest": {
-        "dist_pct": -11.48,
+        "dist_pct": -14.43,
         "label": "78.6%",
         "price": 20.6845
        },
-       "position_pct": 6.3
+       "position_pct": 2.4
       }
      },
      "fundamentals": {
       "analyst": {
        "n_analysts": 4,
-       "price": 17.7,
+       "price": 18.28,
        "target_high": 38.92,
        "target_low": 31.6,
        "target_mean": 34.73
@@ -9784,14 +9055,14 @@
       ],
       "metrics": {
        "earnings_growth_pct": -32.1,
-       "fcf_yield_pct": -5.6,
-       "target_upside_pct": 96.2
+       "fcf_yield_pct": -5.4,
+       "target_upside_pct": 90.0
       },
       "profile": {
        "current_ratio": 2.7,
        "debt_to_equity": 0.02,
-       "div_yield": 2.82,
-       "ev_ebitda": 5.8,
+       "div_yield": 2.74,
+       "ev_ebitda": 6.0,
        "fcf_to_net_income": -1.04,
        "gross_margin": 25.7,
        "net_debt_to_ebitda": -1.08,
@@ -9820,9 +9091,9 @@
      "verdict_reason": "Bearish signal confirmed by MACD",
      "volume": {
       "above_avg": false,
-      "avg20": 8791028,
-      "ratio": 0.43,
-      "today": 3796730
+      "avg20": 8382818,
+      "ratio": 0.64,
+      "today": 5401919
      }
     },
     {
@@ -9835,81 +9106,81 @@
        "high": 115.0,
        "levels": [
         {
-         "dist_pct": -28.2,
+         "dist_pct": -29.59,
          "label": "23.6%",
-         "price": 105.7842
+         "price": 105.2414
         },
         {
-         "dist_pct": -24.11,
+         "dist_pct": -25.31,
          "label": "38.2%",
-         "price": 100.0829
+         "price": 99.2043
         },
         {
-         "dist_pct": -20.45,
+         "dist_pct": -21.44,
          "label": "50.0%",
-         "price": 95.475
+         "price": 94.325
         },
         {
-         "dist_pct": -16.42,
+         "dist_pct": -17.16,
          "label": "61.8%",
-         "price": 90.8671
+         "price": 89.4457
         },
         {
-         "dist_pct": -9.91,
+         "dist_pct": -10.18,
          "label": "78.6%",
-         "price": 84.3067
+         "price": 82.4989
         }
        ],
-       "low": 75.95,
+       "low": 73.65,
        "nearest": {
-        "dist_pct": -9.91,
+        "dist_pct": -10.18,
         "label": "78.6%",
-        "price": 84.3067
+        "price": 82.4989
        },
-       "position_pct": 0.0
+       "position_pct": 1.1
       },
       "weekly": {
        "high": 115.0,
        "levels": [
         {
-         "dist_pct": -27.52,
+         "dist_pct": -29.28,
          "label": "23.6%",
          "price": 104.7812
         },
         {
-         "dist_pct": -22.86,
+         "dist_pct": -24.74,
          "label": "38.2%",
          "price": 98.4594
         },
         {
-         "dist_pct": -18.64,
+         "dist_pct": -20.62,
          "label": "50.0%",
          "price": 93.35
         },
         {
-         "dist_pct": -13.93,
+         "dist_pct": -16.03,
          "label": "61.8%",
          "price": 88.2406
         },
         {
-         "dist_pct": -6.2,
+         "dist_pct": -8.48,
          "label": "78.6%",
          "price": 80.9662
         }
        ],
        "low": 71.7,
        "nearest": {
-        "dist_pct": -6.2,
+        "dist_pct": -8.48,
         "label": "78.6%",
         "price": 80.9662
        },
-       "position_pct": 9.8
+       "position_pct": 5.5
       }
      },
      "fundamentals": {
       "analyst": {
        "n_analysts": 7,
-       "price": 74.1,
+       "price": 75.15,
        "target_high": 181.0,
        "target_low": 138.2,
        "target_mean": 160.42
@@ -9927,10 +9198,10 @@
       "metrics": {
        "earnings_growth_pct": 384.2,
        "forward_pe": 2.7,
-       "target_upside_pct": 116.5
+       "target_upside_pct": 113.5
       },
       "profile": {
-       "div_yield": 1.9,
+       "div_yield": 1.88,
        "gross_margin": 0.0,
        "net_margin": 9.5,
        "op_margin": 38.9,
@@ -9956,10 +9227,10 @@
      "verdict": "hold",
      "verdict_reason": "Bearish signal but fundamentals/sector strong \u2014 trim rather than exit",
      "volume": {
-      "above_avg": false,
-      "avg20": 28553507,
-      "ratio": 0.77,
-      "today": 22071000
+      "above_avg": true,
+      "avg20": 29590180,
+      "ratio": 1.65,
+      "today": 48971747
      }
     },
     {
@@ -9972,82 +9243,82 @@
        "high": 358.25,
        "levels": [
         {
-         "dist_pct": -23.14,
+         "dist_pct": -27.96,
          "label": "23.6%",
          "price": 323.1686
         },
         {
-         "dist_pct": -17.6,
+         "dist_pct": -22.78,
          "label": "38.2%",
          "price": 301.4657
         },
         {
-         "dist_pct": -12.51,
+         "dist_pct": -18.01,
          "label": "50.0%",
          "price": 283.925
         },
         {
-         "dist_pct": -6.75,
+         "dist_pct": -12.61,
          "label": "61.8%",
          "price": 266.3843
         },
         {
-         "dist_pct": 2.9,
+         "dist_pct": -3.57,
          "label": "78.6%",
          "price": 241.4111
         }
        ],
        "low": 209.6,
        "nearest": {
-        "dist_pct": 2.9,
+        "dist_pct": -3.57,
         "label": "78.6%",
         "price": 241.4111
        },
-       "position_pct": 26.1
+       "position_pct": 15.6
       },
       "weekly": {
        "high": 358.25,
        "levels": [
         {
-         "dist_pct": -19.64,
+         "dist_pct": -24.69,
          "label": "23.6%",
          "price": 309.1266
         },
         {
-         "dist_pct": -10.88,
+         "dist_pct": -16.48,
          "label": "38.2%",
          "price": 278.7367
         },
         {
-         "dist_pct": -2.27,
+         "dist_pct": -8.41,
          "label": "50.0%",
          "price": 254.175
         },
         {
-         "dist_pct": 8.18,
+         "dist_pct": 1.39,
          "label": "61.8%",
          "price": 229.6133
         },
         {
-         "dist_pct": 27.62,
+         "dist_pct": 19.6,
          "label": "78.6%",
          "price": 194.6441
         }
        ],
        "low": 150.1,
        "nearest": {
-        "dist_pct": -2.27,
-        "label": "50.0%",
-        "price": 254.175
+        "dist_pct": 1.39,
+        "label": "61.8%",
+        "price": 229.6133
        },
-       "position_pct": 47.2
+       "position_pct": 39.7
       }
      },
      "fundamentals": {
       "analyst": {
        "consensus": "buy",
        "n_analysts": 11,
-       "price": 232.8,
+       "price": 244.8,
        "target_high": 496.7,
        "target_low": 327.6,
        "target_mean": 409.98
@@ -10070,16 +9341,16 @@
       ],
       "metrics": {
        "earnings_growth_pct": 175.8,
-       "fcf_yield_pct": -27.7,
-       "forward_pe": 7.3,
+       "fcf_yield_pct": -26.4,
+       "forward_pe": 7.7,
        "rec_mean": 1.7,
-       "target_upside_pct": 76.1
+       "target_upside_pct": 67.5
       },
       "profile": {
        "current_ratio": 1.46,
        "debt_to_equity": 0.96,
-       "div_yield": 8.59,
-       "ev_ebitda": 17.7,
+       "div_yield": 8.17,
+       "ev_ebitda": 18.4,
        "fcf_to_net_income": -2.08,
        "gross_margin": 7.4,
        "net_debt_to_ebitda": 5.43,
@@ -10094,7 +9365,7 @@
       "rating_changes": [],
       "score": 3,
       "sector": "Consumer Cyclical",
-      "summary": "thin margins (op margin 2%, ROE 25%) \u00b7 high leverage (5.4\u00d7 net debt/EBITDA) \u00b7 cheap valuation (fwd P/E 7) \u00b7 rev -26% / EPS +176%"
+      "summary": "thin margins (op margin 2%, ROE 25%) \u00b7 high leverage (5.4\u00d7 net debt/EBITDA) \u00b7 cheap valuation (fwd P/E 8) \u00b7 rev -26% / EPS +176%"
      },
      "macd_confirms": true,
      "market": "bist",
@@ -10107,10 +9378,10 @@
      "verdict": "buy",
      "verdict_reason": "Bullish signal, MACD confirms, strong fundamentals",
      "volume": {
-      "above_avg": false,
-      "avg20": 4605709,
-      "ratio": 0.74,
-      "today": 3411657
+      "above_avg": true,
+      "avg20": 4641807,
+      "ratio": 1.01,
+      "today": 4670322
      }
     },
     {
@@ -10123,81 +9394,81 @@
        "high": 14.52,
        "levels": [
         {
-         "dist_pct": -25.72,
+         "dist_pct": -29.26,
          "label": "23.6%",
          "price": 13.019
         },
         {
-         "dist_pct": -20.02,
+         "dist_pct": -23.82,
          "label": "38.2%",
          "price": 12.0905
         },
         {
-         "dist_pct": -14.73,
+         "dist_pct": -18.78,
          "label": "50.0%",
          "price": 11.34
         },
         {
-         "dist_pct": -8.68,
+         "dist_pct": -13.03,
          "label": "61.8%",
          "price": 10.5895
         },
         {
-         "dist_pct": 1.56,
+         "dist_pct": -3.27,
          "label": "78.6%",
          "price": 9.521
         }
        ],
        "low": 8.16,
        "nearest": {
-        "dist_pct": 1.56,
+        "dist_pct": -3.27,
         "label": "78.6%",
         "price": 9.521
        },
-       "position_pct": 23.7
+       "position_pct": 16.5
       },
       "weekly": {
        "high": 14.73,
        "levels": [
         {
-         "dist_pct": -26.63,
+         "dist_pct": -30.12,
          "label": "23.6%",
          "price": 13.1795
         },
         {
-         "dist_pct": -20.87,
+         "dist_pct": -24.63,
          "label": "38.2%",
          "price": 12.2203
         },
         {
-         "dist_pct": -15.51,
+         "dist_pct": -19.53,
          "label": "50.0%",
          "price": 11.445
         },
         {
-         "dist_pct": -9.37,
+         "dist_pct": -13.68,
          "label": "61.8%",
          "price": 10.6697
         },
         {
-         "dist_pct": 1.09,
+         "dist_pct": -3.72,
          "label": "78.6%",
          "price": 9.566
         }
        ],
        "low": 8.16,
        "nearest": {
-        "dist_pct": 1.09,
+        "dist_pct": -3.72,
         "label": "78.6%",
         "price": 9.566
        },
-       "position_pct": 23.0
+       "position_pct": 16.0
       }
      },
      "fundamentals": {
       "analyst": {
        "n_analysts": 5,
-       "price": 9.21,
+       "price": 9.34,
        "target_high": 20.0,
        "target_low": 16.8,
        "target_mean": 18.99
@@ -10215,10 +9486,10 @@
       "metrics": {
        "earnings_growth_pct": -4.9,
        "forward_pe": 2.8,
-       "target_upside_pct": 106.2
+       "target_upside_pct": 103.3
       },
       "profile": {
-       "div_yield": 5.86,
+       "div_yield": 5.78,
        "gross_margin": 0.0,
        "net_margin": 56.7,
        "op_margin": 67.8,
@@ -10245,9 +9516,9 @@
      "verdict_reason": "Bearish signal confirmed by MACD",
      "volume": {
       "above_avg": false,
-      "avg20": 18735627,
-      "ratio": 0.41,
-      "today": 7621693
+      "avg20": 18194875,
+      "ratio": 0.57,
+      "today": 10425472
      }
     },
     {
@@ -10434,9 +9705,9 @@
      "verdict_reason": "Bearish signal confirmed by MACD, sector lagging",
      "volume": {
       "above_avg": true,
-      "avg20": 6735355,
-      "ratio": 1.21,
-      "today": 8148000
+      "avg20": 6737350,
+      "ratio": 1.22,
+      "today": 8187900
      }
     },
     {
@@ -11382,7 +10653,7 @@
     }
    ],
    "bar_date": "2026-11-25",
-   "generated_at": "2026-11-26T04:16:09Z",
+   "generated_at": "2026-11-27T04:25:00Z",
    "scanned": 617
   },
   {
